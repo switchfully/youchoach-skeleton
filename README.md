@@ -1,6 +1,6 @@
 # You-Coach Application
 
-![Logo](img\PictoSiteWeb-04.png)
+![Logo](img/PictoSiteWeb-04.png)
 
 The final project of the FEB2020 track will consist of building the You-Coach application. 
 The You-Coach application is an idea of the Make It Happen foundation (https://www.make-it-happen.org/) 
