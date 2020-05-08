@@ -245,8 +245,7 @@ The functional requirements are written down as stories.
      - First name
      - Last name
      - email (disabled)
-     - class  
-     - picture   
+     - picture (url)  
       
  - in scope
      - Creation of the edit 'My Profile' page
@@ -254,14 +253,12 @@ The functional requirements are written down as stories.
      - cancel button
       
  - Open Questions
-     - edit picture in scope?
      - editing of user profiles by admin in scope?
         - admin can edit more fields (status, role, ...)
  
    
  4 - As a coachee I want to be able to edit my 'profile information'    
      
-
 
 *TO DO*
 Status blocked
