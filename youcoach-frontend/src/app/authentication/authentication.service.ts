@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {LoginService} from './login.service';
+import {AuthenticationHttpService} from './authentication.http.service';
 import {tap} from 'rxjs/operators';
 import {Subject} from 'rxjs';
 
@@ -13,7 +13,7 @@ export class AuthenticationService {
   private userLoggedInSource = new Subject<boolean>();
   userLoggedIn$ = this.userLoggedInSource.asObservable();
 
-  constructor(private loginService: LoginService) {
+  constructor(private loginService: AuthenticationHttpService) {
   }
 
   login(loginData: any) {

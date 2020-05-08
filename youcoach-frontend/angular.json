@@ -21,7 +21,10 @@
             "aot": true,
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              { "glob": "**/??.json",
+                "input": "./node_modules/youcoach-i18n/i18n/",
+                "output": "./assets/i18n/" }
             ],
             "styles": [
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
@@ -86,7 +89,10 @@
             "karmaConfig": "karma.conf.js",
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              { "glob": "**/??.json",
+                "input": "./node_modules/youcoach-i18n/i18n/",
+                "output": "./assets/i18n/" }
             ],
             "styles": [
               "src/styles.css"

@@ -10,6 +10,71 @@ and aims to facilitate the peer-to-peer coaching sessions between students.
 
 The plan is to launch the POC build by you in September as a pilot in some schools in Brussel.
 
+## The skeleton
+
+This project is split in two the `youcoach-backend` and the `youcoach-frontend`.
+This project is meant as an example to setup a few features, which are:
+- Setup of a project with both backend and frontend
+- JWT-token based authentication
+- working with translations in Angular
+
+We choose to work with a single codebase because:
+- feature commits can combine frontend and backend code
+- cloning a project shouldn't be a hassle
+
+However this can have problems for:
+- importing your project in intellij
+- setting up a devops pipeline
+
+### Youcoach-frontend
+To import in intellij:
+1. Go to project structure
+1. Click on 'modules'
+1. Create a new module (static web and angular cli)
+1. Follow the wizard and don't forget to select the youcoach-frontend directory as a source!
+
+The frontend supports following features:
+- bootstrap
+- i18n
+- jwt-token based login
+
+#### I18N
+i18n or 'internationalization' is the term used to describe how your app adepts to the users locale (nationality).
+We mainly use it for translation.
+
+- We've made a translation project that you can find at `https://github.com/switchfully/youcoach-i18n`.
+- The project is setup in such a way that the translations are loaded as soon as you serve or build the project.
+- We use `ngx-translate` as a 3th party library to manage the translations.
+- If you want to add new translations please take them to the scrum of scrums.
+- The `youcoach-i18n` project will be updated based on your requests. Make sure to do a `npm install` regulary, to get the latest version!
+
+The general structure of the translation file is:
+```json
+{
+  "name-of-component": {
+      "name-of-element-type(like: title, message, button, label, etc...)": {
+          "id-of-element": "translation" 
+      }
+  }
+}
+```
+- e.g. "login.message.loginsuccessful" 
+
+- when you add `translate` to a html-tag `ngx-translate` will try translate the contents of that tag.
+    - e.g. `<button translate>login.button.logout</button>`
+
+#### Bootstrap
+- Bootstrap is used as css framework but is not required to be used.
+- The mockups are based on `angular-material`. So you can always switch to that framework
+
+#### JWT-tokens
+- The `login component` is setup that it will do a POST call with the username and body.
+- The response will contain a header with a JWT-token.
+- This token will be saved in your session.
+- All other calls to the backend need to contain this JWT-token otherwise the call will be `not authorized`.
+- An `interceptor` is made so that, if available, your JWT-token will be automatically attached to every http call.
+- All this is managed in the `authentication` directory. Normally nothing in this directory needs to be changed (unless we made an oupsy).
+
 ## High level analysis
 
 Before the start of the project we typically conduct a High Level Analysis (HLA) phase. 

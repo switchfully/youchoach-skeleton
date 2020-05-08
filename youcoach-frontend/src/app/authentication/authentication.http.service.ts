@@ -7,7 +7,7 @@ import {environment} from '../../environments/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class LoginService {
+export class AuthenticationHttpService {
   private url = `${environment.backendUrl}/login`;
 
   constructor(private http: HttpClient) {
