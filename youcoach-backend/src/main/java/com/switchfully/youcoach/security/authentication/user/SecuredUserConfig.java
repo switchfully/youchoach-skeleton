@@ -22,7 +22,7 @@ public class SecuredUserConfig {
 
     @Bean
     SecuredUserRepository securedUserRepository() {
-        return new SecuredUserRepository(loadUsers());
+        return new SecuredUserRepositoryFromJson(loadUsers());
     }
 
     private List<SecuredUser> loadUsers() {
