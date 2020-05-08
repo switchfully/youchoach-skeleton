@@ -176,14 +176,20 @@ The functional requirements are written down as stories.
 - in scope
     - Creation of the homepage 
     - Creation of the register user screen
-    - redirect to empty profile page upon success  
-
+    - redirect to empty profile page upon success 
+    
 - Open Questions
     - Password policy?
             - min 8 characters
             - min one capital
             - min one number
-            - min one  symbol     
+            - min one  symbol  
+    
+- mockups
+    - ![Homepage](img\homepage.png)
+              
+    - ![Register](img\register.png)
+   
     
 ### Story 2: Sign in
 **As a user I want to sign in to have access to You-coach**
@@ -205,6 +211,9 @@ The functional requirements are written down as stories.
 - Open Questions
     - How will a password reset happen before story 31 is implemented?
         - test manual encryption of password (bkrypt)
+
+- mockups
+    - ![signin](img\signin.png)
         
 ### Story 3: Profile information
  **As a coachee I want to have an overview of my 'profile information'**   
@@ -222,7 +231,10 @@ The functional requirements are written down as stories.
  
  - Open Questions
  
- ### Story TODO: Profile information access
+ - mockups
+     - ![signin](img\myprofile.png)
+ 
+ ### Story 34: Profile information access
   **As a coachee I want only myself and the admin to have access to my 'profile information'**  
 
  - Profile information contains in addition:
@@ -237,27 +249,35 @@ The functional requirements are written down as stories.
       - administrator can access all profiles (by url you-coach.org/user/UUID)   
       
   - Open Questions 
+
+ - mockups
+     - ![signin](img\myprofile.png)
      
-### Story 3: Edit Profile information
+### Story 4: Edit Profile information
  **As a coachee I want to be able to edit my 'profile information'**   
  
  - coachee can edit
      - First name
      - Last name
      - email (disabled)
-     - picture (url)  
-      
+     - role (disabled)
+     - picture (url) 
+     
+- admin can edit
+     - First name
+     - Last name
+     - email (disabled)
+     - role
+     - picture (url) 
+     
  - in scope
      - Creation of the edit 'My Profile' page
      - save button 
      - cancel button
       
  - Open Questions
-     - editing of user profiles by admin in scope?
-        - admin can edit more fields (status, role, ...)
  
-   
- 4 - As a coachee I want to be able to edit my 'profile information'    
+
      
 
 *TO DO*
