@@ -83,7 +83,7 @@ The goal of this phase is to provide just enough upfront analysis to start the p
 ### C4 model
 
 In order to communicate about the architecture of the applications we've chosen to use the C4 Model (Simon Brown).
-The diagrams below are a materializitation of ou HLA phase. Feel free to challenge.
+The diagrams below are a materialization of ou HLA phase. Feel free to challenge.
 
 #### Context diagram
 
@@ -166,49 +166,46 @@ The functional requirements are written down as stories.
     - First Name
     - Last Name
     - Email (used to sign in)
-    - Password (2 times)
-    
+    - Password (2 times)      
+   
 - Validation
-    - email is a valid email format
-    - email is not yet used within the system      
+    - email is a valid email format (internal format validation, no external webservice)
+    - email is not yet used within the system
+    - password validation    
     
 - in scope
     - Creation of the homepage 
     - Creation of the register user screen
-    - redirect to empty profile page upon success       
+    - redirect to empty profile page upon success  
 
 - Open Questions
     - Password policy?
-    - How to become an administrator (via database)?
-    
+            - min 8 characters
+            - min one capital
+            - min one number
+            - min one  symbol     
     
 ### Story 2: Sign in
 **As a user I want to sign in to have access to You-coach**
 
 - A user needs to provide
     - email
-    - Password (not readable on screen)
+    - Password (<input type='password'/>)
     
 - Validation
     - user is known in the system
-    - combination of user and password is valid
-    - user has not status: blocked     
+    - combination of email and password is valid 
     
 - in scope
-    - Creation of the homepage 
     - Creation of the sign in screen
-        - reset password button (not yet implemented --> contact admin)
+        - reset password button (not yet implemented --> alert: contact admin)
     - redirect to empty profile page upon success
     - redirect to home page after sign-out
        
 - Open Questions
     - How will a password reset happen before story 31 is implemented?
-    - adding status blocked via DB --> benefit?
-    - adding user role at logon?
-        - logged on as coachee
-        - logged on as coach
-        - logged on as admin
-    
+        - test manual encryption of password (bkrypt)
+        
 ### Story 3: Profile information
  **As a coachee I want to have an overview of my 'profile information'**   
  
@@ -216,23 +213,30 @@ The functional requirements are written down as stories.
      - First name
      - Last name
      - Email
-     - class  
-     - You-coach role
-     - Status 
-     - picture   
+     - picture (via external url)  
       
  - in scope
      - Creation of the 'My Profile' menu
-     - Creation of the profile information page     
+     - Creation of the profile information page 
+     - profiles are accessible to everyone (by url you-coach.org/user/UUID)    
  
  - Open Questions
-     - picture in scope?
-     - You-coach role displayed to coachee?
-     - Status displayed to coachee?
-        - or only to admin?
-     - class entered at registration? or only after editing user profile?
-     - own profile accessible by coachee only
-     - all profiles accessible by administrator (via url)
+ 
+ ### Story TODO: Profile information access
+  **As a coachee I want only myself and the admin to have access to my 'profile information'**  
+
+ - Profile information contains in addition:
+     - role
+        - coachee
+        - coach
+        - administrator
+ 
+  - in scope
+      - adding role to my profile
+      - coachee can only visit his own profile
+      - administrator can access all profiles (by url you-coach.org/user/UUID)   
+      
+  - Open Questions 
      
 ### Story 3: Edit Profile information
  **As a coachee I want to be able to edit my 'profile information'**   
@@ -257,3 +261,9 @@ The functional requirements are written down as stories.
    
  4 - As a coachee I want to be able to edit my 'profile information'    
      
+
+
+*TO DO*
+Status blocked
+Image toevoegen op amazon
+class
