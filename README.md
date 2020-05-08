@@ -28,10 +28,10 @@ However this can have problems for:
 
 ### Youcoach-frontend
 To import in intellij:
-1. go to project structure
-1. 'modules'
-1. new module -> 'static web' -> 'angular cli'
-
+1. Go to project structure
+1. Click on 'modules'
+1. Create a new module (static web and angular cli)
+1. Follow the wizard and don't forget to select the youcoach-frontend directory as a source!
 
 The frontend supports following features:
 - bootstrap
@@ -57,8 +57,8 @@ The general structure of the translation file is:
       }
   }
 }
-//e.g. "login.message.loginsuccessful" 
 ```
+- e.g. "login.message.loginsuccessful" 
 
 - when you add `translate` to a html-tag `ngx-translate` will try translate the contents of that tag.
     - e.g. `<button translate>login.button.logout</button>`
