@@ -9,9 +9,9 @@
         - administrator
 
   - in scope
-      - adding 'Apply to become a coach' menu in My Profile menu
-      - adding 'Apply to become a coach' page (under construction)
-      - adding send mail button
+      - adding 'Apply to become a coach' menu in My Profile menu (my-profile-menu.link.apply-to-become-a-coach)
+      - adding 'Apply to become a coach' page (under construction) (become-a-coach.title)
+      - adding send mail button (become-a-coach.button.send-email)
 
   - Open Questions
        - send mail button via mailto
