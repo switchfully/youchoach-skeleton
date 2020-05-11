@@ -1,24 +1,23 @@
 <app-header></app-header>
-<div class="container">
-  <nav class="navbar navbar-light bg-light navbar-expand-lg">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item">
-        <a class="nav-link" routerLink="/login">Login</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" routerLink="/hello-world">Hello world</a>
-      </li>
-    </ul>
-    <div class="mr-2">
-      <div class="nav-item" *ngIf="username" translate [translateParams]="{username: username}">navbar.loggedin</div>
-      <div class="nav-item" *ngIf="!username" translate>navbar.loggedout</div>
-    </div>
-    <div class="btn-group mr-2">
-      <button [class.active]="currentLanguage() === 'en'" class="btn btn-primary nav-item" (click)="switchLanguage('en')">en</button>
-      <button [class.active]="currentLanguage() === 'nl '" class="btn btn-primary nav-item" (click)="switchLanguage('nl')">nl</button>
-    </div>
-  </nav>
-  <router-outlet></router-outlet>
-</div>
-
+<!--<div class="container">-->
+<!--  <nav class="navbar navbar-light bg-light navbar-expand-lg">-->
+<!--    <ul class="navbar-nav mr-auto">-->
+<!--      <li class="nav-item">-->
+<!--        <a class="nav-link" routerLink="/login">Login</a>-->
+<!--      </li>-->
+<!--      <li class="nav-item">-->
+<!--        <a class="nav-link" routerLink="/hello-world">Hello world</a>-->
+<!--      </li>-->
+<!--    </ul>-->
+<!--    <div class="mr-2">-->
+<!--      <div class="nav-item" *ngIf="username" translate [translateParams]="{username: username}">navbar.loggedin</div>-->
+<!--      <div class="nav-item" *ngIf="!username" translate>navbar.loggedout</div>-->
+<!--    </div>-->
+<!--&lt;!&ndash;    <div class="btn-group mr-2">&ndash;&gt;-->
+<!--&lt;!&ndash;      <button [class.active]="currentLanguage() === 'en'" class="btn btn-primary nav-item" (click)="switchLanguage('en')">en</button>&ndash;&gt;-->
+<!--&lt;!&ndash;      <button [class.active]="currentLanguage() === 'nl '" class="btn btn-primary nav-item" (click)="switchLanguage('nl')">nl</button>&ndash;&gt;-->
+<!--&lt;!&ndash;    </div>&ndash;&gt;-->
+<!--  </nav>-->
+<!--</div>-->
+<router-outlet></router-outlet>
 <app-footer></app-footer>
