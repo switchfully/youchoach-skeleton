@@ -9,12 +9,6 @@ import java.util.List;
 @Service
 public class ValidationService {
 
-    private UserService userService;
-
-    @Autowired
-    public ValidationService(UserService userService) {
-        this.userService = userService;
-    }
 
     public boolean isEmailValid(String email) {
         String ePattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$";
@@ -23,9 +17,9 @@ public class ValidationService {
         return m.matches();
     }
 
-    public boolean emailExists(String email) {
-        List<UserDto> allusers = userService.getAllusers();
-        for(UserDto userDto : allusers){
+    public boolean emailExists(String email, List<UserDto> allUsers) {
+
+        for(UserDto userDto : allUsers){
             if(userDto.getEmail().equals(email)){
                 return true;
             }

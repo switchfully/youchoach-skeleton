@@ -34,5 +34,13 @@ class UserServiceTest {
         assertThatExceptionOfType(IllegalStateException.class).isThrownBy(() -> userService.createUser(createUserDto) );
     }
 
+    @Test
+    void emailDuplication() {
+        CreateUserDto createUserDto1 = new CreateUserDto("Test", "Service", "dummy@Mail.com", "test123");
+        CreateUserDto createUserDto2 = new CreateUserDto("Test", "Service", "dummy@Mail.com", "test123");
+        userService.createUser(createUserDto1);
+        assertThatExceptionOfType(IllegalStateException.class).isThrownBy(() -> userService.createUser(createUserDto2) );
+    }
+
 
 }

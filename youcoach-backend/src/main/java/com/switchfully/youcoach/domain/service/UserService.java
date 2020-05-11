@@ -30,7 +30,7 @@ public class UserService {
 
         if (!validationService.isEmailValid(createUserDto.getEmail())) {
             throw new IllegalStateException("Email is not valid !");
-        } else if (validationService.emailExists(createUserDto.getEmail())) {
+        } else if (validationService.emailExists(createUserDto.getEmail(), getAllusers())) {
             throw new IllegalStateException("Email already exists!");
         } else {
             User newUser = userMapper.toUser(createUserDto);
