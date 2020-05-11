@@ -75,6 +75,22 @@ The general structure of the translation file is:
 - An `interceptor` is made so that, if available, your JWT-token will be automatically attached to every http call.
 - All this is managed in the `authentication` directory. Normally nothing in this directory needs to be changed (unless we made an oupsy).
 
+### Youcoach-backend
+The backend is written in Spring-Boot with JWT-token security written in Spring Security.
+
+#### JWT-token
+Security protocol that avoid sending username+password for every request. Implementation is copied from project-jericho in track-java/security.
+Normally you shouldn't have to touch the classes in the jwt-package.
+
+#### User package
+Used for user authentication.
+You should have at least have all the users defined in `secured-users`. You can used the SecuredUserRepositoryFromJson to load the json file.
+
+In the final version of your project you should manage your users in the database.
+
+#### Authorization package
+Basic authorization package used for mapping roles to features. This whole package can be modified.
+
 ## High level analysis
 
 Before the start of the project we typically conduct a High Level Analysis (HLA) phase. 

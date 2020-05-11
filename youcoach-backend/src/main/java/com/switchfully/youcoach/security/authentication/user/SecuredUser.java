@@ -1,17 +1,22 @@
 package com.switchfully.youcoach.security.authentication.user;
 
+import com.switchfully.youcoach.security.authorization.Role;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
+import java.util.List;
 
 public class SecuredUser {
 
     private Long id;
     private String username;
     private String password;
+    private List<Role> roles;
 
-    public SecuredUser(Long id, String username, String password) {
+    public SecuredUser(Long id, String username, String password, List<Role> roles) {
         this.id = id;
         this.username = username;
         this.password = password;
+        this.roles = roles;
     }
 
     public SecuredUser() {
@@ -40,6 +45,14 @@ public class SecuredUser {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
     }
 
     @Override

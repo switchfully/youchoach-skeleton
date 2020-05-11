@@ -1,5 +1,8 @@
 package com.switchfully.youcoach.security.authentication.jwt;
 
+import com.switchfully.youcoach.security.authorization.Feature;
+import com.switchfully.youcoach.security.authorization.Role;
+import com.switchfully.youcoach.security.authorization.RoleToFeatureMapper;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.MalformedJwtException;
@@ -21,6 +24,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import static org.springframework.util.StringUtils.isEmpty;
@@ -30,10 +34,12 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
     private static final Logger log = LoggerFactory.getLogger(JwtAuthorizationFilter.class);
 
     private final String jwtSecret;
+    private final RoleToFeatureMapper roleToFeatureMapper;
 
-    public JwtAuthorizationFilter(AuthenticationManager authenticationManager, String jwtSecret) {
+    public JwtAuthorizationFilter(AuthenticationManager authenticationManager, String jwtSecret, RoleToFeatureMapper roleToFeatureMapper) {
         super(authenticationManager);
         this.jwtSecret = jwtSecret;
+        this.roleToFeatureMapper = roleToFeatureMapper;
     }
 
     @Override
@@ -61,10 +67,12 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
                         .getBody()
                         .getSubject();
 
-                ArrayList<LinkedHashMap<String, String>> authoritiesInToken
-                        = parsedToken.getBody().get("rol", ArrayList.class);
+                List<LinkedHashMap<String, String>> authoritiesInToken
+                        = parsedToken.getBody().get("roles", ArrayList.class);
                 var authorities = authoritiesInToken.stream()
                         .map(linkedMap -> linkedMap.get("authority"))
+                        .flatMap(role -> roleToFeatureMapper.mapRoleToFeature(Role.valueOf(role)).stream())
+                        .map(Feature::getLabel)
                         .map(SimpleGrantedAuthority::new)
                         .collect(Collectors.toList());
 
