@@ -2,3 +2,4 @@ target/
 .idea/
 *.iml
 node_modules/
+/java/resources/application.properties
