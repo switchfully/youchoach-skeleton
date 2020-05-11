@@ -15,6 +15,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { RegisterComponent } from './register/register.component';
+import {MatButtonModule} from "@angular/material/button";
+import {_MatMenuDirectivesModule, MatMenuModule} from "@angular/material/menu";
+import {MatIconModule} from "@angular/material/icon";
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -45,7 +48,11 @@ export function HttpLoaderFactory(http: HttpClient) {
         deps: [HttpClient]
       }
     }),
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatButtonModule,
+    _MatMenuDirectivesModule,
+    MatMenuModule,
+    MatIconModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true}

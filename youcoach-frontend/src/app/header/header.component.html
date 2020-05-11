@@ -1,30 +1,63 @@
 <header>
-  <nav class="white" role="navigation">
+  <nav class="nav-extended white">
     <div class="nav-wrapper container">
       <a id="logo-container" href="#" class="brand-logo">You-Coach</a>
-      <ul class="right hide-on-med-and-down">
+      <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
         <li><a href="#">Home</a></li>
         <li><a href="#">About us</a></li>
         <li><a href="#">Contact</a></li>
+      </ul>
+    </div>
+    <div class="nav-content container">
+      <ul class="tabs tabs-transparent">
         <li><a class="waves-effect waves-light yellow darken-2 btn black-text" routerLink="/login" *ngIf="!username">Sign in<i
           class="material-icons right">person</i></a>
-          <div class="black-text" *ngIf="username" translate [translateParams]="{username: username}">navbar.loggedin</div>
-          <a class="waves-effect waves-light yellow darken-2 btn black-text" routerLink="/login" *ngIf="!username">Sign out<i
-            class="material-icons right" *ngIf="username">person</i></a></li>
+          <a class="waves-effect waves-light yellow darken-2 btn black-text" routerLink="/login" *ngIf="username">Sign out<i
+            class="material-icons right">person</i></a>
         <li><a class="waves-effect waves-light teal lighten-3 btn black-text" routerLink="/register">Register<i
           class="material-icons right">person_add</i></a></li>
+        <li><p *ngIf="username" translate [translateParams]="{username: username}" class="black-text">navbar.loggedin</p></li>
       </ul>
+    </div>
+  </nav>
 
-      <ul id="nav-mobile" class="sidenav">
-        <li><a href="#">Home</a></li>
-        <li><a href="#">About us</a></li>
-        <li><a href="#">Contact</a></li>
-        <li><a class="waves-effect waves-light yellow darken-2 btn black-text" routerLink="/login">Sign in<i
-          class="material-icons right">person</i></a></li>
-        <li><a class="waves-effect waves-light teal lighten-3 btn black-text" routerLink="/register">Register<i
-          class="material-icons right">person_add</i></a></li>
-      </ul>
-      <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+<!--  <ul class="sidenav" id="mobile-demo">-->
+<!--    <li><a href="sass.html">Sass</a></li>-->
+<!--    <li><a href="badges.html">Components</a></li>-->
+<!--    <li><a href="collapsible.html">JavaScript</a></li>-->
+<!--  </ul>-->
+
+<!--  <div id="test1" class="col s12">Test 1</div>-->
+<!--  <div id="test2" class="col s12">Test 2</div>-->
+<!--  <div id="test3" class="col s12">Test 3</div>-->
+<!--  <div id="test4" class="col s12">Test 4</div>-->
+<!--  <nav class="white" role="navigation">-->
+<!--    <div class="nav-wrapper container">-->
+<!--      <a id="logo-container" href="#" class="brand-logo">You-Coach</a>-->
+<!--      <p class="black-text" *ngIf="username" translate [translateParams]="{username: username}">navbar.loggedin</p>-->
+<!--      <ul class="right hide-on-med-and-down">-->
+<!--        <li><a href="#">Home</a></li>-->
+<!--        <li><a href="#">About us</a></li>-->
+<!--        <li><a href="#">Contact</a></li>-->
+<!--        <li><a class="waves-effect waves-light yellow darken-2 btn black-text" routerLink="/login" *ngIf="!username">Sign in<i-->
+<!--          class="material-icons right">person</i></a>-->
+<!--          <a class="waves-effect waves-light yellow darken-2 btn black-text" routerLink="/login" *ngIf="username">Sign out<i-->
+<!--            class="material-icons right">person</i></a>-->
+<!--        <li><a class="waves-effect waves-light teal lighten-3 btn black-text" routerLink="/register">Register<i-->
+<!--          class="material-icons right">person_add</i></a></li>-->
+<!--      </ul>-->
+
+<!--      <ul id="nav-mobile" class="sidenav">-->
+<!--        <li><a href="#">Home</a></li>-->
+<!--        <li><a href="#">About us</a></li>-->
+<!--        <li><a href="#">Contact</a></li>-->
+<!--        <li><a class="waves-effect waves-light yellow darken-2 btn black-text" routerLink="/login">Sign in<i-->
+<!--          class="material-icons right">person</i></a></li>-->
+<!--        <li><a class="waves-effect waves-light teal lighten-3 btn black-text" routerLink="/register">Register<i-->
+<!--          class="material-icons right">person_add</i></a></li>-->
+<!--      </ul>-->
+<!--      <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>-->
 <!--      <div id="login language">-->
 <!--        <div class="mr-2">-->
 <!--          <div class="nav-item" *ngIf="username" translate [translateParams]="{username: username}" style="color: black">navbar.loggedin</div>-->
@@ -39,6 +72,6 @@
 <!--          </button>-->
 <!--        </div>-->
 <!--      </div>-->
-    </div>
-  </nav>
+<!--    </div>-->
+<!--  </nav>-->
 </header>
