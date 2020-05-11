@@ -27,8 +27,8 @@
             <form class="col s12" [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm.value)">
               <div class="row">
                 <div class="input-field col s12">
-                  <input id="username" type="email" class="validate" formControlName="username">
-                  <label for="username" translate>Email</label>
+                  <input id="username" type="text" class="validate" formControlName="username">
+                  <label for="username" translate>User name</label>
                 </div>
               </div>
               <div class="row">
@@ -37,8 +37,9 @@
                   <label for="password" translate>Password</label>
                 </div>
               </div>
-              <p *ngIf="success" class="alert alert-primary" translate>login.message.loginsuccessful</p>
-              <p *ngIf="error" class="alert alert-danger" translate>login.message.loginfailed</p>
+                <p class="green-text" *ngIf="success" translate>login.message.loginsuccessful</p>
+                <p class="red-text" *ngIf="error" translate>login.message.loginfailed</p>
+
               <div class="row right-align">
                 <button class="waves-effect waves-light teal lighten-3 btn-large black-text" type="reset" (click)="logout()" translate>Reset password<i
                   class="material-icons right">autorenew</i></button>
