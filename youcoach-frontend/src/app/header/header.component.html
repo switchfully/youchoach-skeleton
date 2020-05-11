@@ -6,8 +6,11 @@
         <li><a href="#">Home</a></li>
         <li><a href="#">About us</a></li>
         <li><a href="#">Contact</a></li>
-        <li><a class="waves-effect waves-light yellow darken-2 btn black-text" routerLink="/login">Sign in<i
-          class="material-icons right">person</i></a></li>
+        <li><a class="waves-effect waves-light yellow darken-2 btn black-text" routerLink="/login" *ngIf="!username">Sign in<i
+          class="material-icons right">person</i></a>
+          <div class="black-text" *ngIf="username" translate [translateParams]="{username: username}">navbar.loggedin</div>
+          <a class="waves-effect waves-light yellow darken-2 btn black-text" routerLink="/login" *ngIf="!username">Sign out<i
+            class="material-icons right" *ngIf="username">person</i></a></li>
         <li><a class="waves-effect waves-light teal lighten-3 btn black-text" routerLink="/register">Register<i
           class="material-icons right">person_add</i></a></li>
       </ul>
@@ -22,6 +25,20 @@
           class="material-icons right">person_add</i></a></li>
       </ul>
       <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+<!--      <div id="login language">-->
+<!--        <div class="mr-2">-->
+<!--          <div class="nav-item" *ngIf="username" translate [translateParams]="{username: username}" style="color: black">navbar.loggedin</div>-->
+<!--          <div class="nav-item" *ngIf="!username" translate>navbar.loggedout</div>-->
+<!--        </div>-->
+<!--        <div class="btn-group mr-2">-->
+<!--          <button [class.active]="currentLanguage() === 'en'" class="btn btn-primary nav-item"-->
+<!--                  (click)="switchLanguage('en')">en-->
+<!--          </button>-->
+<!--          <button [class.active]="currentLanguage() === 'nl '" class="btn btn-primary nav-item"-->
+<!--                  (click)="switchLanguage('nl')">nl-->
+<!--          </button>-->
+<!--        </div>-->
+<!--      </div>-->
     </div>
   </nav>
 </header>

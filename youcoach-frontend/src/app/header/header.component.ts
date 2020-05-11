@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {AuthenticationService} from '../authentication/authentication.service';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-header',
@@ -6,10 +8,27 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['../../css/materialize.css', '../../css/style.css']
 })
 export class HeaderComponent implements OnInit {
+  username = null;
+  language = 'en';
 
-  constructor() { }
+  constructor(private authenticationService: AuthenticationService, private translate: TranslateService) {
+  }
 
   ngOnInit(): void {
+    this.username = this.authenticationService.getUsername();
+    this.authenticationService.userLoggedIn$.subscribe(_ => {
+      this.username = this.authenticationService.getUsername();
+    });
+  }
+
+
+  switchLanguage(language: string) {
+    this.translate.use(language);
+    this.language = language;
+  }
+
+  currentLanguage() {
+    return this.language;
   }
 
 }
