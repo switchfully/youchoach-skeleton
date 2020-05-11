@@ -1,13 +1,13 @@
 ### Story 2: Sign in
 **As a user I want to sign in to have access to You-coach**
 
-- A user needs to provide
-    - email
-    - Password (<input type='password'/>)
+- sign-in screen (sign-in.title)
+    - email (sign-in.label.email)
+    - Password (<input type='password'/>) (sign-in.label.password)
     
-- Validation
-    - email is known in the system
-    - combination of email and password is valid 
+    - Validation
+        - email is not known in the system (sign-in.message.email-unknown)
+        - combination of email and password is not valid (sign-in.message.login-failed)
     
 - in scope
     - Creation of the sign in screen
