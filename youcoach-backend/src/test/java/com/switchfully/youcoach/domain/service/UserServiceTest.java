@@ -10,6 +10,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 @AutoConfigureTestDatabase
 @DataJpaTest
@@ -21,10 +22,16 @@ class UserServiceTest {
 
     @Test
     void saveAUser() {
-        CreateUserDto createUserDto = new CreateUserDto("Test", "Service", "test@ehb.be", "test123");
+        CreateUserDto createUserDto = new CreateUserDto("Test", "Service", "test@hb.be", "test123");
         userService.createUser(createUserDto);
         UserDto actualUser = userService.getUserById(1);
         assertThat(actualUser.getEmail()).isEqualTo(createUserDto.getEmail());
+    }
+
+    @Test
+    void emailValidator() {
+        CreateUserDto createUserDto = new CreateUserDto("Test", "Service", "dummyMail", "test123");
+        assertThatExceptionOfType(IllegalStateException.class).isThrownBy(() -> userService.createUser(createUserDto) );
     }
 
 

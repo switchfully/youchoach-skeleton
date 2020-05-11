@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @Transactional
 public class UserService {
@@ -26,15 +28,23 @@ public class UserService {
 
     public UserDto createUser(CreateUserDto createUserDto) {
 
-        if(validationService.isEmailValid(createUserDto.getEmail())){
+        if (!validationService.isEmailValid(createUserDto.getEmail())) {
+            throw new IllegalStateException("Email is not valid !");
+        } else if (validationService.emailExists(createUserDto.getEmail())) {
+            throw new IllegalStateException("Email already exists!");
+        } else {
             User newUser = userMapper.toUser(createUserDto);
             userRepository.save(newUser);
             return userMapper.toUserDto(userRepository.findById(newUser.getId()).get());
         }
-        throw new IllegalStateException("Email is not valid !");
+
     }
 
     public UserDto getUserById(long id) {
         return userMapper.toUserDto(userRepository.findById(id).get());
+    }
+
+    public List<UserDto> getAllusers() {
+        return userMapper.toUserDto(userRepository.findAll());
     }
 }
