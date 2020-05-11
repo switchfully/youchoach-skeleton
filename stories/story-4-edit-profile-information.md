@@ -12,12 +12,12 @@
      - First name
      - Last name
      - email (disabled)
-     - role
+     - role (coachee, coach, administrator)
      - picture (url) 
      
  - in scope
      - Creation of the edit 'My Profile' page
-     - save button 
-     - cancel button
+     - Save button 
+     - Cancel button
       
  - Open Questions
