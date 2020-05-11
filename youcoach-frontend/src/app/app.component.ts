@@ -5,7 +5,7 @@ import {TranslateService} from '@ngx-translate/core';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./css/materialize.css', './css/style.css']
+  styleUrls: ['../css/materialize.css', '../css/style.css']
 })
 export class AppComponent implements OnInit {
   username;

@@ -15,46 +15,6 @@
 <!--    <button class="btn btn-danger" type="reset" (click)="logout()" translate>login.button.logout</button>-->
 <!--  </div>-->
 <!--</form>-->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>You-Coach | Sign in</title>
-
-  <!-- CSS  -->
-<!--  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>-->
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<!--  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>-->
-</head>
-<body>
-<header>
-  <nav class="white" role="navigation">
-    <div class="nav-wrapper container">
-      <a id="logo-container" href="#" class="brand-logo">You-Coach</a>
-      <ul class="right hide-on-med-and-down">
-        <li><a href="#">Home</a></li>
-        <li><a href="#">About us</a></li>
-        <li><a href="#">Contact</a></li>
-        <li><a class="waves-effect waves-light yellow darken-2 btn black-text">Sign in<i
-          class="material-icons right">person</i></a></li>
-        <li><a class="waves-effect waves-light teal lighten-3 btn black-text">Register<i
-          class="material-icons right">person_add</i></a></li>
-      </ul>
-
-      <ul id="nav-mobile" class="sidenav">
-        <li><a href="#">Home</a></li>
-        <li><a href="#">About us</a></li>
-        <li><a href="#">Contact</a></li>
-        <li><a class="waves-effect waves-light yellow darken-2 btn black-text">Sign in<i
-          class="material-icons right">person</i></a></li>
-        <li><a class="waves-effect waves-light teal lighten-3 btn black-text">Register<i
-          class="material-icons right">person_add</i></a></li>
-      </ul>
-      <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-    </div>
-  </nav>
-</header>
 
 <main>
   <div class="container">
@@ -64,24 +24,26 @@
         <h1 class="center teal-text lighten-3">Sign in</h1>
         <div class="content-container-with-padding z-depth-4">
           <div class="row">
-            <form class="col s12">
+            <form class="col s12" [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm.value)">
               <div class="row">
                 <div class="input-field col s12">
-                  <input id="email" type="email" class="validate">
-                  <label for="email">Email</label>
+                  <input id="username" type="email" class="validate" formControlName="username">
+                  <label for="username" translate>Email</label>
                 </div>
               </div>
               <div class="row">
                 <div class="input-field col s12">
-                  <input id="password" type="password" class="validate">
-                  <label for="password">Password</label>
+                  <input id="password" type="password" class="validate" formControlName="password">
+                  <label for="password" translate>Password</label>
                 </div>
               </div>
+              <p *ngIf="success" class="alert alert-primary" translate>login.message.loginsuccessful</p>
+              <p *ngIf="error" class="alert alert-danger" translate>login.message.loginfailed</p>
               <div class="row right-align">
-                <a class="waves-effect waves-light teal lighten-3 btn-large black-text">Reset password<i
-                  class="material-icons right">autorenew</i></a>
-                <a class="waves-effect waves-light yellow darken-2 btn-large black-text">Sign in<i
-                  class="material-icons right">send</i></a>
+                <button class="waves-effect waves-light teal lighten-3 btn-large black-text" type="reset" (click)="logout()" translate>Reset password<i
+                  class="material-icons right">autorenew</i></button>
+                <button class="waves-effect waves-light yellow darken-2 btn-large black-text"  type="submit" translate>Sign in<i
+                  class="material-icons right">send</i></button>
 
               </div>
             </form>
@@ -93,59 +55,4 @@
   </div>
 </main>
 
-<footer class="page-footer yellow darken-2">
-  <div class="container">
-    <div class="row">
-      <div class="col l6 s12">
-        <h5 class="black-text">You-Coach</h5>
-        <p class="grey-text text-darken-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-          Nulla ornare erat turpis, eget eleifend lectus sollicitudin elementum. Leifend lectus sollicitudin
-          elementum lectus sollicitudin elementum.</p>
-
-
-      </div>
-      <div class="col l3 s12">
-        <h5 class="black-text">Navigation</h5>
-        <ul>
-          <li><a class="grey-text text-darken-3" href="#"><i class="tiny material-icons">chevron_right</i>Home</a>
-          </li>
-          <li><a class="grey-text text-darken-3" href="#"><i class="tiny material-icons">chevron_right</i>Sign
-            in / Register</a></li>
-          <li><a class="grey-text text-darken-3" href="#"><i class="tiny material-icons">chevron_right</i>Contact</a>
-          </li>
-          <li><a class="grey-text text-darken-3" href="#"><i class="tiny material-icons">chevron_right</i>About
-            us</a></li>
-        </ul>
-      </div>
-      <div class="col l3 s12">
-        <h5 class="black-text">Social media</h5>
-        <ul>
-          <li><a class="grey-text text-darken-3" href="#"><i class="tiny material-icons">chevron_right</i>Facebook</a>
-          </li>
-          <li><a class="grey-text text-darken-3" href="#"><i class="tiny material-icons">chevron_right</i>LinkedIn</a>
-          </li>
-          <li><a class="grey-text text-darken-3" href="#"><i class="tiny material-icons">chevron_right</i>Twitter</a>
-          </li>
-          <li><a class="grey-text text-darken-3" href="#"><i class="tiny material-icons">chevron_right</i>Instagram</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </div>
-  <div class="footer-copyright">
-    <div class="container black-text">
-      Web application proudly created by <a class="grey-text text-darken-2" href="https://switchfully.com">Switchfully</a>
-      students.
-    </div>
-  </div>
-</footer>
-
-
-<!--  Scripts-->
-<script src="js/jquery-3.5.0.min.js"></script>
-<script src="js/materialize.js"></script>
-<script src="js/init.js"></script>
-
-</body>
-</html>
 
