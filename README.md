@@ -1,6 +1,6 @@
 # You-Coach Application
 
-![Logo](img\PictoSiteWeb-04.png)
+![Logo](img/PictoSiteWeb-04.png)
 
 The final project of the FEB2020 track will consist of building the You-Coach application. 
 The You-Coach application is an idea of the Make It Happen foundation (https://www.make-it-happen.org/) 
@@ -99,7 +99,7 @@ The goal of this phase is to provide just enough upfront analysis to start the p
 ### C4 model
 
 In order to communicate about the architecture of the applications we've chosen to use the C4 Model (Simon Brown).
-The diagrams below are a materializitation of ou HLA phase. Feel free to challenge.
+The diagrams below are a materialization of ou HLA phase. Feel free to challenge.
 
 #### Context diagram
 
@@ -168,108 +168,3 @@ The diagrams below are a materializitation of ou HLA phase. Feel free to challen
 - Use materialize CSS and Angular for the front-end    
 
 
-## Functional Stories
-
-The functional requirements are written down as stories.
-
-- The functional analyst/Product owner will be available to answer all your questions during the Scrum of Scrums
-- The functional analyst made some design decisions, if you want to challenge those, you always can. Come prepared though. :grin:
-
-### Story 1: Register
-**As a user I want to register myself to have access to You-coach.**
-
-- A user needs to provide
-    - First Name
-    - Last Name
-    - Email (used to sign in)
-    - Password (2 times)
-    
-- Validation
-    - email is a valid email format
-    - email is not yet used within the system      
-    
-- in scope
-    - Creation of the homepage 
-    - Creation of the register user screen
-    - redirect to empty profile page upon success       
-
-- Open Questions
-    - Password policy?
-    - How to become an administrator (via database)?
-    
-    
-### Story 2: Sign in
-**As a user I want to sign in to have access to You-coach**
-
-- A user needs to provide
-    - email
-    - Password (not readable on screen)
-    
-- Validation
-    - user is known in the system
-    - combination of user and password is valid
-    - user has not status: blocked     
-    
-- in scope
-    - Creation of the homepage 
-    - Creation of the sign in screen
-        - reset password button (not yet implemented --> contact admin)
-    - redirect to empty profile page upon success
-    - redirect to home page after sign-out
-       
-- Open Questions
-    - How will a password reset happen before story 31 is implemented?
-    - adding status blocked via DB --> benefit?
-    - adding user role at logon?
-        - logged on as coachee
-        - logged on as coach
-        - logged on as admin
-    
-### Story 3: Profile information
- **As a coachee I want to have an overview of my 'profile information'**   
- 
- - Profile information contains:
-     - First name
-     - Last name
-     - Email
-     - class  
-     - You-coach role
-     - Status 
-     - picture   
-      
- - in scope
-     - Creation of the 'My Profile' menu
-     - Creation of the profile information page     
- 
- - Open Questions
-     - picture in scope?
-     - You-coach role displayed to coachee?
-     - Status displayed to coachee?
-        - or only to admin?
-     - class entered at registration? or only after editing user profile?
-     - own profile accessible by coachee only
-     - all profiles accessible by administrator (via url)
-     
-### Story 3: Edit Profile information
- **As a coachee I want to be able to edit my 'profile information'**   
- 
- - coachee can edit
-     - First name
-     - Last name
-     - email (disabled)
-     - class  
-     - picture   
-      
- - in scope
-     - Creation of the edit 'My Profile' page
-     - save button 
-     - cancel button
-      
- - Open Questions
-     - edit picture in scope?
-     - editing of user profiles by admin in scope?
-        - admin can edit more fields (status, role, ...)
- 
-   
- 4 - As a coachee I want to be able to edit my 'profile information'    
-     
