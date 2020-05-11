@@ -18,12 +18,17 @@ public class ValidationService {
     }
 
     public boolean emailExists(String email, List<UserDto> allUsers) {
-
-        for(UserDto userDto : allUsers){
-            if(userDto.getEmail().equals(email)){
+        for (UserDto userDto : allUsers) {
+            if (userDto.getEmail().equals(email)) {
                 return true;
             }
         }
         return false;
+    }
+
+    public boolean isPasswordValid(String password) {
+        String pattern = "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{8,}";
+        boolean result = password.matches(pattern);
+        return result;
     }
 }

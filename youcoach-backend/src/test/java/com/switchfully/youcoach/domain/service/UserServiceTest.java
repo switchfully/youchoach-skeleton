@@ -22,7 +22,7 @@ class UserServiceTest {
 
     @Test
     void saveAUser() {
-        CreateUserDto createUserDto = new CreateUserDto("Test", "Service", "test@hb.be", "test123");
+        CreateUserDto createUserDto = new CreateUserDto("Test", "Service", "test@hb.be", "Test123456");
         userService.createUser(createUserDto);
         UserDto actualUser = userService.getUserById(1);
         assertThat(actualUser.getEmail()).isEqualTo(createUserDto.getEmail());
@@ -30,16 +30,22 @@ class UserServiceTest {
 
     @Test
     void emailValidator() {
-        CreateUserDto createUserDto = new CreateUserDto("Test", "Service", "dummyMail", "test123");
+        CreateUserDto createUserDto = new CreateUserDto("Test", "Service", "dummyMail", "Test12346");
         assertThatExceptionOfType(IllegalStateException.class).isThrownBy(() -> userService.createUser(createUserDto) );
     }
 
     @Test
     void emailDuplication() {
-        CreateUserDto createUserDto1 = new CreateUserDto("Test", "Service", "dummy@Mail.com", "test123");
-        CreateUserDto createUserDto2 = new CreateUserDto("Test", "Service", "dummy@Mail.com", "test123");
+        CreateUserDto createUserDto1 = new CreateUserDto("Test", "Service", "dummy@Mail.com", "Test123456");
+        CreateUserDto createUserDto2 = new CreateUserDto("Test", "Service", "dummy@Mail.com", "Test123456");
         userService.createUser(createUserDto1);
         assertThatExceptionOfType(IllegalStateException.class).isThrownBy(() -> userService.createUser(createUserDto2) );
+    }
+
+    @Test
+    void passwordValidator() {
+        CreateUserDto createUserDto1 = new CreateUserDto("Test", "Service", "dummy@Mail.com", "test1234564");
+        assertThatExceptionOfType(IllegalStateException.class).isThrownBy(() -> userService.createUser(createUserDto1) );
     }
 
 

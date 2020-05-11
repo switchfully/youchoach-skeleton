@@ -27,16 +27,10 @@ public class UserService {
     }
 
     public UserDto createUser(CreateUserDto createUserDto) {
-
-        if (!validationService.isEmailValid(createUserDto.getEmail())) {
-            throw new IllegalStateException("Email is not valid !");
-        } else if (validationService.emailExists(createUserDto.getEmail(), getAllusers())) {
-            throw new IllegalStateException("Email already exists!");
-        } else {
-            User newUser = userMapper.toUser(createUserDto);
-            userRepository.save(newUser);
-            return userMapper.toUserDto(userRepository.findById(newUser.getId()).get());
-        }
+        performValidation(createUserDto);
+        User newUser = userMapper.toUser(createUserDto);
+        userRepository.save(newUser);
+        return userMapper.toUserDto(userRepository.findById(newUser.getId()).get());
 
     }
 
@@ -47,4 +41,15 @@ public class UserService {
     public List<UserDto> getAllusers() {
         return userMapper.toUserDto(userRepository.findAll());
     }
+
+    private void performValidation(CreateUserDto createUserDto) {
+        if (!validationService.isEmailValid(createUserDto.getEmail())) {
+            throw new IllegalStateException("Email is not valid !");
+        } else if (validationService.emailExists(createUserDto.getEmail(), getAllusers())) {
+            throw new IllegalStateException("Email already exists!");
+        } else if (!validationService.isPasswordValid(createUserDto.getPassword())) {
+            throw new IllegalStateException("Password needs te be 8 caracters : --> 1 capital, 1 lowercase and 1 one number");
+        }
+    }
+
 }
