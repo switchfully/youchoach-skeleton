@@ -25,4 +25,7 @@ public class SecuredUserService implements UserDetailsService {
         }
         return new User(user.getUsername(), user.getPassword(), emptyList());
     }
+
+
+
 }

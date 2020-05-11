@@ -3,10 +3,11 @@ package com.switchfully.youcoach.datastore.entities;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "user")
+@Table(name = "members")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Column(name = "id")
     private long id;
     @Column(name = "first_name")
     private String firstName;
