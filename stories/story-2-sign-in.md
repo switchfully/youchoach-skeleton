@@ -6,7 +6,7 @@
     - Password (<input type='password'/>)
     
 - Validation
-    - user is known in the system
+    - email is known in the system
     - combination of email and password is valid 
     
 - in scope

@@ -4,14 +4,14 @@
  - coachee can edit
      - First name
      - Last name
-     - email (disabled)
+     - email (alert, email is used to sign-in)
      - role (disabled)
      - picture (url) 
      
 - admin can edit
      - First name
      - Last name
-     - email (disabled)
+     - email (alert, email is used to sign-in)
      - role (coachee, coach, administrator)
      - picture (url) 
      

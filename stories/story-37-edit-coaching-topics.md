@@ -3,8 +3,8 @@
 **As an administrator I want to be able to edit the coaching topics of a coach profile**
    
 - admin can edit
-     - topics
-     - grades
+     - topics (typeahead)
+     - grades 
      
  - in scope
      - Creation of the edit 'coaching topics' page
@@ -12,3 +12,4 @@
      - Cancel button
       
  - Open Questions
+    - grades?

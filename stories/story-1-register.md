@@ -2,10 +2,11 @@
 **As a user I want to register myself to have access to You-coach.**
 
 - A user needs to provide
-    - First Name
-    - Last Name
-    - Email (used to sign in)
-    - Password (2 times)      
+    - First Name (register.label.first-name)
+    - Last Name (register.label.last-name)
+    - Email (used to sign in) (register.label.email)
+    - Password  (register.label.email)
+    - Password  (register.label.email)
    
 - Validation
     - email is a valid email format (internal format validation, no external webservice)
@@ -20,10 +21,9 @@
 - Open Questions
     - Password policy?
             - min 8 characters
-            - min one capital
             - min one number
-            - min one  symbol  
-    
+            - min one capital
+
 - mockups
     - ![Homepage](../img/homepage.png)
               
