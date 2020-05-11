@@ -2,11 +2,13 @@
   {
     "id": 1,
     "username": "student",
-    "password": "student"
+    "password": "student",
+    "roles": ["STUDENT"]
   },
   {
     "id": 2,
     "username": "coach",
-    "password": "coach"
+    "password": "coach",
+    "roles": ["COACH"]
   }
 ]

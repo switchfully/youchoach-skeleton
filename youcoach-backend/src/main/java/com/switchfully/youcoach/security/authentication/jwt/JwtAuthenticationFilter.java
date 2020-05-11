@@ -56,7 +56,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                 .setAudience("secure-app")
                 .setSubject(authentication.getName())
                 .setExpiration(new Date(new Date().getTime() + TOKEN_TIME_TO_LIVE))
-                .claim("rol", authentication.getAuthorities())
+                .claim("roles", authentication.getAuthorities())
                 .compact();
 
         response.addHeader("Authorization", "Bearer " + token);
