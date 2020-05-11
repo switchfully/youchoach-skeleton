@@ -25,7 +25,7 @@
             - min one  symbol  
     
 - mockups
-    - ![Homepage](..\img\homepage.png)
+    - ![Homepage](../img/homepage.png)
               
-    - ![Register](..\img\register.png)
+    - ![Register](../img/register.png)
    

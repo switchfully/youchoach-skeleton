@@ -20,4 +20,4 @@
         - test manual encryption of password (bkrypt)
 
 - mockups
-    - ![signin](..\img\signin.png)
+    - ![signin](../img/signin.png)

@@ -16,4 +16,4 @@
  - Open Questions
  
  - mockups
-     - ![signin](..\img\my-profile.png)
+     - ![signin](../img/my-profile.png)

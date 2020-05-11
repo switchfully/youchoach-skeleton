@@ -17,5 +17,5 @@
        - send mail button via mailto
 
  - mockups
-     - ![signin](..\img\my-profile-become-a-coach.png)
+     - ![signin](../img/my-profile-become-a-coach.png)
   
