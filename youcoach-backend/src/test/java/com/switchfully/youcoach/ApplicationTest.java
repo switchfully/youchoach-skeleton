@@ -1,7 +1,9 @@
 package com.switchfully.youcoach;
 
-import static org.junit.jupiter.api.Assertions.*;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-class ApplicationTest {
+import static org.junit.jupiter.api.Assertions.*;
+@SpringBootApplication
+public class ApplicationTest {
 
 }

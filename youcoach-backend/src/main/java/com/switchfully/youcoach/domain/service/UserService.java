@@ -15,18 +15,26 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserService {
     private UserRepository userRepository;
     private UserMapper userMapper;
+    private ValidationService validationService;
+
     @Autowired
-    public UserService(UserRepository userRepository, UserMapper userMapper) {
+    public UserService(UserRepository userRepository, UserMapper userMapper, ValidationService validationService) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
+        this.validationService = validationService;
     }
 
-    public void createUser(CreateUserDto createUserDto) {
-        User newUser = userMapper.toUser(createUserDto);
-        userRepository.save(newUser);
+    public UserDto createUser(CreateUserDto createUserDto) {
+
+        if(validationService.isEmailValid(createUserDto.getEmail())){
+            User newUser = userMapper.toUser(createUserDto);
+            userRepository.save(newUser);
+            return userMapper.toUserDto(userRepository.findById(newUser.getId()).get());
+        }
+        throw new IllegalStateException("Email is not valid !");
     }
 
-    public UserDto getUserById(long id){
-       return userMapper.toUserDto(userRepository.findById(id).get());
+    public UserDto getUserById(long id) {
+        return userMapper.toUserDto(userRepository.findById(id).get());
     }
 }
