@@ -31,9 +31,14 @@
             "styles": [
               "src/custom-theme.scss",
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "src/css/materialize.min.css",
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [
+              "src/js/jquery-3.5.0.min.js",
+              "src/js/materialize.min.js",
+              "src/js/init.js"
+            ]
           },
           "configurations": {
             "production": {
