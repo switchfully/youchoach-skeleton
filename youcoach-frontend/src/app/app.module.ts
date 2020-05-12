@@ -18,6 +18,7 @@ import { RegisterComponent } from './register/register.component';
 import {MatButtonModule} from "@angular/material/button";
 import {_MatMenuDirectivesModule, MatMenuModule} from "@angular/material/menu";
 import {MatIconModule} from "@angular/material/icon";
+import { HomeComponent } from './home/home.component';
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -31,7 +32,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     HelloWorldComponent,
     HeaderComponent,
     FooterComponent,
-    RegisterComponent
+    RegisterComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,

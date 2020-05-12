@@ -12,6 +12,7 @@ export class LoginComponent implements OnInit {
   error;
   success;
   loginForm;
+  title = 'You-Coach | Sign in';
 
   constructor(private formBuilder: FormBuilder, private authenticationService: AuthenticationService, private router: Router) {
     this.loginForm = this.formBuilder.group({
@@ -21,6 +22,7 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    document.title = this.title;
   }
 
   onSubmit(loginData) {
@@ -40,5 +42,9 @@ export class LoginComponent implements OnInit {
 
   logout() {
     this.authenticationService.logout();
+  }
+
+  alert() {
+    alert('contact admin');
   }
 }

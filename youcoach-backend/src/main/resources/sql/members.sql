@@ -18,3 +18,4 @@ create table members
 
 alter table members
     owner to mncmxmjmrpepth;
+
