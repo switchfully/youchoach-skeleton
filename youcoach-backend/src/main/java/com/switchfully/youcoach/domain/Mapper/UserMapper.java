@@ -2,6 +2,7 @@ package com.switchfully.youcoach.domain.Mapper;
 
 
 import com.switchfully.youcoach.datastore.entities.User;
+import com.switchfully.youcoach.domain.dtos.CoacheeProfileDto;
 import com.switchfully.youcoach.domain.dtos.CreateUserDto;
 import com.switchfully.youcoach.domain.dtos.UserDto;
 import org.springframework.stereotype.Component;
@@ -22,6 +23,14 @@ public class UserMapper {
 
     public List<UserDto> toUserDto(List<User> users){
        return users.stream().map(this::toUserDto).collect(Collectors.toList());
+    }
+
+    public CoacheeProfileDto toCoacheeProfileDto(User model){
+        return new CoacheeProfileDto().withId(model.getId())
+                .withEmail(model.getEmail())
+                .withFirstName(model.getFirstName())
+                .withLastName(model.getLastName())
+                .withSchoolYear(model.getSchoolYear());
     }
 
 }

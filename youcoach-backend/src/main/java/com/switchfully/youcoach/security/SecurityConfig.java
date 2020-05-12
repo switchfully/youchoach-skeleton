@@ -21,7 +21,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private String jwtSecret;
     private SecuredUserService securedUserService;
 
-    public SecurityConfig(SecuredUserService securedUserService, PasswordEncoder passwordEncoder, @Value("${jwt.secret}") String jwtSecret) {
+    public SecurityConfig(SecuredUserService securedUserService, PasswordEncoder passwordEncoder,
+                          @Value("${jwt.secret}") String jwtSecret) {
         this.securedUserService = securedUserService;
         this.passwordEncoder = passwordEncoder;
         this.jwtSecret = jwtSecret;
@@ -32,7 +33,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.cors().and().csrf().disable().authorizeRequests()
                 .anyRequest().authenticated()
                 .and()
-                .addFilter(new JwtAuthenticationFilter(authenticationManager(), jwtSecret))
+                .addFilter(new JwtAuthenticationFilter(authenticationManager(), jwtSecret, securedUserService))
                 .addFilter(new JwtAuthorizationFilter(authenticationManager(), jwtSecret))
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }

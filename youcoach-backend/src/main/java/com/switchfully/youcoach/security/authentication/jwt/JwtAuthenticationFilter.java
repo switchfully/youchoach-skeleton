@@ -2,6 +2,7 @@ package com.switchfully.youcoach.security.authentication.jwt;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.switchfully.youcoach.security.authentication.user.SecuredUser;
+import com.switchfully.youcoach.security.authentication.user.SecuredUserService;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
@@ -19,14 +20,15 @@ import java.util.Date;
 
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
-    private static final int TOKEN_TIME_TO_LIVE  = 3600000;
 
     private final AuthenticationManager authenticationManager;
     private final String jwtSecret;
+    private final SecuredUserService securedUserService;
 
-    public JwtAuthenticationFilter(AuthenticationManager authenticationManager, String jwtSecret) {
+    public JwtAuthenticationFilter(AuthenticationManager authenticationManager, String jwtSecret, SecuredUserService securedUserService) {
         this.authenticationManager = authenticationManager;
         this.jwtSecret = jwtSecret;
+        this.securedUserService = securedUserService;
 
         setFilterProcessesUrl("/login");
     }
@@ -49,17 +51,10 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response,
                                             FilterChain filterChain, Authentication authentication) {
-        var token = Jwts.builder()
-                .signWith(Keys.hmacShaKeyFor(jwtSecret.getBytes()), SignatureAlgorithm.HS512)
-                .setHeaderParam("typ", "JWT")
-                .setIssuer("secure-api")
-                .setAudience("secure-app")
-                .setSubject(authentication.getName())
-                .setExpiration(new Date(new Date().getTime() + TOKEN_TIME_TO_LIVE))
-                .claim("rol", authentication.getAuthorities())
-                .compact();
+        String token = securedUserService.generateJwtToken(authentication, jwtSecret);
 
         response.addHeader("Authorization", "Bearer " + token);
         response.addHeader("Access-Control-Expose-Headers", "Authorization");
     }
+
 }

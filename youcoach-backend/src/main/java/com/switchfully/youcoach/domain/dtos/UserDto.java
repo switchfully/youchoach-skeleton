@@ -1,10 +1,5 @@
 package com.switchfully.youcoach.domain.dtos;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-
 public class UserDto {
 
     private long id;
@@ -19,6 +14,28 @@ public class UserDto {
         this.lastName = lastName;
         this.email = email;
         this.password = password;
+    }
+    public UserDto(){}
+
+    public UserDto withId(long id){
+        this.id = id;
+        return this;
+    }
+    public UserDto withFirstName(String firstName){
+        this.firstName = firstName;
+        return this;
+    }
+    public UserDto withLastName(String lastname){
+        this.lastName = lastname;
+        return this;
+    }
+    public UserDto withEmail(String email){
+        this.email = email;
+        return this;
+    }
+    public UserDto withPassword(String password){
+        this.password = password;
+        return this;
     }
 
     public long getId() {
