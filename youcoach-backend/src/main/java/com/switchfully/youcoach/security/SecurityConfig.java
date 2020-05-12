@@ -6,6 +6,7 @@ import com.switchfully.youcoach.security.authentication.user.SecuredUserJSONServ
 import com.switchfully.youcoach.security.authentication.user.SecuredUserService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -16,17 +17,16 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+@Profile("production")
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final PasswordEncoder passwordEncoder;
     private final String jwtSecret;
     private final SecuredUserService securedUserService;
-    private final SecuredUserJSONService securedUserJSONService;
 
-    public SecurityConfig(SecuredUserService securedUserService, SecuredUserJSONService securedUserJSONService, PasswordEncoder passwordEncoder,
+    public SecurityConfig(SecuredUserService securedUserService, PasswordEncoder passwordEncoder,
                           @Value("${jwt.secret}") String jwtSecret) {
         this.securedUserService = securedUserService;
-        this.securedUserJSONService = securedUserJSONService;
         this.passwordEncoder = passwordEncoder;
         this.jwtSecret = jwtSecret;
     }
@@ -50,7 +50,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(securedUserJSONService).passwordEncoder(passwordEncoder);
         auth.userDetailsService(securedUserService).passwordEncoder(passwordEncoder);
     }
 

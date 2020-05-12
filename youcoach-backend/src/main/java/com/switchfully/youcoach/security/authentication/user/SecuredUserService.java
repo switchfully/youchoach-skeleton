@@ -25,13 +25,11 @@ public class SecuredUserService implements UserDetailsService {
 
     private static final int TOKEN_TIME_TO_LIVE  = 3600000;
 
-    //private SecuredUserRepository securedUserRepository;
     private final UserRepository userRepository;
     private final AdminRepository adminRepository;
     private final CoachRepository coachRepository;
 
     public SecuredUserService(UserRepository userRepository, CoachRepository coachRepository, AdminRepository adminRepository) {
-        //this.securedUserRepository = securedUserRepository;
         this.userRepository = userRepository;
         this.coachRepository = coachRepository;
         this.adminRepository = adminRepository;
@@ -44,14 +42,6 @@ public class SecuredUserService implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException(userName));
 
         Collection<GrantedAuthority> authorities = determineGrantedAuthorities(user);
-
-        /*
-        SecuredUser user = securedUserRepository.findByUsername(userName);
-        if(user == null) {
-            throw new UsernameNotFoundException(userName);
-        }
-
-         */
 
         return new User(user.getEmail(), user.getPassword(), authorities);
     }

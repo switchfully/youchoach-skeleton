@@ -31,7 +31,6 @@ public class SecuredUserJSONService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(final String userName) throws UsernameNotFoundException {
-        System.out.println("loading from JSON file: " + userName);
         SecuredUser user = securedUserRepository.findByUsername(userName);
         if(user == null) {
             throw new UsernameNotFoundException(userName);
