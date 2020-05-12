@@ -39,6 +39,7 @@ public class SecuredUserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(final String userName) throws UsernameNotFoundException {
+        System.out.println("loading from database: " + userName);
         com.switchfully.youcoach.datastore.entities.User user = userRepository.findByEmail(userName)
                 .orElseThrow(() -> new UsernameNotFoundException(userName));
 

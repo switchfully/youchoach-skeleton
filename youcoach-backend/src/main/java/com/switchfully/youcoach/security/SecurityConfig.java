@@ -2,6 +2,7 @@ package com.switchfully.youcoach.security;
 
 import com.switchfully.youcoach.security.authentication.jwt.JwtAuthenticationFilter;
 import com.switchfully.youcoach.security.authentication.jwt.JwtAuthorizationFilter;
+import com.switchfully.youcoach.security.authentication.user.SecuredUserJSONService;
 import com.switchfully.youcoach.security.authentication.user.SecuredUserService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -18,12 +19,14 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final PasswordEncoder passwordEncoder;
-    private String jwtSecret;
-    private SecuredUserService securedUserService;
+    private final String jwtSecret;
+    private final SecuredUserService securedUserService;
+    private final SecuredUserJSONService securedUserJSONService;
 
-    public SecurityConfig(SecuredUserService securedUserService, PasswordEncoder passwordEncoder,
+    public SecurityConfig(SecuredUserService securedUserService, SecuredUserJSONService securedUserJSONService, PasswordEncoder passwordEncoder,
                           @Value("${jwt.secret}") String jwtSecret) {
         this.securedUserService = securedUserService;
+        this.securedUserJSONService = securedUserJSONService;
         this.passwordEncoder = passwordEncoder;
         this.jwtSecret = jwtSecret;
     }
@@ -47,6 +50,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(securedUserJSONService).passwordEncoder(passwordEncoder);
         auth.userDetailsService(securedUserService).passwordEncoder(passwordEncoder);
     }
 
