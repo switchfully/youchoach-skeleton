@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {Observable, of} from 'rxjs';
+import {Observable, of, throwError} from 'rxjs';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {catchError, tap} from 'rxjs/operators';
 import {MessageService} from '../message.service';
@@ -17,19 +17,18 @@ export class CoacheeService {
 
   register(coachee: ICoachee): Observable<ICoachee> {
     return this.http.post<ICoachee>(this.url, coachee, this.httpOptions).pipe(
-      tap((newItem: ICoachee) => this.log(`added Item id=${newItem.id}`)),
-      catchError(this.handleError<ICoachee>('addItem'))
+      // tap((newCoachee: ICoachee) => this.log(`registered coachee id=${newCoachee.id}`)),
+      // catchError(this.handleError<any>('registerCoachee'))
     );
   }
 
-  private log(message: string) {
-    this.messageService.add(`CoacheeService: ${message}`);
-  }
+  // private log(message: string) {
+  //   this.messageService.add(`CoacheeService: ${message}`);
+  // }
 
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
-      // console.error(error); // log to console instead
-      this.log(`${operation} failed: ${error.message}`);
+      console.error(error); // log to console instead
       return of(result as T);
     };
   }

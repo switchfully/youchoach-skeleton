@@ -4,7 +4,6 @@
     <div class="row">
       <div class="col s12 m12">
 
-
         <h1 class="center teal-text lighten-3">Register</h1>
         <div class="content-container-with-padding z-depth-4">
 
@@ -24,6 +23,7 @@
                 <div class="input-field col s12">
                   <input id="email" type="email" class="validate" required formControlName="email">
                   <label for="email">Email</label>
+                  <span data-error="Not a valid email address" class="helper-text" ></span>
                 </div>
               </div>
               <div class="row">
@@ -36,16 +36,20 @@
               </div>
               <div class="row">
                 <div class="input-field col s12">
-                  <input id="passwordVerification" type="password" class="validate" required formControlName="passwordVerification" #passwordVerification>
+                  <input id="passwordVerification" type="password" class="validate" pattern="{{password.value}}"
+                         required formControlName="passwordVerification" #passwordVerification>
                   <label for="passwordVerification">Password (again )</label>
+                  <span data-error="Passwords should match" class="helper-text" ></span>
+
 <!--                  <span data-error="wrong" data-success="right" class="helper-text"  pattern="{{password}} !== {{passwordVerification}}"></span>-->
-                  <p *ngIf="(passwordVerification.value !== password.value) && passwordVerification.value.length > 0"> Password should be same </p>
+<!--                  <p *ngIf="(passwordVerification.value !== password.value) && passwordVerification.value.length > 0"> Password should be same </p>-->
                 </div>
               </div>
-
+              <p class="red-text" *ngIf="emailExistsError">An account with the provided email already exists</p>
               <div class="row right-align">
                 <button [disabled]="(!registerForm.valid)" class="waves-effect waves-light yellow darken-2 btn-large black-text" type="submit">
                   Register<i class="material-icons right">send</i></button>
+                <p>{{errorMessage}}</p>
               </div>
             </form>
           </div>
