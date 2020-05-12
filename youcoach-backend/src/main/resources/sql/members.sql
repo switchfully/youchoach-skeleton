@@ -1,7 +1,7 @@
 create sequence hibernate_sequence;
 
 alter sequence hibernate_sequence owner to mncmxmjmrpepth;
-create schema 'youcoach';
+-- create schema 'youcoach';
 
 create table members
 (
@@ -13,6 +13,8 @@ create table members
     last_name  varchar(255),
     password   varchar(255)
 );
+
+
 
 alter table members
     owner to mncmxmjmrpepth;
