@@ -8,7 +8,7 @@ import {TranslateService} from '@ngx-translate/core';
   styleUrls: ['../../css/materialize.css', '../../css/style.css']
 })
 export class HeaderComponent implements OnInit {
-  username = null;
+  username;
   language = 'en';
 
   constructor(private authenticationService: AuthenticationService, private translate: TranslateService) {
@@ -31,4 +31,7 @@ export class HeaderComponent implements OnInit {
     return this.language;
   }
 
+  logout() {
+    this.authenticationService.logout();
+  }
 }
