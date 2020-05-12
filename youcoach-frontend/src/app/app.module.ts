@@ -19,7 +19,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {_MatMenuDirectivesModule, MatMenuModule} from '@angular/material/menu';
 import {MatIconModule} from '@angular/material/icon';
 import { HomeComponent } from './home/home.component';
-
+import { BecomeCoachComponent } from './become-coach/become-coach.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -34,6 +34,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     FooterComponent,
     RegisterComponent,
     HomeComponent,
+    BecomeCoachComponent
   ],
   imports: [
     BrowserModule,
