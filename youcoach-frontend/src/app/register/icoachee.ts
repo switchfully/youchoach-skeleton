@@ -3,5 +3,5 @@ export interface ICoachee {
   firstName: string;
   lastName: string;
   email: string;
-  schoolYear: string;
+  password: string;
 }

@@ -22,7 +22,7 @@ import java.security.Principal;
 
 @RestController
 @RequestMapping(path = "/users")
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:4200")
 public class UserController {
 
     @Autowired

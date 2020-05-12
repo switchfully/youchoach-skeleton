@@ -16,8 +16,8 @@ export class RegisterComponent implements OnInit {
     lastname: ['', [Validators.required]],
     email: ['', [Validators.required]],
     password: ['', [Validators.required]],
-    passwordVerification: ['']
-  }, {validator: this.checkPasswords});
+    passwordVerification: ['', ]
+  }, {validator: RegisterComponent.checkPasswords});
 
   coachee: ICoachee;
 
@@ -29,7 +29,13 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmit() {
-    this.coachee = this.registerForm.value;
+    this.coachee = {
+      id: null,
+      firstName: this.registerForm.get('firstname').value,
+      lastName: this.registerForm.get('lastname').value,
+      email: this.registerForm.get('email').value,
+      password: this.registerForm.get('password').value
+    };
     this.register(this.coachee);
     // this.goBack();
   }
@@ -43,7 +49,7 @@ export class RegisterComponent implements OnInit {
     this.coacheeService.register(coachee).subscribe();
   }
 
-  private checkPasswords(group: FormGroup) {
+  private static checkPasswords(group: FormGroup) {
     const pass = group.get('password').value;
     const confirmPass = group.get('passwordVerification').value;
 

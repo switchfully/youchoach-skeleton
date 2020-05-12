@@ -9,7 +9,7 @@ import {ICoachee} from '../register/ICoachee';
   providedIn: 'root'
 })
 export class CoacheeService {
-  url = 'localhost:8080/users';
+  url = 'http://localhost:8080/users';
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
