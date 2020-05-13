@@ -21,8 +21,9 @@ import {MatIconModule} from '@angular/material/icon';
 import { HomeComponent } from './home/home.component';
 import { BecomeCoachComponent } from './become-coach/become-coach.component';
 import { DisplayProfileComponent } from './display-profile/display-profile.component';
-import { ProfileHeaderComponent } from './profile-header/profile-header.component';
-import { EditProfileComponent } from './edit-profile/edit-profile.component';
+import {CoachProfileComponent} from './coach-profile/coach-profile.component';
+// import { ProfileHeaderComponent } from './profile-header/profile-header.component';
+// import { EditProfileComponent } from './edit-profile/edit-profile.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -39,8 +40,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     HomeComponent,
     BecomeCoachComponent,
     DisplayProfileComponent,
-    ProfileHeaderComponent,
-    EditProfileComponent
+    CoachProfileComponent,
+    // ProfileHeaderComponent,
+    // EditProfileComponent
   ],
   imports: [
     BrowserModule,
