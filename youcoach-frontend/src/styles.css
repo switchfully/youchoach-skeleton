@@ -6,6 +6,7 @@ body {
 
 main {
   flex: 1 0 auto;
+  min-height: 67vh;
 }
 
 .black-opacity {
@@ -45,6 +46,7 @@ p {
 .extra-large {
   font-size: 16rem;
 }
+
 
 .parallax-container {
   min-height: 380px;

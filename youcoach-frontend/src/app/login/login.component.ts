@@ -6,7 +6,7 @@ import {Router} from '@angular/router';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['../../css/materialize.css', '../../css/style.css']
+  styleUrls: []
 })
 export class LoginComponent implements OnInit {
   error;
