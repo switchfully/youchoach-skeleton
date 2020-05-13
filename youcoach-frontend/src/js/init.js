@@ -1,13 +1,8 @@
 (function ($) {
   $(document).ready(
     function () {
-      console.log("test");
-      $('.scrollspy').scrollSpy({
-        scrollOffset: 0
-      });
-      $('.sidenav').sidenav();
-      $('.parallax').parallax();
-      $('select').formSelect();
-
+      setTimeout(function () {
+        M.AutoInit();
+      }, 500);
     }); // end of document ready
 })(jQuery); // end of jQuery name space

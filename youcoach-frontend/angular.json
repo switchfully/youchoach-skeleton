@@ -36,7 +36,7 @@
             ],
             "scripts": [
               "src/js/jquery-3.5.0.min.js",
-              "src/js/materialize.min.js",
+              "./node_modules/materialize-css/dist/js/materialize.js",
               "src/js/init.js"
             ]
           },
