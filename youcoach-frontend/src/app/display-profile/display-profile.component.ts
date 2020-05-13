@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {IMember} from '../IMember';
 import {AuthenticationService} from '../authentication/authentication.service';
+import {CoacheeService} from '../coacheeService/coachee.service';
 
 @Component({
   selector: 'app-display-profile',
@@ -9,15 +10,21 @@ import {AuthenticationService} from '../authentication/authentication.service';
 })
 export class DisplayProfileComponent implements OnInit {
 
-  member: IMember;
+  member: IMember = null;
 
-  constructor(private authenticationService: AuthenticationService) {
+  constructor(private authenticationService: AuthenticationService, private coacheeService: CoacheeService) {
   }
 
   ngOnInit(): void {
-    this.member.firstName = 'Omar';
+    this.getCoachee();
     console.log(this.authenticationService.getToken());
     console.log(this.authenticationService.getUsername());
   }
+
+  getCoachee(): void {
+    this.coacheeService.getCoachee().subscribe(
+      member => this.member = member);
+  }
+
 
 }
