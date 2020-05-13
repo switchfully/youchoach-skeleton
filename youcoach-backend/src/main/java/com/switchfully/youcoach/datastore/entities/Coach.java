@@ -9,6 +9,15 @@ public class Coach {
     @Id
     private Long userId;
 
+    @Column(name="introduction")
+    private String introduction = "";
+
+    @Column(name="availability")
+    private String availability = "";
+
+    @Column(name="xp")
+    private Integer xp = 0;
+
     @OneToOne
     @MapsId
     private User user;
@@ -25,6 +34,30 @@ public class Coach {
 
     public User getUser() {
         return user;
+    }
+
+    public String getIntroduction() {
+        return introduction;
+    }
+
+    public String getAvailability() {
+        return availability;
+    }
+
+    public Integer getXp() {
+        return xp;
+    }
+
+    public void setXp(int xp){
+        this.xp = xp;
+    }
+
+    public void setIntroduction(String introduction){
+        this.introduction = introduction;
+    }
+
+    public void setAvailability(String availability){
+        this.availability = availability;
     }
 
     @Override

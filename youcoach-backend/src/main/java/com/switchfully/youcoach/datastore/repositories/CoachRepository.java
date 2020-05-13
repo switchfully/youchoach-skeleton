@@ -8,5 +8,8 @@ import java.util.Optional;
 
 public interface CoachRepository extends CrudRepository<Coach, Long> {
     Optional<Coach> findCoachByUser(User user);
+    Optional<Coach> findCoachByUser_Email(String email);
+
     void deleteCoachByUser(User user);
+
 }

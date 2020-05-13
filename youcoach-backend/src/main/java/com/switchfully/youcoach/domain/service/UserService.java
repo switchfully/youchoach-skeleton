@@ -1,9 +1,12 @@
 package com.switchfully.youcoach.domain.service;
 
 
+import com.switchfully.youcoach.datastore.entities.Coach;
 import com.switchfully.youcoach.datastore.entities.User;
+import com.switchfully.youcoach.datastore.repositories.CoachRepository;
 import com.switchfully.youcoach.datastore.repositories.UserRepository;
 import com.switchfully.youcoach.domain.Mapper.UserMapper;
+import com.switchfully.youcoach.domain.dtos.CoachProfileDto;
 import com.switchfully.youcoach.domain.dtos.CoacheeProfileDto;
 import com.switchfully.youcoach.domain.dtos.CreateUserDto;
 import com.switchfully.youcoach.domain.dtos.UserDto;
@@ -14,7 +17,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional
@@ -23,10 +25,12 @@ public class UserService {
     private final UserMapper userMapper;
     private final ValidationService validationService;
     private final PasswordEncoder passwordEncoder;
+    private final CoachRepository coachRepository;
 
     @Autowired
-    public UserService(UserRepository userRepository, UserMapper userMapper, ValidationService validationService, PasswordEncoder passwordEncoder) {
+    public UserService(UserRepository userRepository, CoachRepository coachRepository, UserMapper userMapper, ValidationService validationService, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.coachRepository = coachRepository;
         this.userMapper = userMapper;
         this.validationService = validationService;
         this.passwordEncoder = passwordEncoder;
@@ -72,6 +76,31 @@ public class UserService {
     public CoacheeProfileDto getCoacheeProfile(String email){
         User user = assertUserExistsAndRetrieve(email);
         return userMapper.toCoacheeProfileDto(user);
+    }
+
+    public CoachProfileDto getCoachProfileForUser(User user){
+        Coach coach = assertCoachExistsAndRetrieve(user);
+        return userMapper.toCoachProfileDto(coach);
+    }
+    public CoachProfileDto getCoachProfileForUserWithEmail(String email){
+        Coach coach = assertCoachExistsAndRetrieve(email);
+        return userMapper.toCoachProfileDto(coach);
+    }
+    public Coach assertCoachExistsAndRetrieve(String email){
+        return coachRepository.findCoachByUser_Email(email).orElseThrow(CoachNotFoundException::new);
+    }
+
+    public CoachProfileDto getCoachProfile(long id){
+        Coach coach = assertCoachExistsAndRetrieve(id);
+        return userMapper.toCoachProfileDto(coach);
+    }
+
+    public Coach assertCoachExistsAndRetrieve(long id){
+        return coachRepository.findById(id).orElseThrow(CoachNotFoundException::new);
+    }
+
+    public Coach assertCoachExistsAndRetrieve(User user){
+        return coachRepository.findCoachByUser(user).orElseThrow(CoachNotFoundException::new);
     }
 
     private User assertUserExistsAndRetrieve(long id) {

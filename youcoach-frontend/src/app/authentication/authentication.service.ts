@@ -21,6 +21,7 @@ export class AuthenticationService {
   login(loginData: any) {
     return this.loginService.login(loginData)
       .pipe(tap(response => {
+        console.log(loginData);
         sessionStorage.setItem(this.tokenKey, response.headers.get('Authorization').replace('Bearer', '').trim());
         sessionStorage.setItem(this.usernameKey, loginData.username);
         this.userLoggedInSource.next(true);

@@ -1,8 +1,11 @@
 package com.switchfully.youcoach.domain.service;
 
+import com.switchfully.youcoach.datastore.entities.Coach;
 import com.switchfully.youcoach.datastore.entities.User;
+import com.switchfully.youcoach.datastore.repositories.CoachRepository;
 import com.switchfully.youcoach.datastore.repositories.UserRepository;
 import com.switchfully.youcoach.domain.Mapper.UserMapper;
+import com.switchfully.youcoach.domain.dtos.CoachProfileDto;
 import com.switchfully.youcoach.domain.dtos.CoacheeProfileDto;
 import com.switchfully.youcoach.domain.dtos.CreateUserDto;
 import com.switchfully.youcoach.domain.dtos.UserDto;
@@ -10,6 +13,7 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.test.context.jdbc.Sql;
 
 import java.util.Optional;
 
@@ -18,10 +22,15 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 class UserServiceTest {
     private final UserRepository userRepository = Mockito.mock(UserRepository.class);
+    private final CoachRepository coachRepository = Mockito.mock(CoachRepository.class);
     private final PasswordEncoder passwordEncoder = Mockito.mock(PasswordEncoder.class);
 
-    private final UserService userService = new UserService(userRepository, new UserMapper(), new ValidationService(), passwordEncoder);
+    private final UserService userService = new UserService(userRepository, coachRepository, new UserMapper(), new ValidationService(), passwordEncoder);
 
+    private User getDefaultUser() {
+        return new User(1,"First", "Last","example@example.com","1lpassword",
+                "1 - latin","/my/photo.png");
+    }
 
     @Test
     void saveAUser() {
@@ -58,8 +67,7 @@ class UserServiceTest {
 
     @Test
     public void getCoacheeProfile() {
-        User user = new User(1,"First", "Last","example@example.com","1lpassword",
-                "1 - latin","/my/photo.png");
+        User user = getDefaultUser();
         Mockito.when(userRepository.findById(Mockito.anyLong())).thenReturn(Optional.of(user));
 
         CoacheeProfileDto expected = new CoacheeProfileDto()
@@ -75,6 +83,81 @@ class UserServiceTest {
         assertThat(actual).isEqualTo(expected);
     }
 
+
+    @Test
+    public void getCoachProfile(){
+        User user = getDefaultUser();
+        Coach coach = new Coach(user);
+        coach.setXp(100);
+        coach.setAvailability("Whenever you want.");
+        coach.setIntroduction("Endorsed by your mom.");
+
+        Mockito.when(coachRepository.findById(Mockito.anyLong())).thenReturn(Optional.of(coach));
+
+       CoachProfileDto expected = (CoachProfileDto) new CoachProfileDto()
+               .withXp(coach.getXp())
+               .withIntroduction(coach.getIntroduction())
+               .withAvailability(coach.getAvailability())
+               .withSchoolYear(user.getSchoolYear())
+               .withId(user.getId())
+               .withEmail(user.getEmail())
+               .withFirstName(user.getFirstName())
+               .withLastName(user.getLastName())
+               .withPhotoUrl(user.getPhotoUrl());
+
+        CoachProfileDto actual = userService.getCoachProfile(1);
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @Test
+    public void getCoachProfileForUser(){
+        User user = getDefaultUser();
+        Coach coach = new Coach(user);
+        coach.setXp(100);
+        coach.setAvailability("Whenever you want.");
+        coach.setIntroduction("Endorsed by your mom.");
+
+        Mockito.when(coachRepository.findCoachByUser(Mockito.any(User.class))).thenReturn(Optional.of(coach));
+
+        CoachProfileDto expected = (CoachProfileDto) new CoachProfileDto()
+                .withXp(coach.getXp())
+                .withIntroduction(coach.getIntroduction())
+                .withAvailability(coach.getAvailability())
+                .withSchoolYear(user.getSchoolYear())
+                .withId(user.getId())
+                .withEmail(user.getEmail())
+                .withFirstName(user.getFirstName())
+                .withLastName(user.getLastName())
+                .withPhotoUrl(user.getPhotoUrl());
+
+        CoachProfileDto actual = userService.getCoachProfileForUser(user);
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @Test
+    public void getCoachProfileForUserWithEmail(){
+        User user = getDefaultUser();
+        Coach coach = new Coach(user);
+        coach.setXp(100);
+        coach.setAvailability("Whenever you want.");
+        coach.setIntroduction("Endorsed by your mom.");
+
+        Mockito.when(coachRepository.findCoachByUser_Email(Mockito.anyString())).thenReturn(Optional.of(coach));
+
+        CoachProfileDto expected = (CoachProfileDto) new CoachProfileDto()
+                .withXp(coach.getXp())
+                .withIntroduction(coach.getIntroduction())
+                .withAvailability(coach.getAvailability())
+                .withSchoolYear(user.getSchoolYear())
+                .withId(user.getId())
+                .withEmail(user.getEmail())
+                .withFirstName(user.getFirstName())
+                .withLastName(user.getLastName())
+                .withPhotoUrl(user.getPhotoUrl());
+
+        CoachProfileDto actual = userService.getCoachProfileForUserWithEmail(user.getEmail());
+        assertThat(actual).isEqualTo(expected);
+    }
     @Test
     public void emailExists(){
         Mockito.when(userRepository.existsByEmail(Mockito.anyString())).thenReturn(true);

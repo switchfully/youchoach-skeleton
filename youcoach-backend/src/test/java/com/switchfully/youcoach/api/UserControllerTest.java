@@ -2,6 +2,7 @@ package com.switchfully.youcoach.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.switchfully.youcoach.ApplicationTest;
+import com.switchfully.youcoach.domain.dtos.CoachProfileDto;
 import com.switchfully.youcoach.domain.dtos.CreateUserDto;
 import com.switchfully.youcoach.domain.service.UserService;
 import com.switchfully.youcoach.security.authentication.jwt.JwtAuthorizationFilter;
@@ -129,4 +130,30 @@ class UserControllerTest {
         String expected = "{\"id\":1,\"firstName\":\"First\",\"lastName\":\"Last\",\"email\":\"example@example.com\",\"schoolYear\":\"1 - latin\",\"photoUrl\":\"/my/photo.png\"}";
         JSONAssert.assertEquals(expected, actualResult, true);
     }
+
+    @Test
+    @Sql("oneDefaultUser.sql")
+    @Sql("makeUsersCoach.sql")
+    void getCoachProfile() throws Exception {
+        String jwtSecret = environment.getProperty("jwt.secret");
+        UsernamePasswordAuthenticationToken user = new UsernamePasswordAuthenticationToken("example@example.com",null, List.of(UserRoles.ROLE_COACH));
+        String token =  securedUserService.generateJwtToken(user,jwtSecret);
+
+        CoachProfileDto expectedDto = (CoachProfileDto) new CoachProfileDto().withXp(100).withIntroduction("Endorsed by your mom.").withAvailability("Whenever you want.")
+                .withEmail("example@example.com").withPhotoUrl("/my/photo.png").withFirstName("First").withLastName("Last").withId(1L).withSchoolYear("1 - latin");
+        String expected = new ObjectMapper().writeValueAsString(expectedDto);
+
+        String actualResult = mockMvc.perform(get("/users/coach/profile")
+                .header("Authorization", "Bearer " + token)
+                .with(csrf())
+                .accept("application/json;charset=UTF-8")
+        )
+                .andExpect(status().isOk())
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
+
+        JSONAssert.assertEquals(expected, actualResult, true);
+    }
+
 }

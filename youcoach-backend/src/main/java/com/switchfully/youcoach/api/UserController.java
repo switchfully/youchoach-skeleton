@@ -1,5 +1,6 @@
 package com.switchfully.youcoach.api;
 
+import com.switchfully.youcoach.domain.dtos.CoachProfileDto;
 import com.switchfully.youcoach.domain.dtos.CoacheeProfileDto;
 import com.switchfully.youcoach.domain.dtos.CreateUserDto;
 import com.switchfully.youcoach.domain.dtos.UserDto;
@@ -46,6 +47,12 @@ public class UserController {
     @GetMapping(produces = "application/json;charset=UTF-8", path = "/profile/{id}")
     public CoacheeProfileDto getSpecificCoacheeProfile(@PathVariable("id") long id){
         return userService.getCoacheeProfile(id);
+    }
+
+    @PreAuthorize("hasRole('ROLE_COACH')")
+    @GetMapping(produces = "application/json;charset=UTF-8", path="/coach/profile")
+    public CoachProfileDto getCoachProfile(Principal principal){
+        return userService.getCoachProfileForUserWithEmail(principal.getName());
     }
 
     @ExceptionHandler(IllegalStateException.class)

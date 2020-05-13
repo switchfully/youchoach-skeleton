@@ -8,5 +8,35 @@
     "id": 2,
     "username": "coach",
     "password": "coach"
+  },
+  {
+    "id": 3,
+    "username": "coachee1@school.org",
+    "password": "YouC0ach"
+  },
+  {
+    "id": 4,
+    "username": "coachee2@school.org",
+    "password": "YouC0ach"
+  },
+  {
+    "id": 5,
+    "username": "coach1@school.org",
+    "password": "YouC0ach"
+  },
+  {
+    "id": 6,
+    "username": "coach2@school.org",
+    "password": "YouC0ach"
+  },
+  {
+    "id": 7,
+    "username": "admin1@school.org",
+    "password": "YouC0ach"
+  },
+  {
+    "id": 8,
+    "username": "admin2@school.org",
+    "password": "YouC0ach"
   }
 ]

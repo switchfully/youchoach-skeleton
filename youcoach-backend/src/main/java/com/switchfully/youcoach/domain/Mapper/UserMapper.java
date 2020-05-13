@@ -1,7 +1,9 @@
 package com.switchfully.youcoach.domain.Mapper;
 
 
+import com.switchfully.youcoach.datastore.entities.Coach;
 import com.switchfully.youcoach.datastore.entities.User;
+import com.switchfully.youcoach.domain.dtos.CoachProfileDto;
 import com.switchfully.youcoach.domain.dtos.CoacheeProfileDto;
 import com.switchfully.youcoach.domain.dtos.CreateUserDto;
 import com.switchfully.youcoach.domain.dtos.UserDto;
@@ -26,12 +28,27 @@ public class UserMapper {
     }
 
     public CoacheeProfileDto toCoacheeProfileDto(User model){
-        return new CoacheeProfileDto().withId(model.getId())
+        return new CoacheeProfileDto()
+                .withId(model.getId())
                 .withEmail(model.getEmail())
                 .withFirstName(model.getFirstName())
                 .withLastName(model.getLastName())
                 .withSchoolYear(model.getSchoolYear())
                 .withPhotoUrl(model.getPhotoUrl());
+    }
+
+    public CoachProfileDto toCoachProfileDto(Coach model){
+        return (CoachProfileDto) new CoachProfileDto()
+                .withAvailability(model.getAvailability())
+                .withIntroduction(model.getIntroduction())
+                .withXp(model.getXp())
+                .withId(model.getUser().getId())
+                .withEmail(model.getUser().getEmail())
+                .withFirstName(model.getUser().getFirstName())
+                .withLastName(model.getUser().getLastName())
+                .withSchoolYear(model.getUser().getSchoolYear())
+                .withPhotoUrl(model.getUser().getPhotoUrl());
+
     }
 
 }
