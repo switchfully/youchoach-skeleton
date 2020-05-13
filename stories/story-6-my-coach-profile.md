@@ -6,15 +6,18 @@
      - First name (shared with my profile)  (coach-profile-information.label.first-name)
      - Last name (shared with my profile) (coach-profile-information.label.last-name)
      - Email (shared with my profile) (coach-profile-information.label.email)
-     - Introduction (new)  (coach-profile-information.label.introduction)
-     - Availability (new) (coach-profile-information.label.availability)
      - class (out of scope, story 35)
-     - coach XP (out of scope, story 18)
+     - role (shared with my profile) (coach-profile-information.label.role)
      - picture (url)
      
+ - Coach information section of coach profile contains:
+      - Coach XP (out of scope, story 18)
+      - Introduction (coach-information.label.introduction)
+      - Availability (coach-information.label.availability)
+      
   - Coaching topics section of coach profile contains:
     - topic
-    - grade per topic
+    - year
 
   - in scope
       - Visual shift between my profile and my coach profile (color scheme)
@@ -23,11 +26,11 @@
         - administrator can access coach profile of a coach via url
       - creation of 'My Coach Profile' menu (my-coach-profile-menu.title)
       - adding Profile Information section 
+      - adding Coach information section
       - adding coaching topics section
       
   - Open Questions
-       - structure of topics and grades?
-       - split info already on my profile and coach specific info?
+
 
  - mockups
      - ![signin](../img/my-coach-profile.png)

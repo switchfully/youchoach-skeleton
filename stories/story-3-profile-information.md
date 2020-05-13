@@ -6,6 +6,8 @@
      - First name (profile-information.label.first-name)
      - Last name (profile-information.label.last-name)
      - Email (profile-information.label.email)
+     - class (out of scope)
+     - role (out of scope)
      - picture (via external url)  
       
  - in scope

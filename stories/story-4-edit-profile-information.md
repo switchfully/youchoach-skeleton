@@ -6,7 +6,7 @@
      - Last name (profile-information.label.last-name)
      - email (profile-information.label.email)
         - alert, your email address is used to sign-in (profile-information.message.change-email)
-     - role (disabled) (profile-information.label.role)
+     - role (disabled)(profile-information.label.role)
      - picture (url)  (profile-information.label.profile-picture)
      
 - admin can edit

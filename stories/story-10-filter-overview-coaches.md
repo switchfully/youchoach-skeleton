@@ -5,16 +5,13 @@
 - Find a coach page
     - filter by topic (coach-overview.label.filter-topic)
         - multiple select dropdown (coach-overview.label.filter-topic-dropdown)
-    - filter by grade (coach-overview.label.filter-grade)
-        - multiple select dropdown (coach-overview.label.filter-grade-dropdown)
+    - filter by grade (coach-overview.label.filter-year)
+        - multiple select dropdown (coach-overview.label.filter-year-dropdown)
              
   - in scope
       - adding filter functionality to the 'Find a coach' page
 
   - Open Questions
-    - multiple select dropdown on topic?
-    - multiple select dropdown on grade?
-    - structure of topic, grade?  
 
  - mockups
      - ![signin](../img/find-a-coach.png)

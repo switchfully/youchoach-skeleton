@@ -2,7 +2,7 @@
  **As a coachee I want only myself and the admin to have access to my 'profile information'**
 
  - Profile information contains in addition:
-     - role
+     - role (profile-information.label.role)
         - coachee
         - coach
         - administrator

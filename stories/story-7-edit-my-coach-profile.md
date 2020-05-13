@@ -2,19 +2,17 @@
 
 **As a coach I want to be able to edit my coach profile (profile information) displayed to coachees**
 
- - coach can edit
-     - First name (shared with my profile)
-     - Last name (shared with my profile)
-     - email (shared with my profile)
-     - picture (url, shared with my profile)
-     - Introduction
-     - Availability     
-     
-- admin can edit
-     - all fields
+
+ - profile information
+    - cannot be added from the coach profile screen
+    
+ - Coach information
+     - both coach and administrator can edit   
+         - Introduction
+         - Availability     
      
  - in scope
-     - Creation of the edit 'My Profile' page
+     - Creation of the edit 'Coach information' page
      - Save button 
      - Cancel button
       

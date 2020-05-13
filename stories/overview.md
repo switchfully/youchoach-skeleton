@@ -3,11 +3,11 @@
 
 *TO DO*
 
-- email adjust is possible (with warning)
-- add admin email to become a coach page
 - role based (become a coach)
-- typeahead for topics
 
+- typeahead for topics
+- restriction of # of topics (max 2)
+- grade 1-7
 
 - how to contact the admin? as a coach? or contact admin on homepage?
 
