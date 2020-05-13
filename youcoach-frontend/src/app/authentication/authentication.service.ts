@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {AuthenticationHttpService} from './authentication.http.service';
 import {tap} from 'rxjs/operators';
-import {Observable, Subject} from 'rxjs';
-import {HttpClient} from '@angular/common/http';
+import {Subject} from 'rxjs';
+
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +15,7 @@ export class AuthenticationService {
 
   userLoggedIn$ = this.userLoggedInSource.asObservable();
 
-  constructor(private loginService: AuthenticationHttpService, private httpClient: HttpClient) {
+  constructor(private loginService: AuthenticationHttpService) {
   }
 
   login(loginData: any) {
@@ -25,6 +25,7 @@ export class AuthenticationService {
         sessionStorage.setItem(this.usernameKey, loginData.username);
         this.userLoggedInSource.next(true);
       }));
+
   }
 
   getToken() {
@@ -45,4 +46,5 @@ export class AuthenticationService {
     sessionStorage.removeItem(this.usernameKey);
     this.userLoggedInSource.next(false);
   }
+
 }
