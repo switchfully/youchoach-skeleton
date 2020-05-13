@@ -25,7 +25,6 @@
     "@ng-bootstrap/ng-bootstrap": "^6.1.0",
     "@ngx-translate/core": "^12.1.2",
     "@ngx-translate/http-loader": "^4.0.0",
-    "angular": "^1.7.9",
     "angular-mailto": "^0.1.0",
     "bootstrap": "^4.4.0",
     "express": "^4.17.1",

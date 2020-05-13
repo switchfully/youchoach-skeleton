@@ -29,8 +29,8 @@
               }
             ],
             "styles": [
-              "src/css/materialize.min.css",
-              "node_modules/material-design-icons/iconfont/material-icons.css",
+              "./node_modules/materialize-css/dist/css/materialize.css",
+              "./node_modules/material-design-icons/iconfont/material-icons.css",
               "src/styles.css"
 
             ],

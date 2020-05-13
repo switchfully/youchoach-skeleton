@@ -7,7 +7,7 @@ import {ICoachee} from './ICoachee';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrls: ['../../css/materialize.css', '../../css/style.css']
+  styleUrls: []
 })
 export class RegisterComponent implements OnInit {
   registerForm = this.fb.group({
