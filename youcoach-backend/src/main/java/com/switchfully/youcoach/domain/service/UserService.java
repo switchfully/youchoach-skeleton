@@ -9,6 +9,7 @@ import com.switchfully.youcoach.domain.dtos.CreateUserDto;
 import com.switchfully.youcoach.domain.dtos.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,17 +22,20 @@ public class UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
     private final ValidationService validationService;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserService(UserRepository userRepository, UserMapper userMapper, ValidationService validationService) {
+    public UserService(UserRepository userRepository, UserMapper userMapper, ValidationService validationService, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
         this.validationService = validationService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public UserDto createUser(CreateUserDto createUserDto) {
         performValidation(createUserDto);
         User newUser = userMapper.toUser(createUserDto);
+        newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
         newUser = userRepository.save(newUser);
 
         return userMapper.toUserDto(newUser);

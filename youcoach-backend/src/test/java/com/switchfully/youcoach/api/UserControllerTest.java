@@ -22,6 +22,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers;
 import org.springframework.security.web.FilterChainProxy;
@@ -58,6 +59,10 @@ class UserControllerTest {
     SecuredUserService securedUserService;
     @Autowired
     Environment environment;
+    @Autowired
+    PasswordEncoder passwordEncoder;
+
+
 
 
     @BeforeEach
@@ -83,8 +88,8 @@ class UserControllerTest {
                         .andReturn()
                         .getResponse()
                         .getContentAsString();
-        String expected = "{\"id\":1,\"firstName\":\"Integration\",\"lastName\":\"Test\",\"email\":\"test@integraition.be\",\"password\":\"test123TT\"}";
-        JSONAssert.assertEquals(expected, actualResult, true);
+        String expected = "{\"id\":1,\"firstName\":\"Integration\",\"lastName\":\"Test\",\"email\":\"test@integraition.be\"}";
+        JSONAssert.assertEquals(expected, actualResult, false);
     }
 
     @Test
