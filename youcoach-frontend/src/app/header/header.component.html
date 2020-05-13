@@ -15,11 +15,9 @@
           class="material-icons right">person</i></a></li>
         <li><a class="waves-effect waves-light teal lighten-3 btn black-text" routerLink="/register">Register<i
           class="material-icons right">person_add</i></a></li>
-        <li>
-          <button [class.active]="currentLanguage() === 'en'" class="btn btn-primary nav-item btn-small grey darken-1"
+        <li class="valign-wrapper">:
+            <button [class.active]="currentLanguage() === 'en'" class="btn btn-primary nav-item btn-small grey darken-1"
                   (click)="switchLanguage('en')">en </button>
-        </li>
-        <li>
           <button [class.active]="currentLanguage() === 'nl '" class="btn btn-primary nav-item btn-small grey darken-1"
                   (click)="switchLanguage('nl')">nl </button>
         </li>
@@ -29,12 +27,22 @@
         <li><a href="#">Home</a></li>
         <li><a href="#">About us</a></li>
         <li><a href="#">Contact</a></li>
-        <li><a class="waves-effect waves-light yellow darken-2 btn black-text">Sign in<i
+        <li><a class="waves-effect waves-light yellow darken-2 btn black-text" routerLink="/login" *ngIf="!username">Sign in<i
           class="material-icons right">person</i></a></li>
-        <li><a class="waves-effect waves-light teal lighten-3 btn black-text">Register<i
+        <li><a class="waves-effect waves-light grey lighten-2 btn black-text" routerLink="/home" *ngIf="username"
+               (click)="logout()">Sign out<i
+          class="material-icons right">person</i></a></li>
+        <li><a class="waves-effect waves-light teal lighten-3 btn black-text" routerLink="/register">Register<i
           class="material-icons right">person_add</i></a></li>
+        <li>
+          <button [class.active]="currentLanguage() === 'en'" class="btn btn-primary nav-item btn-small grey darken-1"
+                  (click)="switchLanguage('en')">en </button>
+          <button [class.active]="currentLanguage() === 'nl '" class="btn btn-primary nav-item btn-small grey darken-1"
+                  (click)="switchLanguage('nl')">nl </button>
+        </li>
       </ul>
-      <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+      <a href="#"  data-target="nav-mobile" class="sidenav-trigger green-text"><i class="material-icons">menu</i></a>
     </div>
   </nav>
 </header>
+

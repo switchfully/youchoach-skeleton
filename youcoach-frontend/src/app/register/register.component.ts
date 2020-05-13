@@ -3,7 +3,6 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {CoacheeService} from '../coacheeService/coachee.service';
 import {ICoachee} from './ICoachee';
-import {group} from '@angular/animations';
 
 @Component({
   selector: 'app-register',
@@ -20,7 +19,13 @@ export class RegisterComponent implements OnInit {
   }, {validator: RegisterComponent.checkPasswords});
 
   coachee: ICoachee;
-
+  emailExistsError = false;
+  errorMessage: string;
+  private static checkPasswords(group: FormGroup) {
+    const pass = group.get('password').value;
+    const confirmPass = group.get('passwordVerification').value;
+    return pass === confirmPass ? null : {notSame: true};
+  }
   constructor(private fb: FormBuilder, private router: Router,
               private coacheeService: CoacheeService) {
   }
@@ -37,22 +42,15 @@ export class RegisterComponent implements OnInit {
       password: this.registerForm.get('password').value
     };
     this.register(this.coachee);
-    // this.goBack();
   }
-
-  // goBack() {
-  //   this.router.navigateByUrl('/items').then(r => true);
-  // }
-  // passwordEqual: true;
 
   private register(coachee: ICoachee) {
-    this.coacheeService.register(coachee).subscribe();
-  }
-
-  private static checkPasswords(group: FormGroup) {
-    const pass = group.get('password').value;
-    const confirmPass = group.get('passwordVerification').value;
-
-    return pass === confirmPass ? null : {notSame: true};
+    this.coacheeService.register(coachee).subscribe(addedCoachee => this.coachee = addedCoachee,
+      err => {
+      if (err.message === ('Email already exists!')) {
+         this.emailExistsError = true;
+      }
+      this.errorMessage = err.message;
+    });
   }
 }

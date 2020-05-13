@@ -2,7 +2,6 @@ package com.switchfully.youcoach.security;
 
 import com.switchfully.youcoach.security.authentication.jwt.JwtAuthenticationFilter;
 import com.switchfully.youcoach.security.authentication.jwt.JwtAuthorizationFilter;
-import com.switchfully.youcoach.security.authentication.user.SecuredUserJSONService;
 import com.switchfully.youcoach.security.authentication.user.SecuredUserService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
