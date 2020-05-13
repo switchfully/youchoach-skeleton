@@ -3,7 +3,7 @@ package com.switchfully.youcoach.security.authentication.user;
 import org.springframework.security.core.GrantedAuthority;
 
 public enum UserRoles implements GrantedAuthority {
-    COACHEE("ROLE_COACHEE"),COACH("ROLE_COACH"),ADMIN("ROLE_ADMIN");
+    ROLE_COACHEE("ROLE_COACHEE"), ROLE_COACH("ROLE_COACH"),ROLE_ADMIN("ROLE_ADMIN");
     private final String authority;
 
     private UserRoles(String authority){

@@ -26,6 +26,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers;
 import org.springframework.security.web.FilterChainProxy;
 import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
@@ -35,11 +36,13 @@ import org.springframework.web.context.WebApplicationContext;
 import java.util.List;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebAppConfiguration
+@ContextConfiguration
 @SpringBootTest(classes = {ApplicationTest.class})
 @AutoConfigureMockMvc
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
@@ -84,16 +87,15 @@ class UserControllerTest {
         JSONAssert.assertEquals(expected, actualResult, true);
     }
 
-    @WithMockUser(username="example@example.com")
     @Test
     @Sql("oneDefaultUser.sql")
     void getCoacheeProfile() throws Exception {
         String jwtSecret = environment.getProperty("jwt.secret");
-        UsernamePasswordAuthenticationToken user = new UsernamePasswordAuthenticationToken("example@example.com",null, List.of(UserRoles.COACHEE));
+        UsernamePasswordAuthenticationToken user = new UsernamePasswordAuthenticationToken("example@example.com",null, List.of(UserRoles.ROLE_COACHEE));
         String token =  securedUserService.generateJwtToken(user,jwtSecret);
 
-        String actualResult = mockMvc.perform(get("/users/profile").header("Authorization", token)
-                        .with(csrf())
+        String actualResult = mockMvc.perform(get("/users/profile").header("Authorization", "Bearer " + token)
+                        //.with(csrf())
                 )
                 .andExpect(status().isOk())
                 .andReturn()
@@ -103,12 +105,11 @@ class UserControllerTest {
         JSONAssert.assertEquals(expected, actualResult, true);
     }
 
-    @WithMockUser(username="example@example.com")
     @Test
     @Sql("oneDefaultUser.sql")
     void getSpecificCoacheeProfile() throws Exception {
         String jwtSecret = environment.getProperty("jwt.secret");
-        UsernamePasswordAuthenticationToken user = new UsernamePasswordAuthenticationToken("example@example.com",null, List.of(UserRoles.ADMIN));
+        UsernamePasswordAuthenticationToken user = new UsernamePasswordAuthenticationToken("example@example.com",null, List.of(UserRoles.ROLE_ADMIN));
         String token =  securedUserService.generateJwtToken(user,jwtSecret);
 
         String actualResult = mockMvc.perform(get("/users/profile/1")
