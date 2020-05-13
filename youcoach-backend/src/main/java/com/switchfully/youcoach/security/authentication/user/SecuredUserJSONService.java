@@ -45,13 +45,13 @@ public class SecuredUserJSONService implements UserDetailsService {
         Collection<GrantedAuthority> authorities = new ArrayList<>();
         switch(user.getUsername().toUpperCase()){
             case "COACH":
-                authorities.add(UserRoles.COACH);
+                authorities.add(UserRoles.ROLE_COACH);
                 break;
             case "ADMIN":
-                authorities.add(UserRoles.ADMIN);
+                authorities.add(UserRoles.ROLE_ADMIN);
                 break;
         }
-        authorities.add(UserRoles.COACHEE);
+        authorities.add(UserRoles.ROLE_COACHEE);
         return authorities;
     }
 

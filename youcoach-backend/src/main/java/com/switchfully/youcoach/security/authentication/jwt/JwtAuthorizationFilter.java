@@ -19,7 +19,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.stream.Collectors;
 
 import static org.springframework.util.StringUtils.isEmpty;
@@ -60,13 +59,19 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
                         .getBody()
                         .getSubject();
 
+                ArrayList<String> authoritiesInToken
+                        = parsedToken.getBody().get("rol", ArrayList.class);
+                var authorities = authoritiesInToken.stream()
+                        .map(SimpleGrantedAuthority::new)
+                        .collect(Collectors.toList());
+                /*
                 ArrayList<LinkedHashMap<String, String>> authoritiesInToken
                         = parsedToken.getBody().get("rol", ArrayList.class);
                 var authorities = authoritiesInToken.stream()
                         .map(linkedMap -> linkedMap.get("authority"))
                         .map(SimpleGrantedAuthority::new)
                         .collect(Collectors.toList());
-
+                 */
                 if (!isEmpty(username)) {
                     return new UsernamePasswordAuthenticationToken(username, null, authorities);
                 }
