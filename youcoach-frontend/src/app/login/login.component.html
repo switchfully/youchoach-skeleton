@@ -1,17 +1,17 @@
 <form [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm.value)">
-  <h1 translate>login.title</h1>
+  <h1 translate>register.title</h1>
   <div class="form-group">
-    <label for="username" translate>login.label.username</label>
-    <input id="username" class="form-control" size="50" type="text" formControlName="username"/>
+    <label for="username" translate>register.label.email</label>
+    <input id="username" class="form-control" size="50" type="email" formControlName="username"/>
   </div>
   <div class="form-group">
-    <label for="password" translate>login.label.password</label>
+    <label for="password" translate>register.label.password</label>
     <input id="password" class="form-control" size="50" type="password" formControlName="password"/>
   </div>
-  <p *ngIf="success" class="alert alert-primary" translate>login.message.loginsuccessful</p>
-  <p *ngIf="error" class="alert alert-danger" translate>login.message.loginfailed</p>
+  <p *ngIf="success" class="alert alert-primary" translate>sign-in.message.login-successful</p>
+  <p *ngIf="error" class="alert alert-danger" translate>sign-in.message.login-failed</p>
   <div class="btn-group">
-    <button class="btn btn-primary" type="submit" translate>login.button.login</button>
-    <button class="btn btn-danger" type="reset" (click)="logout()" translate>login.button.logout</button>
+    <button class="btn btn-primary" type="submit" translate>menu.button.sign-in</button>
+    <button class="btn btn-danger" type="reset" (click)="logout()" translate>menu.button.sign-out</button>
   </div>
 </form>

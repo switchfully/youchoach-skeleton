@@ -9,8 +9,8 @@
       </li>
     </ul>
     <div class="mr-2">
-      <div class="nav-item" *ngIf="username" translate [translateParams]="{username: username}">navbar.loggedin</div>
-      <div class="nav-item" *ngIf="!username" translate>navbar.loggedout</div>
+      <div class="nav-item" *ngIf="username" translate [translateParams]="{username: username}">menu.label.logged-in</div>
+      <div class="nav-item" *ngIf="!username" translate>menu.label.logged-out</div>
     </div>
     <div class="btn-group mr-2">
       <button [class.active]="currentLanguage() === 'en'" class="btn btn-primary nav-item" (click)="switchLanguage('en')">en</button>
