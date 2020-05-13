@@ -41,10 +41,15 @@ public class UserService {
         User newUser = userMapper.toUser(createUserDto);
         newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
         newUser = userRepository.save(newUser);
-
         return userMapper.toUserDto(newUser);
-
     }
+//Update coacheeprofile
+//    public CoacheeProfileDto coacheeProfileDto(CoacheeProfileDto coacheeProfileDto){
+//        User user = assertUserExistsAndRetrieve(coacheeProfileDto.getId());
+//        User updatedUser = userMapper.toUser(coacheeProfileDto);
+//        userRepository.save(user);
+//
+//    }
 
     public UserDto getUserById(long id) {
         return userMapper.toUserDto(userRepository.findById(id).get());

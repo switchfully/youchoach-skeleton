@@ -5,6 +5,7 @@ import {RegisterComponent} from './register/register.component';
 import {HomeComponent} from './home/home.component';
 import {BecomeCoachComponent} from './become-coach/become-coach.component';
 import {DisplayProfileComponent} from './display-profile/display-profile.component';
+import {EditProfileComponent} from './edit-profile/edit-profile.component';
 
 const routes: Routes = [
   {path: 'home', component: HomeComponent},
@@ -12,6 +13,7 @@ const routes: Routes = [
   {path: 'register', component: RegisterComponent},
   {path: 'becomecoach', component: BecomeCoachComponent },
   {path: 'profile', component: DisplayProfileComponent },
+  {path: 'edit-profile', component: EditProfileComponent },
   {path: '', redirectTo: 'home', pathMatch: 'full'},
   {path: '**', redirectTo: 'home', pathMatch: 'full'},
 ];
