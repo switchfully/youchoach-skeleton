@@ -9,7 +9,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Profile("development")
-@EnableWebSecurity(debug=true)
+@EnableWebSecurity(debug=false)
 public class SecurityConfigJSON extends SecurityConfig {
     private final SecuredUserJSONService securedUserJSONService;
     private final PasswordEncoder passwordEncoder;

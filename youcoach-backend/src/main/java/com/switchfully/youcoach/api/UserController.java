@@ -20,10 +20,7 @@ import java.security.Principal;
 @RequestMapping(path = "/users")
 @CrossOrigin(origins = "http://localhost:4200")
 public class UserController {
-
-    @Autowired
     private final UserService userService;
-
     private final static Logger LOGGER = LoggerFactory.getLogger(UserController.class);
 
     @Autowired
