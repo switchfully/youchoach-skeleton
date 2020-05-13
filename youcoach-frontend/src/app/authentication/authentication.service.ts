@@ -1,7 +1,8 @@
 import {Injectable} from '@angular/core';
 import {AuthenticationHttpService} from './authentication.http.service';
 import {tap} from 'rxjs/operators';
-import {Subject} from 'rxjs';
+import {Observable, Subject} from 'rxjs';
+import {HttpClient} from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -11,9 +12,10 @@ export class AuthenticationService {
   private tokenKey = 'jwt_token';
   private usernameKey = 'username';
   private userLoggedInSource = new Subject<boolean>();
+
   userLoggedIn$ = this.userLoggedInSource.asObservable();
 
-  constructor(private loginService: AuthenticationHttpService) {
+  constructor(private loginService: AuthenticationHttpService, private httpClient: HttpClient) {
   }
 
   login(loginData: any) {
@@ -28,6 +30,7 @@ export class AuthenticationService {
   getToken() {
     return sessionStorage.getItem(this.tokenKey);
   }
+
 
   getUsername() {
     return sessionStorage.getItem(this.usernameKey);
