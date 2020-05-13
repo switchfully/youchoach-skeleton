@@ -39,7 +39,7 @@ class UserRepositoryTest {
     @Sql("oneDefaultUser.sql")
     void retrieveProfile(){
         User expected = new User(1L, "First", "Last","example@example.com",
-                "1Lpassword","1 - Latin");
+                "1Lpassword","1 - Latin","/my/photo.png");
         User actual = userRepository.findById(1L).get();
         Assertions.assertThat(actual).isEqualTo(expected);
     }
@@ -58,7 +58,7 @@ class UserRepositoryTest {
     @Sql("oneDefaultUser.sql")
     void emailDuplication() {
         User duplicateEmail = new User(2,"DuplicateFirst","DuplicateLast","example@example.com",
-                "1Lpassword","1 - latin");
+                "1Lpassword","1 - latin","/my/photo.png");
         userRepository.save(duplicateEmail);
 
         assertThatExceptionOfType(DataIntegrityViolationException.class).isThrownBy(() -> userRepository.flush() );

@@ -4,43 +4,52 @@
     <div class="row">
       <div class="col s12 m12">
 
-
         <h1 class="center teal-text lighten-3">Register</h1>
         <div class="content-container-with-padding z-depth-4">
 
           <div class="row">
-            <form class="col s12">
+            <form class="col s12" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
               <div class="row">
                 <div class="input-field col s6">
-                  <input id="first_name" type="text" class="validate">
+                  <input id="first_name" type="text" class="validate" required formControlName="firstname">
                   <label for="first_name">First Name</label>
                 </div>
                 <div class="input-field col s6">
-                  <input id="last_name" type="text" class="validate">
+                  <input id="last_name" type="text" class="validate" required formControlName="lastname">
                   <label for="last_name">Last Name</label>
                 </div>
               </div>
               <div class="row">
                 <div class="input-field col s12">
-                  <input id="email" type="email" class="validate">
+                  <input id="email" type="email" class="validate" required formControlName="email">
                   <label for="email">Email</label>
+                  <span data-error="Not a valid email address" class="helper-text" ></span>
                 </div>
               </div>
               <div class="row">
                 <div class="input-field col s12">
-                  <input id="password" type="password" class="validate">
+                  <input id="password" type="password" class="validate" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required formControlName="password" #password>
                   <label for="password">Password</label>
+                  <span data-error="Password should be valid" data-success="password is valid" class="helper-text" ></span>
+<!--                  <p *ngIf="!password.pattern"> Password should be valid </p>-->
                 </div>
               </div>
               <div class="row">
                 <div class="input-field col s12">
-                  <input id="passwordVerification" type="password" class="validate">
+                  <input id="passwordVerification" type="password" class="validate" pattern="{{password.value}}"
+                         required formControlName="passwordVerification" #passwordVerification>
                   <label for="passwordVerification">Password (again )</label>
+                  <span data-error="Passwords should match" class="helper-text" ></span>
+
+<!--                  <span data-error="wrong" data-success="right" class="helper-text"  pattern="{{password}} !== {{passwordVerification}}"></span>-->
+<!--                  <p *ngIf="(passwordVerification.value !== password.value) && passwordVerification.value.length > 0"> Password should be same </p>-->
                 </div>
               </div>
-
+              <p class="red-text" *ngIf="emailExistsError">An account with the provided email already exists</p>
               <div class="row right-align">
-                <a class="waves-effect waves-light yellow darken-2 btn-large black-text">Register<i class="material-icons right">send</i></a>
+                <button [disabled]="(!registerForm.valid)" class="waves-effect waves-light yellow darken-2 btn-large black-text" type="submit">
+                  Register<i class="material-icons right">send</i></button>
+                <p>{{errorMessage}}</p>
               </div>
             </form>
           </div>
@@ -48,6 +57,5 @@
         </div>
       </div>
     </div>
-
   </div>
 </main>

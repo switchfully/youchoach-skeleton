@@ -12,12 +12,13 @@ public class UserMapperTest {
     @Test
     public void fromUserToCoacheeProfileDto(){
         User input = new User(1,"First","Last",
-                "example@example.com","1Lpassword","1 - latin");
+                "example@example.com","1Lpassword","1 - latin","/my/photo.png");
         CoacheeProfileDto expected = new CoacheeProfileDto().withId(input.getId())
                 .withEmail(input.getEmail())
                 .withFirstName(input.getFirstName())
                 .withLastName(input.getLastName())
-                .withSchoolYear(input.getSchoolYear());
+                .withSchoolYear(input.getSchoolYear())
+                .withPhotoUrl(input.getPhotoUrl());
 
         CoacheeProfileDto actual = userMapper.toCoacheeProfileDto(input);
 

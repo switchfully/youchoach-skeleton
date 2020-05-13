@@ -21,7 +21,6 @@ export class HeaderComponent implements OnInit {
     });
   }
 
-
   switchLanguage(language: string) {
     this.translate.use(language);
     this.language = language;
