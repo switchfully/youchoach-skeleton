@@ -1,9 +1,8 @@
-import {Injectable} from '@angular/core';
-import {Observable, of, throwError} from 'rxjs';
+import { Injectable } from '@angular/core';
+import {Observable, of} from 'rxjs';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {catchError, tap} from 'rxjs/operators';
 import {MessageService} from '../message.service';
-import {ICoachee} from '../register/ICoachee';
+import {ICoachee} from '../register/icoachee';
 
 @Injectable({
   providedIn: 'root'
@@ -11,11 +10,9 @@ import {ICoachee} from '../register/ICoachee';
 export class CoacheeService {
   url = 'http://localhost:8080/users';
   httpOptions = {
-    headers: new HttpHeaders({'Content-Type': 'application/json'})
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
-
-  constructor(private http: HttpClient, private messageService: MessageService) {
-  }
+  constructor(private http: HttpClient, private messageService: MessageService) { }
 
   register(coachee: ICoachee): Observable<ICoachee> {
     return this.http.post<ICoachee>(this.url, coachee, this.httpOptions).pipe(
@@ -23,8 +20,6 @@ export class CoacheeService {
       // catchError(this.handleError<any>('registerCoachee'))
     );
   }
-
-
 
   // private log(message: string) {
   //   this.messageService.add(`CoacheeService: ${message}`);

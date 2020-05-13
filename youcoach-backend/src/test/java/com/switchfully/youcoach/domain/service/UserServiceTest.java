@@ -9,6 +9,7 @@ import com.switchfully.youcoach.domain.dtos.UserDto;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Optional;
 
@@ -17,8 +18,9 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 class UserServiceTest {
     private final UserRepository userRepository = Mockito.mock(UserRepository.class);
+    private final PasswordEncoder passwordEncoder = Mockito.mock(PasswordEncoder.class);
 
-    private final UserService userService = new UserService(userRepository, new UserMapper(), new ValidationService());
+    private final UserService userService = new UserService(userRepository, new UserMapper(), new ValidationService(), passwordEncoder);
 
 
     @Test

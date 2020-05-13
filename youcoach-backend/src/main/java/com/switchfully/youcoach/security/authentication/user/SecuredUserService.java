@@ -49,9 +49,9 @@ public class SecuredUserService implements UserDetailsService {
     Collection<GrantedAuthority> determineGrantedAuthorities(com.switchfully.youcoach.datastore.entities.User user) {
         Collection<GrantedAuthority> authorities = new ArrayList<>();
 
-        authorities.add(UserRoles.COACHEE);
-        if(isAdmin(user)) authorities.add(UserRoles.ADMIN);
-        if(isCoach(user)) authorities.add(UserRoles.COACH);
+        authorities.add(UserRoles.ROLE_COACHEE);
+        if(isAdmin(user)) authorities.add(UserRoles.ROLE_ADMIN);
+        if(isCoach(user)) authorities.add(UserRoles.ROLE_COACH);
         return authorities;
     }
 

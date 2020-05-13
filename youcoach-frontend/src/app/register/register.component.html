@@ -23,6 +23,7 @@
                 <div class="input-field col s12">
                   <input id="email" type="email" class="validate" required formControlName="email">
                   <label for="email">Email</label>
+                  <span class="helper-text red-text darken-2"  *ngIf="emailExistsError">An account with the provided email already exists</span>
                   <span data-error="Not a valid email address" class="helper-text" ></span>
                 </div>
               </div>
@@ -45,11 +46,9 @@
 <!--                  <p *ngIf="(passwordVerification.value !== password.value) && passwordVerification.value.length > 0"> Password should be same </p>-->
                 </div>
               </div>
-              <p class="red-text" *ngIf="emailExistsError">An account with the provided email already exists</p>
               <div class="row right-align">
                 <button [disabled]="(!registerForm.valid)" class="waves-effect waves-light yellow darken-2 btn-large black-text" type="submit">
                   Register<i class="material-icons right">send</i></button>
-                <p>{{errorMessage}}</p>
               </div>
             </form>
           </div>

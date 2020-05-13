@@ -30,7 +30,7 @@ public class SecuredUserServiceDatabaseBasedAuthoritiesTest {
         Mockito.when(coachRepository.findCoachByUser(Mockito.any())).thenReturn(Optional.empty());
         Mockito.when(adminRepository.findAdminByUser(Mockito.any())).thenReturn(Optional.empty());
         Assertions.assertThat(securedUserService.determineGrantedAuthorities(getDefaultUser()))
-                .containsExactly(UserRoles.COACHEE);
+                .containsExactly(UserRoles.ROLE_COACHEE);
     }
 
     @Test
@@ -38,7 +38,7 @@ public class SecuredUserServiceDatabaseBasedAuthoritiesTest {
         Mockito.when(coachRepository.findCoachByUser(Mockito.any())).thenReturn(Optional.of(new Coach()));
         Mockito.when(adminRepository.findAdminByUser(Mockito.any())).thenReturn(Optional.empty());
         Assertions.assertThat(securedUserService.determineGrantedAuthorities(getDefaultUser()))
-                .contains(UserRoles.COACHEE);
+                .contains(UserRoles.ROLE_COACHEE);
 
     }
 
@@ -47,7 +47,7 @@ public class SecuredUserServiceDatabaseBasedAuthoritiesTest {
         Mockito.when(coachRepository.findCoachByUser(Mockito.any())).thenReturn(Optional.empty());
         Mockito.when(adminRepository.findAdminByUser(Mockito.any())).thenReturn(Optional.of(new Admin()));
         Assertions.assertThat(securedUserService.determineGrantedAuthorities(getDefaultUser()))
-                .containsExactlyInAnyOrder(UserRoles.COACHEE, UserRoles.ADMIN);
+                .containsExactlyInAnyOrder(UserRoles.ROLE_COACHEE, UserRoles.ROLE_ADMIN);
     }
 
     @Test
@@ -55,7 +55,7 @@ public class SecuredUserServiceDatabaseBasedAuthoritiesTest {
         Mockito.when(coachRepository.findCoachByUser(Mockito.any())).thenReturn(Optional.of(new Coach()));
         Mockito.when(adminRepository.findAdminByUser(Mockito.any())).thenReturn(Optional.empty());
         Assertions.assertThat(securedUserService.determineGrantedAuthorities(getDefaultUser()))
-                .containsExactlyInAnyOrder(UserRoles.COACHEE, UserRoles.COACH);
+                .containsExactlyInAnyOrder(UserRoles.ROLE_COACHEE, UserRoles.ROLE_COACH);
     }
 
     @Test
@@ -63,7 +63,7 @@ public class SecuredUserServiceDatabaseBasedAuthoritiesTest {
         Mockito.when(coachRepository.findCoachByUser(Mockito.any())).thenReturn(Optional.of(new Coach()));
         Mockito.when(adminRepository.findAdminByUser(Mockito.any())).thenReturn(Optional.of(new Admin()));
         Assertions.assertThat(securedUserService.determineGrantedAuthorities(getDefaultUser()))
-                .containsExactlyInAnyOrder(UserRoles.COACHEE, UserRoles.ADMIN, UserRoles.COACH);
+                .containsExactlyInAnyOrder(UserRoles.ROLE_COACHEE, UserRoles.ROLE_ADMIN, UserRoles.ROLE_COACH);
     }
 
 }
