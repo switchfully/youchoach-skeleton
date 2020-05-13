@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.switchfully.youcoach.ApplicationTest;
 import com.switchfully.youcoach.domain.dtos.CreateUserDto;
 import com.switchfully.youcoach.domain.service.UserService;
+import com.switchfully.youcoach.security.authentication.jwt.JwtAuthorizationFilter;
 import com.switchfully.youcoach.security.authentication.user.SecuredUserService;
 import com.switchfully.youcoach.security.authentication.user.UserRoles;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,8 +24,10 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers;
+import org.springframework.security.web.FilterChainProxy;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.jdbc.Sql;
+import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
@@ -37,6 +40,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@WebAppConfiguration
 @SpringBootTest(classes = {ApplicationTest.class})
 @AutoConfigureMockMvc
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
@@ -53,6 +57,7 @@ class UserControllerTest {
     @Autowired
     Environment environment;
 
+
     @BeforeEach
     private void setup(){
         MockitoAnnotations.initMocks(this);
@@ -60,6 +65,7 @@ class UserControllerTest {
                 .apply(SecurityMockMvcConfigurers.springSecurity())
                 .dispatchOptions(true)
                 .build();
+
     }
 
     @WithMockUser
@@ -79,7 +85,7 @@ class UserControllerTest {
         JSONAssert.assertEquals(expected, actualResult, true);
     }
 
-    @WithMockUser("example@example.com")
+    @WithMockUser(username="example@example.com")
     @Test
     @Sql("oneDefaultUser.sql")
     void getCoacheeProfile() throws Exception {
@@ -94,7 +100,28 @@ class UserControllerTest {
                 .andReturn()
                         .getResponse()
                         .getContentAsString();
-        String expected = "{\"id\":1,\"firstName\":\"First\",\"lastName\":\"Last\",\"email\":\"example@example.com\",\"schoolYear\":\"1 - latin\"}";
+        String expected = "{\"id\":1,\"firstName\":\"First\",\"lastName\":\"Last\",\"email\":\"example@example.com\",\"schoolYear\":\"1 - latin\",\"photoUrl\":\"/my/photo.png\"}";
+        JSONAssert.assertEquals(expected, actualResult, true);
+    }
+
+    @WithMockUser(username="example@example.com")
+    @Test
+    @Sql("oneDefaultUser.sql")
+    void getSpecificCoacheeProfile() throws Exception {
+        String jwtSecret = environment.getProperty("jwt.secret");
+        UsernamePasswordAuthenticationToken user = new UsernamePasswordAuthenticationToken("example@example.com",null, List.of(UserRoles.ADMIN));
+        String token =  securedUserService.generateJwtToken(user,jwtSecret);
+
+        String actualResult = mockMvc.perform(get("/users/profile/1")
+                .header("Authorization", "Bearer " + token)
+                .with(csrf())
+                .accept("application/json;charset=UTF-8")
+        )
+                .andExpect(status().isOk())
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
+        String expected = "{\"id\":1,\"firstName\":\"First\",\"lastName\":\"Last\",\"email\":\"example@example.com\",\"schoolYear\":\"1 - latin\",\"photoUrl\":\"/my/photo.png\"}";
         JSONAssert.assertEquals(expected, actualResult, true);
     }
 }

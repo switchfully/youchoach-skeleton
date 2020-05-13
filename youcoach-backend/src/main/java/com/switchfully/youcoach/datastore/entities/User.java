@@ -20,20 +20,23 @@ public class User {
     private String password;
     @Column(name = "school_year")
     private String schoolYear;
+    @Column(name = "photo_url")
+    private String photoUrl;
 
-    public User(long id, String firstName, String lastName, String email, String password, String schoolYear) {
+    public User(long id, String firstName, String lastName, String email, String password, String schoolYear, String photoUrl) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
         this.schoolYear = schoolYear;
+        this.photoUrl = photoUrl;
     }
     public User(String firstName, String lastName, String email, String password) {
         this(0,firstName,lastName,email,password);
     }
     public User(long id, String firstName, String lastName, String email, String password){
-        this(id,firstName,lastName,email,password,"");
+        this(id,firstName,lastName,email,password,"","");
     }
 
     public User() {
@@ -61,6 +64,10 @@ public class User {
 
     public String getSchoolYear() {
         return schoolYear;
+    }
+
+    public String getPhotoUrl() {
+        return photoUrl;
     }
 
     @Override

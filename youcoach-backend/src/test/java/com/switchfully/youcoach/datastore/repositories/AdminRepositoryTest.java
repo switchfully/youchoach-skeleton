@@ -28,7 +28,7 @@ public class AdminRepositoryTest {
 
     private User getDefaultUser() {
         return new User(1L, "First", "Last", "example@example.com",
-                "1Lpassword", "1 - latin");
+                "1Lpassword", "1 - latin","/my/photo.png");
     }
 
     @Test

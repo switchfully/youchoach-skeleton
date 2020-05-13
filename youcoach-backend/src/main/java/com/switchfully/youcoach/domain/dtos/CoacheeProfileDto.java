@@ -8,6 +8,7 @@ public class CoacheeProfileDto {
     private String firstName;
     private String lastName;
     private String email;
+    private String photoUrl;
 
     public CoacheeProfileDto withSchoolYear(String schoolYear) {
         this.schoolYear = schoolYear;
@@ -27,6 +28,10 @@ public class CoacheeProfileDto {
     }
     public CoacheeProfileDto withEmail(String email){
         this.email = email;
+        return this;
+    }
+    public CoacheeProfileDto withPhotoUrl(String photoUrl){
+        this.photoUrl = photoUrl;
         return this;
     }
 
@@ -50,6 +55,10 @@ public class CoacheeProfileDto {
         return email;
     }
 
+    public String getPhotoUrl(){
+        return photoUrl;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -59,11 +68,12 @@ public class CoacheeProfileDto {
                 Objects.equals(schoolYear, that.schoolYear) &&
                 Objects.equals(firstName, that.firstName) &&
                 Objects.equals(lastName, that.lastName) &&
+                Objects.equals(photoUrl, that.photoUrl) &&
                 Objects.equals(email, that.email);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(schoolYear, id, firstName, lastName, email);
+        return Objects.hash(schoolYear, id, firstName, lastName, email, photoUrl);
     }
 }

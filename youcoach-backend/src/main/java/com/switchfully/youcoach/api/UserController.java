@@ -42,10 +42,15 @@ public class UserController {
         return userService.createUser(createUserDto);
     }
 
-    @PreAuthorize("hasAnyRole(COACH,ADMIN)")
+    @PreAuthorize("hasAnyRole(COACH)")
     @GetMapping(produces = "application/json;charset=UTF-8", path = "/profile")
     public CoacheeProfileDto getCoacheeProfile(Principal principal){
         return userService.getCoacheeProfile(principal.getName());
+    }
+    @PreAuthorize("hasAnyRole(ADMIN)")
+    @GetMapping(produces = "application/json;charset=UTF-8", path = "/profile/{id}")
+    public CoacheeProfileDto getCoacheeProfile(@PathVariable("id") long id){
+        return userService.getCoacheeProfile(id);
     }
 
     @ExceptionHandler(IllegalStateException.class)

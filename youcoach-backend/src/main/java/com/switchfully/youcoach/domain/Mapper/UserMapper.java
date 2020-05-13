@@ -30,7 +30,8 @@ public class UserMapper {
                 .withEmail(model.getEmail())
                 .withFirstName(model.getFirstName())
                 .withLastName(model.getLastName())
-                .withSchoolYear(model.getSchoolYear());
+                .withSchoolYear(model.getSchoolYear())
+                .withPhotoUrl(model.getPhotoUrl());
     }
 
 }

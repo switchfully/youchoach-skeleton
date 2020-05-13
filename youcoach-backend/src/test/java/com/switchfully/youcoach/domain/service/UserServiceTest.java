@@ -23,7 +23,7 @@ class UserServiceTest {
 
     @Test
     void saveAUser() {
-        User user = new User(1,"Test","Service","test@hb.be","Test123456","");
+        User user = new User(1,"Test","Service","test@hb.be","Test123456","","");
         Mockito.when(userRepository.findById(Mockito.anyLong())).thenReturn(Optional.of(user));
         Mockito.when(userRepository.save(Mockito.any(User.class))).thenReturn(user);
 
@@ -57,7 +57,7 @@ class UserServiceTest {
     @Test
     public void getCoacheeProfile() {
         User user = new User(1,"First", "Last","example@example.com","1lpassword",
-                "1 - latin");
+                "1 - latin","/my/photo.png");
         Mockito.when(userRepository.findById(Mockito.anyLong())).thenReturn(Optional.of(user));
 
         CoacheeProfileDto expected = new CoacheeProfileDto()
@@ -65,7 +65,8 @@ class UserServiceTest {
                 .withId(user.getId())
                 .withEmail(user.getEmail())
                 .withFirstName(user.getFirstName())
-                .withLastName(user.getLastName());
+                .withLastName(user.getLastName())
+                .withPhotoUrl(user.getPhotoUrl());
 
 
         CoacheeProfileDto actual = userService.getCoacheeProfile(1);
