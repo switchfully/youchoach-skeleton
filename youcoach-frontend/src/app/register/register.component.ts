@@ -20,7 +20,7 @@ export class RegisterComponent implements OnInit {
 
   coachee: ICoachee;
   emailExistsError = false;
-  errorMessage: string;
+  emailErrorMessage: string;
   private static checkPasswords(group: FormGroup) {
     const pass = group.get('password').value;
     const confirmPass = group.get('passwordVerification').value;
@@ -47,10 +47,10 @@ export class RegisterComponent implements OnInit {
   private register(coachee: ICoachee) {
     this.coacheeService.register(coachee).subscribe(addedCoachee => this.coachee = addedCoachee,
       err => {
-      if (err.message === ('Email already exists!')) {
+      if (err.error.message === ('Email already exists!')) {
          this.emailExistsError = true;
       }
-      this.errorMessage = err.message;
+      this.emailErrorMessage = err.error.message;
     });
   }
 }

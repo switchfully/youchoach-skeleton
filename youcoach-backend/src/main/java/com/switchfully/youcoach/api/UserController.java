@@ -52,6 +52,6 @@ public class UserController {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public void invalidFieldsException(IllegalStateException ex, HttpServletResponse response) throws IOException {
         LOGGER.info(ex.getMessage());
-        response.sendError(403, "Some fields are not correct");
+        response.sendError(400, ex.getMessage());
     }
 }
