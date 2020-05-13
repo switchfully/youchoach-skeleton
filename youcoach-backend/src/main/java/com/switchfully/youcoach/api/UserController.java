@@ -47,6 +47,12 @@ public class UserController {
     public CoacheeProfileDto getSpecificCoacheeProfile(@PathVariable("id") long id){
         return userService.getCoacheeProfile(id);
     }
+    //endpont updateProfile
+//    @PreAuthorize("hasRole('ROLE_COACHEE')")
+//    @PutMapping(produces = "application/json;charset=UTF-8", path = "/profile")
+//    public CoacheeProfileDto updateCoacheeProfile(Principal principal){
+//        return userService.getCoacheeProfile(principal.getName());
+//    }
 
     @ExceptionHandler(IllegalStateException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)

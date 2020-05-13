@@ -33,5 +33,9 @@ public class UserMapper {
                 .withSchoolYear(model.getSchoolYear())
                 .withPhotoUrl(model.getPhotoUrl());
     }
+//transforme coacheeProfileDto to User for the Database
+//    public User toUser(CoacheeProfileDto coacheeProfileDto){
+//        return new User(coacheeProfileDto.getFirstName(), coacheeProfileDto.getLastName(), coacheeProfileDto.getEmail());
+//    }
 
 }

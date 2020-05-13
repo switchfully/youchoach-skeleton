@@ -17,8 +17,6 @@ export class DisplayProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.getCoachee();
-    console.log(this.authenticationService.getToken());
-    console.log(this.authenticationService.getUsername());
   }
 
   getCoachee(): void {
