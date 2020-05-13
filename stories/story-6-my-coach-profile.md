@@ -23,7 +23,7 @@
       - Visual shift between my profile and my coach profile (color scheme)
       - adding My Coach profile in general menu (menu.link.my-coach-profile)
         - only available for users with role coach or administrator
-        - administrator can access coach profile of a coach via url
+        - administrator can access coach profile of a coach via url (by url you-coach.org/coach/UUID)
       - creation of 'My Coach Profile' menu (my-coach-profile-menu.title)
       - adding Profile Information section 
       - adding Coach information section

@@ -10,7 +10,7 @@
   - in scope
       - adding role to my profile
       - coachee can only visit his own profile
-      - administrator can access all profiles (by url you-coach.org/user/UUID)
+      - administrator can access all profiles (by url you-coach.org/profile/UUID)
 
   - Open Questions
 
