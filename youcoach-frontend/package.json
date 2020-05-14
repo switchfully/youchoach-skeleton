@@ -22,6 +22,7 @@
     "@angular/router": "~9.1.4",
     "@ngx-translate/core": "^12.1.2",
     "@ngx-translate/http-loader": "^4.0.0",
+    "@types/materialize-css": "^1.0.7",
     "jquery": "^3.5.1",
     "material-design-icons": "^3.0.1",
     "materialize-css": "^1.0.0",
