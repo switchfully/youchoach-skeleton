@@ -33,8 +33,12 @@ export class LoginComponent implements OnInit {
       .subscribe(
         (_ => {
           this.success = true;
-          setTimeout(() => this.router.navigateByUrl('/coach-profile'), 1000);
-        }),
+          if(this.authenticationService.isCoach()) {
+            setTimeout(() => this.router.navigateByUrl('/coach-profile'), 1000);
+          } else {
+            setTimeout(() => this.router.navigateByUrl('/profile'), 1000);
+          }
+          }),
         (_ => this.error = true)
       );
     this.loginForm.reset();
