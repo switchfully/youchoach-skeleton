@@ -43,7 +43,7 @@ export class RegisterComponent implements OnInit {
       password: this.registerForm.get('password').value
     };
     this.register(this.coachee);
-    if (this.emailErrorMessage == null) {
+    if (this.emailExistsError) {
       this.router.navigateByUrl('/profile');
     }
   }
@@ -53,8 +53,8 @@ export class RegisterComponent implements OnInit {
       err => {
       if (err.error.message === ('Email already exists!')) {
          this.emailExistsError = true;
+         this.emailErrorMessage = err.error.message;
       }
-      this.emailErrorMessage = err.error.message;
     });
   }
 }
