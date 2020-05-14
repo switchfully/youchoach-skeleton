@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder} from '@angular/forms';
 import {AuthenticationService} from '../authentication/authentication.service';
 import {Router} from '@angular/router';
+import set = Reflect.set;
 
 @Component({
   selector: 'app-login',
@@ -33,11 +34,12 @@ export class LoginComponent implements OnInit {
       .subscribe(
         (_ => {
           this.success = true;
-          setTimeout(() => this.router.navigateByUrl('/coach-profile'), 1000);
+          this.router.navigateByUrl('/coach-profile');
         }),
         (_ => this.error = true)
       );
     this.loginForm.reset();
+    setTimeout(() => console.log(this.authenticationService.getToken()), 2000);
   }
 
   logout() {
