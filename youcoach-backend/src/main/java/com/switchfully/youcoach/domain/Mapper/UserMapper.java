@@ -46,6 +46,7 @@ public class UserMapper {
                 .withAvailability(model.getAvailability())
                 .withIntroduction(model.getIntroduction())
                 .withXp(model.getXp())
+                .withCoachingTopics(model.getTopics())
                 .withId(model.getUser().getId())
                 .withEmail(model.getUser().getEmail())
                 .withFirstName(model.getUser().getFirstName())

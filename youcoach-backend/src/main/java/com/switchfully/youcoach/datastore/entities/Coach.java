@@ -1,7 +1,9 @@
 package com.switchfully.youcoach.datastore.entities;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name="coaches")
@@ -21,6 +23,10 @@ public class Coach {
     @OneToOne
     @MapsId
     private User user;
+
+    @ElementCollection
+    @CollectionTable(name = "coaching_topics", joinColumns = {@JoinColumn(name = "user_id")})
+    Set<CoachingTopic> topics = new HashSet<>();
 
     public Coach(){}
     public Coach(User user){
@@ -58,6 +64,14 @@ public class Coach {
 
     public void setAvailability(String availability){
         this.availability = availability;
+    }
+
+    public Set<CoachingTopic> getTopics() {
+        return topics;
+    }
+
+    public void setTopics(Set<CoachingTopic> topics) {
+        this.topics = topics;
     }
 
     @Override
