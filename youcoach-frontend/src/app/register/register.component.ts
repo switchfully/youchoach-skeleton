@@ -17,15 +17,16 @@ export class RegisterComponent implements OnInit {
     password: ['', [Validators.required]],
     passwordVerification: ['', ]
   }, {validator: RegisterComponent.checkPasswords});
-
   coachee: ICoachee;
   emailExistsError = false;
   emailErrorMessage: string;
+
   private static checkPasswords(group: FormGroup) {
     const pass = group.get('password').value;
     const confirmPass = group.get('passwordVerification').value;
     return pass === confirmPass ? null : {notSame: true};
   }
+
   constructor(private fb: FormBuilder, private router: Router,
               private coacheeService: CoacheeService) {
   }
@@ -42,6 +43,9 @@ export class RegisterComponent implements OnInit {
       password: this.registerForm.get('password').value
     };
     this.register(this.coachee);
+    if (this.emailErrorMessage == null) {
+      this.router.navigateByUrl('/profile');
+    }
   }
 
   private register(coachee: ICoachee) {

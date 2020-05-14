@@ -22,15 +22,16 @@ export class CoachProfileComponent implements OnInit {
     topicYear: null,
     youcoachRole: null
   };
+  title = 'You-Coach | Coach-Profile';
 
   coachView = false;
 
   constructor(private authenticationService: AuthenticationService, private coachService: CoachService) { }
 
   ngOnInit(): void {
+    document.getElementById('footer').setAttribute('class', 'page-footer teal lighten-3');
+    document.title = this.title;
     this.getCoach();
-    console.log(this.authenticationService.getToken());
-    console.log(this.authenticationService.getUsername());
   }
 
   getCoach(): void {
