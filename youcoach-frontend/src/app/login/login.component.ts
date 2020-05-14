@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit {
       .subscribe(
         (_ => {
           this.success = true;
-          setTimeout(() => this.router.navigateByUrl('/profile'), 1000);
+          setTimeout(() => this.router.navigateByUrl('/coach-profile'), 1000);
         }),
         (_ => this.error = true)
       );
