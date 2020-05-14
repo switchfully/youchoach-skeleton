@@ -13,6 +13,7 @@ export class LoginComponent implements OnInit {
   success;
   loginForm;
   title = 'You-Coach | Sign in';
+  jwt;
 
   constructor(private formBuilder: FormBuilder, private authenticationService: AuthenticationService, private router: Router) {
     this.loginForm = this.formBuilder.group({

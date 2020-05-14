@@ -2,8 +2,7 @@ import {Injectable} from '@angular/core';
 import {AuthenticationHttpService} from './authentication.http.service';
 import {tap} from 'rxjs/operators';
 import {Subject} from 'rxjs';
-
-
+import * as jwt_decode from 'jwt-decode';
 
 @Injectable({
   providedIn: 'root'
@@ -28,7 +27,6 @@ export class AuthenticationService {
         sessionStorage.setItem(this.usernameKey, loginData.username);
         this.userLoggedInSource.next(true);
       }));
-
   }
 
   getToken() {

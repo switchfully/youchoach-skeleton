@@ -10,16 +10,25 @@ import {ICoach} from './ICoach';
 })
 export class CoachProfileComponent implements OnInit {
   coach: ICoach;
+  coachView = false;
+
   constructor(private authenticationService: AuthenticationService, private coachService: CoachService) { }
 
   ngOnInit(): void {
-    // this.getCoach();
+    this.getCoach();
     console.log(this.authenticationService.getToken());
     console.log(this.authenticationService.getUsername());
   }
 
-  // getCoach(): void {
-  //   this.coachService.getCoach().subscribe(
-  //     coach => this.coach = coach);
-  // }
+  getCoach(): void {
+    this.coachService.getCoach().subscribe(
+      coach => this.coach = coach);
+  }
+
+  enableCoachView() {
+    this.coachView = true;
+  }
+  disableCoachView() {
+    this.coachView = false;
+  }
 }
