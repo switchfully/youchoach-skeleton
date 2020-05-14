@@ -27,8 +27,8 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit(loginData) {
-    this.success = false;
     this.error = false;
+    this.success = false;
     this.authenticationService.login(loginData)
       .subscribe(
         (_ => {

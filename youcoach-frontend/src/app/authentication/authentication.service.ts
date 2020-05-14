@@ -47,9 +47,4 @@ export class AuthenticationService {
     this.userLoggedInSource.next(false);
   }
 
-  getUserRole() {
-    const token = this.getToken();
-    console.log(token);
-  }
-
 }

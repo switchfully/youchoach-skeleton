@@ -14,6 +14,7 @@ export class HomeComponent extends InitMaterializeComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    document.getElementById('footer').setAttribute('class', 'page-footer yellow darken-2');
     document.title = this.title;
   }
 

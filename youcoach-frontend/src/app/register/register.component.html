@@ -32,7 +32,6 @@
                   <input id="password" type="password" class="validate" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required formControlName="password" #password>
                   <label for="password">Password</label>
                   <span data-error="Password should be valid" data-success="password is valid" class="helper-text" ></span>
-<!--                  <p *ngIf="!password.pattern"> Password should be valid </p>-->
                 </div>
               </div>
               <div class="row">
@@ -41,9 +40,6 @@
                          required formControlName="passwordVerification" #passwordVerification>
                   <label for="passwordVerification">Password (again )</label>
                   <span data-error="Passwords should match" class="helper-text" ></span>
-
-<!--                  <span data-error="wrong" data-success="right" class="helper-text"  pattern="{{password}} !== {{passwordVerification}}"></span>-->
-<!--                  <p *ngIf="(passwordVerification.value !== password.value) && passwordVerification.value.length > 0"> Password should be same </p>-->
                 </div>
               </div>
               <div class="row right-align">
