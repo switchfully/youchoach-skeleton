@@ -3,6 +3,7 @@ import {IMember} from '../IMember';
 import {FormBuilder, Validators} from '@angular/forms';
 import {ICoachee} from '../register/icoachee';
 import {CoacheeService} from '../coacheeService/coachee.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-edit-profile',
@@ -10,16 +11,15 @@ import {CoacheeService} from '../coacheeService/coachee.service';
   styleUrls: ['./edit-profile.component.css']
 })
 export class EditProfileComponent implements OnInit {
-  @Input() previousMember: IMember;
   member: IMember;
   editForm = this.fb.group({
     firstName: ['', [Validators.required]],
     lastName: ['', [Validators.required]],
     email: ['', [Validators.required]],
-    photoUrl: ['', [Validators.required]],
+    // photoUrl: [''],
   });
 
-  constructor(private fb: FormBuilder, private coacheeService: CoacheeService) {
+  constructor(private fb: FormBuilder, private coacheeService: CoacheeService, private router: Router) {
   }
 
   ngOnInit(): void {
@@ -31,19 +31,30 @@ export class EditProfileComponent implements OnInit {
       member => this.member = member);
   }
 
+  updateProfile(): void {
+    this.coacheeService.updateProfile(this.member).subscribe();
+    this.onBack();
+  }
+
+  onBack(): void {
+    this.router.navigate(['/profile']);
+  }
+
+
   onSubmit() {
-    this.member = {
-      firstName: this.editForm.get('firstname').value,
-      lastName: this.editForm.get('lastname').value,
-      email: this.editForm.get('email').value,
-      photoUrl: this.editForm.get('url').value,
-      schoolYear: this.previousMember.schoolYear,
-      youcoachRole: this.previousMember.youcoachRole
-    };
+    console.log('test ob submit');
+    // this.member = {
+    //   firstName: this.editForm.get('firstname').value,
+    //   lastName: this.editForm.get('lastname').value,
+    //   email: this.editForm.get('email').value,
+    //   photoUrl: this.editForm.get('url').value,
+    //   schoolYear: this.member.email,
+    //   youcoachRole: 'Coachee',
+    //   id: this.member.id
+    // };
+    this.member = this.editForm.value;
+    this.updateProfile();
     // this.register(this.coachee);
   }
 
-  test(): void {
-    alert('A href met event');
-  }
 }

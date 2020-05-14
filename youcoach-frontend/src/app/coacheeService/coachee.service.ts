@@ -28,6 +28,10 @@ export class CoacheeService {
     return this.http.get<IMember>(this.url + '/profile');
   }
 
+  updateProfile(member: IMember): Observable<IMember> {
+    return this.http.put<IMember>(this.url + '/profile', member, this.httpOptions);
+  }
+
   // private log(message: string) {
   //   this.messageService.add(`CoacheeService: ${message}`);
   // }

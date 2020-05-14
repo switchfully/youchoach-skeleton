@@ -59,6 +59,8 @@ public class CoacheeProfileDto {
         return photoUrl;
     }
 
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

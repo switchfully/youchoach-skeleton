@@ -23,16 +23,18 @@
                 <div class="input-field col s12">
                   <input id="email" type="email" class="validate" required formControlName="email">
                   <label for="email">Email</label>
-                  <span class="helper-text red-text darken-2"  *ngIf="emailExistsError">An account with the provided email already exists</span>
-                  <span data-error="Not a valid email address" class="helper-text" ></span>
+                  <span class="helper-text red-text darken-2" *ngIf="emailExistsError">An account with the provided email already exists</span>
+                  <span data-error="Not a valid email address" class="helper-text"></span>
                 </div>
               </div>
               <div class="row">
                 <div class="input-field col s12">
-                  <input id="password" type="password" class="validate" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required formControlName="password" #password>
+                  <input id="password" type="password" class="validate" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                         required formControlName="password" #password>
                   <label for="password">Password</label>
-                  <span data-error="Password should be valid" data-success="password is valid" class="helper-text" ></span>
-<!--                  <p *ngIf="!password.pattern"> Password should be valid </p>-->
+                  <span data-error="Password should be valid" data-success="password is valid"
+                        class="helper-text"></span>
+                  <!--                  <p *ngIf="!password.pattern"> Password should be valid </p>-->
                 </div>
               </div>
               <div class="row">
@@ -40,14 +42,15 @@
                   <input id="passwordVerification" type="password" class="validate" pattern="{{password.value}}"
                          required formControlName="passwordVerification" #passwordVerification>
                   <label for="passwordVerification">Password (again )</label>
-                  <span data-error="Passwords should match" class="helper-text" ></span>
+                  <span data-error="Passwords should match" class="helper-text"></span>
 
-<!--                  <span data-error="wrong" data-success="right" class="helper-text"  pattern="{{password}} !== {{passwordVerification}}"></span>-->
-<!--                  <p *ngIf="(passwordVerification.value !== password.value) && passwordVerification.value.length > 0"> Password should be same </p>-->
+                  <!--                  <span data-error="wrong" data-success="right" class="helper-text"  pattern="{{password}} !== {{passwordVerification}}"></span>-->
+                  <!--                  <p *ngIf="(passwordVerification.value !== password.value) && passwordVerification.value.length > 0"> Password should be same </p>-->
                 </div>
               </div>
               <div class="row right-align">
-                <button [disabled]="(!registerForm.valid)" class="waves-effect waves-light yellow darken-2 btn-large black-text" type="submit">
+                <button [disabled]="(!registerForm.valid)"
+                        class="waves-effect waves-light yellow darken-2 btn-large black-text" type="submit">
                   Register<i class="material-icons right">send</i></button>
               </div>
             </form>

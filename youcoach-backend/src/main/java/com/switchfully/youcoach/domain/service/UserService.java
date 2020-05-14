@@ -43,13 +43,16 @@ public class UserService {
         newUser = userRepository.save(newUser);
         return userMapper.toUserDto(newUser);
     }
-//Update coacheeprofile
-//    public CoacheeProfileDto coacheeProfileDto(CoacheeProfileDto coacheeProfileDto){
-//        User user = assertUserExistsAndRetrieve(coacheeProfileDto.getId());
-//        User updatedUser = userMapper.toUser(coacheeProfileDto);
-//        userRepository.save(user);
-//
-//    }
+
+    public CoacheeProfileDto updateProfile(String email, CoacheeProfileDto coacheeProfileDto){
+        User user = assertUserExistsAndRetrieve(email);
+        user.setEmail(coacheeProfileDto.getEmail());
+        user.setFirstName(coacheeProfileDto.getFirstName());
+        user.setLastName(coacheeProfileDto.getLastName());
+        user.setPhotoUrl(coacheeProfileDto.getPhotoUrl());
+        userRepository.save(user);
+        return coacheeProfileDto;
+    }
 
     public UserDto getUserById(long id) {
         return userMapper.toUserDto(userRepository.findById(id).get());

@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {IMember} from '../IMember';
-import {AuthenticationService} from '../authentication/authentication.service';
 import {CoacheeService} from '../coacheeService/coachee.service';
 
 @Component({
@@ -12,7 +11,7 @@ export class DisplayProfileComponent implements OnInit {
 
   member: IMember = null;
 
-  constructor(private authenticationService: AuthenticationService, private coacheeService: CoacheeService) {
+  constructor(private coacheeService: CoacheeService) {
   }
 
   ngOnInit(): void {

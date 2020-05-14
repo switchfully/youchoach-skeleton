@@ -42,22 +42,26 @@
                              name='member.email' [(ngModel)]="member.email">
                     </div>
                   </tr>
+<!--                  <tr>-->
+<!--                    <td><strong>Picture url</strong></td>-->
+<!--                    <div class="input-field col s12">-->
+<!--                      <input id="photoUrl" type="email" class="validate" -->
+<!--                             name='member.photoUrl' [(ngModel)]="member.photoUrl">-->
+<!--                    </div>-->
+<!--                  </tr>-->
                   <tr>
-                    <td><strong>Picture url</strong></td>
-                    <div class="input-field col s12">
-                      <input id="photoUrl" type="email" class="validate" required formControlName="photoUrl"
-                             name='member.photoUrl' [(ngModel)]="member.photoUrl">
+                    <!--                    <div class="right"><a class="btn-large waves-effect waves-light yellow darken-2" type="submit" (click)="updateProfile()">-->
+                    <!--                      <span class="black-text">Save changes</span>-->
+                    <!--                    </a>-->
+                    <div class="row right-align">
+                      <button [disabled]="(!editForm.valid)" class="waves-effect waves-light yellow darken-2 btn-large black-text" type="submit" (click)="updateProfile()">
+                        Save changes</button>
                     </div>
-                  </tr>
-                  <tr>
-                    <div class="right"><a class="btn-large waves-effect waves-light yellow darken-2" (click)="test()">
-                      <span class="black-text">Save changes</span>
-                    </a>
-                      <div class="center"><a href="" class="btn-large waves-effect waves-light yellow darken-2">
-                        <span class="black-text">Cancel</span>
-                      </a></div>
+<!--                    <div class="center"><a href="" class="btn-large waves-effect waves-light yellow darken-2">-->
+<!--                      <span class="black-text">Cancel</span>-->
+<!--                    </a></div>-->
 
-                    </div>
+
                   </tr>
                   <!--                <tr>-->
                   <!--                  <td><strong>Class</strong></td>-->
