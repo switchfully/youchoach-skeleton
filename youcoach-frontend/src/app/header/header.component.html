@@ -14,7 +14,7 @@
         <li><a class="waves-effect waves-light grey lighten-2 btn black-text" routerLink="/home" *ngIf="username"
                (click)="logout()">Sign out<i
           class="material-icons right">person</i></a></li>
-        <li><a class="waves-effect waves-light teal lighten-3 btn black-text" routerLink="/register">Register<i
+        <li><a class="waves-effect waves-light teal lighten-3 btn black-text" routerLink="/register" *ngIf="!username">Register<i
           class="material-icons right">person_add</i></a></li>
         <li class="valign-wrapper">
           <button [class.active]="currentLanguage() === 'en'" class="btn btn-primary nav-item btn-small grey darken-1"
