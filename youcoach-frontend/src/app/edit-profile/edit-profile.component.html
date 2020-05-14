@@ -1,0 +1,84 @@
+<main>
+
+  <div class="row">
+
+    <div class="col s12 m10">
+      <div class="content-container">
+
+        <section class="card-panel grey lighten-5">
+          <!--          <div class="right">-->
+          <!--            <a class="waves-effect waves-light btn-large btn-floating yellow darken-2"><i-->
+          <!--              class="material-icons left">edit</i>Edit</a>-->
+          <!--          </div>-->
+          <h5>Edit profile Information</h5>
+          <div class="divider"></div>
+          <div class="row">
+            <form class="col s12" [formGroup]="editForm" (ngSubmit)="onSubmit()">
+              <div class="col l2 m2 s12">
+                <img src="img/dummy/profile-picture.jpg" class="responsive-img circle"
+                     alt="Profile Picture">
+              </div>
+              <div class="col l10 m10 s12">
+                <table class="highlight">
+                  <tbody>
+                  <tr>
+                    <td><strong>First name</strong></td>
+                    <div class="input-field col s6">
+                      <input id="first_name" type="text" class="validate" required formControlName="firstName"
+                             name='member.firstName' [(ngModel)]="member.firstName">
+                    </div>
+                  </tr>
+                  <tr>
+                    <td><strong>Last name</strong></td>
+                    <div class="input-field col s6">
+                      <input id="last_name" type="text" class="validate" required formControlName="lastName"
+                             name='member.lastName' [(ngModel)]="member.lastName">
+                    </div>
+                  </tr>
+                  <tr>
+                    <td><strong>Email</strong></td>
+                    <div class="input-field col s12">
+                      <input id="email" type="email" class="validate" required formControlName="email"
+                             name='member.email' [(ngModel)]="member.email">
+                    </div>
+                  </tr>
+                  <tr>
+                    <td><strong>Picture url</strong></td>
+                    <div class="input-field col s12">
+                      <input id="photoUrl" type="email" class="validate" required formControlName="photoUrl"
+                             name='member.photoUrl' [(ngModel)]="member.photoUrl">
+                    </div>
+                  </tr>
+                  <tr>
+                    <div class="right"><a class="btn-large waves-effect waves-light yellow darken-2" (click)="test()">
+                      <span class="black-text">Save changes</span>
+                    </a>
+                      <div class="center"><a href="" class="btn-large waves-effect waves-light yellow darken-2">
+                        <span class="black-text">Cancel</span>
+                      </a></div>
+
+                    </div>
+                  </tr>
+                  <!--                <tr>-->
+                  <!--                  <td><strong>Class</strong></td>-->
+                  <!--                  <input id="schoolyear" type="email" class="validate" required name='member.schoolYear'  [(ngModel)]="member.schoolYear">-->
+                  <!--                </tr>-->
+                  </tbody>
+                </table>
+              </div>
+            </form>
+          </div>
+        </section>
+
+      </div>
+    </div>
+  </div>
+</main>
+
+
+<!--  Scripts-->
+<script src="js/jquery-3.5.0.min.js"></script>
+<script src="js/materialize.js"></script>
+<script src="js/init.js"></script>
+
+
