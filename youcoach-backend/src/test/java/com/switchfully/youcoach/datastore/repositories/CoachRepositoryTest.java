@@ -164,4 +164,11 @@ public class CoachRepositoryTest {
 
         Assertions.assertThat(coachRepository.findById(1L)).isEmpty();
     }
+
+    @Test
+    public void assertPreentered(){
+        Optional<Coach> coach = coachRepository.findCoachByUser_Email("coach1@school.org");
+
+        Assertions.assertThat(coach).isNotEmpty();
+    }
 }
