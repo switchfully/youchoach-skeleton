@@ -22,6 +22,7 @@ export class CoachProfileComponent implements OnInit {
     topicYear: null,
     youcoachRole: null
   };
+  // title = 'You-Coach | Coach-Profile';
 
   coachView = false;
 
@@ -31,6 +32,7 @@ export class CoachProfileComponent implements OnInit {
     this.getCoach();
     console.log(this.authenticationService.getToken());
     console.log(this.authenticationService.getUsername());
+    // document.getElementById()
   }
 
   getCoach(): void {
