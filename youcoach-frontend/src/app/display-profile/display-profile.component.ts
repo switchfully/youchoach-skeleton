@@ -16,6 +16,7 @@ export class DisplayProfileComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    document.getElementById('footer').setAttribute('class', 'page-footer yellow darken-2');
     this.getCoachee();
   }
 
