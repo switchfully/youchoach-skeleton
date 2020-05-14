@@ -43,7 +43,7 @@ public class SecuredUserJSONService implements UserDetailsService {
 
     Collection<GrantedAuthority> determineGrantedAuthorities(SecuredUser user) {
         Collection<GrantedAuthority> authorities = new ArrayList<>();
-        if(user.getUsername().contains("coach")) authorities.add(UserRoles.ROLE_COACH);
+        if(user.getUsername().contains("coach") && !user.getUsername().contains("coachee")) authorities.add(UserRoles.ROLE_COACH);
         if(user.getUsername().contains("admin")) authorities.add(UserRoles.ROLE_ADMIN);
 
         authorities.add(UserRoles.ROLE_COACHEE);
