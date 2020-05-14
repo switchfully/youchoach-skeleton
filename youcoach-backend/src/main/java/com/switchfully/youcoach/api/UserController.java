@@ -1,5 +1,6 @@
 package com.switchfully.youcoach.api;
 
+import com.switchfully.youcoach.domain.dtos.CoachProfileDto;
 import com.switchfully.youcoach.domain.dtos.CoacheeProfileDto;
 import com.switchfully.youcoach.domain.dtos.CreateUserDto;
 import com.switchfully.youcoach.domain.dtos.UserDto;
@@ -19,10 +20,7 @@ import java.security.Principal;
 @RequestMapping(path = "/users")
 @CrossOrigin(origins = "http://localhost:4200")
 public class UserController {
-
-    @Autowired
     private final UserService userService;
-
     private final static Logger LOGGER = LoggerFactory.getLogger(UserController.class);
 
     @Autowired
@@ -42,6 +40,7 @@ public class UserController {
     public CoacheeProfileDto getCoacheeProfile(Principal principal){
         return userService.getCoacheeProfile(principal.getName());
     }
+
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping(produces = "application/json;charset=UTF-8", path = "/profile/{id}")
     public CoacheeProfileDto getSpecificCoacheeProfile(@PathVariable("id") long id){
@@ -53,6 +52,12 @@ public class UserController {
 //    public CoacheeProfileDto updateCoacheeProfile(Principal principal){
 //        return userService.getCoacheeProfile(principal.getName());
 //    }
+
+    @PreAuthorize("hasRole('ROLE_COACH')")
+    @GetMapping(produces = "application/json;charset=UTF-8", path="/coach/profile")
+    public CoachProfileDto getCoachProfile(Principal principal){
+        return userService.getCoachProfileForUserWithEmail(principal.getName());
+    }
 
     @ExceptionHandler(IllegalStateException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)

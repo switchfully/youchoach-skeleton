@@ -20,6 +20,4 @@ export class AppComponent implements OnInit {
       this.username = this.authenticationService.getUsername();
     });
   }
-
-
 }

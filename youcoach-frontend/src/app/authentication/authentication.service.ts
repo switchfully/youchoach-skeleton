@@ -4,6 +4,7 @@ import {tap} from 'rxjs/operators';
 import {Subject} from 'rxjs';
 
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -12,6 +13,7 @@ export class AuthenticationService {
   private tokenKey = 'jwt_token';
   private usernameKey = 'username';
   private userLoggedInSource = new Subject<boolean>();
+  private userRole;
 
   userLoggedIn$ = this.userLoggedInSource.asObservable();
 
@@ -21,6 +23,7 @@ export class AuthenticationService {
   login(loginData: any) {
     return this.loginService.login(loginData)
       .pipe(tap(response => {
+        console.log(loginData);
         sessionStorage.setItem(this.tokenKey, response.headers.get('Authorization').replace('Bearer', '').trim());
         sessionStorage.setItem(this.usernameKey, loginData.username);
         this.userLoggedInSource.next(true);

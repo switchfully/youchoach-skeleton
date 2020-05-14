@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {AuthenticationService} from '../authentication/authentication.service';
+// import * as jwt_decode from 'jwt-decode';
 
 @Component({
   selector: 'app-footer',
@@ -7,9 +9,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FooterComponent implements OnInit {
 
-  constructor() { }
+  constructor(private authenticationService: AuthenticationService) { }
 
   ngOnInit(): void {
   }
-
 }

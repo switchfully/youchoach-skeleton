@@ -42,6 +42,11 @@ public class CoachRepositoryTest {
                 .isNotEmpty()
                 .containsInstanceOf(Coach.class)
                 .contains(expected);
+
+        Coach result = actual.get();
+        Assertions.assertThat(result.getXp()).isEqualTo(100);
+        Assertions.assertThat(result.getAvailability()).isEqualTo("Whenever you want.");
+        Assertions.assertThat(result.getIntroduction()).isEqualTo("Endorsed by your mom.");
     }
 
     @Test
@@ -59,6 +64,42 @@ public class CoachRepositoryTest {
                 .contains(expected);
 
     }
+
+    @Test
+    @Sql("oneDefaultUser.sql")
+    @Sql("makeUsersCoach.sql")
+    public void getCoachByUser(){
+        User user = getDefaultUser();
+        Coach expected = new Coach(user);
+
+        Optional<Coach> actual = coachRepository.findCoachByUser(user);
+
+        Assertions.assertThat(actual).isInstanceOf(Optional.class)
+                .isNotEmpty()
+                .containsInstanceOf(Coach.class)
+                .contains(expected);
+
+    }
+
+    @Test
+    @Sql("oneDefaultUser.sql")
+    @Sql("makeUsersCoach.sql")
+    public void getCoachByUserWithEmail(){
+        User user = getDefaultUser();
+        Coach expected = new Coach(user);
+
+        Optional<Coach> actual = coachRepository.findCoachByUser_Email(user.getEmail());
+
+        Assertions.assertThat(actual).isInstanceOf(Optional.class)
+                .isNotEmpty()
+                .containsInstanceOf(Coach.class)
+                .contains(expected);
+
+    }
+
+
+
+
 
 
     @Test
