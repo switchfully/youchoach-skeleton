@@ -6,10 +6,7 @@ import com.switchfully.youcoach.datastore.entities.User;
 import com.switchfully.youcoach.datastore.repositories.CoachRepository;
 import com.switchfully.youcoach.datastore.repositories.UserRepository;
 import com.switchfully.youcoach.domain.Mapper.UserMapper;
-import com.switchfully.youcoach.domain.dtos.CoachProfileDto;
-import com.switchfully.youcoach.domain.dtos.CoacheeProfileDto;
-import com.switchfully.youcoach.domain.dtos.CreateUserDto;
-import com.switchfully.youcoach.domain.dtos.UserDto;
+import com.switchfully.youcoach.domain.dtos.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -44,14 +41,14 @@ public class UserService {
         return userMapper.toUserDto(newUser);
     }
 
-    public CoacheeProfileDto updateProfile(String email, CoacheeProfileDto coacheeProfileDto){
+    public CreateCoacheeProfileDto updateProfile(String email, CreateCoacheeProfileDto createCoacheeProfileDto){
         User user = assertUserExistsAndRetrieve(email);
-        user.setEmail(coacheeProfileDto.getEmail());
-        user.setFirstName(coacheeProfileDto.getFirstName());
-        user.setLastName(coacheeProfileDto.getLastName());
-        user.setPhotoUrl(coacheeProfileDto.getPhotoUrl());
+        user.setEmail(createCoacheeProfileDto.getEmail());
+        user.setFirstName(createCoacheeProfileDto.getFirstName());
+        user.setLastName(createCoacheeProfileDto.getLastName());
+        user.setPhotoUrl(createCoacheeProfileDto.getPhotoUrl());
         userRepository.save(user);
-        return coacheeProfileDto;
+        return createCoacheeProfileDto;
     }
 
     public UserDto getUserById(long id) {
