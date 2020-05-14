@@ -1,6 +1,7 @@
 DELETE FROM members;
 DELETE FROM coaches;
 DELETE FROM admins;
+DELETE FROM coaching_topics;
 
 INSERT INTO members (email, first_name, last_name, password,school_year, photo_url) VALUES ('coach', 'jef', 'klak', 'coach','','');
 INSERT INTO members (email, first_name, last_name, password, school_year, photo_url) VALUES ('student', 'hans', 'worst', 'student','','');
@@ -14,5 +15,7 @@ INSERT INTO members (email, first_name, last_name, password, school_year, photo_
 
 INSERT INTO coaches (user_id, availability, introduction, xp) VALUES ((SELECT id FROM members WHERE email = 'coach1@school.org'),'my availability here','my introduction here', 100);
 INSERT INTO coaches (user_id, availability, introduction, xp) VALUES ((SELECT id FROM members WHERE email = 'coach2@school.org'),'my availability here','my introduction here', 100);
+
+INSERT INTO coaching_topics(user_id, topic) SELECT user_id, 'Coaching topic' FROM coaches;
 
 INSERT INTO admins SELECT id FROM members WHERE first_name IN ('admin1', 'admin2');

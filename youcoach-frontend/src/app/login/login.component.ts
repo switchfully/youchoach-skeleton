@@ -13,6 +13,7 @@ export class LoginComponent implements OnInit {
   success;
   loginForm;
   title = 'You-Coach | Sign in';
+  jwt;
 
   constructor(private formBuilder: FormBuilder, private authenticationService: AuthenticationService, private router: Router) {
     this.loginForm = this.formBuilder.group({
@@ -26,13 +27,13 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit(loginData) {
-    this.success = false;
     this.error = false;
+    this.success = false;
     this.authenticationService.login(loginData)
       .subscribe(
         (_ => {
           this.success = true;
-          setTimeout(() => this.router.navigateByUrl('/profile'), 1000);
+          setTimeout(() => this.router.navigateByUrl('/coach-profile'), 1000);
         }),
         (_ => this.error = true)
       );

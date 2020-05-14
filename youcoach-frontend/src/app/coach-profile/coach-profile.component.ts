@@ -9,17 +9,40 @@ import {ICoach} from './ICoach';
   styleUrls: ['./coach-profile.component.css']
 })
 export class CoachProfileComponent implements OnInit {
-  coach: ICoach;
+  coach: ICoach = {
+    availability: null,
+    coachXP: null,
+    coachingTopics: null,
+    email: null,
+    firstName: null,
+    introduction: null,
+    lastName: null,
+    photoUrl: null,
+    schoolYear: null,
+    topicYear: null,
+    youcoachRole: null
+  };
+  title = 'You-Coach | Coach-Profile';
+
+  coachView = false;
+
   constructor(private authenticationService: AuthenticationService, private coachService: CoachService) { }
 
   ngOnInit(): void {
-    // this.getCoach();
-    console.log(this.authenticationService.getToken());
-    console.log(this.authenticationService.getUsername());
+    document.getElementById('footer').setAttribute('class', 'page-footer teal lighten-3');
+    document.title = this.title;
+    this.getCoach();
   }
 
-  // getCoach(): void {
-  //   this.coachService.getCoach().subscribe(
-  //     coach => this.coach = coach);
-  // }
+  getCoach(): void {
+    this.coachService.getCoach().subscribe(
+      coach => this.coach = coach);
+  }
+
+  enableCoachView() {
+    this.coachView = true;
+  }
+  disableCoachView() {
+    this.coachView = false;
+  }
 }

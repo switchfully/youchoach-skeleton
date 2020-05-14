@@ -1,12 +1,16 @@
 package com.switchfully.youcoach.domain.service;
 
 import com.switchfully.youcoach.datastore.entities.Coach;
+import com.switchfully.youcoach.datastore.entities.CoachingTopic;
 import com.switchfully.youcoach.datastore.entities.User;
 import com.switchfully.youcoach.domain.Mapper.UserMapper;
 import com.switchfully.youcoach.domain.dtos.CoachProfileDto;
 import com.switchfully.youcoach.domain.dtos.CoacheeProfileDto;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
+
+import java.util.HashSet;
+import java.util.Set;
 
 public class UserMapperTest {
     private final UserMapper userMapper = new UserMapper();
@@ -39,11 +43,16 @@ public class UserMapperTest {
         coach.setXp(100);
         coach.setAvailability("Whenever you want.");
         coach.setIntroduction("Endorsed by your mom.");
+        Set<CoachingTopic> topics = new HashSet<>();
+        topics.add(new CoachingTopic("Algebra"));
+        topics.add(new CoachingTopic("French"));
+        coach.setTopics(topics);
 
         CoachProfileDto expected = (CoachProfileDto) new CoachProfileDto()
                 .withXp(coach.getXp())
                 .withIntroduction(coach.getIntroduction())
                 .withAvailability(coach.getAvailability())
+                .withCoachingTopics(coach.getTopics())
                 .withSchoolYear(user.getSchoolYear())
                 .withId(user.getId())
                 .withEmail(user.getEmail())

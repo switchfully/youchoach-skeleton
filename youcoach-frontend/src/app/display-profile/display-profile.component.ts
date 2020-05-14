@@ -9,12 +9,13 @@ import {CoacheeService} from '../coacheeService/coachee.service';
 })
 export class DisplayProfileComponent implements OnInit {
 
-  member: IMember = null;
+  member: IMember;
 
   constructor(private coacheeService: CoacheeService) {
   }
 
   ngOnInit(): void {
+    document.getElementById('footer').setAttribute('class', 'page-footer yellow darken-2');
     this.getCoachee();
   }
 

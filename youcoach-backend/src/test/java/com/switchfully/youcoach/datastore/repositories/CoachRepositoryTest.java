@@ -1,6 +1,7 @@
 package com.switchfully.youcoach.datastore.repositories;
 
 import com.switchfully.youcoach.datastore.entities.Coach;
+import com.switchfully.youcoach.datastore.entities.CoachingTopic;
 import com.switchfully.youcoach.datastore.entities.User;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -47,6 +48,35 @@ public class CoachRepositoryTest {
         Assertions.assertThat(result.getXp()).isEqualTo(100);
         Assertions.assertThat(result.getAvailability()).isEqualTo("Whenever you want.");
         Assertions.assertThat(result.getIntroduction()).isEqualTo("Endorsed by your mom.");
+        Assertions.assertThat(result.getTopics()).hasSize(1);
+        for(CoachingTopic topic: result.getTopics()) {
+            Assertions.assertThat(topic.getTopic()).contains("topic placeholder");
+        }
+    }
+
+    @Test
+    @Sql("oneDefaultUser.sql")
+    @Sql("makeUsersCoach.sql")
+    public void addTopicForCoach(){
+        User user = getDefaultUser();
+        Coach expected = new Coach(user);
+
+        Optional<Coach> actual = coachRepository.findCoachByUser(user);
+
+        Assertions.assertThat(actual).isInstanceOf(Optional.class)
+                .isNotEmpty()
+                .containsInstanceOf(Coach.class)
+                .contains(expected);
+
+        Coach result = actual.get();
+        result.getTopics().add(new CoachingTopic("Another Topic"));
+        coachRepository.save(result);
+        result = coachRepository.findCoachByUser(user).get();
+
+        Assertions.assertThat(result.getXp()).isEqualTo(100);
+        Assertions.assertThat(result.getAvailability()).isEqualTo("Whenever you want.");
+        Assertions.assertThat(result.getIntroduction()).isEqualTo("Endorsed by your mom.");
+        Assertions.assertThat(result.getTopics()).hasSize(2);
     }
 
     @Test
