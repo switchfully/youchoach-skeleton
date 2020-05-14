@@ -49,7 +49,7 @@ export class EditProfileComponent implements OnInit {
       email: this.editForm.get('email').value,
       photoUrl: this.editForm.get('photoUrl').value,
       schoolYear: this.member.schoolYear,
-      youcoachRole: this.member.youcoachRole,
+      youcoachRole: "coachee",
     };
     // this.member = this.editForm.value;
     this.updateProfile();
