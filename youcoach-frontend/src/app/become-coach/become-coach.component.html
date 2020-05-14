@@ -7,34 +7,59 @@
   </div>
 </div>
 
+<main>
 
-<div class="col s12 m8 offset-m2 l6 offset-l3">
-  <div class="card-panel grey lighten-5 z-depth-1">
-    <div class="row valign-wrapper">
-      <div class="col s2">
-        <img src="/assets/img/image_preview.png" alt="" class=" responsive-img"> <!-- notice the "circle" class -->
+  <div class="row">
+
+    <div class="col s12 m2">
+      <div class="content-container">
+        <h6>My Profile</h6>
+        <div class="collection">
+          <a href="#!" class="collection-item black-text active yellow darken-2" routerLink="/profile">Profile Information</a>
+          <a href="#!" class="collection-item grey-text text-darken-2">Coaching sessions</a>
+          <a href="#!" class="collection-item grey-text text-darken-2" routerLink="/becomecoach">Apply to become a coach</a>
+        </div>
       </div>
-      <div class="col s10">
+    </div>
+
+    <div class="col s12 m10">
+      <div class="content-container">
+
+        <section class="card-panel grey lighten-5">
+          <h5>Request profile change</h5>
+          <div class="divider"></div>
+          <div class="row">
+            <div class="col l2 m2 s12">
+              <img src="/assets/img/image_preview.png" class="responsive-img"
+                   alt="Under Construction">
+            </div>
+            <div class="col l10 m10 s12">
               <span class="black-text">
                 This part of the application is currently still under construction. In order to become a coach please send an email to your administration with the following information: <br/>
   Your full name <br/>
   Your motivation to become a coach <br/>
   The list of topics (topic + grade) on which you would like to coach <br/>
               </span>
-      </div>
-    </div>
-    <div class="center"><a
-      href="mailto:driesbodaer@hotmail.com
+
+
+              <div class="row right-align">
+                <a
+                  href="mailto:driesbodaer@hotmail.com
      ?cc=omar.lamrabet@vdab.be
      &subject=Become a coach&body=
      Your full name: %0D%0A
      Your motivation to become a coach: %0D%0A
      The list of topics (topic + grade) on which you would like to coach: "
-      class="btn-large waves-effect waves-light yellow darken-2">
-      <span class="black-text">Send Mail</span>
-    </a>
-    </div>
-  </div>
-</div>
+                  class="btn-large waves-effect waves-light yellow darken-2">Send Email <i
+                  class="material-icons right">send</i></a>
 
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+
+  </div>
+</main>
 
