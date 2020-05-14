@@ -5,7 +5,7 @@ import javax.persistence.Embeddable;
 
 @Embeddable
 public class CoachingTopic {
-    @Column(name = "topic",unique = true, nullable = false)
+    @Column(name = "topic", nullable = false)
     private String topic;
 
     public CoachingTopic(){}

@@ -1,2 +1,2 @@
-INSERT INTO coaches (user_id) SELECT id FROM members;
+INSERT INTO coaches (user_id) SELECT id FROM members WHERE id NOT IN (SELECT user_id FROM coaches);
 UPDATE coaches SET xp = 100, availability = 'Whenever you want.', introduction = 'Endorsed by your mom.';
