@@ -8,6 +8,7 @@ import {ICoach} from './ICoach';
 })
 export class CoachService {
   readonly url = 'http://localhost:8080/users';
+
   httpOptions = {
     headers: new HttpHeaders({'Content-Type': 'application/json'})
   };
@@ -15,7 +16,7 @@ export class CoachService {
   }
 
   getCoach(): Observable<ICoach> {
-    return this.http.get<ICoach>(this.url + '/profile');
+    return this.http.get<ICoach>(this.url + '/coach/profile');
   }
 
 }
