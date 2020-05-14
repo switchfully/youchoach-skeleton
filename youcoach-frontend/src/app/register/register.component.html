@@ -21,7 +21,7 @@
               </div>
               <div class="row">
                 <div class="input-field col s12">
-                  <input id="email" type="email" class="validate" required formControlName="email">
+                  <input id="email" type="email" class="validate" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" formControlName="email">
                   <label for="email">Email</label>
                   <span class="helper-text red-text darken-2"  *ngIf="emailExistsError">An account with the provided email already exists</span>
                   <span data-error="Not a valid email address" class="helper-text" ></span>
