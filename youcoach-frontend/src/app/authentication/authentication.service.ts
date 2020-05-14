@@ -2,7 +2,7 @@ import {Injectable, OnInit} from '@angular/core';
 import {AuthenticationHttpService} from './authentication.http.service';
 import {tap} from 'rxjs/operators';
 import {Subject} from 'rxjs';
-import * as jwt_decode from 'jwt-decode';
+// import * as jwt_decode from 'jwt-decode';
 
 @Injectable({
   providedIn: 'root'
