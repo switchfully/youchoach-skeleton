@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthenticationService} from '../authentication/authentication.service';
 import {TranslateService} from '@ngx-translate/core';
-import {ProfileViewService} from "../profile-view.service";
+import {ProfileViewService} from '../profile-view.service';
 
 @Component({
   selector: 'app-header',
