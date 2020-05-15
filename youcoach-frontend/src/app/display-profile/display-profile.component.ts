@@ -18,7 +18,7 @@ export class DisplayProfileComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getCoachee();
+
     document.getElementById('footer').setAttribute('class', 'page-footer yellow darken-2');
     const url: string = this.route.snapshot['_routerState'].url;
     if (url.endsWith('/profile')) {
