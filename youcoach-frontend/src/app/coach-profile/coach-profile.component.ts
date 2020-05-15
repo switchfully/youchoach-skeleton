@@ -32,6 +32,7 @@ export class CoachProfileComponent implements OnInit {
     document.getElementById('footer').setAttribute('class', 'page-footer teal lighten-3');
     document.title = this.title;
     this.getCoach();
+    document.getElementById('coachee').setAttribute('class', 'hidden');
   }
 
   getCoach(): void {
