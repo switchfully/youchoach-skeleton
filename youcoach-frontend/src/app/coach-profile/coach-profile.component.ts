@@ -37,6 +37,6 @@ export class CoachProfileComponent implements OnInit {
 
   getCoach(): void {
     this.coachService.getCoach().subscribe(
-      coach => { this.coach = coach; console.log(coach);});
+      coach => this.coach = coach);
   }
 }
