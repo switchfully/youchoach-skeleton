@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:remove="all">Template for HTML email</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<p>
+    Hello, <span th:text="${fullName}">unknown user</span>!
+</p>
+<p>
+    You are receiving this email because you or someone else registered at
+    <span th:text="${firmName}">youcoach</span>.
+</p>
+<p>
+    If this action was taken by you, great! Welcome to <span th:text="${firmName}">youcoach</span>.<br />
+    <br />
+    Before you can proceed you must validate your email-address however,<br />
+    so please proceed to <a th:href="@{http://localhost:4200/validate-account(token=${token})}" href="${hostName}"></a> to validate your email-address.
+</p>
+<p>
+    The <span th:text="${firmName}">youcoach</span> team.
+</p>
+</body>
+</html>
+
+
+

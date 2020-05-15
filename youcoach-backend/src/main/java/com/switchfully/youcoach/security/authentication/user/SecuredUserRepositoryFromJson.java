@@ -3,7 +3,7 @@ package com.switchfully.youcoach.security.authentication.user;
 import java.util.List;
 
 public class SecuredUserRepositoryFromJson implements SecuredUserRepository {
-    private List<SecuredUser> securedUsers;
+    private final List<SecuredUser> securedUsers;
 
     public SecuredUserRepositoryFromJson(List<SecuredUser> securedUsers) {
         this.securedUsers = securedUsers;

@@ -13,6 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.mail.MessagingException;
 import java.util.List;
 
 @Service
@@ -23,14 +24,18 @@ public class UserService {
     private final ValidationService validationService;
     private final PasswordEncoder passwordEncoder;
     private final CoachRepository coachRepository;
+    private final AccountVerificator accountVerificator;
 
     @Autowired
-    public UserService(UserRepository userRepository, CoachRepository coachRepository, UserMapper userMapper, ValidationService validationService, PasswordEncoder passwordEncoder) {
+    public UserService(UserRepository userRepository, CoachRepository coachRepository, UserMapper userMapper,
+                       ValidationService validationService, PasswordEncoder passwordEncoder,
+                       AccountVerificator accountVerificator) {
         this.userRepository = userRepository;
         this.coachRepository = coachRepository;
         this.userMapper = userMapper;
         this.validationService = validationService;
         this.passwordEncoder = passwordEncoder;
+        this.accountVerificator = accountVerificator;
     }
 
     public UserDto createUser(CreateUserDto createUserDto) {
@@ -38,6 +43,13 @@ public class UserService {
         User newUser = userMapper.toUser(createUserDto);
         newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
         newUser = userRepository.save(newUser);
+        accountVerificator.createAccountVerification(newUser);
+        try {
+            accountVerificator.sendVerificationEmail(newUser);
+        } catch (MessagingException ex){
+            newUser.setAccountEnabled(true);
+            accountVerificator.removeAccountVerification(newUser);
+        }
         return userMapper.toUserDto(newUser);
     }
 
@@ -113,6 +125,17 @@ public class UserService {
     }
     private User assertUserExistsAndRetrieve(final String email){
         return userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException(email));
+    }
+
+    public ValidationResultDto validateAccount(ValidateAccountDto validationData) {
+        if(validationDataDoesNotMatch(validationData)) return new ValidationResultDto(false);
+
+        accountVerificator.enableAccount(validationData.getEmail());
+        return new ValidationResultDto(true);
+    }
+
+    private boolean validationDataDoesNotMatch(ValidateAccountDto validationData) {
+        return !accountVerificator.doesVerificationCodeMatch(validationData.getVerificationCode(), validationData.getEmail());
     }
 
 }

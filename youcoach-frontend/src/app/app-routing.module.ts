@@ -7,6 +7,7 @@ import {BecomeCoachComponent} from './become-coach/become-coach.component';
 import {DisplayProfileComponent} from './display-profile/display-profile.component';
 import {EditProfileComponent} from './edit-profile/edit-profile.component';
 import {CoachProfileComponent} from './coach-profile/coach-profile.component';
+import {ValidateAccountComponent} from './validate-account/validate-account.component';
 
 const routes: Routes = [
   {path: 'home', component: HomeComponent},
@@ -17,6 +18,7 @@ const routes: Routes = [
   {path: 'profile/:id', component: DisplayProfileComponent },
   {path: 'edit-profile', component: EditProfileComponent },
   {path: 'coach-profile', component: CoachProfileComponent },
+  {path: 'validate-account', component: ValidateAccountComponent },
   {path: '', redirectTo: 'home', pathMatch: 'full'},
   {path: '**', redirectTo: 'home', pathMatch: 'full'},
 ];

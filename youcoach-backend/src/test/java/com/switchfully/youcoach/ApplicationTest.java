@@ -1,10 +1,5 @@
 package com.switchfully.youcoach;
 
-import com.switchfully.youcoach.datastore.entities.User;
-import com.switchfully.youcoach.datastore.repositories.UserRepository;
-import com.switchfully.youcoach.domain.dtos.CreateUserDto;
-import com.switchfully.youcoach.domain.dtos.UserDto;
-import com.switchfully.youcoach.domain.service.UserService;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
