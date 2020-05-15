@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthenticationService} from '../authentication/authentication.service';
 import {TranslateService} from '@ngx-translate/core';
+import {ProfileViewService} from "../profile-view.service";
 
 @Component({
   selector: 'app-header',
@@ -11,7 +12,7 @@ export class HeaderComponent implements OnInit {
   username;
   language = 'en';
 
-  constructor(private authenticationService: AuthenticationService, private translate: TranslateService) {
+  constructor(public authenticationService: AuthenticationService, private translate: TranslateService, private profileView: ProfileViewService) {
   }
 
   ngOnInit(): void {
@@ -32,5 +33,13 @@ export class HeaderComponent implements OnInit {
 
   logout() {
     this.authenticationService.logout();
+  }
+
+  disableCoachView() {
+    this.profileView.disableCoachView();
+  }
+
+  enableCoachView() {
+    this.profileView.enableCoachView();
   }
 }
