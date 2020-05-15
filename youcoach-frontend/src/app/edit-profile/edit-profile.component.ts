@@ -16,7 +16,7 @@ export class EditProfileComponent implements OnInit {
     firstName: ['', [Validators.required]],
     lastName: ['', [Validators.required]],
     email: ['', [Validators.required]],
-    // photoUrl: [''],
+    photoUrl: [''],
   });
 
   constructor(private fb: FormBuilder, private coacheeService: CoacheeService, private router: Router) {
@@ -42,19 +42,17 @@ export class EditProfileComponent implements OnInit {
 
 
   onSubmit() {
-    console.log('test ob submit');
-    // this.member = {
-    //   firstName: this.editForm.get('firstname').value,
-    //   lastName: this.editForm.get('lastname').value,
-    //   email: this.editForm.get('email').value,
-    //   photoUrl: this.editForm.get('url').value,
-    //   schoolYear: this.member.email,
-    //   youcoachRole: 'Coachee',
-    //   id: this.member.id
-    // };
-    this.member = this.editForm.value;
+    console.log('test on submit');
+    this.member = {
+      firstName: this.editForm.get('firstName').value,
+      lastName: this.editForm.get('lastName').value,
+      email: this.editForm.get('email').value,
+      photoUrl: this.editForm.get('photoUrl').value,
+      schoolYear: this.member.schoolYear,
+      youcoachRole: "coachee",
+    };
+    // this.member = this.editForm.value;
     this.updateProfile();
-    // this.register(this.coachee);
   }
 
 }

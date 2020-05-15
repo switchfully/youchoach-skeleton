@@ -1,9 +1,6 @@
 package com.switchfully.youcoach.api;
 
-import com.switchfully.youcoach.domain.dtos.CoachProfileDto;
-import com.switchfully.youcoach.domain.dtos.CoacheeProfileDto;
-import com.switchfully.youcoach.domain.dtos.CreateUserDto;
-import com.switchfully.youcoach.domain.dtos.UserDto;
+import com.switchfully.youcoach.domain.dtos.*;
 import com.switchfully.youcoach.domain.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,8 +46,8 @@ public class UserController {
 
     @PreAuthorize("hasRole('ROLE_COACHEE')")
     @PutMapping(produces = "application/json;charset=UTF-8", path = "/profile")
-    public CoacheeProfileDto updateCoacheeProfile(Principal principal, @RequestBody CoacheeProfileDto coacheeProfileDto){
-        return userService.updateProfile(principal.getName(), coacheeProfileDto);
+    public CreateCoacheeProfileDto updateCoacheeProfile(Principal principal, @RequestBody CreateCoacheeProfileDto createCoacheeProfileDto){
+        return userService.updateProfile(principal.getName(), createCoacheeProfileDto);
     }
 
     @PreAuthorize("hasRole('ROLE_COACH')")
