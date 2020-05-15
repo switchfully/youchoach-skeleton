@@ -4,6 +4,7 @@ import {FormBuilder, Validators} from '@angular/forms';
 import {ICoachee} from '../register/icoachee';
 import {CoacheeService} from '../coacheeService/coachee.service';
 import {Router} from '@angular/router';
+import {AuthenticationService} from '../authentication/authentication.service';
 
 @Component({
   selector: 'app-edit-profile',
@@ -18,8 +19,10 @@ export class EditProfileComponent implements OnInit {
     email: ['', [Validators.required]],
     photoUrl: [''],
   });
+  private isEmailChange = false;
 
-  constructor(private fb: FormBuilder, private coacheeService: CoacheeService, private router: Router) {
+  constructor(private fb: FormBuilder, private coacheeService: CoacheeService, private router: Router,
+              private authenticationService: AuthenticationService) {
   }
 
   ngOnInit(): void {
@@ -33,25 +36,40 @@ export class EditProfileComponent implements OnInit {
 
   updateProfile(): void {
     this.coacheeService.updateProfile(this.member).subscribe();
-    this.onBack();
+    if (this.isEmailChange === true) {
+      alert('Sign in with your new email');
+      this.authenticationService.logout();
+      this.onLogin();
+    } else {
+      this.onBack();
+    }
+
+
   }
 
   onBack(): void {
     this.router.navigate(['/profile']);
   }
 
+  onLogin(): void {
+    this.router.navigate(['/login']);
+  }
+
 
   onSubmit() {
-    console.log('test on submit');
+    console.log('isEmailValid: ' + this.editForm.get('email').value);
+    console.log('isEmailValid: ' + this.member.email);
+    if (this.editForm.get('email').value !== null) {
+      this.isEmailChange = true;
+    }
     this.member = {
       firstName: this.editForm.get('firstName').value,
       lastName: this.editForm.get('lastName').value,
       email: this.editForm.get('email').value,
       photoUrl: this.editForm.get('photoUrl').value,
       schoolYear: this.member.schoolYear,
-      youcoachRole: "coachee",
+      youcoachRole: 'coachee',
     };
-    // this.member = this.editForm.value;
     this.updateProfile();
   }
 

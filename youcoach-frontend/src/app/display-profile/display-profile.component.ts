@@ -12,13 +12,19 @@ import {map} from 'rxjs/operators';
 })
 export class DisplayProfileComponent implements OnInit {
 
-  member: IMember = {email: null, firstName: null, lastName: null, photoUrl: null, schoolYear: null, youcoachRole: null};
+  member: IMember = {
+    email: null,
+    firstName: null,
+    lastName: null,
+    photoUrl: null,
+    schoolYear: null,
+    youcoachRole: null
+  };
 
   constructor(private coacheeService: CoacheeService, private route: ActivatedRoute) {
   }
 
   ngOnInit(): void {
-
     document.getElementById('footer').setAttribute('class', 'page-footer yellow darken-2');
     const url: string = this.route.snapshot['_routerState'].url;
     if (url.endsWith('/profile')) {
