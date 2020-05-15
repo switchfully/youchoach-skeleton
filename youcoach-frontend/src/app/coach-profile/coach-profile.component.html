@@ -2,9 +2,9 @@
   <div class="nav-content teal lighten-3">
     <div class="container">
       <ul class="tabs tabs-transparent">
-        <li class="tab"><a class="grey-text text-darken-2" (click)="disableCoachView()" routerLink="/coach-profile" >My Profile</a></li>
-        <li class="tab"><a class="grey-text text-darken-2" href="#test3">Find a coach</a></li>
-        <li class="tab"><a class="black-test" (click)="enableCoachView()" routerLink="/coach-profile" >My Coach Profile</a></li>
+        <li class="tab"><a class="grey-text text-darken-2" (click)="disableCoachView()" routerLink="/coach-profile" translate >menu.link.my-profile</a></li>
+        <li class="tab"><a class="grey-text text-darken-2" href="#test3" translate >menu.link.find-a-coach</a></li>
+        <li class="tab"><a class="black-test" (click)="enableCoachView()" routerLink="/coach-profile" translate >menu.link.my-coach-profile</a></li>
       </ul>
     </div>
   </div>
@@ -13,12 +13,12 @@
   <div class="row">
     <div class="col s12 m2">
       <div class="content-container">
-        <h6>My Coach Profile</h6>
+        <h6 translate>my-profile-menu.title</h6>
         <div class="collection">
-          <a href="#!" class="collection-item black-text active teal lighten-3">Profile Information</a>
-          <a href="#!" class="collection-item grey-text text-darken-2">Coaching sessions<span
+          <a href="#!" class="collection-item black-text active teal lighten-3"translate >my-profile-menu.link.profile-information</a>
+          <a href="#!" class="collection-item grey-text text-darken-2"translate >my-profile-menu.link.coaching-sessions<span
             class="btn-floating btn-small teal lighten-3 pulse">1</span></a>
-          <a href="#!" class="collection-item grey-text text-darken-2">Request profile change</a>
+          <a href="#!" class="collection-item grey-text text-darken-2"translate >my-profile-menu.link.request-profile-change</a>
         </div>
       </div>
     </div>
@@ -32,7 +32,7 @@
             <a class="waves-effect waves-light btn-large btn-floating teal lighten-3"><i
               class="material-icons left">edit</i>Edit</a>
           </div>
-          <h5>Profile Information</h5>
+          <h5 translate>my-profile-menu.link.profile-information</h5>
           <div class="divider"></div>
           <div class="row">
             <div class="col l2 m2 s12">
@@ -43,23 +43,23 @@
               <table class="highlight">
                 <tbody>
                 <tr>
-                  <td><strong>First name</strong></td>
+                  <td><strong translate>coach-profile-information.label.first-name</strong></td>
                   <td>{{coach.firstName}}</td>
                 </tr>
                 <tr>
-                  <td><strong>Last name</strong></td>
+                  <td><strong translate>coach-profile-information.label.last-name</strong></td>
                   <td>{{coach.lastName}}</td>
                 </tr>
                 <tr>
-                  <td><strong>Email</strong></td>
+                  <td><strong translate>coach-profile-information.label.email</strong></td>
                   <td>{{coach.email}}</td>
                 </tr>
                 <tr>
-                  <td><strong>Class</strong></td>
+                  <td><strong translate>coach-profile-information.label.class</strong></td>
                   <td>{{coach.schoolYear}}</td>
                 </tr>
                 <tr>
-                  <td><strong>You-coach role</strong></td>
+                  <td><strong translate>profile-information.label.role</strong></td>
                   <td>{{coach.youcoachRole}}</td>
                 </tr>
                 </tbody>

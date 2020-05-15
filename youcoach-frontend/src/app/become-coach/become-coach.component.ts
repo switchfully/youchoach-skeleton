@@ -13,6 +13,6 @@ export class BecomeCoachComponent extends InitMaterializeComponent implements On
   }
 
 
-  ngOnInit(){
+  ngOnInit() {
   }
 }

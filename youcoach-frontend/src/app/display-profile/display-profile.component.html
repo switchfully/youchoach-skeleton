@@ -19,9 +19,9 @@
       <div class="content-container">
         <h6>My Profile</h6>
         <div class="collection">
-          <a href="#!" class="collection-item black-text active yellow darken-2" routerLink="/profile">Profile Information</a>
-          <a href="#!" class="collection-item grey-text text-darken-2">Coaching sessions</a>
-          <a href="#!" class="collection-item grey-text text-darken-2" routerLink="/becomecoach">Apply to become a coach</a>
+          <a href="#!" class="collection-item black-text active yellow darken-2" routerLink="/profile" translate>my-profile-menu.link.profile-information</a>
+          <a href="#!" class="collection-item grey-text text-darken-2" translate>my-profile-menu.link.coaching-sessions</a>
+          <a href="#!" class="collection-item grey-text text-darken-2" routerLink="/becomecoach" translate>my-profile-menu.link.apply-to-become-a-coach</a>
         </div>
       </div>
     </div>
@@ -34,7 +34,7 @@
             <a class="waves-effect waves-light btn-large btn-floating yellow darken-2"><i
               class="material-icons left" routerLink="/edit-profile">edit</i>Edit</a>
           </div>
-          <h5>Profile Information</h5>
+          <h5 translate>profile-information.title</h5>
           <div class="divider"></div>
           <div class="row">
             <div class="col l2 m2 s12">
@@ -45,25 +45,25 @@
               <table class="highlight">
                 <tbody>
                 <tr>
-                  <td><strong>First name</strong></td>
+                  <td><strong translate>profile-information.label.first-name</strong></td>
                   <td>{{member.firstName}}</td>
                 </tr>
                 <tr>
-                  <td><strong>Last name</strong></td>
+                  <td><strong translate>profile-information.label.last-name</strong></td>
                   <td>{{member.lastName}}</td>
                 </tr>
                 <tr>
-                  <td><strong>Email</strong></td>
+                  <td><strong translate>profile-information.label.email</strong></td>
                   <td>
                     {{member.email}}
                   </td>
                 </tr>
                 <tr>
-                  <td><strong>Class</strong></td>
+                  <td><strong translate>profile-information.label.class</strong></td>
                   <td>{{member.schoolYear}}</td>
                 </tr>
                 <tr>
-                  <td><strong>You-coach role</strong></td>
+                  <td><strong translate>profile-information.label.role</strong></td>
                   <td>{{member.youcoachRole}}</td>
                 </tr>
                 </tbody>
