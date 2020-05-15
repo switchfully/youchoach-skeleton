@@ -24,8 +24,10 @@ class UserServiceTest {
     private final UserRepository userRepository = Mockito.mock(UserRepository.class);
     private final CoachRepository coachRepository = Mockito.mock(CoachRepository.class);
     private final PasswordEncoder passwordEncoder = Mockito.mock(PasswordEncoder.class);
+    private final AccountVerificatorService accountVerificatorService = Mockito.mock(AccountVerificatorService.class);
 
-    private final UserService userService = new UserService(userRepository, coachRepository, new UserMapper(), new ValidationService(), passwordEncoder);
+    private final UserService userService = new UserService(userRepository, coachRepository, new UserMapper(), new ValidationService(),
+            passwordEncoder, accountVerificatorService);
 
     private User getDefaultUser() {
         return new User(1,"First", "Last","example@example.com","1lpassword",

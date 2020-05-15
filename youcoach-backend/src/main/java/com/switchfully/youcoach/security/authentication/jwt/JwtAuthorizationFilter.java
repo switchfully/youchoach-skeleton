@@ -64,14 +64,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
                 var authorities = authoritiesInToken.stream()
                         .map(SimpleGrantedAuthority::new)
                         .collect(Collectors.toList());
-                /*
-                ArrayList<LinkedHashMap<String, String>> authoritiesInToken
-                        = parsedToken.getBody().get("rol", ArrayList.class);
-                var authorities = authoritiesInToken.stream()
-                        .map(linkedMap -> linkedMap.get("authority"))
-                        .map(SimpleGrantedAuthority::new)
-                        .collect(Collectors.toList());
-                 */
+
                 if (!isEmpty(username)) {
                     return new UsernamePasswordAuthenticationToken(username, null, authorities);
                 }

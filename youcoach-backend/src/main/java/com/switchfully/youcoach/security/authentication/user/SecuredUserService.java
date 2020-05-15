@@ -8,7 +8,6 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -17,8 +16,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
-
-import static java.util.Collections.emptyList;
 
 @Service
 public class SecuredUserService implements UserDetailsService {
@@ -37,13 +34,12 @@ public class SecuredUserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(final String userName) throws UsernameNotFoundException {
-        System.out.println("loading from database: " + userName);
         com.switchfully.youcoach.datastore.entities.User user = userRepository.findByEmail(userName)
                 .orElseThrow(() -> new UsernameNotFoundException(userName));
 
         Collection<GrantedAuthority> authorities = determineGrantedAuthorities(user);
 
-        return new User(user.getEmail(), user.getPassword(), authorities);
+        return new ValidatedUser(user.getEmail(), user.getPassword(), authorities, user.isAccountEnabled());
     }
 
     Collection<GrantedAuthority> determineGrantedAuthorities(com.switchfully.youcoach.datastore.entities.User user) {
