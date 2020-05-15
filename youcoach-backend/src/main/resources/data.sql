@@ -45,16 +45,16 @@ INSERT INTO coaching_topic (id, topic_topic_id) VALUES (1001, 101);
 INSERT INTO coaching_topic (id, topic_topic_id) VALUES (1002, 102);
 
 -- coach1
-INSERT INTO coaches_topics (coach_user_id, topics_id) VALUES (113, 100); -- Algebra
+INSERT INTO coaches_topics (coach_user_id, topics_id) VALUES (113, 1000); -- Algebra
 INSERT INTO coaching_topic_grades (coaching_topic_id, grades) VALUES (1000, 4);
 INSERT INTO coaching_topic_grades (coaching_topic_id, grades) VALUES (1000, 3);
 INSERT INTO coaching_topic_grades (coaching_topic_id, grades) VALUES (1000, 5);
-INSERT INTO coaches_topics (coach_user_id, topics_id) VALUES (113, 101); -- French
+INSERT INTO coaches_topics (coach_user_id, topics_id) VALUES (113, 1001); -- French
 INSERT INTO coaching_topic_grades (coaching_topic_id, grades) VALUES (1001, 1);
 INSERT INTO coaching_topic_grades (coaching_topic_id, grades) VALUES (1001, 6);
 
 --coach2
-INSERT INTO coaches_topics (coach_user_id, topics_id) VALUES (114, 102); -- Biology
+INSERT INTO coaches_topics (coach_user_id, topics_id) VALUES (114, 1002); -- Biology
 
 INSERT INTO coaching_topic_grades (coaching_topic_id, grades) VALUES (1002, 7);
 INSERT INTO coaching_topic_grades (coaching_topic_id, grades) VALUES (1002, 6);
