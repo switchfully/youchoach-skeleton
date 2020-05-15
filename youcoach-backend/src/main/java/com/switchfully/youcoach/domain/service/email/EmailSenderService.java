@@ -11,21 +11,22 @@ import javax.mail.internet.MimeMessage;
 
 @Service
 public class EmailSenderService {
-    Logger logger = LoggerFactory.getLogger(this.getClass());
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
     private final JavaMailSender javaMailSender;
 
     @Autowired
     public EmailSenderService(JavaMailSender javaMailSender) {
         this.javaMailSender = javaMailSender;
+        System.setProperty("mail.mime.charset", "utf8");
     }
 
-    public void sendMail(String from, String to, String subject, String body) throws MessagingException {
+    public void sendMail(String from, String to, String subject, String body, boolean bodyIsHTML) throws MessagingException {
         MimeMessage message = javaMailSender.createMimeMessage();
-        MimeMessageHelper helper = new MimeMessageHelper(message, true);
+        MimeMessageHelper helper = new MimeMessageHelper(message, true,"UTF-8");
 
         helper.setTo(to);
         helper.setSubject(subject);
-        helper.setText(body);
+        helper.setText(body, bodyIsHTML);
         helper.setFrom(from);
 
         logger.info("Sending email with subject " + subject + " to " + to);

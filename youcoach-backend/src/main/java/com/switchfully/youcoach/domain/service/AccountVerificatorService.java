@@ -71,7 +71,7 @@ public class AccountVerificatorService implements AccountVerificator {
         ctx.setVariable("token", accountVerification.getVerificationCode());
         final String body = this.templateEngine.process("EmailVerificationTemplate.html", ctx);
 
-        emailSenderService.sendMail(from, user.getEmail(), subject, body);
+        emailSenderService.sendMail(from, user.getEmail(), subject, body, true);
 
     }
 
