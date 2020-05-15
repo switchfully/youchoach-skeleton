@@ -7,12 +7,13 @@ import {InitMaterializeComponent} from '../init-materialize.component';
   styleUrls: ['./become-coach.component.css']
 })
 export class BecomeCoachComponent extends InitMaterializeComponent implements OnInit {
-
+  text = null;
   constructor() {
     super();
   }
 
 
-  ngOnInit(){
+  ngOnInit() {
+    this.text = document.getElementById('test').nodeValue;
   }
 }
