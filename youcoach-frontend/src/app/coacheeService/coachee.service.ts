@@ -11,7 +11,10 @@ import {IMember} from '../IMember';
 export class CoacheeService {
   readonly url = 'http://localhost:8080/users';
   httpOptions = {
-    headers: new HttpHeaders({'Content-Type': 'application/json'})
+    headers: new HttpHeaders({'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin' : 'http://localhost:4200'
+    }),
+
   };
 
   constructor(private http: HttpClient, private messageService: MessageService) {
