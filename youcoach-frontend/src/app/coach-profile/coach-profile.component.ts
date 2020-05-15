@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import {AuthenticationService} from '../authentication/authentication.service';
+import {Component, OnInit} from '@angular/core';
 import {CoachService} from './coach.service';
 import {ICoach} from './ICoach';
 
@@ -26,13 +25,13 @@ export class CoachProfileComponent implements OnInit {
 
   coachView = false;
 
-  constructor(private authenticationService: AuthenticationService, private coachService: CoachService) { }
+  constructor(private coachService: CoachService) { }
 
   ngOnInit(): void {
+    document.getElementById('coachee').setAttribute('class', 'hidden');
     document.getElementById('footer').setAttribute('class', 'page-footer teal lighten-3');
     document.title = this.title;
     this.getCoach();
-    document.getElementById('coachee').setAttribute('class', 'hidden');
   }
 
   getCoach(): void {
