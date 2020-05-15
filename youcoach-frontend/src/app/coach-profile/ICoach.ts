@@ -9,6 +9,6 @@ export interface ICoach extends IMember {
   coachXP: number;
   introduction: string;
   availability: string;
-  coachingTopics: ITopic[];
+  topics: ITopic[];
   topicYear: number;
 }

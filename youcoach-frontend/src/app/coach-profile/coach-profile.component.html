@@ -58,10 +58,6 @@
                   <td><strong translate>coach-profile-information.label.class</strong></td>
                   <td>{{coach.schoolYear}}</td>
                 </tr>
-                <tr>
-                  <td><strong translate>profile-information.label.role</strong></td>
-                  <td>{{coach.youcoachRole}}</td>
-                </tr>
                 </tbody>
               </table>
             </div>
@@ -114,6 +110,7 @@
             <div class="col s12">
               <table class="highlight">
                 <tbody>
+                <!--
                 <tr>
                   <td><strong>Biology</strong></td>
                   <td>
@@ -128,20 +125,21 @@
                     </div>
                   </td>
                 </tr>
-<!--                <tr>-->
-<!--                  <td *ngFor="let topic of coach.coachingTopics"><strong>{{topic.name}}</strong></td>-->
-<!--                  <td>-->
-<!--                    <div class="center">-->
-<!--                      <a class="btn-floating disabled"><i class="material-icons">filter_1</i></a>-->
-<!--                      <a class="btn-floating disabled"><i class="material-icons">filter_2</i></a>-->
-<!--                      <a class="btn-floating disabled"><i class="material-icons">filter_3</i></a>-->
-<!--                      <a class="btn-floating"><i class="material-icons">filter_4</i></a>-->
-<!--                      <a class="btn-floating disabled"><i class="material-icons">filter_5</i></a>-->
-<!--                      <a class="btn-floating disabled"><i class="material-icons">filter_6</i></a>-->
-<!--                      <a class="btn-floating disabled"><i class="material-icons">filter_7</i></a>-->
-<!--                    </div>-->
-<!--                  </td>-->
-<!--                </tr>-->
+                -->
+                <tr *ngFor="let topic of coach.topics">
+                  <td><strong>{{topic.name}}</strong></td>
+                  <td>
+                    <div class="center">
+                      <a class="btn-floating " [class.disabled]="!topic.grades.includes(1)"><i class="material-icons">filter_1</i></a>
+                      <a class="btn-floating " [class.disabled]="!topic.grades.includes(2)"><i class="material-icons">filter_2</i></a>
+                      <a class="btn-floating " [class.disabled]="!topic.grades.includes(3)"><i class="material-icons">filter_3</i></a>
+                      <a class="btn-floating " [class.disabled]="!topic.grades.includes(4)"><i class="material-icons">filter_4</i></a>
+                      <a class="btn-floating " [class.disabled]="!topic.grades.includes(5)"><i class="material-icons">filter_5</i></a>
+                      <a class="btn-floating " [class.disabled]="!topic.grades.includes(6)"><i class="material-icons">filter_6</i></a>
+                      <a class="btn-floating " [class.disabled]="!topic.grades.includes(7)"><i class="material-icons">filter_7</i></a>
+                    </div>
+                  </td>
+                </tr>
                 </tbody>
               </table>
             </div>

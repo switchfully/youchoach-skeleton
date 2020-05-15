@@ -12,7 +12,7 @@ export class CoachProfileComponent implements OnInit {
   coach: ICoach = {
     availability: null,
     coachXP: null,
-    coachingTopics: null,
+    topics: null,
     email: null,
     firstName: null,
     introduction: null,
@@ -37,6 +37,6 @@ export class CoachProfileComponent implements OnInit {
 
   getCoach(): void {
     this.coachService.getCoach().subscribe(
-      coach => this.coach = coach);
+      coach => { this.coach = coach; console.log(coach);});
   }
 }
