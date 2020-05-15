@@ -4,7 +4,7 @@
     <div class="row">
       <div class="col s12 m12">
 
-        <h1 class="center teal-text lighten-3">Register</h1>
+        <h1 class="center teal-text lighten-3" translate>register.title</h1>
         <div class="content-container-with-padding z-depth-4">
 
           <div class="row">
@@ -12,39 +12,42 @@
               <div class="row">
                 <div class="input-field col s6">
                   <input id="first_name" type="text" class="validate" required formControlName="firstname">
-                  <label for="first_name">First Name</label>
+                  <label for="first_name" translate>register.label.first-name</label>
+                  <span data-error="Required" class="helper-text"></span>
                 </div>
                 <div class="input-field col s6">
                   <input id="last_name" type="text" class="validate" required formControlName="lastname">
-                  <label for="last_name">Last Name</label>
+                  <label for="last_name" translate>register.label.last-name</label>
+                  <span data-error="Required" class="helper-text"></span>
                 </div>
               </div>
               <div class="row">
                 <div class="input-field col s12">
                   <input id="email" type="email" class="validate" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" formControlName="email">
-                  <label for="email">Email</label>
-                  <span class="helper-text red-text darken-2"  *ngIf="emailExistsError">An account with the provided email already exists</span>
-                  <span data-error="Not a valid email address" class="helper-text" ></span>
+                  <label for="email" translate>register.label.email</label>
+                  <span class="helper-text red-text darken-2"  *ngIf="emailExistsError" translate>register.message.email-in-use</span>
+                  <span data-error="Not a valid email" class="helper-text"></span>
                 </div>
               </div>
               <div class="row">
                 <div class="input-field col s12">
                   <input id="password" type="password" class="validate" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required formControlName="password" #password>
-                  <label for="password">Password</label>
+                  <label for="password" translate>register.label.password</label>
                   <span data-error="Password should be valid" data-success="password is valid" class="helper-text" ></span>
                 </div>
               </div>
               <div class="row">
                 <div class="input-field col s12">
                   <input id="passwordVerification" type="password" class="validate" pattern="{{password.value}}"
-                         required formControlName="passwordVerification" #passwordVerification>
-                  <label for="passwordVerification">Password (again )</label>
+                         required formControlName="passwordVerification">
+                  <label for="passwordVerification" translate>register.label.password2</label>
                   <span data-error="Passwords should match" class="helper-text" ></span>
                 </div>
               </div>
               <div class="row right-align">
-                <button [disabled]="(!registerForm.valid)" class="waves-effect waves-light yellow darken-2 btn-large black-text" type="submit">
-                  Register<i class="material-icons right">send</i></button>
+                <button [disabled]="(!registerForm.valid)"
+                        class="waves-effect waves-light yellow darken-2 btn-large black-text" type="submit" translate>register.button.register
+                  <i class="material-icons right">send</i></button>
               </div>
             </form>
           </div>
