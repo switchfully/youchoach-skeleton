@@ -22,28 +22,32 @@
                     <td><strong translate>profile-information.label.first-name</strong></td>
                     <div class="input-field col s6">
                       <input id="first_name" type="text" class="validate" required formControlName="firstName"
-                             name='member.firstName' >
+                             name='member.firstName' name='member.firstName'
+                             [(ngModel)]="member.firstName" >
                     </div>
                   </tr>
                   <tr>
                     <td><strong translate>profile-information.label.last-name</strong></td>
                     <div class="input-field col s6">
                       <input id="last_name" type="text" class="validate" required formControlName="lastName"
-                             name='member.lastName' >
+                             name='member.lastName' name='member.lastName'
+                             [(ngModel)]="member.lastName"  >
                     </div>
                   </tr>
                   <tr>
                     <td><strong translate>profile-information.label.email</strong></td>
                     <div class="input-field col s12">
                       <input id="email" type="email" class="validate" required formControlName="email"
-                             name='member.email' >
+                             name='member.email' name='member.email'
+                             [(ngModel)]="member.email"   >
                     </div>
                   </tr>
                   <tr>
                     <td><strong translate>profile-information.label.profile-picture</strong></td>
                     <div class="input-field col s12">
                       <input id="photoUrl" type="email" class="validate"
-                             name='member.photoUrl' required formControlName="photoUrl" >
+                             name='member.photoUrl' required formControlName="photoUrl" name='member.photoUrl'
+                             [(ngModel)]="member.photoUrl" >
                     </div>
                   </tr>
                   <tr>

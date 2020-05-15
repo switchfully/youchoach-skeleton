@@ -47,10 +47,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     CorsFilter corsFilter() {
+
         CorsConfiguration corsConfig = new CorsConfiguration();
         corsConfig.setMaxAge(8000L);
         corsConfig.setAllowCredentials(true);
-        corsConfig.addAllowedOrigin("*");
+        corsConfig.addAllowedOrigin("http://localhost:4200");
         corsConfig.addAllowedHeader("*");
         corsConfig.addAllowedMethod("GET");
         corsConfig.addAllowedMethod("POST");

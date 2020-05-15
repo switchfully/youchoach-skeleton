@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {IMember} from '../IMember';
 import {CoacheeService} from '../coacheeService/coachee.service';
-import {ActivatedRoute, NavigationStart, Route, Router} from "@angular/router";
-import {Observable} from "rxjs";
-import {map} from "rxjs/operators";
+import {ActivatedRoute, NavigationStart, Route, Router} from '@angular/router';
+import {Observable} from 'rxjs';
+import {map} from 'rxjs/operators';
 
 @Component({
   selector: 'app-display-profile',
@@ -12,14 +12,14 @@ import {map} from "rxjs/operators";
 })
 export class DisplayProfileComponent implements OnInit {
 
-  member: IMember;
+  member: IMember = {email: null, firstName: null, lastName: null, photoUrl: null, schoolYear: null, youcoachRole: null};
 
   constructor(private coacheeService: CoacheeService, private route: ActivatedRoute) {
   }
 
   ngOnInit(): void {
+    this.getCoachee();
     document.getElementById('footer').setAttribute('class', 'page-footer yellow darken-2');
-
     const url: string = this.route.snapshot['_routerState'].url;
     if (url.endsWith('/profile')) {
       this.getCoachee();

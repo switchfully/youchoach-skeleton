@@ -10,6 +10,7 @@ public class CreateCoacheeProfileDto {
     private String photoUrl;
     private String youcoachRole;
 
+
     public CreateCoacheeProfileDto withSchoolYear(String schoolYear) {
         this.schoolYear = schoolYear;
         return this;
