@@ -14,6 +14,7 @@ const routes: Routes = [
   {path: 'register', component: RegisterComponent},
   {path: 'becomecoach', component: BecomeCoachComponent },
   {path: 'profile', component: DisplayProfileComponent },
+  {path: 'profile/:id', component: DisplayProfileComponent },
   {path: 'edit-profile', component: EditProfileComponent },
   {path: 'coach-profile', component: CoachProfileComponent },
   {path: '', redirectTo: 'home', pathMatch: 'full'},

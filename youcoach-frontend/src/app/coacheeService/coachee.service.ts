@@ -4,6 +4,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {MessageService} from '../message.service';
 import {ICoachee} from '../register/icoachee';
 import {IMember} from '../IMember';
+import {catchError} from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
@@ -29,6 +30,12 @@ export class CoacheeService {
 
   getCoachee(): Observable<IMember> {
     return this.http.get<IMember>(this.url + '/profile');
+  }
+
+    getCoacheeById(id: number): Observable<IMember> {
+    return this.http.get<IMember>(this.url + '/profile' + `/${id}`).pipe(
+      catchError(this.handleError<IMember>(`getCoachee with id: ${id}`))
+    );
   }
 
   updateProfile(member: IMember): Observable<IMember> {
