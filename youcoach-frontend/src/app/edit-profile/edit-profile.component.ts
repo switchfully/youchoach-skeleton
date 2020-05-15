@@ -1,7 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {IMember} from '../IMember';
 import {FormBuilder, Validators} from '@angular/forms';
-import {ICoachee} from '../register/icoachee';
 import {CoacheeService} from '../coacheeService/coachee.service';
 import {Router} from '@angular/router';
 import {AuthenticationService} from '../authentication/authentication.service';
@@ -19,13 +18,13 @@ export class EditProfileComponent implements OnInit {
     email: ['', [Validators.required]],
     photoUrl: [''],
   });
-  private isEmailChange = false;
-
+  private isEmailChanged = false;
+  oldEmail = '';
   constructor(private fb: FormBuilder, private coacheeService: CoacheeService, private router: Router,
               private authenticationService: AuthenticationService) {
   }
-
   ngOnInit(): void {
+    this.coacheeService.getCoachee().subscribe(coachee => this.oldEmail = coachee.email);
     this.getCoachee();
   }
 
@@ -36,15 +35,14 @@ export class EditProfileComponent implements OnInit {
 
   updateProfile(): void {
     this.coacheeService.updateProfile(this.member).subscribe();
-    if (this.isEmailChange === true) {
+    if (this.isEmailChanged === true) {
       alert('Sign in with your new email');
       this.authenticationService.logout();
       this.onLogin();
     } else {
       this.onBack();
     }
-
-
+    this.isEmailChanged = false;
   }
 
   onBack(): void {
@@ -57,10 +55,9 @@ export class EditProfileComponent implements OnInit {
 
 
   onSubmit() {
-    console.log('isEmailValid: ' + this.editForm.get('email').value);
     console.log('isEmailValid: ' + this.member.email);
-    if (this.editForm.get('email').value !== null) {
-      this.isEmailChange = true;
+    if (this.editForm.get('email').value !== this.oldEmail) {
+      this.isEmailChanged = true;
     }
     this.member = {
       firstName: this.editForm.get('firstName').value,
