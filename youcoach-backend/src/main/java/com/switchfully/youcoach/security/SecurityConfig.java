@@ -46,7 +46,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    CorsFilter corsFilter(@Value("youcoach.allowed.origins") String origins) {
+    CorsFilter corsFilter(@Value("${youcoach.allowed.origins}") String origins) {
 
         CorsConfiguration corsConfig = new CorsConfiguration();
         corsConfig.setMaxAge(8000L);
