@@ -1,16 +1,16 @@
 package com.switchfully.youcoach.domain.dtos;
 
 import com.switchfully.youcoach.datastore.entities.CoachingTopic;
+import com.switchfully.youcoach.datastore.entities.Grade;
 
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class CoachProfileDto extends CoacheeProfileDto {
     private String availablity;
     private int xp;
     private String introduction;
-    private Set<String> topics = new HashSet<>();
+    private List<CoachingTopicDto> topics = new ArrayList<>();
 
     public String getAvailablity() {
         return availablity;
@@ -24,7 +24,7 @@ public class CoachProfileDto extends CoacheeProfileDto {
         return introduction;
     }
 
-    public Set<String> getTopics() {
+    public List<CoachingTopicDto> getTopics() {
         return topics;
     }
 
@@ -41,13 +41,19 @@ public class CoachProfileDto extends CoacheeProfileDto {
         return this;
     }
 
-    public CoachProfileDto withCoachingTopics(Set<CoachingTopic> topics){
+    public CoachProfileDto withCoachingTopics(List<CoachingTopic> topics){
         this.topics.clear();
         for(CoachingTopic topic: topics){
-            this.topics.add(topic.getTopic());
+            this.topics.add(new CoachingTopicDto(topic.getTopic().getName(),
+                     topic.getGrades()
+                            .stream()
+                            .map(Grade::ordinal)
+                            .collect(Collectors.toList())
+            ));
         }
         return this;
     }
+
 
     @Override
     public String toString() {

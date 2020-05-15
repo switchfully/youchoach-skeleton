@@ -1,15 +1,15 @@
 package com.switchfully.youcoach.domain.service;
 
-import com.switchfully.youcoach.datastore.entities.Coach;
-import com.switchfully.youcoach.datastore.entities.CoachingTopic;
-import com.switchfully.youcoach.datastore.entities.User;
+import com.switchfully.youcoach.datastore.entities.*;
 import com.switchfully.youcoach.domain.Mapper.UserMapper;
 import com.switchfully.youcoach.domain.dtos.CoachProfileDto;
 import com.switchfully.youcoach.domain.dtos.CoacheeProfileDto;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class UserMapperTest {
@@ -43,9 +43,9 @@ public class UserMapperTest {
         coach.setXp(100);
         coach.setAvailability("Whenever you want.");
         coach.setIntroduction("Endorsed by your mom.");
-        Set<CoachingTopic> topics = new HashSet<>();
-        topics.add(new CoachingTopic("Algebra"));
-        topics.add(new CoachingTopic("French"));
+        List<CoachingTopic> topics = new ArrayList<>();
+        topics.add(new CoachingTopic(new Topic("Algebra"),List.of(Grade.FOUR, Grade.FIVE)));
+        topics.add(new CoachingTopic(new Topic("French"),List.of(Grade.FIVE, Grade.SIX)));
         coach.setTopics(topics);
 
         CoachProfileDto expected = (CoachProfileDto) new CoachProfileDto()

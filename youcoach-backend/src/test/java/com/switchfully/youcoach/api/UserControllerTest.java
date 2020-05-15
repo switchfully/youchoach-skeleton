@@ -2,6 +2,9 @@ package com.switchfully.youcoach.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.switchfully.youcoach.ApplicationTest;
+import com.switchfully.youcoach.datastore.entities.CoachingTopic;
+import com.switchfully.youcoach.datastore.entities.Grade;
+import com.switchfully.youcoach.datastore.entities.Topic;
 import com.switchfully.youcoach.domain.dtos.CoachProfileDto;
 import com.switchfully.youcoach.domain.dtos.CreateUserDto;
 import com.switchfully.youcoach.domain.service.UserService;
@@ -95,7 +98,7 @@ class UserControllerTest {
     }
 
     @Test
-    @Sql("oneDefaultUser.sql")
+    @Sql("../datastore/repositories/oneDefaultUser.sql")
     void getCoacheeProfile() throws Exception {
         String jwtSecret = environment.getProperty("jwt.secret");
         UsernamePasswordAuthenticationToken user = new UsernamePasswordAuthenticationToken("example@example.com",null, List.of(UserRoles.ROLE_COACHEE));
@@ -113,7 +116,7 @@ class UserControllerTest {
     }
 
     @Test
-    @Sql("oneDefaultUser.sql")
+    @Sql("../datastore/repositories/oneDefaultUser.sql")
     void getSpecificCoacheeProfile() throws Exception {
         String jwtSecret = environment.getProperty("jwt.secret");
         UsernamePasswordAuthenticationToken user = new UsernamePasswordAuthenticationToken("example@example.com",null, List.of(UserRoles.ROLE_ADMIN));
@@ -133,15 +136,23 @@ class UserControllerTest {
     }
 
     @Test
-    @Sql("oneDefaultUser.sql")
-    @Sql("makeUsersCoach.sql")
+    @Sql("../datastore/repositories/oneDefaultUser.sql")
+    @Sql("../datastore/repositories/makeUsersCoach.sql")
     void getCoachProfile() throws Exception {
         String jwtSecret = environment.getProperty("jwt.secret");
         UsernamePasswordAuthenticationToken user = new UsernamePasswordAuthenticationToken("example@example.com",null, List.of(UserRoles.ROLE_COACH));
         String token =  securedUserService.generateJwtToken(user,jwtSecret);
 
-        CoachProfileDto expectedDto = (CoachProfileDto) new CoachProfileDto().withXp(100).withIntroduction("Endorsed by your mom.").withAvailability("Whenever you want.")
-                .withEmail("example@example.com").withPhotoUrl("/my/photo.png").withFirstName("First").withLastName("Last").withId(1L).withSchoolYear("1 - latin");
+        CoachProfileDto expectedDto = (CoachProfileDto) new CoachProfileDto().withXp(100)
+                .withIntroduction("Endorsed by your mom.")
+                .withAvailability("Whenever you want.")
+                .withCoachingTopics(List.of(new CoachingTopic(new Topic("Algebra"),List.of(Grade.FOUR, Grade.THREE) )))
+                .withEmail("example@example.com")
+                .withPhotoUrl("/my/photo.png")
+                .withFirstName("First")
+                .withLastName("Last")
+                .withId(1L)
+                .withSchoolYear("1 - latin");
         String expected = new ObjectMapper().writeValueAsString(expectedDto);
 
         String actualResult = mockMvc.perform(get("/users/coach/profile")

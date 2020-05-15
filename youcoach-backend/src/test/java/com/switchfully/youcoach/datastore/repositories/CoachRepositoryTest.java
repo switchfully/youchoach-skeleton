@@ -1,8 +1,6 @@
 package com.switchfully.youcoach.datastore.repositories;
 
-import com.switchfully.youcoach.datastore.entities.Coach;
-import com.switchfully.youcoach.datastore.entities.CoachingTopic;
-import com.switchfully.youcoach.datastore.entities.User;
+import com.switchfully.youcoach.datastore.entities.*;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +10,7 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @AutoConfigureTestDatabase
@@ -50,7 +49,7 @@ public class CoachRepositoryTest {
         Assertions.assertThat(result.getIntroduction()).isEqualTo("Endorsed by your mom.");
         Assertions.assertThat(result.getTopics()).hasSize(1);
         for(CoachingTopic topic: result.getTopics()) {
-            Assertions.assertThat(topic.getTopic()).contains("topic placeholder");
+            Assertions.assertThat(topic).isEqualTo(new CoachingTopic(1, new Topic("Algebra"), List.of(Grade.FOUR, Grade.THREE)));
         }
     }
 
@@ -69,7 +68,7 @@ public class CoachRepositoryTest {
                 .contains(expected);
 
         Coach result = actual.get();
-        result.getTopics().add(new CoachingTopic("Another Topic"));
+        result.getTopics().add(new CoachingTopic(new Topic("Another Topic"), List.of(Grade.FOUR) ));
         coachRepository.save(result);
         result = coachRepository.findCoachByUser(user).get();
 
