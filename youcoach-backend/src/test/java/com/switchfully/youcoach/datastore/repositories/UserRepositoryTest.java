@@ -27,6 +27,11 @@ class UserRepositoryTest {
     @Autowired
     private UserRepository userRepository;
 
+    private User getDefaultUser() {
+        return new User(1,"First", "Last","example@example.com","1lpassword",
+                "1 - latin","/my/photo.png");
+    }
+
     @Test
     void saveAUser() {
         User user = new User(1L, "Test", "Service", "test@ehb.be", "test123");
@@ -75,6 +80,15 @@ class UserRepositoryTest {
     @Test
     void findByEmailThatDoesNotExistReturnsEmpty(){
         assertThat(userRepository.findByEmail("example@example.com")).isEmpty();
+    }
+
+    @Test
+    void byDefaultAccountEnabledIsFalse(){
+        User user = getDefaultUser();
+        user = userRepository.save(user);
+        user = userRepository.findByEmail(user.getEmail()).get();
+
+        Assertions.assertThat(user.isAccountEnabled()).isFalse();
     }
 
 }

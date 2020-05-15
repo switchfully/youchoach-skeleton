@@ -23,6 +23,9 @@ public class User {
     @Column(name = "photo_url")
     private String photoUrl;
 
+    @Column(name = "account_enabled", nullable = false)
+    private boolean accountEnabled = true;
+
     public User(long id, String firstName, String lastName, String email, String password, String schoolYear, String photoUrl) {
         this.id = id;
         this.firstName = firstName;
@@ -89,6 +92,14 @@ public class User {
 
     public void setPhotoUrl(String photoUrl) {
         this.photoUrl = photoUrl;
+    }
+
+    public boolean isAccountEnabled(){
+        return accountEnabled;
+    }
+
+    public void setAccountEnabled(boolean isEnabled){
+        accountEnabled = isEnabled;
     }
 
     @Override

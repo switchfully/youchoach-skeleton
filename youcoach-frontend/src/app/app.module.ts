@@ -24,6 +24,7 @@ import { DisplayProfileComponent } from './display-profile/display-profile.compo
 import {CoachProfileComponent} from './coach-profile/coach-profile.component';
 import { ProfileHeaderComponent } from './profile-header/profile-header.component';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
+import { ValidateAccountComponent } from './validate-account/validate-account.component';
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -44,6 +45,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     CoachProfileComponent,
     ProfileHeaderComponent,
     EditProfileComponent,
+    ValidateAccountComponent,
   ],
   imports: [
     BrowserModule,

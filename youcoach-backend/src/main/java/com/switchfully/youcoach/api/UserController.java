@@ -5,6 +5,7 @@ import com.switchfully.youcoach.domain.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +16,7 @@ import java.security.Principal;
 
 @RestController
 @RequestMapping(path = "/users")
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin
 public class UserController {
     private final UserService userService;
     private final static Logger LOGGER = LoggerFactory.getLogger(UserController.class);
@@ -54,6 +55,12 @@ public class UserController {
     @GetMapping(produces = "application/json;charset=UTF-8", path="/coach/profile")
     public CoachProfileDto getCoachProfile(Principal principal){
         return userService.getCoachProfileForUserWithEmail(principal.getName());
+    }
+
+
+    @PatchMapping(consumes = "application/json", path="/validate")
+    public ValidationResultDto validateAccount(@RequestBody ValidateAccountDto validationData){
+        return userService.validateAccount(validationData);
     }
 
     @ExceptionHandler(IllegalStateException.class)
