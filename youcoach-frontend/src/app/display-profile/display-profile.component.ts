@@ -26,7 +26,6 @@ export class DisplayProfileComponent implements OnInit {
     } else {
       this.getCoacheeByID(+this.route.snapshot.paramMap.get('id'));
     }
-
   }
 
 
