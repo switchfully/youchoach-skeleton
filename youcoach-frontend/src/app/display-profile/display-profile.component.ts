@@ -39,6 +39,4 @@ export class DisplayProfileComponent implements OnInit {
     this.coacheeService.getCoacheeById(id).subscribe(
       member => this.member = member);
   }
-
-
 }

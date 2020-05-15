@@ -3,10 +3,10 @@
     <div class="nav-wrapper container">
       <a id="logo-container" href="#" class="brand-logo">You-Coach</a>
       <ul class="right hide-on-med-and-down valign-wrapper">
-        <li><a routerLink="/home" translate>menu.link.home</a></li>
-        <li><a href="#"translate>menu.link.about-us</a></li>
-        <li><a href="#"translate>menu.link.contact</a></li>
-        <li><p class="grey-text" *ngIf="username" translate [translateParams]="{username: username}">menu.label.logged-in</p>
+        <li class="header-hidden"><a routerLink="/home" translate>menu.link.home</a></li>
+        <li class="header-hidden"><a href="#"translate>menu.link.about-us</a></li>
+        <li class="header-hidden"><a href="#"translate>menu.link.contact</a></li>
+        <li class="header-hidden"><p class="grey-text" *ngIf="username" translate [translateParams]="{username: username}">menu.label.logged-in</p>
         </li>
         <li><a class="vawaves-effect waves-light yellow darken-2 btn black-text" routerLink="/login" *ngIf="!username"translate>menu.button.sign-in<i
             class="material-icons right">person</i></a></li>
