@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {CoachService} from './coach.service';
 import {ICoach} from './ICoach';
-import {ProfileViewService} from '../profile-view.service';
 
 @Component({
   selector: 'app-coach-profile',
@@ -26,19 +25,16 @@ export class CoachProfileComponent implements OnInit {
 
   coachView = false;
 
-  constructor(private coachService: CoachService, private profileView: ProfileViewService) {
-  }
+  constructor(private coachService: CoachService) { }
 
   ngOnInit(): void {
-    document.getElementById('footer').setAttribute('class', 'page-footer teal lighten-3');
+
     document.title = this.title;
     this.getCoach();
-    this.profileView.change.subscribe(value => this.coachView = value);
   }
 
   getCoach(): void {
     this.coachService.getCoach().subscribe(
       coach => this.coach = coach);
   }
-
 }

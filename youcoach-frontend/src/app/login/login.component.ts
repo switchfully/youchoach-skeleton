@@ -38,13 +38,11 @@ export class LoginComponent implements OnInit {
           if (this.authenticationService.isCoach()) {
             setTimeout(() => {
               this.router.navigateByUrl('/coach-profile');
-              document.getElementById('footer').setAttribute('class', 'page-footer teal darken-2');
             }, 1000);
 
           } else {
             setTimeout(() => {
               this.router.navigateByUrl('/profile');
-              document.getElementById('footer').setAttribute('class', 'page-footer yellow darken-2');
             }, 1000);
           }
         }),
