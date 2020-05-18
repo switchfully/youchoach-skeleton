@@ -18,8 +18,9 @@ export class EditProfileComponent implements OnInit {
     email: ['', [Validators.required]],
     photoUrl: [''],
   });
-  private isEmailChanged = false;
+  isEmailChanged = false;
   oldEmail = '';
+  emailExistsError = false;
   constructor(private fb: FormBuilder, private coacheeService: CoacheeService, private router: Router,
               private authenticationService: AuthenticationService) {
   }
@@ -34,28 +35,37 @@ export class EditProfileComponent implements OnInit {
   }
 
   updateProfile(): void {
-    this.coacheeService.updateProfile(this.member).subscribe();
-    if (this.isEmailChanged === true) {
-      alert('Sign in with your new email');
-      this.authenticationService.logout();
-      this.onLogin();
-    } else {
-      this.onBack();
-    }
-    this.isEmailChanged = false;
+    this.coacheeService.updateProfile(this.member).subscribe(updatedMember => this.member = updatedMember,
+      err => {
+        if (err.error.message === ('Email already exists!')) {
+          this.emailExistsError = true;
+        }
+      });
+    setTimeout(() => {
+      if (!this.emailExistsError) {
+      if (this.isEmailChanged) {
+        alert('Sign in with your new email');
+        this.authenticationService.logout();
+        this.onLogin();
+      } else {
+        this.onBack();
+      }
+    } }, 1500);
+    // TEST IT IN HEROKU if timeout is enough
+    this.emailExistsError = false;
+    // this.isEmailChanged = false;
   }
 
   onBack(): void {
-    this.router.navigate(['/profile']);
+    this.router.navigateByUrl('/profile');
   }
 
   onLogin(): void {
-    this.router.navigate(['/login']);
+    this.router.navigateByUrl('/login');
   }
 
 
   onSubmit() {
-    console.log('isEmailValid: ' + this.member.email);
     if (this.editForm.get('email').value !== this.oldEmail) {
       this.isEmailChanged = true;
     }

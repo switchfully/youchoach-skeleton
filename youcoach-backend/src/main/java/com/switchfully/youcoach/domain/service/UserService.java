@@ -54,6 +54,7 @@ public class UserService {
     }
 
     public CreateCoacheeProfileDto updateProfile(String email, CreateCoacheeProfileDto createCoacheeProfileDto){
+        performUpdateValidation(email, createCoacheeProfileDto);
         User user = assertUserExistsAndRetrieve(email);
         user.setEmail(createCoacheeProfileDto.getEmail());
         user.setFirstName(createCoacheeProfileDto.getFirstName());
@@ -84,6 +85,11 @@ public class UserService {
             throw new IllegalStateException("Password needs te be 8 characters : --> 1 capital, 1 lowercase and 1 one number ");
         }
     }
+    public void performUpdateValidation(String email, CreateCoacheeProfileDto createCoacheeProfileDto) {
+        if (!email.equalsIgnoreCase(createCoacheeProfileDto.getEmail()) && emailExists(createCoacheeProfileDto.getEmail())) {
+        throw new IllegalStateException("Email already exists!");
+    }
+}
 
     public CoacheeProfileDto getCoacheeProfile(long id){
         User user = assertUserExistsAndRetrieve(id);
