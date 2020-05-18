@@ -3,6 +3,7 @@ import {FormBuilder, Validators} from '@angular/forms';
 import {ICoach, ITopic} from '../ICoach';
 import {CoachService} from '../coach.service';
 import {Router} from '@angular/router';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-edit-coach-information',
@@ -16,7 +17,7 @@ export class EditCoachInformationComponent implements OnInit {
     availability: [''],
   });
 
-  constructor(private fb: FormBuilder, private coachService: CoachService, private router: Router) {
+  constructor(private fb: FormBuilder, private coachService: CoachService, private router: Router, private location: Location) {
   }
 
   ngOnInit(): void {
@@ -54,7 +55,7 @@ export class EditCoachInformationComponent implements OnInit {
   }
 
   goBack(): void {
-    this.router.navigateByUrl('/coach-profile');
+    this.location.back();
   }
 
 }

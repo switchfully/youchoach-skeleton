@@ -13,8 +13,16 @@ public class CoachListingEntryDto {
     String firstName;
     String lastName;
     private List<CoachingTopicDto> topics = new ArrayList<>();
+    String photoUrl;
 
+    public CoachListingEntryDto withUrl(String photoUrl) {
+        this.photoUrl = photoUrl;
+        return this;
+    }
 
+    public String getPhotoUrl() {
+        return photoUrl;
+    }
 
     public CoachListingEntryDto withFirstName(String firstName) {
         this.firstName = firstName;
@@ -58,11 +66,12 @@ public class CoachListingEntryDto {
         CoachListingEntryDto that = (CoachListingEntryDto) o;
         return Objects.equals(firstName, that.firstName) &&
                 Objects.equals(lastName, that.lastName) &&
-                Objects.equals(topics, that.topics);
+                Objects.equals(topics, that.topics) &&
+                Objects.equals(photoUrl, that.photoUrl);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(firstName, lastName, topics);
+        return Objects.hash(firstName, lastName, topics, photoUrl);
     }
 }

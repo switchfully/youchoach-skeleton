@@ -111,7 +111,7 @@ public class UserService {
 
     public CoachProfileDto updateCoachInformation(String email, CoachProfileDto coachProfileDto){
         Coach coach = assertCoachExistsAndRetrieve(email);
-        coach.setAvailability(coachProfileDto.getAvailablity());
+        coach.setAvailability(coachProfileDto.getAvailability());
         coach.setIntroduction(coachProfileDto.getIntroduction());
         return coachProfileDto;
     }
