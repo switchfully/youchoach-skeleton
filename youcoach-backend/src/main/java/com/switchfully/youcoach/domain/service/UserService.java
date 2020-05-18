@@ -151,4 +151,8 @@ public class UserService {
     }
 
 
+    public CoachListingDto getCoachProfiles() {
+        List<Coach> coachList = coachRepository.findAll();
+        return userMapper.toCoachListingDto(coachList);
+    }
 }

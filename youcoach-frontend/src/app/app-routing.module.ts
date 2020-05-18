@@ -15,6 +15,7 @@ import {PasswordResetRequestedComponent} from './password-reset-requested/passwo
 import {PasswordResetComponent} from './password-reset/password-reset.component';
 import {PasswordChangeSuccessComponent} from './password-change-success/password-change-success.component';
 import {PasswordChangeFailureComponent} from './password-change-failure/password-change-failure.component';
+import {FindACoachComponent} from './find-a-coach/find-a-coach.component';
 
 const routes: Routes = [
   {path: 'home', component: HomeComponent},
@@ -30,6 +31,7 @@ const routes: Routes = [
   {path: 'profile/:id', component: DisplayProfileComponent },
   {path: 'edit-profile', component: EditProfileComponent },
   {path: 'coach-profile', component: CoachProfileComponent },
+  {path: 'find-coach', component: FindACoachComponent },
   {path: 'validate-account', component: ValidateAccountComponent },
   {path: 'email-validation-success', component: EmailValidationSuccessComponent },
   {path: 'forbidden', component: ForbiddenComponent},

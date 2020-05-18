@@ -41,6 +41,13 @@ public class UserController {
         return userService.getCoacheeProfile(principal.getName());
     }
 
+    @PreAuthorize("hasRole('ROLE_COACHEE')")
+    @GetMapping(produces = "application/json;charset=UTF-8", path = "/find-coach")
+    public CoachListingDto getCoachProfiles(){
+        return userService.getCoachProfiles();
+    }
+
+
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping(produces = "application/json;charset=UTF-8", path = "/profile/{id}")
     public CoacheeProfileDto getSpecificCoacheeProfile(@PathVariable("id") long id){

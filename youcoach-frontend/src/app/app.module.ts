@@ -34,6 +34,7 @@ import { PasswordResetRequestedComponent } from './password-reset-requested/pass
 import { PasswordResetComponent } from './password-reset/password-reset.component';
 import { PasswordChangeSuccessComponent } from './password-change-success/password-change-success.component';
 import { PasswordChangeFailureComponent } from './password-change-failure/password-change-failure.component';
+import { FindACoachComponent } from './find-a-coach/find-a-coach.component';
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -63,6 +64,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     PasswordResetComponent,
     PasswordChangeSuccessComponent,
     PasswordChangeFailureComponent,
+    FindACoachComponent,
   ],
   imports: [
     BrowserModule,
