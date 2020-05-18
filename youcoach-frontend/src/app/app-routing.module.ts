@@ -17,6 +17,7 @@ import {PasswordChangeSuccessComponent} from './password-change-success/password
 import {PasswordChangeFailureComponent} from './password-change-failure/password-change-failure.component';
 import {EditCoachInformationComponent} from './coach-profile/edit-coach-information/edit-coach-information.component';
 import {FindACoachComponent} from './find-a-coach/find-a-coach.component';
+import {ChangeTopicsComponent} from "./change-topics/change-topics.component";
 
 const routes: Routes = [
   {path: 'home', component: HomeComponent},
@@ -28,6 +29,7 @@ const routes: Routes = [
   {path: 'register', component: RegisterComponent},
   {path: 'registration-success', component: RegistrationSuccessComponent},
   {path: 'becomecoach', component: BecomeCoachComponent },
+  {path: 'change-topics', component: ChangeTopicsComponent },
   {path: 'profile', component: DisplayProfileComponent },
   {path: 'profile/:id', component: DisplayProfileComponent },
   {path: 'edit-profile', component: EditProfileComponent },

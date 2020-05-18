@@ -37,7 +37,7 @@ export class HeaderComponent implements OnInit {
 
   calculateClass() {
     const url: string = this.route.snapshot['_routerState'].url;
-    if (url.endsWith('/coach-profile')) {
+    if (url.endsWith('/coach-profile') || url.endsWith('/change-topics')) {
       return 'nav-content teal lighten-3';
     }
     return 'nav-content yellow darken-2';

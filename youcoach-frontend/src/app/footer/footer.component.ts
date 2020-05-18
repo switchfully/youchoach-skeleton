@@ -16,7 +16,7 @@ export class FooterComponent implements OnInit {
 
   calculateClass() {
     const url: string = this.route.snapshot['_routerState'].url;
-    if (url.endsWith('/coach-profile')) {
+    if (url.endsWith('/coach-profile') || url.endsWith('/change-topics')) {
       return 'page-footer teal lighten-3';
     }
     return 'page-footer yellow darken-2';
