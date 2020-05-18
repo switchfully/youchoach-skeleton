@@ -1,5 +1,6 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 import {AppComponent} from './app.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -87,7 +88,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatButtonModule,
     _MatMenuDirectivesModule,
     MatMenuModule,
-    MatIconModule
+    MatIconModule,
+    Ng2SearchPipeModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true},
