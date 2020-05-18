@@ -9,12 +9,13 @@ import {ICoacheeRegisterResult} from './ICoacheeRegisterResult';
 import {IRequestPasswordResetToken} from '../IRequestPasswordResetToken';
 import {IPasswordChange} from '../IPasswordChange';
 import {IPasswordChangeResult} from '../IPasswordChangeResult';
+import {environment} from "../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
 })
 export class CoacheeService {
-  readonly url = 'http://localhost:8080/users';
+  readonly url = `${environment.backendUrl}/users`;
   httpOptions = {
     headers: new HttpHeaders({'Content-Type': 'application/json',
       'Access-Control-Allow-Origin' : 'http://localhost:4200'

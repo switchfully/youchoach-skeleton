@@ -5,13 +5,14 @@ import {Observable} from 'rxjs';
 import {IValidationData} from './IValidationData';
 import {IResendValidation} from './IResendValidation';
 import {IValidationResult} from './IValidationResult';
+import {environment} from "../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
 })
 export class EmailValidationService {
 
-  readonly url = 'http://localhost:8080/users';
+  readonly url = `${environment.backendUrl}/users`;
   httpOptions = {
     headers: new HttpHeaders({'Content-Type': 'application/json'})
   };
