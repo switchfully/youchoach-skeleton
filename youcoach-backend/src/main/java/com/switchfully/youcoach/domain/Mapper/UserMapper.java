@@ -58,7 +58,8 @@ public class UserMapper {
                     .withFirstName(coach.getUser().getFirstName())
                     .withLastName(coach.getUser().getLastName())
                     .withCoachingTopics(coach.getTopics())
-                    .withUrl(coach.getUser().getPhotoUrl());
+                    .withUrl(coach.getUser().getPhotoUrl())
+                    .withEmail(coach.getUser().getEmail());
             coachListingEntryDtoList.add(cli);
         });
 

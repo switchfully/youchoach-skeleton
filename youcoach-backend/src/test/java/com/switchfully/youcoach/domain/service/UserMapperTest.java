@@ -83,7 +83,8 @@ public class UserMapperTest {
                 .withFirstName(coach.getUser().getFirstName())
                 .withLastName(coach.getUser().getLastName())
                 .withCoachingTopics(coach.getTopics())
-                .withUrl(coach.getUser().getPhotoUrl());
+                .withUrl(coach.getUser().getPhotoUrl())
+                .withEmail(coach.getUser().getEmail());
 
         CoachListingDto expected = new CoachListingDto(List.of(cpd));
 

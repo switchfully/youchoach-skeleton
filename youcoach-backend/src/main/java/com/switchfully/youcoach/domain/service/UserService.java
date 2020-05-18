@@ -125,6 +125,11 @@ public class UserService {
         return userMapper.toCoachProfileDto(coach);
     }
 
+    public CoachProfileDto getCoachProfile(String id){
+        Coach coach = assertCoachExistsAndRetrieve(id);
+        return userMapper.toCoachProfileDto(coach);
+    }
+
     public Coach assertCoachExistsAndRetrieve(long id){
         return coachRepository.findById(id).orElseThrow(CoachNotFoundException::new);
     }
