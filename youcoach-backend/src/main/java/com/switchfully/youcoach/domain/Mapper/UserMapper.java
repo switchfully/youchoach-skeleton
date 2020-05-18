@@ -57,7 +57,8 @@ public class UserMapper {
             CoachListingEntryDto cli = new CoachListingEntryDto()
                     .withFirstName(coach.getUser().getFirstName())
                     .withLastName(coach.getUser().getLastName())
-                    .withCoachingTopics(coach.getTopics());
+                    .withCoachingTopics(coach.getTopics())
+                    .withUrl(coach.getUser().getPhotoUrl());
             coachListingEntryDtoList.add(cli);
         });
 
