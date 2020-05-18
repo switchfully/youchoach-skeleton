@@ -12,7 +12,7 @@ public class CoachProfileDto extends CoacheeProfileDto {
     private String introduction;
     private List<CoachingTopicDto> topics = new ArrayList<>();
 
-    public String getAvailablity() {
+    public String getAvailability() {
         return availability;
     }
 
