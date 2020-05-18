@@ -2,6 +2,8 @@ package com.switchfully.youcoach.domain.service;
 
 import com.switchfully.youcoach.datastore.entities.*;
 import com.switchfully.youcoach.domain.Mapper.UserMapper;
+import com.switchfully.youcoach.domain.dtos.CoachListingDto;
+import com.switchfully.youcoach.domain.dtos.CoachListingEntryDto;
 import com.switchfully.youcoach.domain.dtos.CoachProfileDto;
 import com.switchfully.youcoach.domain.dtos.CoacheeProfileDto;
 import org.assertj.core.api.Assertions;
@@ -63,5 +65,31 @@ public class UserMapperTest {
         CoachProfileDto actual = userMapper.toCoachProfileDto(coach);
 
         Assertions.assertThat(actual).isEqualTo(expected);
+    }
+
+    @Test
+    public void fromCoachList_to_CoachlistingDto() {
+        User user = getDefaultUser();
+        Coach coach = new Coach(user);
+        coach.setXp(100);
+        coach.setAvailability("Whenever you want.");
+        coach.setIntroduction("Endorsed by your mom.");
+        List<CoachingTopic> topics = new ArrayList<>();
+        topics.add(new CoachingTopic(new Topic("Algebra"),List.of(Grade.FOUR, Grade.FIVE)));
+        topics.add(new CoachingTopic(new Topic("French"),List.of(Grade.FIVE, Grade.SIX)));
+        coach.setTopics(topics);
+
+        CoachListingEntryDto cpd = new CoachListingEntryDto()
+                .withFirstName(coach.getUser().getFirstName())
+                .withLastName(coach.getUser().getLastName())
+                .withCoachingTopics(coach.getTopics());
+
+        CoachListingDto expected = new CoachListingDto(List.of(cpd));
+
+        CoachListingDto actual = userMapper.toCoachListingDto(List.of(coach));
+
+        Assertions.assertThat(actual).isEqualTo(expected);
+
+
     }
 }
