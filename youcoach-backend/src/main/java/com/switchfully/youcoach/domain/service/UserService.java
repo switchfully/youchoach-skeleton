@@ -60,7 +60,6 @@ public class UserService {
         user.setFirstName(createCoacheeProfileDto.getFirstName());
         user.setLastName(createCoacheeProfileDto.getLastName());
         user.setPhotoUrl(createCoacheeProfileDto.getPhotoUrl());
-        userRepository.save(user);
         return createCoacheeProfileDto;
     }
 
@@ -111,12 +110,12 @@ public class UserService {
     }
 
     public CoachProfileDto updateCoachInformation(String email, CoachProfileDto coachProfileDto){
-        Coach coach = this.coachRepository.findCoachByUser_Email(email).orElseThrow(CoachNotFoundException::new);
+        Coach coach = assertCoachExistsAndRetrieve(email);
         coach.setAvailability(coachProfileDto.getAvailablity());
         coach.setIntroduction(coachProfileDto.getIntroduction());
-        this.coachRepository.save(coach);
         return coachProfileDto;
     }
+
     public Coach assertCoachExistsAndRetrieve(String email){
         return coachRepository.findCoachByUser_Email(email).orElseThrow(CoachNotFoundException::new);
     }
