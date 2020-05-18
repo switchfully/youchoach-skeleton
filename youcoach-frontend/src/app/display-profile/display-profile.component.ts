@@ -1,9 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {IMember} from '../IMember';
 import {CoacheeService} from '../coacheeService/coachee.service';
-import {ActivatedRoute, NavigationStart, Route, Router} from '@angular/router';
-import {Observable} from 'rxjs';
-import {map} from 'rxjs/operators';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-display-profile',
