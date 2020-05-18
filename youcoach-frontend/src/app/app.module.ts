@@ -37,6 +37,7 @@ import { PasswordChangeSuccessComponent } from './password-change-success/passwo
 import { PasswordChangeFailureComponent } from './password-change-failure/password-change-failure.component';
 import { EditCoachInformationComponent } from './coach-profile/edit-coach-information/edit-coach-information.component';
 import { FindACoachComponent } from './find-a-coach/find-a-coach.component';
+import { ChangeTopicsComponent } from './change-topics/change-topics.component';
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -68,6 +69,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     PasswordChangeFailureComponent,
     EditCoachInformationComponent,
     FindACoachComponent,
+    ChangeTopicsComponent,
   ],
   imports: [
     BrowserModule,

@@ -39,6 +39,7 @@ public class CoachProfileDto extends CoacheeProfileDto {
     public CoachProfileDto withXp(int xp){
         this.xp = xp;
         return this;
+
     }
 
     public CoachProfileDto() {
