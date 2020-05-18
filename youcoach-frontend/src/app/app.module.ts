@@ -13,6 +13,7 @@ import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import { HomeComponent } from './home/home.component';
 import { NavigationBarComponent } from './navigation-bar/navigation-bar.component';
 import { FooterComponent } from './footer/footer.component';
+import { TeamsComponent } from './teams/teams.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -25,7 +26,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     HelloWorldComponent,
     HomeComponent,
     NavigationBarComponent,
-    FooterComponent
+    FooterComponent,
+    TeamsComponent
   ],
   imports: [
     BrowserModule,
