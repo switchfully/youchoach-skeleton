@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, Validators} from '@angular/forms';
-import {ICoach} from '../ICoach';
+import {ICoach, ITopic} from '../ICoach';
 import {CoachService} from '../coach.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-edit-coach-information',
@@ -11,11 +12,11 @@ import {CoachService} from '../coach.service';
 export class EditCoachInformationComponent implements OnInit {
   coach: ICoach;
   editForm = this.fb.group({
-    introduction: ['', [Validators.required]],
-    availability: ['', [Validators.required]],
+    introduction: [''],
+    availability: [''],
   });
 
-  constructor(private fb: FormBuilder, private coachService: CoachService) {
+  constructor(private fb: FormBuilder, private coachService: CoachService, private router: Router) {
   }
 
   ngOnInit(): void {
@@ -29,13 +30,31 @@ export class EditCoachInformationComponent implements OnInit {
   }
 
   onSubmit() {
-    this.coach.availability = this.editForm.get('availability').value;
-    this.coach.introduction = this.editForm.get('introduction').value;
+    this.coach = {
+      introduction: this.editForm.get('introduction').value,
+      availability: this.editForm.get('availability').value,
+      coachXP: this.coach.coachXP,
+      topics: this.coach.topics,
+      topicYear: this.coach.topicYear,
+      firstName: this.coach.firstName,
+      lastName: this.coach.lastName,
+      email: this.coach.email,
+      schoolYear: this.coach.schoolYear,
+      youcoachRole: this.coach.schoolYear,
+      photoUrl: this.coach.photoUrl
+    };
     this.updateProfile();
   }
 
   updateProfile(): void {
-    this.coachService.updateCoachInformation(this.coach);
+    this.coachService.updateCoachInformation(this.coach).subscribe(
+      updatedCoach => this.coach = updatedCoach
+    );
+    this.goBack();
+  }
+
+  goBack(): void {
+    this.router.navigateByUrl('/coach-profile');
   }
 
 }

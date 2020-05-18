@@ -22,6 +22,6 @@ export class CoachService {
   }
 
   updateCoachInformation(coach: ICoach): Observable<ICoach> {
-    return this.http.put<ICoach>(this.url, coach, this.httpOptions);
+    return this.http.put<ICoach>(this.url + '/coach/profile', coach, this.httpOptions);
   }
 }

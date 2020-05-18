@@ -41,6 +41,16 @@ public class CoachProfileDto extends CoacheeProfileDto {
         return this;
     }
 
+    public CoachProfileDto() {
+    }
+
+    public CoachProfileDto(String availablity, int xp, String introduction, List<CoachingTopicDto> topics) {
+        this.availablity = availablity;
+        this.xp = xp;
+        this.introduction = introduction;
+        this.topics = topics;
+    }
+
     public CoachProfileDto withCoachingTopics(List<CoachingTopic> topics){
         this.topics.clear();
         for(CoachingTopic topic: topics){
