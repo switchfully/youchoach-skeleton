@@ -68,7 +68,7 @@ public class UserController {
 
     @PreAuthorize("hasRole('ROLE_COACH')")
     @PutMapping(produces = "application/json;charset=UTF-8", path="/coach/profile")
-    public CoachProfileDto updateCoachInformation(Principal principal, CoachProfileDto coachProfileDto){
+    public CoachProfileDto updateCoachInformation(Principal principal, @RequestBody CoachProfileDto coachProfileDto){
         return userService.updateCoachInformation(principal.getName(),coachProfileDto);
     }
 
