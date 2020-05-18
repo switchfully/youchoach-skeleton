@@ -1,7 +1,10 @@
 <main>
+  Before you're able to log-in, your email-account needs to be verified as working and controlled by you.<br />
+  To do this we have sent an email to it with a link that you can use to activate your account.<br />
   <form>
     <label>Token: <input id="token" name="token" [(ngModel)]="token" type="text" /></label><br />
   <label>Email: <input id="email" name="email" [(ngModel)]="email" type="text" /></label><br />
-    <button (click)="validateAccount()">validate</button>
+    <button [disabled]="!validEmailEntered()" (click)="validateAccount()">validate</button>&nbsp;<button [disabled]="!validEmailEntered()" (click)="resendValidationtoken()">Resend validation token</button>
+    <div *ngIf="validationFailed" style="color: red; font-weight: bold;">Validation failed.</div>
   </form>
 </main>

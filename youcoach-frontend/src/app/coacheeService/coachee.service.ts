@@ -4,7 +4,11 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {MessageService} from '../message.service';
 import {ICoachee} from '../register/icoachee';
 import {IMember} from '../IMember';
-import {catchError} from "rxjs/operators";
+import {catchError} from 'rxjs/operators';
+import {ICoacheeRegisterResult} from './ICoacheeRegisterResult';
+import {IRequestPasswordResetToken} from '../IRequestPasswordResetToken';
+import {IPasswordChange} from '../IPasswordChange';
+import {IPasswordChangeResult} from '../IPasswordChangeResult';
 
 @Injectable({
   providedIn: 'root'
@@ -21,11 +25,14 @@ export class CoacheeService {
   constructor(private http: HttpClient, private messageService: MessageService) {
   }
 
-  register(coachee: ICoachee): Observable<ICoachee> {
-    return this.http.post<ICoachee>(this.url, coachee, this.httpOptions).pipe(
-      // tap((newCoachee: ICoachee) => this.log(`registered coachee id=${newCoachee.id}`)),
-      // catchError(this.handleError<any>('registerCoachee'))
-    );
+  register(coachee: ICoachee): Observable<ICoacheeRegisterResult> {
+    return this.http.post<ICoacheeRegisterResult>(this.url, coachee, this.httpOptions);
+  }
+  requestPasswordResetToken(tokenRequest: IRequestPasswordResetToken): Observable<any> {
+    return this.http.post<any>(this.url + '/password/reset', tokenRequest, this.httpOptions);
+  }
+  performPasswordReset(passwordChange: IPasswordChange): Observable<IPasswordChangeResult> {
+    return this.http.patch<any>(this.url + '/password/reset', passwordChange, this.httpOptions);
   }
 
   getCoachee(): Observable<IMember> {
@@ -41,10 +48,6 @@ export class CoacheeService {
   updateProfile(member: IMember): Observable<IMember> {
     return this.http.put<IMember>(this.url + '/profile', member, this.httpOptions);
   }
-
-  // private log(message: string) {
-  //   this.messageService.add(`CoacheeService: ${message}`);
-  // }
 
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {

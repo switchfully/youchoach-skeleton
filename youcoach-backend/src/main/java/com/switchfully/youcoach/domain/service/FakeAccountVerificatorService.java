@@ -28,7 +28,14 @@ public class FakeAccountVerificatorService extends AccountVerificatorService {
     }
 
     @Override
-    public void sendVerificationEmail(User user) throws MessagingException { }
+    public void sendVerificationEmail(User user) throws MessagingException {
+        // ignored on purpose
+    }
+
+    @Override
+    public boolean resendVerificationEmailFor(String email){
+        return true;
+    }
 
     @Override
     public void createAccountVerification(User user){

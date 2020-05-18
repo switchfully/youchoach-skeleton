@@ -1,5 +1,6 @@
 package com.switchfully.youcoach.security;
 
+import com.switchfully.youcoach.security.authentication.OnAuthenticationFailureHandler;
 import com.switchfully.youcoach.security.authentication.jwt.JwtAuthenticationFilter;
 import com.switchfully.youcoach.security.authentication.jwt.JwtAuthorizationFilter;
 import com.switchfully.youcoach.security.authentication.user.SecuredUserService;
@@ -38,9 +39,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.cors().and().csrf().disable().authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/users").permitAll()
                 .antMatchers(HttpMethod.PATCH, "/users/validate").permitAll()
+                .antMatchers(HttpMethod.POST, "/users/validate").permitAll()
+                .antMatchers(HttpMethod.PATCH, "/users/password/reset").permitAll()
+                .antMatchers(HttpMethod.POST, "/users/password/reset").permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .addFilter(new JwtAuthenticationFilter(authenticationManager(), jwtSecret, securedUserService))
+                .addFilter(new JwtAuthenticationFilter(authenticationManager(), jwtSecret, securedUserService, new OnAuthenticationFailureHandler()))
                 .addFilter(new JwtAuthorizationFilter(authenticationManager(), jwtSecret))
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }

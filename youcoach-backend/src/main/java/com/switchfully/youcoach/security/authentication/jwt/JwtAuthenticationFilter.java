@@ -1,14 +1,17 @@
 package com.switchfully.youcoach.security.authentication.jwt;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.switchfully.youcoach.security.authentication.OnAuthenticationFailureHandler;
 import com.switchfully.youcoach.security.authentication.user.SecuredUser;
 import com.switchfully.youcoach.security.authentication.user.SecuredUserService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -21,13 +24,26 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     private final String jwtSecret;
     private final SecuredUserService securedUserService;
 
-    public JwtAuthenticationFilter(AuthenticationManager authenticationManager, String jwtSecret, SecuredUserService securedUserService) {
+    public JwtAuthenticationFilter(AuthenticationManager authenticationManager, String jwtSecret,
+                                   SecuredUserService securedUserService, OnAuthenticationFailureHandler failureHandler) {
         this.authenticationManager = authenticationManager;
         this.jwtSecret = jwtSecret;
         this.securedUserService = securedUserService;
 
         setFilterProcessesUrl("/login");
+        setAuthenticationFailureHandler(failureHandler);
     }
+
+    @Override
+    protected void unsuccessfulAuthentication(HttpServletRequest request,
+                                              HttpServletResponse response,
+                                              AuthenticationException failed)
+            throws IOException, ServletException {
+
+        getFailureHandler().onAuthenticationFailure(request, response, failed);
+    }
+
+
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) {

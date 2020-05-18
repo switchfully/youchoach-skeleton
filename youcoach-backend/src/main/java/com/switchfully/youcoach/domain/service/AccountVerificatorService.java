@@ -15,6 +15,8 @@ import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
 import javax.mail.MessagingException;
+import java.util.Optional;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 
 @Profile("production")
@@ -74,6 +76,31 @@ public class AccountVerificatorService implements AccountVerificator {
         emailSenderService.sendMail(from, user.getEmail(), subject, body, true);
 
     }
+    @Override
+    public boolean resendVerificationEmailFor(String email){
+        Optional<User> userOpt = userRepository.findByEmail(email);
+        return recreateVerificationAndResendEmailIfUserFound(userOpt);
+    }
+
+    private boolean recreateVerificationAndResendEmailIfUserFound(Optional<User> userOpt) {
+        final AtomicBoolean result = new AtomicBoolean(true);
+        userOpt.ifPresent( user -> {
+            try{
+                assertUserHasNotBeenEnabledAlready(user);
+                removeAccountVerification(user);
+                createAccountVerification(user);
+
+                sendVerificationEmail(user);
+            } catch(MessagingException|IllegalStateException e){
+                result.set(false);
+            }
+        });
+        return result.get();
+    }
+
+    private void assertUserHasNotBeenEnabledAlready(User user) {
+        if(user.isAccountEnabled()) throw new IllegalStateException("user already enabled");
+    }
 
     @Override
     public boolean doesVerificationCodeMatch(String verificationCode, String email) {
@@ -86,5 +113,7 @@ public class AccountVerificatorService implements AccountVerificator {
         user.setAccountEnabled(true);
         removeAccountVerification(user);
     }
+
+
 
 }
