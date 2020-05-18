@@ -10,6 +10,17 @@ public class CreateCoacheeProfileDto {
     private String photoUrl;
     private String youcoachRole;
 
+    public CreateCoacheeProfileDto(String schoolYear, String firstName, String lastName, String email, String photoUrl, String youcoachRole) {
+        this.schoolYear = schoolYear;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.photoUrl = photoUrl;
+        this.youcoachRole = youcoachRole;
+    }
+
+    public CreateCoacheeProfileDto() {
+    }
 
     public CreateCoacheeProfileDto withSchoolYear(String schoolYear) {
         this.schoolYear = schoolYear;
