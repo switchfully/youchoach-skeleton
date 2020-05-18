@@ -1,8 +1,8 @@
+
+create schema IF NOT EXISTS youcoach;
+set schema 'youcoach';
+
 create sequence hibernate_sequence;
-
-alter sequence hibernate_sequence owner to mncmxmjmrpepth;
--- create schema 'youcoach';
-
 create table members
 (
     id         bigint not null
@@ -15,7 +15,4 @@ create table members
 );
 
 
-
-alter table members
-    owner to mncmxmjmrpepth;
 
