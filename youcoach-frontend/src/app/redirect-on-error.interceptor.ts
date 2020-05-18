@@ -20,7 +20,7 @@ export class RedirectOnErrorInterceptor implements HttpInterceptor {
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     console.log(request);
     return next.handle(request).pipe(
-      tap(evt => { console.log('evt: ' + evt.type); {}}),
+      tap(evt => {}),
     catchError((err: any) => {
       const router = this.router;
       function isAuthorisationError() {

@@ -13,12 +13,14 @@
                 <div class="input-field col s6">
                   <input id="first_name" type="text" class="validate" required formControlName="firstname">
                   <label for="first_name" translate>register.label.first-name</label>
-                  <span data-error="Required" class="helper-text"></span>
+                  <span #firstnamerequired hidden translate>register.message.first-name-required</span>
+                  <span [attr.data-error]="firstnamerequired.innerText" class="helper-text"></span>
                 </div>
                 <div class="input-field col s6">
                   <input id="last_name" type="text" class="validate" required formControlName="lastname">
                   <label for="last_name" translate>register.label.last-name</label>
-                  <span data-error="Required" class="helper-text"></span>
+                  <span #lastnamerequired hidden translate>register.message.last-name-required</span>
+                  <span [attr.data-error]="lastnamerequired.innerText" class="helper-text"></span>
                 </div>
               </div>
               <div class="row">
@@ -26,14 +28,16 @@
                   <input id="email" type="email" class="validate" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" formControlName="email">
                   <label for="email" translate>register.label.email</label>
                   <span class="helper-text red-text darken-2"  *ngIf="emailExistsError" translate>register.message.email-in-use</span>
-                  <span data-error="Not a valid email" class="helper-text"></span>
+                  <span #wrongemailformat hidden translate>register.message.email-wrong-format</span>
+                  <span [attr.data-error]="wrongemailformat.innerText" class="helper-text"></span>
                 </div>
               </div>
               <div class="row">
                 <div class="input-field col s12">
                   <input id="password" type="password" class="validate" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required formControlName="password" #password>
                   <label for="password" translate>register.label.password</label>
-                  <span data-error="Password should be valid" data-success="password is valid" class="helper-text" ></span>
+                  <span #wrongpasswordformat hidden translate>register.message.password-policy</span>
+                  <span [attr.data-error]="wrongpasswordformat.innerText" class="helper-text"></span>
                 </div>
               </div>
               <div class="row">
@@ -41,7 +45,8 @@
                   <input id="passwordVerification" type="password" class="validate" pattern="{{password.value}}"
                          required formControlName="passwordVerification">
                   <label for="passwordVerification" translate>register.label.password2</label>
-                  <span data-error="Passwords should match" class="helper-text" ></span>
+                  <span #passwordmatch hidden translate>register.message.password-match</span>
+                  <span [attr.data-error]="passwordmatch.innerText" class="helper-text"></span>
                 </div>
               </div>
               <div class="row right-align">

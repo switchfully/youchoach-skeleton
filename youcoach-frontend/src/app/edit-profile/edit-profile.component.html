@@ -24,6 +24,8 @@
                       <input id="first_name" type="text" class="validate" required formControlName="firstName"
                              name='member.firstName' name='member.firstName'
                              [(ngModel)]="member.firstName" >
+                      <span #firstnamerequired hidden translate>register.message.first-name-required</span>
+                      <span [attr.data-error]="firstnamerequired.innerText" class="helper-text"></span>
                     </div>
                   </tr>
                   <tr>
@@ -31,15 +33,20 @@
                     <div class="input-field col s6">
                       <input id="last_name" type="text" class="validate" required formControlName="lastName"
                              name='member.lastName' name='member.lastName'
-                             [(ngModel)]="member.lastName"  >
+                             [(ngModel)]="member.lastName">
+                      <span #lastnamerequired hidden translate>register.message.last-name-required</span>
+                      <span [attr.data-error]="lastnamerequired.innerText" class="helper-text"></span>
                     </div>
                   </tr>
                   <tr>
                     <td><strong translate>profile-information.label.email</strong></td>
                     <div class="input-field col s12">
-                      <input id="email" type="email" class="validate" required formControlName="email"
+                      <input id="email" type="email" class="validate" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" formControlName="email"
                              name='member.email' name='member.email'
                              [(ngModel)]="member.email"   >
+                      <span class="helper-text red-text darken-2"  *ngIf="emailExistsError" translate>register.message.email-in-use</span>
+                      <span #wrongemailformat hidden translate>register.message.email-wrong-format</span>
+                      <span [attr.data-error]="wrongemailformat.innerText" class="helper-text"></span>
                     </div>
                   </tr>
                   <tr>
@@ -54,7 +61,8 @@
 
                     <div class="row right-align">
                       <button [disabled]="(!editForm.valid)" class="waves-effect waves-light yellow darken-2 btn-large black-text" type="submit" translate>
-                        profile-information.button.save</button>
+                        profile-information.button.save
+                      <i class="material-icons right">send</i></button>
                     </div>
 <!--                    <div class="center"><a href="" class="btn-large waves-effect waves-light yellow darken-2">-->
 <!--                      <span class="black-text">Cancel</span>-->
