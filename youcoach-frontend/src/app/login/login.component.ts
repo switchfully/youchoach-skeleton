@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder} from '@angular/forms';
 import {AuthenticationService} from '../authentication/authentication.service';
 import {Router} from '@angular/router';
+import {CoacheeService} from '../coacheeService/coachee.service';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +16,8 @@ export class LoginComponent implements OnInit {
   title = 'You-Coach | Sign in';
   jwt;
 
-  constructor(private formBuilder: FormBuilder, private authenticationService: AuthenticationService, private router: Router) {
+  constructor(private formBuilder: FormBuilder, private authenticationService: AuthenticationService, private router: Router,
+              private coacheeService: CoacheeService) {
     this.loginForm = this.formBuilder.group({
       username: '',
       password: ''
@@ -34,17 +36,26 @@ export class LoginComponent implements OnInit {
         (_ => {
           this.success = true;
           if (this.authenticationService.isCoach()) {
-            setTimeout(() => {this.router.navigateByUrl('/coach-profile');
-                              document.getElementById('footer').setAttribute('class', 'page-footer teal darken-2'); }, 1000);
+            setTimeout(() => {
+              this.router.navigateByUrl('/coach-profile');
+              document.getElementById('footer').setAttribute('class', 'page-footer teal darken-2');
+            }, 1000);
 
           } else {
-            setTimeout(() => {this.router.navigateByUrl('/profile');
-                              document.getElementById('footer').setAttribute('class', 'page-footer yellow darken-2'); }, 1000);
+            setTimeout(() => {
+              this.router.navigateByUrl('/profile');
+              document.getElementById('footer').setAttribute('class', 'page-footer yellow darken-2');
+            }, 1000);
           }
-          }),
+        }),
         (_ => this.error = true)
       );
     this.loginForm.reset();
+  }
+
+  resetPassword() {
+    this.coacheeService.requestPasswordResetToken({ email: this.loginForm.get('username').value })
+      .subscribe(_ => this.router.navigateByUrl('/password-reset-requested'));
   }
 
   logout() {

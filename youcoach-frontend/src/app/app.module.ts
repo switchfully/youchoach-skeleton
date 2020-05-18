@@ -25,6 +25,15 @@ import {CoachProfileComponent} from './coach-profile/coach-profile.component';
 import { ProfileHeaderComponent } from './profile-header/profile-header.component';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
 import { ValidateAccountComponent } from './validate-account/validate-account.component';
+import {RedirectOnErrorInterceptor} from './redirect-on-error.interceptor';
+import { ForbiddenComponent } from './forbidden/forbidden.component';
+import { NotFoundComponent } from './not-found/not-found.component';
+import { EmailValidationSuccessComponent } from './email-validation-success/email-validation-success.component';
+import { RegistrationSuccessComponent } from './registration-success/registration-success.component';
+import { PasswordResetRequestedComponent } from './password-reset-requested/password-reset-requested.component';
+import { PasswordResetComponent } from './password-reset/password-reset.component';
+import { PasswordChangeSuccessComponent } from './password-change-success/password-change-success.component';
+import { PasswordChangeFailureComponent } from './password-change-failure/password-change-failure.component';
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -46,6 +55,14 @@ export function HttpLoaderFactory(http: HttpClient) {
     ProfileHeaderComponent,
     EditProfileComponent,
     ValidateAccountComponent,
+    ForbiddenComponent,
+    NotFoundComponent,
+    EmailValidationSuccessComponent,
+    RegistrationSuccessComponent,
+    PasswordResetRequestedComponent,
+    PasswordResetComponent,
+    PasswordChangeSuccessComponent,
+    PasswordChangeFailureComponent,
   ],
   imports: [
     BrowserModule,
@@ -69,7 +86,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatIconModule
   ],
   providers: [
-    {provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true}
+    {provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: RedirectOnErrorInterceptor, multi: true}
   ],
   bootstrap: [AppComponent]
 })

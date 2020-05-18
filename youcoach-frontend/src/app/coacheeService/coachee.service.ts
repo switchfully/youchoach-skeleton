@@ -1,9 +1,14 @@
 import {Injectable} from '@angular/core';
 import {Observable, of} from 'rxjs';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {MessageService} from '../message.service';
 import {ICoachee} from '../register/icoachee';
 import {IMember} from '../IMember';
 import {catchError} from 'rxjs/operators';
+import {ICoacheeRegisterResult} from './ICoacheeRegisterResult';
+import {IRequestPasswordResetToken} from '../IRequestPasswordResetToken';
+import {IPasswordChange} from '../IPasswordChange';
+import {IPasswordChangeResult} from '../IPasswordChangeResult';
 
 @Injectable({
   providedIn: 'root'
@@ -17,11 +22,17 @@ export class CoacheeService {
 
   };
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private messageService: MessageService) {
   }
 
-  register(coachee: ICoachee): Observable<ICoachee> {
-    return this.http.post<ICoachee>(this.url, coachee, this.httpOptions);
+  register(coachee: ICoachee): Observable<ICoacheeRegisterResult> {
+    return this.http.post<ICoacheeRegisterResult>(this.url, coachee, this.httpOptions);
+  }
+  requestPasswordResetToken(tokenRequest: IRequestPasswordResetToken): Observable<any> {
+    return this.http.post<any>(this.url + '/password/reset', tokenRequest, this.httpOptions);
+  }
+  performPasswordReset(passwordChange: IPasswordChange): Observable<IPasswordChangeResult> {
+    return this.http.patch<any>(this.url + '/password/reset', passwordChange, this.httpOptions);
   }
 
   getCoachee(): Observable<IMember> {

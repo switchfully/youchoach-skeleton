@@ -144,4 +144,11 @@ public class UserService {
         return !accountVerificator.doesVerificationCodeMatch(validationData.getVerificationCode(), validationData.getEmail());
     }
 
+    public ResendValidationDto resendValidation(ResendValidationDto validationData){
+        boolean result = accountVerificator.resendVerificationEmailFor(validationData.getEmail());
+        validationData.setValidationBeenResend(result);
+        return validationData;
+    }
+
+
 }

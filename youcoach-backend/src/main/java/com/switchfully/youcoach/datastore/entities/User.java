@@ -24,7 +24,7 @@ public class User {
     private String photoUrl;
 
     @Column(name = "account_enabled", nullable = false)
-    private boolean accountEnabled = true;
+    private boolean accountEnabled = false;
 
     public User(long id, String firstName, String lastName, String email, String password, String schoolYear, String photoUrl) {
         this.id = id;

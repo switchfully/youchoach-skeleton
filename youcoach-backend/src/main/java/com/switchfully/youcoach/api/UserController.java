@@ -1,11 +1,11 @@
 package com.switchfully.youcoach.api;
 
 import com.switchfully.youcoach.domain.dtos.*;
+import com.switchfully.youcoach.domain.service.PasswordResetService;
 import com.switchfully.youcoach.domain.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -20,10 +20,12 @@ import java.security.Principal;
 public class UserController {
     private final UserService userService;
     private final static Logger LOGGER = LoggerFactory.getLogger(UserController.class);
+    private final PasswordResetService passwordResetService;
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService, PasswordResetService passwordResetService) {
         this.userService = userService;
+        this.passwordResetService = passwordResetService;
     }
 
     @PostMapping(produces = "application/json", consumes = "application/json")
@@ -57,10 +59,27 @@ public class UserController {
         return userService.getCoachProfileForUserWithEmail(principal.getName());
     }
 
-
-    @PatchMapping(consumes = "application/json", path="/validate")
+    @PreAuthorize("isAnonymous()")
+    @PostMapping(consumes = "application/json;charset=UTF-8", produces = "application/json;charset=UTF-8", path="/validate")
     public ValidationResultDto validateAccount(@RequestBody ValidateAccountDto validationData){
         return userService.validateAccount(validationData);
+    }
+
+    @PreAuthorize("isAnonymous()")
+    @PatchMapping(consumes = "application/json;charset=UTF-8", produces = "application/json;charset=UTF-8", path = "/validate")
+    public ResendValidationDto resendValidation(@RequestBody ResendValidationDto validationData){
+        return userService.resendValidation(validationData);
+    }
+
+    @PreAuthorize("isAnonymous()")
+    @PostMapping(consumes = "application/json;charset=UTF-8", path = "/password/reset")
+    public void requestPasswordResetToken(@RequestBody PasswordResetRequestDto resetRequest){
+        passwordResetService.requestPasswordReset(resetRequest);
+    }
+    @PreAuthorize("isAnonymous()")
+    @PatchMapping(consumes = "application/json;charset=UTF-8", path = "/password/reset", produces= "application/json;charset=UTF-8")
+    public PasswordChangeResultDto performPasswordChange(@RequestBody PasswordChangeRequestDto changeRequest){
+        return passwordResetService.performPasswordChange(changeRequest);
     }
 
     @ExceptionHandler(IllegalStateException.class)

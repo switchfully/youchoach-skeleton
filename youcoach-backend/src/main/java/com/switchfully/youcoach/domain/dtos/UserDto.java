@@ -6,14 +6,14 @@ public class UserDto {
     private String firstName;
     private String lastName;
     private String email;
-    private String password;
+    private boolean accountEnabled;
 
-    public UserDto(long id, String firstName, String lastName, String email, String password) {
+    public UserDto(long id, String firstName, String lastName, String email, boolean accountEnabled) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
-        this.password = password;
+        this.accountEnabled = accountEnabled;
     }
     public UserDto(){}
 
@@ -33,8 +33,8 @@ public class UserDto {
         this.email = email;
         return this;
     }
-    public UserDto withPassword(String password){
-        this.password = password;
+    public UserDto withAccountEnabled(boolean accountEnabled){
+        this.accountEnabled = accountEnabled;
         return this;
     }
 
@@ -54,7 +54,8 @@ public class UserDto {
         return email;
     }
 
-    public String getPassword() {
-        return password;
+    public boolean isAccountEnabled() {
+        return accountEnabled;
     }
+
 }

@@ -12,6 +12,7 @@ export class AppComponent implements OnInit {
   language = 'en';
 
   constructor(private authenticationService: AuthenticationService, private translate: TranslateService) {
+    translate.setDefaultLang('en');
   }
 
   ngOnInit(): void {

@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {CoacheeService} from '../coacheeService/coachee.service';
 import {ICoachee} from './icoachee';
+import {ICoacheeRegisterResult} from '../coacheeService/ICoacheeRegisterResult';
 
 @Component({
   selector: 'app-register',
@@ -45,8 +46,16 @@ export class RegisterComponent implements OnInit {
     this.register(this.coachee);
   }
 
+  private transformResult(input: ICoacheeRegisterResult): ICoachee {
+    return { id: input.id, firstName: input.firstName, lastName: input.lastName, email: input.email, password: '' };
+  }
   private register(coachee: ICoachee) {
-    this.coacheeService.register(coachee).subscribe(addedCoachee => this.coachee = addedCoachee,
+    this.coacheeService.register(coachee).subscribe(
+      addedCoachee => {
+                this.coachee = this.transformResult(addedCoachee);
+                if (addedCoachee.accountEnabled) { this.router.navigateByUrl('/registration-success');
+                } else { this.router.navigateByUrl('/validate-account'); }
+    },
       err => {
       if (err.error.message === ('Email already exists!')) {
          this.emailExistsError = true;

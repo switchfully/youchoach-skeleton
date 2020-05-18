@@ -1,8 +1,7 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
-import {ICoachee} from "../register/icoachee";
-import {IValidationData} from "../IValidationData";
-import {EmailValidationService} from "../email-validation.service";
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {IValidationData} from './IValidationData';
+import {EmailValidationService} from './email-validation.service';
 
 @Component({
   selector: 'app-validate-account',
@@ -12,9 +11,12 @@ import {EmailValidationService} from "../email-validation.service";
 export class ValidateAccountComponent implements OnInit {
   email: string;
   token: string;
-  private sub: any;
+  emailMatch: RegExp;
+  validationFailed = false;
 
-  constructor(private route: ActivatedRoute, private validationService: EmailValidationService) {
+  constructor(private route: ActivatedRoute, private validationService: EmailValidationService, private router: Router) {
+    // tslint:disable-next-line:max-line-length
+    this.emailMatch = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
     this.token = 'initial';
     this.email = 'your email';
   }
@@ -24,7 +26,7 @@ export class ValidateAccountComponent implements OnInit {
       .subscribe(params => {
 
         console.log(params);
-        if(undefined !== params.token) {
+        if (undefined !== params.token) {
           this.token = params.token;
         }
         console.log(this.token);
@@ -38,13 +40,29 @@ export class ValidateAccountComponent implements OnInit {
     console.log('validate account function ' + this.token + ' ' + this.email);
   }
 
+  resendValidationtoken(): void {
+    this.validationService.resend({ email: this.email, validationBeingResend: false } ).subscribe(
+      result => console.log('result', result),
+      err => console.log('err', err)
+    );
+  }
+
+  validEmailEntered(): boolean {
+    console.log(this.emailMatch.test(this.email), this.email);
+    return this.emailMatch.test(this.email);
+  }
+
 
   private performValidation(data: IValidationData) {
-    this.validationService.validate(data).subscribe(result => console.log(result),
-      err => {
-        if (err.error.message === ('Email already exists!')) {
+    this.validationService.validate(data).subscribe(
+      result => {
+        if (result.emailAddressValidated) {
+          this.router.navigateByUrl('/email-validation-success');
+        } else {
+          this.validationFailed = true;
         }
-      });
+      },
+      _ => this.validationFailed = true);
   }
 
 }

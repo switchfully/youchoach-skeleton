@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 public class UserMapper {
 
     public UserDto toUserDto(User user){
-        return new UserDto(user.getId(),user.getFirstName(),user.getLastName(),user.getEmail(),user.getPassword());
+        return new UserDto(user.getId(),user.getFirstName(),user.getLastName(),user.getEmail(),user.isAccountEnabled());
     }
 
     public User toUser(CreateUserDto createUserDto){

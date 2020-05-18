@@ -12,5 +12,6 @@ public interface AccountVerificator {
     void removeAccountVerification(User user);
     boolean doesVerificationCodeMatch(String token, String email);
     void enableAccount(String email);
+    boolean resendVerificationEmailFor(String email);
 
 }
