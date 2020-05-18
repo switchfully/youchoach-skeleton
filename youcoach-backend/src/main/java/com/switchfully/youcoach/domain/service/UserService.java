@@ -109,6 +109,14 @@ public class UserService {
         Coach coach = assertCoachExistsAndRetrieve(email);
         return userMapper.toCoachProfileDto(coach);
     }
+
+    public CoachProfileDto updateCoachInformation(String email, CoachProfileDto coachProfileDto){
+        Coach coach = this.coachRepository.findCoachByUser_Email(email).orElseThrow(CoachNotFoundException::new);
+        coach.setAvailability(coachProfileDto.getAvailablity());
+        coach.setIntroduction(coachProfileDto.getIntroduction());
+        this.coachRepository.save(coach);
+        return coachProfileDto;
+    }
     public Coach assertCoachExistsAndRetrieve(String email){
         return coachRepository.findCoachByUser_Email(email).orElseThrow(CoachNotFoundException::new);
     }

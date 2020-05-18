@@ -58,16 +58,12 @@
                     </div>
                   </tr>
                   <tr>
-
                     <div class="row right-align">
-                      <button [disabled]="(!editForm.valid)" class="waves-effect waves-light yellow darken-2 btn-large black-text" type="submit" translate>
-                        profile-information.button.save
-                      <i class="material-icons right">send</i></button>
+                      <button class="waves-effect waves-light teal lighten-3 btn-large black-text" (click)="onBack()" translate>profile-information.button.cancel<i
+                        class="material-icons right">cancel</i></button>
+                      <button [disabled]="(!editForm.valid)" class="waves-effect waves-light yellow darken-2 btn-large black-text"  type="submit" translate>profile-information.button.save<i
+                        class="material-icons right">save</i></button>
                     </div>
-<!--                    <div class="center"><a href="" class="btn-large waves-effect waves-light yellow darken-2">-->
-<!--                      <span class="black-text">Cancel</span>-->
-<!--                    </a></div>-->
-
 
                   </tr>
 

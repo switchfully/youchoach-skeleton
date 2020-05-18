@@ -26,7 +26,8 @@ export class CoachProfileComponent implements OnInit {
 
   coachView = false;
 
-  constructor(private coachService: CoachService, private profileView: ProfileViewService) { }
+  constructor(private coachService: CoachService, private profileView: ProfileViewService) {
+  }
 
   ngOnInit(): void {
     document.getElementById('footer').setAttribute('class', 'page-footer teal lighten-3');
@@ -39,4 +40,5 @@ export class CoachProfileComponent implements OnInit {
     this.coachService.getCoach().subscribe(
       coach => this.coach = coach);
   }
+
 }
