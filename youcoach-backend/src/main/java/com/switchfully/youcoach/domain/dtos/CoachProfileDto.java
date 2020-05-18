@@ -7,13 +7,13 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class CoachProfileDto extends CoacheeProfileDto {
-    private String availablity;
+    private String availability;
     private int xp;
     private String introduction;
     private List<CoachingTopicDto> topics = new ArrayList<>();
 
     public String getAvailablity() {
-        return availablity;
+        return availability;
     }
 
     public int getXp() {
@@ -29,7 +29,7 @@ public class CoachProfileDto extends CoacheeProfileDto {
     }
 
     public CoachProfileDto withAvailability(String availability){
-        this.availablity = availability;
+        this.availability = availability;
         return this;
     }
     public CoachProfileDto withIntroduction(String introduction){
@@ -39,6 +39,16 @@ public class CoachProfileDto extends CoacheeProfileDto {
     public CoachProfileDto withXp(int xp){
         this.xp = xp;
         return this;
+    }
+
+    public CoachProfileDto() {
+    }
+
+    public CoachProfileDto(String availablity, int xp, String introduction, List<CoachingTopicDto> topics) {
+        this.availability = availablity;
+        this.xp = xp;
+        this.introduction = introduction;
+        this.topics = topics;
     }
 
     public CoachProfileDto withCoachingTopics(List<CoachingTopic> topics){
@@ -58,7 +68,7 @@ public class CoachProfileDto extends CoacheeProfileDto {
     @Override
     public String toString() {
         return "CoachProfileDto{" +
-                "availablity='" + availablity + '\'' +
+                "availability='" + availability + '\'' +
                 ", xp=" + xp +
                 ", introduction='" + introduction + '\'' +
                 ", topics=" + topics +
@@ -72,13 +82,13 @@ public class CoachProfileDto extends CoacheeProfileDto {
         if (!super.equals(o)) return false;
         CoachProfileDto that = (CoachProfileDto) o;
         return xp == that.xp &&
-                Objects.equals(availablity, that.availablity) &&
+                Objects.equals(availability, that.availability) &&
                 Objects.equals(introduction, that.introduction) &&
                 Objects.equals(topics, that.topics);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), availablity, xp, introduction, topics);
+        return Objects.hash(super.hashCode(), availability, xp, introduction, topics);
     }
 }

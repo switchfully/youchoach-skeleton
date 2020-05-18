@@ -66,6 +66,12 @@ public class UserController {
         return userService.getCoachProfileForUserWithEmail(principal.getName());
     }
 
+    @PreAuthorize("hasRole('ROLE_COACH')")
+    @PutMapping(produces = "application/json;charset=UTF-8", path="/coach/profile")
+    public CoachProfileDto updateCoachInformation(Principal principal, @RequestBody CoachProfileDto coachProfileDto){
+        return userService.updateCoachInformation(principal.getName(),coachProfileDto);
+    }
+
     @PreAuthorize("isAnonymous()")
     @PostMapping(consumes = "application/json;charset=UTF-8", produces = "application/json;charset=UTF-8", path="/validate")
     public ValidationResultDto validateAccount(@RequestBody ValidateAccountDto validationData){
