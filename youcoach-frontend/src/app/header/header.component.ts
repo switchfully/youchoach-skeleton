@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthenticationService} from '../authentication/authentication.service';
 import {TranslateService} from '@ngx-translate/core';
-import {ProfileViewService} from '../profile-view.service';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -12,7 +12,7 @@ export class HeaderComponent implements OnInit {
   username;
   language = 'en';
 
-  constructor(public authenticationService: AuthenticationService, private translate: TranslateService, private profileView: ProfileViewService) {
+  constructor(public authenticationService: AuthenticationService, private translate: TranslateService, private route: ActivatedRoute) {
   }
 
   ngOnInit(): void {
@@ -35,11 +35,11 @@ export class HeaderComponent implements OnInit {
     this.authenticationService.logout();
   }
 
-  disableCoachView() {
-    this.profileView.disableCoachView();
-  }
-
-  enableCoachView() {
-    this.profileView.enableCoachView();
+  calculateClass() {
+    const url: string = this.route.snapshot['_routerState'].url;
+    if (url.endsWith('/coach-profile')) {
+      return 'nav-content teal lighten-3';
+    }
+    return 'nav-content yellow darken-2';
   }
 }
