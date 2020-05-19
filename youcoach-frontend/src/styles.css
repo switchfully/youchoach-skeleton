@@ -6,7 +6,7 @@ body {
 
 main {
   flex: 1 0 auto;
-  min-height: 67vh;
+  min-height: 62.5vh;
 }
 
 .black-opacity {
