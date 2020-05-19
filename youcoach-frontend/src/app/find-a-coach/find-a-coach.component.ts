@@ -22,7 +22,7 @@ export class FindACoachComponent implements OnInit {
   ngOnInit(): void {
     this.coachService.getAllCoaches().subscribe(coaches => {
       this.coachList = coaches;
-      // this.filteredCoachList = coaches.coaches;
+      this.filteredCoachList = coaches.coaches;
       for (const coach of this.coachList.coaches) {
         for (const topic of coach.topics) {
           if (this.topicList.indexOf(topic) === -1) {
@@ -42,6 +42,7 @@ export class FindACoachComponent implements OnInit {
   }
 
   updateList(event: any) {
+    this.filteredCoachList = [];
     for (const coach of this.coachList.coaches) {
       for (const topic1 of coach.topics) {
         if (topic1.name === event.target.value) {
