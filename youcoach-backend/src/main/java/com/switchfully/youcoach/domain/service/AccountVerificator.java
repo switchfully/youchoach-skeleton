@@ -2,6 +2,8 @@ package com.switchfully.youcoach.domain.service;
 
 import com.switchfully.youcoach.datastore.entities.AccountVerification;
 import com.switchfully.youcoach.datastore.entities.User;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
 
