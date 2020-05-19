@@ -31,8 +31,8 @@
               </div>
               <div class="input-field col l6 m12 s12">
                 <i class="material-icons prefix">search</i>
-                <input id="icon_prefix" type="text" class="validate" [(ngModel)]="searchText" autocomplete="off">
-                <label for="icon_prefix">First name, last name or email</label>
+                <input id="firstLastOrEmail" type="text" class="validate" [(ngModel)]="searchText" autocomplete="off" (change)="performFilter()">
+                <label for="firstLastOrEmail">First name, last name or email</label>
               </div>
             </div>
           </header>

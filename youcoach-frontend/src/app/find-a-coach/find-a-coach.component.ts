@@ -10,12 +10,13 @@ import {ICoach} from '../coach-profile/ICoach';
   styleUrls: ['./find-a-coach.component.css']
 })
 export class FindACoachComponent implements OnInit {
-  searchText;
+  searchText: string;
   coachList: ICoachList = {coaches: null};
   topicList = [];
   private _filteredCoaches: ICoach [];
   selectedTopic = '';
   grades: number[];
+
 
   constructor(private coachService: CoachService) {
   }
@@ -73,6 +74,12 @@ export class FindACoachComponent implements OnInit {
           })));
           return c;
         });
+    } else if (this.searchText !== undefined && this.searchText.length > 0) {
+      this.filteredCoaches = this.coachList.coaches
+        .filter(coach => coach.firstName.toLowerCase().startsWith(this.searchText.toLowerCase()) ||
+          coach.lastName.toLowerCase().startsWith(this.searchText.toLowerCase()) ||
+          coach.email.toLowerCase().startsWith(this.searchText.toLowerCase())
+        );
     } else {
       this.filteredCoaches = this.coachList.coaches;
     }
