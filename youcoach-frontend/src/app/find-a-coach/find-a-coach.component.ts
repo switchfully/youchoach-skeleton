@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ICoachList} from '../coach-profile/ICoachList';
 import {CoachService} from '../coach-profile/coach.service';
 import * as M from 'materialize-css';
+import {ICoach, ITopic} from '../coach-profile/ICoach';
 
 @Component({
   selector: 'app-find-a-coach',
@@ -11,7 +12,9 @@ import * as M from 'materialize-css';
 export class FindACoachComponent implements OnInit {
   searchText;
   coachList: ICoachList = {coaches: null};
-  topicList = [];
+  topicList: ITopic[] = [];
+  filteredCoachList: ICoach[] = [];
+  filteredtopicList = [];
 
   constructor(private coachService: CoachService) {
   }
@@ -19,10 +22,11 @@ export class FindACoachComponent implements OnInit {
   ngOnInit(): void {
     this.coachService.getAllCoaches().subscribe(coaches => {
       this.coachList = coaches;
+      // this.filteredCoachList = coaches.coaches;
       for (const coach of this.coachList.coaches) {
         for (const topic of coach.topics) {
-          if (this.topicList.indexOf(topic.name) === -1) {
-            this.topicList.push(topic.name);
+          if (this.topicList.indexOf(topic) === -1) {
+            this.topicList.push(topic);
           }
         }
       }
@@ -35,5 +39,16 @@ export class FindACoachComponent implements OnInit {
     for (const el of elem) {
       const instance = M.FormSelect.init(el, {});
     }
+  }
+
+  updateList(event: any) {
+    for (const coach of this.coachList.coaches) {
+      for (const topic1 of coach.topics) {
+        if (topic1.name === event.target.value) {
+          this.filteredCoachList.push(coach);
+        }
+      }
+    }
+    this.coachList.coaches = this.filteredCoachList;
   }
 }
