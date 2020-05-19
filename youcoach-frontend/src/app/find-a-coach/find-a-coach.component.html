@@ -11,14 +11,14 @@
             <div class="row">
               <div class="input-field col l3 m6 s12">
                 <select  [(ngModel)]="selectedTopic" >
-                  <option value="none" selected>Choose topic</option>
+                  <option value="none" selected translate>coach-overview.label.filter-topic-dropdown</option>
                   <option *ngFor="let topic of topicList">{{topic}}</option>
                 </select>
-                <label>Filter by Topic</label>
+                <label translate>coach-overview.label.filter-topic</label>
               </div>
               <div class="input-field col l3 m6 s12">
                 <select [(ngModel)]="grades" multiple>
-                  <option value="none" disabled selected>Choose year</option>
+                  <option value="none" selected disabled translate>coach-overview.label.filter-year-dropdown</option>
                   <option value="1">year 1</option>
                   <option value="2">year 2</option>
                   <option value="3">year 3</option>
@@ -27,12 +27,12 @@
                   <option value="6">year 6</option>
                   <option value="7">year 7</option>
                 </select>
-                <label>Filter by Year</label>
+                <label translate>coach-overview.label.filter-year</label>
               </div>
               <div class="input-field col l6 m12 s12">
                 <i class="material-icons prefix">search</i>
                 <input id="icon_prefix" type="text" class="validate" [(ngModel)]="searchText" autocomplete="off">
-                <label for="icon_prefix">First name, last name or email</label>
+                <label for="icon_prefix" translate>coach-overview.label.search-placeholder</label>
               </div>
             </div>
           </header>
