@@ -58,6 +58,8 @@ export class AuthenticationService {
   logout() {
     sessionStorage.removeItem(this.tokenKey);
     sessionStorage.removeItem(this.usernameKey);
+    this.tokenValue = null;
+    this.usernameValue = null;
     this.userLoggedInSource.next(false);
   }
 
