@@ -17,6 +17,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.jdbc.Sql;
 
+import java.security.Principal;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -98,7 +99,12 @@ class UserServiceTest {
         coach.setAvailability("Whenever you want.");
         coach.setIntroduction("Endorsed by your mom.");
 
+        Principal principal = Mockito.mock(Principal.class);
+
+
         Mockito.when(coachRepository.findById(Mockito.anyLong())).thenReturn(Optional.of(coach));
+        Mockito.when(securedUserService.isAdmin(Mockito.anyString())).thenReturn(true);
+        Mockito.when(principal.getName()).thenReturn("");
 
        CoachProfileDto expected = (CoachProfileDto) new CoachProfileDto()
                .withXp(coach.getXp())
@@ -111,7 +117,7 @@ class UserServiceTest {
                .withLastName(user.getLastName())
                .withPhotoUrl(user.getPhotoUrl());
 
-        CoachProfileDto actual = userService.getCoachProfile(1);
+        CoachProfileDto actual = userService.getCoachProfile(principal,1);
         assertThat(actual).isEqualTo(expected);
     }
 
