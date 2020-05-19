@@ -13,6 +13,7 @@ export class AuthenticationService {
   private usernameKey = 'username';
   private userLoggedInSource = new Subject<boolean>();
   private tokenValue = null;
+  private usernameValue = null;
 
   userLoggedIn$ = this.userLoggedInSource.asObservable();
 
@@ -23,6 +24,7 @@ export class AuthenticationService {
 
   public setJwtToken(token: string, username: string): void {
     this.tokenValue = token;
+    this.usernameValue = username;
     sessionStorage.setItem(this.tokenKey, this.tokenValue);
     sessionStorage.setItem(this.usernameKey, username);
   }
@@ -36,14 +38,17 @@ export class AuthenticationService {
   }
 
   getToken() {
-    if (this.tokenValue == null) {
+    if (this.tokenValue === null) {
       this.tokenValue = sessionStorage.getItem(this.tokenKey);
     }
     return this.tokenValue;
   }
 
   getUsername() {
-    return sessionStorage.getItem(this.usernameKey);
+    if (this.usernameValue === null) {
+      this.usernameValue = sessionStorage.getItem(this.usernameKey);
+    }
+    return this.usernameValue;
   }
 
   isLoggedIn() {
