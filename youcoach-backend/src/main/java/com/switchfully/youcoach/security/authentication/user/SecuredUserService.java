@@ -3,9 +3,11 @@ package com.switchfully.youcoach.security.authentication.user;
 import com.switchfully.youcoach.datastore.repositories.AdminRepository;
 import com.switchfully.youcoach.datastore.repositories.CoachRepository;
 import com.switchfully.youcoach.datastore.repositories.UserRepository;
+import com.switchfully.youcoach.domain.dtos.CreateCoacheeProfileDto;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -55,11 +57,22 @@ public class SecuredUserService implements UserDetailsService {
         return adminRepository.findAdminByUser(user).isPresent();
     }
 
+    public boolean isAdmin(String email){
+        UserDetails ud = loadUserByUsername(email);
+        return ud.getAuthorities().contains(UserRoles.ROLE_ADMIN);
+    }
+
     private boolean isCoach(com.switchfully.youcoach.datastore.entities.User user){
         return coachRepository.findCoachByUser(user).isPresent();
     }
 
 
+    public String generateAuthorizationBearerTokenForUser(String email, String jwtSecret) {
+        UserDetails ud = loadUserByUsername(email);
+        UsernamePasswordAuthenticationToken user = new UsernamePasswordAuthenticationToken(ud.getUsername(),null, ud.getAuthorities());
+
+        return generateJwtToken(user,jwtSecret);
+    }
     public String generateJwtToken(Authentication authentication, String jwtSecret) {
         return Jwts.builder()
                 .signWith(Keys.hmacShaKeyFor(jwtSecret.getBytes()), SignatureAlgorithm.HS512)

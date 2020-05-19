@@ -55,6 +55,7 @@ public class UserMapper {
 
         coachList.forEach(coach -> {
             CoachListingEntryDto cli = new CoachListingEntryDto()
+                    .withId(coach.getUserId())
                     .withFirstName(coach.getUser().getFirstName())
                     .withLastName(coach.getUser().getLastName())
                     .withCoachingTopics(coach.getTopics())

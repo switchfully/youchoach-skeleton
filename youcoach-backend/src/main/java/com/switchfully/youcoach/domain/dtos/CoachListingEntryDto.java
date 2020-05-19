@@ -10,11 +10,17 @@ import java.util.stream.Collectors;
 
 public class CoachListingEntryDto {
 
-    String firstName;
-    String lastName;
+    private long id;
+    private String firstName;
+    private String lastName;
     private List<CoachingTopicDto> topics = new ArrayList<>();
-    String photoUrl;
-    String email;
+    private String photoUrl;
+    private String email;
+
+    public CoachListingEntryDto withId(long id){
+        this.id = id;
+        return this;
+    }
 
     public CoachListingEntryDto withUrl(String photoUrl) {
         this.photoUrl = photoUrl;
@@ -24,14 +30,6 @@ public class CoachListingEntryDto {
     public CoachListingEntryDto withEmail(String email) {
         this.email = email;
         return this;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getPhotoUrl() {
-        return photoUrl;
     }
 
     public CoachListingEntryDto withFirstName(String firstName) {
@@ -57,12 +55,24 @@ public class CoachListingEntryDto {
         return this;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPhotoUrl() {
+        return photoUrl;
+    }
+
     public String getFirstName() {
         return firstName;
     }
 
     public String getLastName() {
         return lastName;
+    }
+
+    public long getId() {
+        return id;
     }
 
     public List<CoachingTopicDto> getTopics() {

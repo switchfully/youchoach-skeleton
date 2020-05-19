@@ -4,8 +4,8 @@
       <a id="logo-container" href="#" class="brand-logo">You-Coach</a>
       <ul class="right hide-on-med-and-down valign-wrapper">
         <li class="header-hidden"><a routerLink="/home" translate>menu.link.home</a></li>
-        <li class="header-hidden"><a href="#" translate>menu.link.about-us</a></li>
-        <li class="header-hidden"><a href="#" translate>menu.link.contact</a></li>
+        <li class="header-hidden not-yet-implemented"><a href="#" translate>menu.link.about-us</a></li>
+        <li class="header-hidden not-yet-implemented"><a href="#" translate>menu.link.contact</a></li>
         <li class="header-hidden"><p class="grey-text" *ngIf="username" translate
                                      [translateParams]="{username: username}">menu.label.logged-in</p>
         </li>
@@ -19,10 +19,10 @@
                translate>menu.button.register<i
           class="material-icons right">person_add</i></a></li>
         <li class="valign-wrapper">
-          <button [class.active]="currentLanguage() === 'en'" class="btn btn-primary nav-item btn-small grey darken-1"
+          <button [class.active]="currentLanguage() === 'en'" class="btn btn-primary nav-item btn-small grey darken-1 not-yet-implemented"
                   (click)="switchLanguage('en')">en
           </button>
-          <button [class.active]="currentLanguage() === 'nl '" class="btn btn-primary nav-item btn-small grey darken-1"
+          <button [class.active]="currentLanguage() === 'nl '" class="btn btn-primary nav-item btn-small grey darken-1 not-yet-implemented"
                   (click)="switchLanguage('nl')">nl
           </button>
         </li>
@@ -30,8 +30,8 @@
 
       <ul id="nav-mobile" class="sidenav">
         <li><a routerLink="/home" translate>menu.link.home</a></li>
-        <li><a href="#" translate>menu.link.about-us</a></li>
-        <li><a href="#" translate>menu.link.contact</a></li>
+        <li class="not-yet-implemented"><a href="#" translate>menu.link.about-us</a></li>
+        <li class="not-yet-implemented"><a href="#" translate>menu.link.contact</a></li>
         <li><p class="grey-text" *ngIf="username" translate [translateParams]="{username: username}">
           menu.label.logged-in</p>
         </li>

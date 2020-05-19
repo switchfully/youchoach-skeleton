@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {CoachService} from './coach.service';
 import {ICoach} from './ICoach';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-coach-profile',
@@ -9,6 +10,7 @@ import {ICoach} from './ICoach';
 })
 export class CoachProfileComponent implements OnInit {
   coach: ICoach = {
+    id: null,
     availability: null,
     coachXP: null,
     topics: null,
@@ -22,17 +24,28 @@ export class CoachProfileComponent implements OnInit {
     youcoachRole: null
   };
   title = 'You-Coach | Coach-Profile';
+  idToGet: number;
 
   coachView = false;
 
-  constructor(private coachService: CoachService) { }
+  constructor(private coachService: CoachService, private route: ActivatedRoute) {
+    this.idToGet = +this.route.snapshot.paramMap.get('id');
+
+  }
 
   ngOnInit(): void {
 
     document.title = this.title;
-    this.getCoach();
+    if (this.idToGet !== 0) {
+      this.getSpecificCoach();
+    } else {
+      this.getCoach();
+    }
   }
 
+  getSpecificCoach(): void {
+    this.coachService.getSpecificCoach(this.idToGet).subscribe(coach => this.coach = coach);
+  }
   getCoach(): void {
     this.coachService.getCoach().subscribe(
       coach => this.coach = coach);

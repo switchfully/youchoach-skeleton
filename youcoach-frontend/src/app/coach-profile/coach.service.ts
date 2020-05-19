@@ -21,9 +21,11 @@ export class CoachService {
     return this.http.get<ICoach>(this.url + '/coach/profile');
   }
 
-  getCoachByEmail(id: string): Observable<ICoach> {
+  getSpecificCoach(id: number): Observable<ICoach> {
     return this.http.get<ICoach>(this.url + `/coach/profile/${id}`);
   }
+
+  getSpecificCoachByEmail(id: any): Observable<ICoach> { return null; }
 
   updateCoachInformation(coach: ICoach): Observable<ICoach> {
     return this.http.put<ICoach>(this.url + '/coach/profile', coach, this.httpOptions);
