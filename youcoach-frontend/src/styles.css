@@ -9,6 +9,10 @@ main {
   min-height: 62.5vh;
 }
 
+.not-yet-implemented {
+  display: none;
+}
+
 .black-opacity {
   background-color: rgba(0,0,0,0.25);
 }
