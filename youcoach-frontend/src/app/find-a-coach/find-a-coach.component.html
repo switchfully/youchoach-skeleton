@@ -10,9 +10,9 @@
           <header>
             <div class="row">
               <div class="input-field col l3 m6 s12">
-                <select>
+                <select  (change)="updateList($event)" >
                   <option value="" disabled selected>Choose topic</option>
-                  <option *ngFor="let topic of topicList">{{topic}}</option>
+                  <option  *ngFor="let topic of topicList" [value]="topic.name">{{topic.name}}</option>
                 </select>
                 <label>Filter by Topic</label>
               </div>
@@ -38,7 +38,8 @@
           </header>
 
           <div class="row">
-            <div *ngFor="let coach of coachList.coaches | filter:searchText">
+            <div *ngFor="let coach of filteredCoachList  | filter:searchText"
+            >
             <div class="col l3 m4 s12">
               <h6 class="card-title">{{coach.firstName}}&nbsp;{{coach.lastName}}</h6>
               <div class="card small">
