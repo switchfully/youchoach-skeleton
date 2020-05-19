@@ -38,6 +38,7 @@ import { PasswordChangeFailureComponent } from './password-change-failure/passwo
 import { EditCoachInformationComponent } from './coach-profile/edit-coach-information/edit-coach-information.component';
 import { FindACoachComponent } from './find-a-coach/find-a-coach.component';
 import { ChangeTopicsComponent } from './change-topics/change-topics.component';
+import { CoachProfileForCoacheeComponent } from './coach-profile-for-coachee/coach-profile-for-coachee.component';
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -70,6 +71,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     EditCoachInformationComponent,
     FindACoachComponent,
     ChangeTopicsComponent,
+    CoachProfileForCoacheeComponent,
   ],
   imports: [
     BrowserModule,

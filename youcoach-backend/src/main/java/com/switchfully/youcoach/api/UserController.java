@@ -66,6 +66,12 @@ public class UserController {
     }
 
     @PreAuthorize("hasRole('ROLE_COACHEE')")
+    @GetMapping(produces = "application/json;charset=UTF-8", path = "/coach/profile/{id}")
+    public CoachProfileDto getSpecificCoachProfile(@PathVariable("id") String id){
+        return userService.getCoachProfile(id);
+    }
+
+    @PreAuthorize("hasRole('ROLE_COACHEE')")
     @PutMapping(produces = "application/json;charset=UTF-8", path = "/profile")
     public CoacheeProfileUpdatedDto updateCoacheeProfile(Principal principal, @RequestBody CreateCoacheeProfileDto createCoacheeProfileDto){
         return userService.updateProfile(principal.getName(), createCoacheeProfileDto);

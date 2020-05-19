@@ -1,0 +1,107 @@
+<main class="container">
+
+
+  <div class="col s12 m10">
+    <div class="content-container" >
+
+      <section *ngIf="true" class="card-panel grey lighten-5">
+        <h5 translate>my-profile-menu.link.profile-information</h5>
+        <div class="divider"></div>
+        <div class="row">
+          <div class="col l2 m2 s12">
+            <img src="/assets/img/profile-picture-coach.jpg" class="responsive-img circle"
+                 alt="Profile Picture">
+          </div>
+          <div class="col l10 m10 s12">
+            <table class="highlight">
+              <tbody>
+              <tr>
+                <td><strong translate>coach-profile-information.label.first-name</strong></td>
+                <td>{{coach.firstName}}</td>
+              </tr>
+              <tr>
+                <td><strong translate>coach-profile-information.label.last-name</strong></td>
+                <td>{{coach.lastName}}</td>
+              </tr>
+              <tr>
+                <td><strong translate>coach-profile-information.label.email</strong></td>
+                <td>{{coach.email}}</td>
+              </tr>
+              <tr>
+                <td><strong translate>coach-profile-information.label.class</strong></td>
+                <td>{{coach.schoolYear}}</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+      <div>
+        <div class="divider"></div>
+        <section  class="card-panel grey lighten-5 ">
+          <h5>Coach Information</h5>
+          <div class="divider"></div>
+          <div class="row">
+            <div class="col l12 m12 s12">
+              <table class="highlight">
+                <tbody>
+                <!--
+                <tr>
+                  <td><strong>Coach XP</strong></td>
+                  <td>
+                    <div class="center">
+                      <span class="new badge teal lighten-3 teal-text text-darken-3"
+                            data-badge-caption="(Silver)">{{coach.coachXP}}</span>
+                    </div>
+                    <div class="progress teal">
+                      <div class="determinate" style="width: 60%"></div>
+                    </div>
+                  </td>
+                </tr>
+                -->
+                <tr>
+                  <td><strong>Introduction</strong></td>
+                  <td>{{coach.introduction}}</td>
+                </tr>
+                <tr>
+                  <td><strong>Availability</strong></td>
+                  <td>{{coach.availability}}</td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <div class="divider"></div>
+        <section class="card-panel grey lighten-5">
+          <h5>Coaching topics</h5>
+          <div class="divider"></div>
+          <div class="row">
+            <div class="col s12">
+              <table class="highlight">
+                <tbody>
+                <tr *ngFor="let topic of coach.topics">
+                  <td><strong>{{topic.name}}</strong></td>
+                  <td>
+                    <div class="center">
+                      <a class="btn-floating " [class.disabled]="!topic.grades.includes(1)"><i class="material-icons">filter_1</i></a>
+                      <a class="btn-floating " [class.disabled]="!topic.grades.includes(2)"><i class="material-icons">filter_2</i></a>
+                      <a class="btn-floating " [class.disabled]="!topic.grades.includes(3)"><i class="material-icons">filter_3</i></a>
+                      <a class="btn-floating " [class.disabled]="!topic.grades.includes(4)"><i class="material-icons">filter_4</i></a>
+                      <a class="btn-floating " [class.disabled]="!topic.grades.includes(5)"><i class="material-icons">filter_5</i></a>
+                      <a class="btn-floating " [class.disabled]="!topic.grades.includes(6)"><i class="material-icons">filter_6</i></a>
+                      <a class="btn-floating " [class.disabled]="!topic.grades.includes(7)"><i class="material-icons">filter_7</i></a>
+                    </div>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+
+</main>
