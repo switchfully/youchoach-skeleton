@@ -31,5 +31,4 @@ export class CoachService {
   getAllCoaches(): Observable<ICoachList> {
     return this.http.get<ICoachList>(this.url + '/find-coach');
   }
-
 }

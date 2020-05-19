@@ -10,22 +10,22 @@
           <header>
             <div class="row">
               <div class="input-field col l3 m6 s12">
-                <select>
-                  <option value="" disabled selected>Choose topic</option>
+                <select  [(ngModel)]="selectedTopic" >
+                  <option value="none" selected>Choose topic</option>
                   <option *ngFor="let topic of topicList">{{topic}}</option>
                 </select>
                 <label>Filter by Topic</label>
               </div>
               <div class="input-field col l3 m6 s12">
-                <select multiple>
-                  <option value="" disabled selected>Choose year</option>
+                <select [(ngModel)]="grades"multiple>
+                  <option value="none" disabled selected>Choose year</option>
                   <option value="1">year 1</option>
                   <option value="2">year 2</option>
                   <option value="3">year 3</option>
-                  <option value="1">year 4</option>
-                  <option value="2">year 5</option>
-                  <option value="3">year 6</option>
-                  <option value="3">year 7</option>
+                  <option value="4">year 4</option>
+                  <option value="5">year 5</option>
+                  <option value="6">year 6</option>
+                  <option value="7">year 7</option>
                 </select>
                 <label>Filter by Year</label>
               </div>
@@ -38,7 +38,8 @@
           </header>
 
           <div class="row">
-            <div *ngFor="let coach of coachList.coaches | filter:searchText">
+<!--             | filter:searchText-->
+            <div *ngFor="let coach of filteredCoaches | filter:searchText">
             <div class="col l3 m4 s12">
               <h6 class="card-title">{{coach.firstName}}&nbsp;{{coach.lastName}}</h6>
               <div class="card small">
