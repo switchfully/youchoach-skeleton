@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ICoachList} from '../coach-profile/ICoachList';
 import {CoachService} from '../coach-profile/coach.service';
 import * as M from 'materialize-css';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-find-a-coach',
@@ -13,7 +14,7 @@ export class FindACoachComponent implements OnInit {
   coachList: ICoachList = {coaches: null};
   topicList = [];
 
-  constructor(private coachService: CoachService) {
+  constructor(private coachService: CoachService, private router: Router) {
   }
 
   ngOnInit(): void {
@@ -36,4 +37,5 @@ export class FindACoachComponent implements OnInit {
       const instance = M.FormSelect.init(el, {});
     }
   }
+
 }
