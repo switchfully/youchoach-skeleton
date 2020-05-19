@@ -3,8 +3,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {ICoach} from './ICoach';
 import {environment} from '../../environments/environment';
-import {ICoachList} from "./ICoachList";
-import {map} from "rxjs/operators";
+import {ICoachList} from './ICoachList';
 
 @Injectable({
   providedIn: 'root'
@@ -23,9 +22,6 @@ export class CoachService {
   }
 
   getCoachByEmail(id: string): Observable<ICoach> {
-   // return  this.getAllCoaches().pipe( map((coaches: ICoachList) => coaches.coaches.find(i =>
-   //   i.email
-   //   === id)));
     return this.http.get<ICoach>(this.url + `/coach/profile/${id}`);
   }
 

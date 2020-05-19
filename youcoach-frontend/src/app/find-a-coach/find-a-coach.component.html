@@ -38,33 +38,29 @@
           </header>
 
           <div class="row">
-
-
             <div *ngFor="let coach of coachList.coaches | filter:searchText">
             <div class="col l3 m4 s12">
-              <h5 class="header">{{coach.firstName}}&nbsp;{{coach.lastName}}</h5>
-              <div class="card horizontal small">
+              <h6 class="card-title">{{coach.firstName}}&nbsp;{{coach.lastName}}</h6>
+              <div class="card small">
                 <div class="card-image">
-                  <img src="{{coach.photoUrl}}">
-
+                  <img class="responsive-img" src="{{coach.photoUrl}}">
                 </div >
-
                 <div class="card-stacked">
                   <div class="card-content">
 
                     <table class="highlight responsive-table">
                       <tbody>
                       <div *ngFor="let topic of coach.topics">
-                      <tr>
-                        <td><strong>{{topic.name}}</strong></td>
-                        <td>{{topic.grades.sort()}}</td>
-                      </tr>
+<!--                      <tr>-->
+                        <td><strong>{{topic.name}}</strong>: {{topic.grades.sort()}}</td>
+<!--                        <td>{{topic.grades.sort()}}</td>-->
+<!--                      </tr>-->
                       </div>
                       </tbody>
                     </table>
                   </div>
 
-                  <a class="btn-floating halfway-fab waves-effect waves-light yellow darken-2 btn-large" [routerLink]="['/coach-profile-for-coachee', coach.email ]" ><i
+                  <a title="More information" class="btn-floating halfway-fab waves-effect waves-light yellow darken-2 btn-large" [routerLink]="['/coach-profile-for-coachee', coach.emai]"><i
                     class="material-icons">send</i></a>
                 </div>
 

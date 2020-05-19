@@ -26,9 +26,8 @@ export class CoachProfileForCoacheeComponent implements OnInit {
     topics: [],
     youcoachRole: ''
   };
-
   ngOnInit(): void {
-    this.coachService.getCoachByEmail(this.route.snapshot.paramMap.get('id')).subscribe(coach => this.coach = coach);
+    this.coachService.getCoachByEmail(this.route.snapshot.paramMap.get('id'))
+      .subscribe(coach => this.coach = coach);
   }
-
 }

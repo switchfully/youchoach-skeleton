@@ -22,7 +22,6 @@ public class User {
     private String schoolYear;
     @Column(name = "photo_url")
     private String photoUrl;
-
     @Column(name = "account_enabled", nullable = false)
     private boolean accountEnabled = false;
 
