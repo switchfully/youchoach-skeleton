@@ -19,6 +19,7 @@ import {EditCoachInformationComponent} from './coach-profile/edit-coach-informat
 import {FindACoachComponent} from './find-a-coach/find-a-coach.component';
 import {ChangeTopicsComponent} from './change-topics/change-topics.component';
 import {CoachProfileForCoacheeComponent} from './coach-profile-for-coachee/coach-profile-for-coachee.component';
+import {Ng2SearchPipeModule} from 'ng2-search-filter';
 
 const routes: Routes = [
   {path: 'home', component: HomeComponent},
@@ -47,7 +48,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes), Ng2SearchPipeModule],
   exports: [RouterModule]
 })
 export class AppRoutingModule {

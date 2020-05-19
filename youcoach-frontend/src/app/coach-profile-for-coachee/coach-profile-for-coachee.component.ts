@@ -28,7 +28,6 @@ export class CoachProfileForCoacheeComponent implements OnInit {
 
   ngOnInit(): void {
     this.coachService.getCoachByEmail(this.route.snapshot.paramMap.get('id')).subscribe(coach => this.coach = coach);
-    console.log(this.coach.firstName);
   }
 
 }
