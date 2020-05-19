@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ICoachList} from '../coach-profile/ICoachList';
 import {CoachService} from '../coach-profile/coach.service';
 import * as M from 'materialize-css';
-import {ICoach, ITopic} from '../coach-profile/ICoach';
+import {ICoach} from '../coach-profile/ICoach';
 
 @Component({
   selector: 'app-find-a-coach',
@@ -12,21 +12,26 @@ import {ICoach, ITopic} from '../coach-profile/ICoach';
 export class FindACoachComponent implements OnInit {
   searchText;
   coachList: ICoachList = {coaches: null};
-  topicList: ITopic[] = [];
-  filteredCoachList: ICoach[] = [];
-  filteredtopicList = [];
+  topicList = [];
+  private _filteredCoaches: ICoach [];
+  selectedTopic = '';
+  grades: number[];
 
   constructor(private coachService: CoachService) {
   }
 
   ngOnInit(): void {
+    this.getCoachesAndTopics();
+  }
+
+  getCoachesAndTopics() {
     this.coachService.getAllCoaches().subscribe(coaches => {
       this.coachList = coaches;
-      this.filteredCoachList = coaches.coaches;
+      this._filteredCoaches = coaches.coaches;
       for (const coach of this.coachList.coaches) {
         for (const topic of coach.topics) {
-          if (this.topicList.indexOf(topic) === -1) {
-            this.topicList.push(topic);
+          if (this.topicList.indexOf(topic.name) === -1) {
+            this.topicList.push(topic.name);
           }
         }
       }
@@ -34,6 +39,17 @@ export class FindACoachComponent implements OnInit {
       setTimeout(() => this.enableSelect(), 50);
     });
   }
+
+
+  get filteredCoaches(): ICoach[] {
+    this.performFilter();
+    return this._filteredCoaches;
+  }
+
+  set filteredCoaches(value: ICoach[]) {
+    this._filteredCoaches = value;
+  }
+
   private enableSelect() {
     const elem: any = document.getElementsByTagName('select');
     for (const el of elem) {
@@ -41,14 +57,81 @@ export class FindACoachComponent implements OnInit {
     }
   }
 
-  updateList(event: any) {
-    this.filteredCoachList = [];
-    for (const coach of this.coachList.coaches) {
-      for (const topic1 of coach.topics) {
-        if (topic1.name === event.target.value) {
-          this.filteredCoachList.push(coach);
-        }
-      }
+  performFilter() {
+    if (this.selectedTopic && this.selectedTopic.valueOf() !== 'none') {
+      this.filteredCoaches = this.coachList.coaches
+        .filter(coach => {
+          const c = coach.topics.some(topic => topic.name === this.selectedTopic);
+          return c;
+        });
+    } else if (this.grades && this.grades.length > 0) {
+      this.filteredCoaches = this.coachList.coaches
+        .filter(coach => {
+          const c = coach.topics.some(topic => topic.grades.some(grade => this.grades.some(grd => {
+            const a = (grd.toString() === grade.toString());
+            return a;
+          })));
+          return c;
+        });
+    } else {
+      this.filteredCoaches = this.coachList.coaches;
     }
   }
 }
+
+
+
+// import {Component, OnInit} from '@angular/core';
+// import {ICoachList} from '../coach-profile/ICoachList';
+// import {CoachService} from '../coach-profile/coach.service';
+// import * as M from 'materialize-css';
+// import {ICoach, ITopic} from '../coach-profile/ICoach';
+//
+// @Component({
+//   selector: 'app-find-a-coach',
+//   templateUrl: './find-a-coach.component.html',
+//   styleUrls: ['./find-a-coach.component.css']
+// })
+// export class FindACoachComponent implements OnInit {
+//   searchText;
+//   coachList: ICoachList = {coaches: null};
+//   topicList: ITopic[] = [];
+//   filteredCoachList: ICoach[] = [];
+//   filteredtopicList = [];
+//
+//   constructor(private coachService: CoachService) {
+//   }
+//
+//   ngOnInit(): void {
+//     this.coachService.getAllCoaches().subscribe(coaches => {
+//       this.coachList = coaches;
+//       this.filteredCoachList = coaches.coaches;
+//       for (const coach of this.coachList.coaches) {
+//         for (const topic of coach.topics) {
+//           if (this.topicList.indexOf(topic) === -1) {
+//             this.topicList.push(topic);
+//           }
+//         }
+//       }
+//       this.topicList.sort();
+//       setTimeout(() => this.enableSelect(), 50);
+//     });
+//   }
+//   private enableSelect() {
+//     const elem: any = document.getElementsByTagName('select');
+//     for (const el of elem) {
+//       const instance = M.FormSelect.init(el, {});
+//     }
+//   }
+//
+//   updateList(event: any) {
+//     this.filteredCoachList = [];
+//     for (const coach of this.coachList.coaches) {
+//       for (const topic1 of coach.topics) {
+//         if (topic1.name === event.target.value) {
+//           this.filteredCoachList.push(coach);
+//         }
+//       }
+//     }
+//   }
+// }
