@@ -52,18 +52,18 @@ export class RegisterComponent implements OnInit {
   private register(coachee: ICoachee) {
     this.coacheeService.register(coachee).subscribe(
       addedCoachee => {
-                this.coachee = this.transformResult(addedCoachee);
-                if (addedCoachee.accountEnabled) { this.router.navigateByUrl('/registration-success');
-                } else { this.router.navigateByUrl('/validate-account'); }
-    },
+        this.coachee = this.transformResult(addedCoachee);
+        if (addedCoachee.accountEnabled) { this.router.navigateByUrl('/registration-success');
+        } else { this.router.navigateByUrl('/validate-account'); }
+      },
       err => {
-      if (err.error.message === ('Email already exists!')) {
-         this.emailExistsError = true;
-         this.emailErrorMessage = err.error.message;
-      }
-      if (!this.emailExistsError) {
-        this.router.navigateByUrl('/profile');
-      }
-    });
+        if (err.error.message === ('Email already exists!')) {
+          this.emailExistsError = true;
+          this.emailErrorMessage = err.error.message;
+        }
+        if (!this.emailExistsError) {
+          this.router.navigateByUrl('/profile');
+        }
+      });
   }
 }

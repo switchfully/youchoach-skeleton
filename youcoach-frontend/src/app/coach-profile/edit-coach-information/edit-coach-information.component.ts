@@ -49,9 +49,11 @@ export class EditCoachInformationComponent implements OnInit {
 
   updateProfile(): void {
     this.coachService.updateCoachInformation(this.coach).subscribe(
-      updatedCoach => this.coach = updatedCoach
+      updatedCoach => {
+        this.coach = updatedCoach;
+        this.goBack();
+      }
     );
-    this.goBack();
   }
 
   goBack(): void {
