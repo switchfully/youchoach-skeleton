@@ -8,6 +8,7 @@ import com.switchfully.youcoach.datastore.repositories.UserRepository;
 import com.switchfully.youcoach.domain.Mapper.UserMapper;
 import com.switchfully.youcoach.domain.dtos.*;
 import com.switchfully.youcoach.security.authentication.user.SecuredUserService;
+import com.switchfully.youcoach.security.authentication.user.UserRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.mail.MessagingException;
+import java.security.Principal;
 import java.util.List;
 
 @Service
@@ -77,18 +79,12 @@ public class UserService {
                 .withSchoolYear(createCoacheeProfileDto.getSchoolYear())
                 .withYoucoachRole(createCoacheeProfileDto.getYoucoachRole());
         if(!email.equals(createCoacheeProfileDto.getEmail())) {
-            cpu.setToken(generateAuthorizationBearerToken(createCoacheeProfileDto));
+            String jwtSecret = environment.getProperty("jwt.secret");
+            cpu.setToken(securedUserService.generateAuthorizationBearerTokenForUser(createCoacheeProfileDto.getEmail(),jwtSecret));
         }
         return cpu;
     }
 
-    private String generateAuthorizationBearerToken(CreateCoacheeProfileDto created) {
-        UserDetails ud = securedUserService.loadUserByUsername(created.getEmail());
-        String jwtSecret = environment.getProperty("jwt.secret");
-        UsernamePasswordAuthenticationToken user = new UsernamePasswordAuthenticationToken(ud.getUsername(),null, ud.getAuthorities());
-
-        return securedUserService.generateJwtToken(user,jwtSecret);
-    }
 
     public UserDto getUserById(long id) {
         return userMapper.toUserDto(userRepository.findById(id).get());
@@ -147,9 +143,17 @@ public class UserService {
         return coachRepository.findCoachByUser_Email(email).orElseThrow(CoachNotFoundException::new);
     }
 
-    public CoachProfileDto getCoachProfile(long id){
+    public CoachProfileDto getCoachProfile(Principal principal, long id){
         Coach coach = assertCoachExistsAndRetrieve(id);
-        return userMapper.toCoachProfileDto(coach);
+        CoachProfileDto coachDto = userMapper.toCoachProfileDto(coach);
+
+        obliterateEmailForNonAdminsAndStrangers(principal, coachDto);
+
+        return coachDto;
+    }
+
+    private void obliterateEmailForNonAdminsAndStrangers(Principal principal, CoachProfileDto coach) {
+        if(!securedUserService.isAdmin(principal.getName()) && !coach.getEmail().equals(principal.getName())) coach.setEmail(null);
     }
 
     public CoachProfileDto getCoachProfile(String id){
