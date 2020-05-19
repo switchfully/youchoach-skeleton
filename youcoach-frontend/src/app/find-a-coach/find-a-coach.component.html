@@ -10,8 +10,8 @@
           <header>
             <div class="row">
               <div class="input-field col l3 m6 s12">
-                <select>
-                  <option value="" disabled selected>Choose topic</option>
+                <select [(ngModel)]="result" (change)="dummyMehtod()">
+                  <option value=""  selected>Choose topic</option>
                   <option *ngFor="let topic of topicList">{{topic}}</option>
                 </select>
                 <label>Filter by Topic</label>
@@ -38,7 +38,7 @@
           </header>
 
           <div class="row">
-            <div *ngFor="let coach of coachList.coaches | filter:searchText">
+            <div *ngFor="let coach of coachList.coaches| filter:searchText">
             <div class="col l3 m4 s12">
               <h6 class="card-title">{{coach.firstName}}&nbsp;{{coach.lastName}}</h6>
               <div class="card small">
