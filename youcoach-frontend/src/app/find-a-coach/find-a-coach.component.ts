@@ -50,6 +50,5 @@ export class FindACoachComponent implements OnInit {
         }
       }
     }
-    this.coachList.coaches = this.filteredCoachList;
   }
 }
