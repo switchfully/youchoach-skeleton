@@ -1,4 +1,4 @@
-import {Injectable, OnInit} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {AuthenticationHttpService} from './authentication.http.service';
 import {tap} from 'rxjs/operators';
 import {Subject} from 'rxjs';
@@ -12,25 +12,34 @@ export class AuthenticationService {
   private tokenKey = 'jwt_token';
   private usernameKey = 'username';
   private userLoggedInSource = new Subject<boolean>();
-  private userRole;
+  private tokenValue = null;
 
   userLoggedIn$ = this.userLoggedInSource.asObservable();
+
 
   constructor(private loginService: AuthenticationHttpService) {
   }
 
 
+  public setJwtToken(token: string, username: string): void {
+    this.tokenValue = token;
+    sessionStorage.setItem(this.tokenKey, this.tokenValue);
+    sessionStorage.setItem(this.usernameKey, username);
+  }
+
   login(loginData: any) {
     return this.loginService.login(loginData)
       .pipe(tap(response => {
-        sessionStorage.setItem(this.tokenKey, response.headers.get('Authorization').replace('Bearer', '').trim());
-        sessionStorage.setItem(this.usernameKey, loginData.username);
+        this.setJwtToken(response.headers.get('Authorization').replace('Bearer', '').trim(), loginData.username);
         this.userLoggedInSource.next(true);
       }));
   }
 
   getToken() {
-    return sessionStorage.getItem(this.tokenKey);
+    if (this.tokenValue == null) {
+      this.tokenValue = sessionStorage.getItem(this.tokenKey);
+    }
+    return this.tokenValue;
   }
 
   getUsername() {

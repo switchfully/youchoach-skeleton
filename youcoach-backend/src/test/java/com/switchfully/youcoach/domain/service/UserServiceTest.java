@@ -9,9 +9,11 @@ import com.switchfully.youcoach.domain.dtos.CoachProfileDto;
 import com.switchfully.youcoach.domain.dtos.CoacheeProfileDto;
 import com.switchfully.youcoach.domain.dtos.CreateUserDto;
 import com.switchfully.youcoach.domain.dtos.UserDto;
+import com.switchfully.youcoach.security.authentication.user.SecuredUserService;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import org.springframework.core.env.Environment;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.jdbc.Sql;
 
@@ -25,9 +27,11 @@ class UserServiceTest {
     private final CoachRepository coachRepository = Mockito.mock(CoachRepository.class);
     private final PasswordEncoder passwordEncoder = Mockito.mock(PasswordEncoder.class);
     private final AccountVerificatorService accountVerificatorService = Mockito.mock(AccountVerificatorService.class);
+    private final SecuredUserService securedUserService = Mockito.mock(SecuredUserService.class);
+    private final Environment environment = Mockito.mock(Environment.class);
 
     private final UserService userService = new UserService(userRepository, coachRepository, new UserMapper(), new ValidationService(),
-            passwordEncoder, accountVerificatorService);
+            passwordEncoder, accountVerificatorService, securedUserService, environment);
 
     private User getDefaultUser() {
         return new User(1,"First", "Last","example@example.com","1lpassword",

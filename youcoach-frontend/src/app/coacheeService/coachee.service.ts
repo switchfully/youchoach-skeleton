@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Observable, of} from 'rxjs';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient, HttpHeaders } from '@angular/common/http';
 import {MessageService} from '../message.service';
 import {ICoachee} from '../register/icoachee';
 import {IMember} from '../IMember';
@@ -9,7 +9,8 @@ import {ICoacheeRegisterResult} from './ICoacheeRegisterResult';
 import {IRequestPasswordResetToken} from '../IRequestPasswordResetToken';
 import {IPasswordChange} from '../IPasswordChange';
 import {IPasswordChangeResult} from '../IPasswordChangeResult';
-import {environment} from "../../environments/environment";
+import {environment} from '../../environments/environment';
+import {IMemberProfileUpdated} from '../edit-profile/IMemberProfileUpdated';
 
 @Injectable({
   providedIn: 'root'
@@ -46,8 +47,8 @@ export class CoacheeService {
     );
   }
 
-  updateProfile(member: IMember): Observable<IMember> {
-    return this.http.put<IMember>(this.url + '/profile', member, this.httpOptions);
+  updateProfile(member: IMember): Observable<IMemberProfileUpdated> {
+    return this.http.put<IMemberProfileUpdated>(this.url + '/profile', member, this.httpOptions);
   }
 
   private handleError<T>(operation = 'operation', result?: T) {

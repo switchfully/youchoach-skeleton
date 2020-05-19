@@ -42,7 +42,7 @@ public class SecuredUserService implements UserDetailsService {
         return new ValidatedUser(user.getEmail(), user.getPassword(), authorities, user.isAccountEnabled());
     }
 
-    Collection<GrantedAuthority> determineGrantedAuthorities(com.switchfully.youcoach.datastore.entities.User user) {
+    public Collection<GrantedAuthority> determineGrantedAuthorities(com.switchfully.youcoach.datastore.entities.User user) {
         Collection<GrantedAuthority> authorities = new ArrayList<>();
 
         authorities.add(UserRoles.ROLE_COACHEE);

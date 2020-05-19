@@ -18,9 +18,8 @@ export class RedirectOnErrorInterceptor implements HttpInterceptor {
               private forbiddenService: ForbiddenService) {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    console.log(request);
     return next.handle(request).pipe(
-      tap(evt => {}),
+      tap(_ => {}),
     catchError((err: any) => {
       const router = this.router;
       function isAuthorisationError() {

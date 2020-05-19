@@ -7,7 +7,11 @@ import com.switchfully.youcoach.datastore.repositories.CoachRepository;
 import com.switchfully.youcoach.datastore.repositories.UserRepository;
 import com.switchfully.youcoach.domain.Mapper.UserMapper;
 import com.switchfully.youcoach.domain.dtos.*;
+import com.switchfully.youcoach.security.authentication.user.SecuredUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -25,17 +29,21 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final CoachRepository coachRepository;
     private final AccountVerificator accountVerificator;
+    private final SecuredUserService securedUserService;
+    private final Environment environment;
 
     @Autowired
     public UserService(UserRepository userRepository, CoachRepository coachRepository, UserMapper userMapper,
                        ValidationService validationService, PasswordEncoder passwordEncoder,
-                       AccountVerificator accountVerificator) {
+                       AccountVerificator accountVerificator, SecuredUserService securedUserService, Environment environment) {
         this.userRepository = userRepository;
         this.coachRepository = coachRepository;
         this.userMapper = userMapper;
         this.validationService = validationService;
         this.passwordEncoder = passwordEncoder;
         this.accountVerificator = accountVerificator;
+        this.securedUserService = securedUserService;
+        this.environment = environment;
     }
 
     public UserDto createUser(CreateUserDto createUserDto) {
@@ -53,14 +61,33 @@ public class UserService {
         return userMapper.toUserDto(newUser);
     }
 
-    public CreateCoacheeProfileDto updateProfile(String email, CreateCoacheeProfileDto createCoacheeProfileDto){
+    public CoacheeProfileUpdatedDto updateProfile(String email, CreateCoacheeProfileDto createCoacheeProfileDto){
         performUpdateValidation(email, createCoacheeProfileDto);
         User user = assertUserExistsAndRetrieve(email);
         user.setEmail(createCoacheeProfileDto.getEmail());
         user.setFirstName(createCoacheeProfileDto.getFirstName());
         user.setLastName(createCoacheeProfileDto.getLastName());
         user.setPhotoUrl(createCoacheeProfileDto.getPhotoUrl());
-        return createCoacheeProfileDto;
+
+        CoacheeProfileUpdatedDto cpu = (CoacheeProfileUpdatedDto) new CoacheeProfileUpdatedDto()
+                .withEmail(createCoacheeProfileDto.getEmail())
+                .withFirstName(createCoacheeProfileDto.getFirstName())
+                .withLastName(createCoacheeProfileDto.getLastName())
+                .withPhotoUrl(createCoacheeProfileDto.getPhotoUrl())
+                .withSchoolYear(createCoacheeProfileDto.getSchoolYear())
+                .withYoucoachRole(createCoacheeProfileDto.getYoucoachRole());
+        if(!email.equals(createCoacheeProfileDto.getEmail())) {
+            cpu.setToken(generateAuthorizationBearerToken(createCoacheeProfileDto));
+        }
+        return cpu;
+    }
+
+    private String generateAuthorizationBearerToken(CreateCoacheeProfileDto created) {
+        UserDetails ud = securedUserService.loadUserByUsername(created.getEmail());
+        String jwtSecret = environment.getProperty("jwt.secret");
+        UsernamePasswordAuthenticationToken user = new UsernamePasswordAuthenticationToken(ud.getUsername(),null, ud.getAuthorities());
+
+        return securedUserService.generateJwtToken(user,jwtSecret);
     }
 
     public UserDto getUserById(long id) {

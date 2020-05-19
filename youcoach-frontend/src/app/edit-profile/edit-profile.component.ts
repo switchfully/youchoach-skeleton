@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {IMember} from '../IMember';
 import {FormBuilder, Validators} from '@angular/forms';
 import {CoacheeService} from '../coacheeService/coachee.service';
@@ -35,7 +35,13 @@ export class EditProfileComponent implements OnInit {
   }
 
   updateProfile(): void {
-    this.coacheeService.updateProfile(this.member).subscribe(updatedMember => this.member = updatedMember,
+    this.coacheeService.updateProfile(this.member)
+      .subscribe(memberUpdated => {
+        this.member = memberUpdated;
+        if (memberUpdated.token !== null) {
+            this.authenticationService.setJwtToken(memberUpdated.token, this.member.email);
+          }
+        },
       err => {
         if (err.error.message === ('Email already exists!')) {
           this.emailExistsError = true;
@@ -43,13 +49,7 @@ export class EditProfileComponent implements OnInit {
       });
     setTimeout(() => {
       if (!this.emailExistsError) {
-      if (this.isEmailChanged) {
-        alert('Sign in with your new email');
-        this.authenticationService.logout();
-        this.onLogin();
-      } else {
         this.onBack();
-      }
     } }, 1500);
     // TEST IT IN HEROKU if timeout is enough
     this.emailExistsError = false;

@@ -65,6 +65,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                                             FilterChain filterChain, Authentication authentication) {
         String token = securedUserService.generateJwtToken(authentication, jwtSecret);
 
+
         response.addHeader("Authorization", "Bearer " + token);
         response.addHeader("Access-Control-Expose-Headers", "Authorization");
     }

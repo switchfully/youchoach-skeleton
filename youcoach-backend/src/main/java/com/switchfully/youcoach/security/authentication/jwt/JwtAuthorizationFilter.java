@@ -8,6 +8,7 @@ import io.jsonwebtoken.security.SignatureException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -32,6 +33,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
     public JwtAuthorizationFilter(AuthenticationManager authenticationManager, String jwtSecret) {
         super(authenticationManager);
         this.jwtSecret = jwtSecret;
+
     }
 
     @Override
