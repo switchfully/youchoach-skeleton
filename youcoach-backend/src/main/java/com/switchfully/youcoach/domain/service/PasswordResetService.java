@@ -78,7 +78,7 @@ public class PasswordResetService {
         ctx.setVariable("fullName", user.getFirstName() + " " + user.getLastName());
         ctx.setVariable("firmName", environment.getProperty("app.passwordreset.firmName"));
         ctx.setVariable("hostName", environment.getProperty("app.passwordreset.hostName"));
-        ctx.setVariable("url", environment.getProperty("app.passwordreset.hostName") + "/password-reset");
+        ctx.setVariable("url", environment.getProperty("app.passwordreset.hostName") + "/password/reset");
         ctx.setVariable("token", validationService.digitallySignAndEncodeBase64(user.getEmail()));
         final String body = this.templateEngine.process("PasswordResetTemplate.html", ctx);
 
