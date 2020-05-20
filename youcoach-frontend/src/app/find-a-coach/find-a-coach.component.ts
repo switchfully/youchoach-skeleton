@@ -77,8 +77,7 @@ export class FindACoachComponent implements OnInit {
     } else if (this.searchText !== undefined && this.searchText.length > 2) {
       this.filteredCoaches = this.coachList.coaches
         .filter(coach => coach.firstName.toLowerCase().startsWith(this.searchText.toLowerCase()) ||
-          coach.lastName.toLowerCase().startsWith(this.searchText.toLowerCase()) ||
-          coach.email.toLowerCase().startsWith(this.searchText.toLowerCase())
+          coach.lastName.toLowerCase().startsWith(this.searchText.toLowerCase())
         );
     } else {
       this.filteredCoaches = this.coachList.coaches;

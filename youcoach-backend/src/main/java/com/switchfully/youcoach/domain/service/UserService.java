@@ -196,6 +196,9 @@ public class UserService {
 
     public CoachListingDto getCoachProfiles() {
         List<Coach> coachList = coachRepository.findAll();
-        return userMapper.toCoachListingDto(coachList);
+
+        CoachListingDto cl = userMapper.toCoachListingDto(coachList);
+        cl.getCoaches().forEach(coach -> coach.setEmail(null));
+        return cl;
     }
 }
