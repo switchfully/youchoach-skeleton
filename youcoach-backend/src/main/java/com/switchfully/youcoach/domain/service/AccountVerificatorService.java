@@ -70,6 +70,7 @@ public class AccountVerificatorService implements AccountVerificator {
         ctx.setVariable("fullName", user.getFirstName() + " " + user.getLastName());
         ctx.setVariable("firmName", environment.getProperty("app.emailverification.firmName"));
         ctx.setVariable("hostName", environment.getProperty("app.emailverification.hostName"));
+        ctx.setVariable("url", environment.getProperty("app.emailverification.hostName") + "/validate-account");
         ctx.setVariable("token", accountVerification.getVerificationCode());
         final String body = this.templateEngine.process("EmailVerificationTemplate.html", ctx);
 

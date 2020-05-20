@@ -16,7 +16,7 @@
     If this action was taken by you, great! Welcome to <span th:text="${firmName}">youcoach</span>.<br />
     <br />
     Before you can proceed you must validate your email-address however,<br />
-    so please proceed to <a th:href="@{http://localhost:4200/validate-account(token=${token})}" href="${hostName}">validate your email-address</a>.
+    so please proceed to <a th:href="@{${url}(token=${token})}" href="${hostName}">validate your email-address</a>.
     If a token hasn't been automatically inserted for you then please present the following one:<br /><br />
     <span th:text="${token}"></span>
 </p>
