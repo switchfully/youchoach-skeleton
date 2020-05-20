@@ -33,7 +33,6 @@
     "jwt-decode": "^2.2.0",
     "material-design-icons": "^3.0.1",
     "materialize-css": "^1.0.0-rc.2",
-    "ng2-search-filter": "^0.5.1",
     "rxjs": "~6.5.5",
     "tslib": "^1.10.0",
     "youcoach-i18n": "github:switchfully/youcoach-i18n",
