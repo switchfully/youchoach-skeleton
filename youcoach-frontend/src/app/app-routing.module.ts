@@ -18,7 +18,6 @@ import {PasswordChangeFailureComponent} from './password-change-failure/password
 import {EditCoachInformationComponent} from './coach-profile/edit-coach-information/edit-coach-information.component';
 import {FindACoachComponent} from './find-a-coach/find-a-coach.component';
 import {ChangeTopicsComponent} from './change-topics/change-topics.component';
-import {Ng2SearchPipeModule} from 'ng2-search-filter';
 
 const routes: Routes = [
   {path: 'home', component: HomeComponent},
@@ -47,7 +46,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes), Ng2SearchPipeModule],
+  imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
 export class AppRoutingModule {

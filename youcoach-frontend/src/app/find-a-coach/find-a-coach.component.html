@@ -39,7 +39,7 @@
 
           <div class="row">
 
-            <div *ngFor="let coach of filteredCoaches | filter:searchText">
+            <div *ngFor="let coach of filteredCoaches">
               <div class="col l3 m4 s12">
                 <h6 class="card-title">{{coach.firstName}}&nbsp;{{coach.lastName}}</h6>
                 <div class="card small">
@@ -61,7 +61,7 @@
                       </table>
                     </div>
 
-                    <a title="More information" class="btn-floating halfway-fab waves-effect waves-light yellow darken-2 btn-large" [routerLink]="['/coach-profile/', coach.id]"><i
+                    <a title = "See details of {{coach.firstName + ' ' + coach.lastName}} "  class="btn-floating halfway-fab waves-effect waves-light yellow darken-2 btn-large" [routerLink]="['/coach-profile/', coach.id]"><i
                       class="material-icons">send</i></a>
                   </div>
 
