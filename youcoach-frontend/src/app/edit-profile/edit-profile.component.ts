@@ -70,6 +70,7 @@ export class EditProfileComponent implements OnInit {
       this.isEmailChanged = true;
     }
     this.member = {
+      id: this.member.id,
       firstName: this.editForm.get('firstName').value,
       lastName: this.editForm.get('lastName').value,
       email: this.editForm.get('email').value,

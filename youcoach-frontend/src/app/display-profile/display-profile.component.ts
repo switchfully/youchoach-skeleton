@@ -11,6 +11,7 @@ import {ActivatedRoute} from '@angular/router';
 export class DisplayProfileComponent implements OnInit {
 
   member: IMember = {
+    id: null,
     email: null,
     firstName: null,
     lastName: null,

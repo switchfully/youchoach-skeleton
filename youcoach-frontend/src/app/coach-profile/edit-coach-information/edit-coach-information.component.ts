@@ -32,6 +32,7 @@ export class EditCoachInformationComponent implements OnInit {
 
   onSubmit() {
     this.coach = {
+      id: this.coach.id,
       introduction: this.editForm.get('introduction').value,
       availability: this.editForm.get('availability').value,
       coachXP: this.coach.coachXP,

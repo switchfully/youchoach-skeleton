@@ -1,11 +1,11 @@
 <header>
   <nav class="white" role="navigation">
     <div class="nav-wrapper container">
-      <a id="logo-container" href="#" class="brand-logo">You-Coach</a>
+      <a id="logo-container" routerLink="/home" class="brand-logo">You-Coach</a>
       <ul class="right hide-on-med-and-down valign-wrapper">
         <li class="header-hidden"><a routerLink="/home" translate>menu.link.home</a></li>
-        <li class="header-hidden"><a href="#" translate>menu.link.about-us</a></li>
-        <li class="header-hidden"><a href="#" translate>menu.link.contact</a></li>
+        <li class="header-hidden not-yet-implemented"><a href="#" translate>menu.link.about-us</a></li>
+        <li class="header-hidden not-yet-implemented"><a href="#" translate>menu.link.contact</a></li>
         <li class="header-hidden"><p class="grey-text" *ngIf="username" translate
                                      [translateParams]="{username: username}">menu.label.logged-in</p>
         </li>
@@ -18,20 +18,31 @@
         <li><a class="waves-effect waves-light teal lighten-3 btn black-text" routerLink="/register" *ngIf="!username"
                translate>menu.button.register<i
           class="material-icons right">person_add</i></a></li>
-        <li class="valign-wrapper">
-          <button [class.active]="currentLanguage() === 'en'" class="btn btn-primary nav-item btn-small grey darken-1"
-                  (click)="switchLanguage('en')">en
-          </button>
-          <button [class.active]="currentLanguage() === 'nl '" class="btn btn-primary nav-item btn-small grey darken-1"
-                  (click)="switchLanguage('nl')">nl
-          </button>
+<!--        <li class="valign-wrapper">-->
+<!--          <button [class.active]="currentLanguage() === 'en'" class="btn btn-primary nav-item btn-small grey darken-1 "-->
+<!--                  (click)="switchLanguage('en')">en-->
+<!--          </button>-->
+<!--          <button [class.active]="currentLanguage() === 'nl '" class="btn btn-primary nav-item btn-small grey darken-1 "-->
+<!--                  (click)="switchLanguage('nl')">nl-->
+<!--          </button>-->
+<!--          <button [class.active]="currentLanguage() === 'fr '" class="btn btn-primary nav-item btn-small grey darken-1 "-->
+<!--                  (click)="switchLanguage('fr')">fr-->
+<!--          </button>-->
+<!--        </li>-->
+        <li class="center-align">
+        <a class='dropdown-trigger btn' data-target='dropdown1'><i class="material-icons">language</i></a>
+        <ul id='dropdown1' class='dropdown-content'>
+          <li><a [class.active]="currentLanguage() === 'en'" (click)="switchLanguage('en')">en</a></li>
+          <li><a [class.active]="currentLanguage() === 'fr '" (click)="switchLanguage('fr')">fr</a></li>
+          <li><a [class.active]="currentLanguage() === 'nl '" (click)="switchLanguage('nl')">nl</a></li>
+        </ul>
         </li>
       </ul>
 
       <ul id="nav-mobile" class="sidenav">
         <li><a routerLink="/home" translate>menu.link.home</a></li>
-        <li><a href="#" translate>menu.link.about-us</a></li>
-        <li><a href="#" translate>menu.link.contact</a></li>
+        <li class="not-yet-implemented"><a href="#" translate>menu.link.about-us</a></li>
+        <li class="not-yet-implemented"><a href="#" translate>menu.link.contact</a></li>
         <li><p class="grey-text" *ngIf="username" translate [translateParams]="{username: username}">
           menu.label.logged-in</p>
         </li>
@@ -44,14 +55,21 @@
         <li><a class="waves-effect waves-light teal lighten-3 btn black-text" routerLink="/register" *ngIf="!username"
                translate>menu.button.register<i
           class="material-icons right">person_add</i></a></li>
-        <li class="valign-wrapper">
-          <button [class.active]="currentLanguage() === 'en'" class="btn btn-primary nav-item btn-small grey darken-1"
-                  (click)="switchLanguage('en')">en
-          </button>
-          <button [class.active]="currentLanguage() === 'nl '" class="btn btn-primary nav-item btn-small grey darken-1"
-                  (click)="switchLanguage('nl')">nl
-          </button>
-        </li>
+<!--        <li class="valign-wrapper">-->
+<!--          <button [class.active]="currentLanguage() === 'en'" class="btn btn-primary nav-item btn-small grey darken-1"-->
+<!--                  (click)="switchLanguage('en')">en-->
+<!--          </button>-->
+<!--          <button [class.active]="currentLanguage() === 'nl '" class="btn btn-primary nav-item btn-small grey darken-1"-->
+<!--                  (click)="switchLanguage('nl')">nl-->
+<!--          </button>-->
+<!--        </li>-->
+
+        <a class='dropdown-trigger btn' data-target='dropdown2'><i class="material-icons">language</i></a>
+          <ul id='dropdown2' class='dropdown-content'>
+            <li><a [class.active]="currentLanguage() === 'en'" (click)="switchLanguage('en')">en</a></li>
+            <li><a [class.active]="currentLanguage() === 'fr '" (click)="switchLanguage('fr')">fr</a></li>
+            <li><a [class.active]="currentLanguage() === 'nl '" (click)="switchLanguage('nl')">nl</a></li>
+          </ul>
       </ul>
       <a href="#" data-target="nav-mobile" class="sidenav-trigger green-text"><i class="material-icons">menu</i></a>
     </div>

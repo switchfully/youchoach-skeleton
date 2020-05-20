@@ -18,7 +18,6 @@ import {PasswordChangeFailureComponent} from './password-change-failure/password
 import {EditCoachInformationComponent} from './coach-profile/edit-coach-information/edit-coach-information.component';
 import {FindACoachComponent} from './find-a-coach/find-a-coach.component';
 import {ChangeTopicsComponent} from './change-topics/change-topics.component';
-import {CoachProfileForCoacheeComponent} from './coach-profile-for-coachee/coach-profile-for-coachee.component';
 import {Ng2SearchPipeModule} from 'ng2-search-filter';
 
 const routes: Routes = [
@@ -36,7 +35,7 @@ const routes: Routes = [
   {path: 'profile/:id', component: DisplayProfileComponent },
   {path: 'edit-profile', component: EditProfileComponent },
   {path: 'coach-profile', component: CoachProfileComponent },
-  {path: 'coach-profile-for-coachee/:id', component: CoachProfileForCoacheeComponent },
+  {path: 'coach-profile/:id', component: CoachProfileComponent },
   {path: 'edit-coach-information', component: EditCoachInformationComponent},
   {path: 'find-coach', component: FindACoachComponent },
   {path: 'validate-account', component: ValidateAccountComponent },

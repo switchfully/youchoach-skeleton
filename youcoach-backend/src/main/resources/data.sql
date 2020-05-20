@@ -9,29 +9,30 @@
 -- alter table coaches_topics add constraint UK_9l964dg81lk07ofqagvxbupow unique (topics_id)
 -- alter table members add constraint UK_9d30a9u1qpg8eou0otgkwrp5d unique (email)
 -- alter table topics add constraint UK_7tuhnscjpohbffmp7btit1uff unique (name)
--- alter table account_verification add constraint FKglx0w7njieyv9xprt465m2i6q foreign key (user_id) references members
--- alter table admins add constraint FKjoasa92wy96dlicsbfcdl5krg foreign key (user_id) references members
--- alter table coaches add constraint FK5h0cksgba49yg6apbiie5wlvy foreign key (user_id) references members
--- alter table coaches_topics add constraint FKhihfdn0xxsvr4bx9jaokql5pf foreign key (topics_id) references coaching_topic
--- alter table coaches_topics add constraint FKfhcuxfpmbn4inpk0vidwea8s6 foreign key (coach_user_id) references coaches
--- alter table coaching_topic add constraint FKl62wqdgeidhvwvp5j6qhpb8df foreign key (topic_topic_id) references topics
--- alter table coaching_topic_grades add constraint FK13ryigkrx2nw7bkg78irl6uqq foreign key (coaching_topic_id) references coaching_topic
-DELETE FROM members;
-DELETE FROM coaches;
-DELETE FROM admins;
-
-DELETE FROM coaches_topics;
-DELETE FROM topics;
+-- alter tble account_verification add constraint FKglx0w7njieyv9xprt465m2i6q foreign key (user_id) references members
+-- -- alter table admins add constraint FKjoasa92wy96dlicsbfcdl5krg foreign key (user_id) references members
+-- -- alter table coaches add constraint FK5h0cksgba49yg6apbiie5wlvy foreign key (user_id) references members
+-- -- alter table coaches_topics add constraint FKhihfdn0xxsvr4bx9jaokql5pf foreign key (topics_id) references coaching_topic
+-- -- alter table coaches_topics add constraint FKfhcuxfpmbn4inpk0vidwea8s6 foreign key (coach_user_id) references coaches
+-- -- alter table coaching_topic add constraint FKl62wqdgeidhvwvp5j6qhpb8df foreign key (topic_topic_id) references topics
+-- -- alter table coaching_topic_grades add constraint FK13ryigkrx2nw7bkg78irl6uqq foreign key (coaching_topic_id) references coaching_topica
+set schema 'youcoach';
+-- DELETE FROM members;
+-- DELETE FROM coaches;
+-- DELETE FROM admins;
+--
+-- DELETE FROM coaches_topics;
+-- DELETE FROM topics;
 
 -- INSERT INTO members (email, first_name, last_name, password,school_year, photo_url) VALUES ('coach', 'jef', 'klak', 'coach','','');
 -- INSERT INTO members (email, first_name, last_name, password, school_year, photo_url) VALUES ('student', 'hans', 'worst', 'student','','');
 
-INSERT INTO members (id, email, first_name, last_name, password,school_year, photo_url, account_enabled) VALUES (111, 'coachee1@school.org', 'coachee1', 'person', '$2a$10$Px8bPIDgwpmiL6UuNtAp2.4BmSvlAGQF4gtY6/Wb7ZyKW5oSlz6oa','some class','https://www.nomadfoods.com/wp-content/uploads/2018/08/placeholder-1-e1533569576673-960x960.png', TRUE);
-INSERT INTO members (id, email, first_name, last_name, password,school_year, photo_url, account_enabled) VALUES (112, 'coachee2@school.org', 'coachee2', 'person', '$2a$10$Px8bPIDgwpmiL6UuNtAp2.4BmSvlAGQF4gtY6/Wb7ZyKW5oSlz6oa','some class','https://www.nomadfoods.com/wp-content/uploads/2018/08/placeholder-1-e1533569576673-960x960.png', TRUE);
-INSERT INTO members (id, email, first_name, last_name, password,school_year, photo_url, account_enabled) VALUES (113, 'coach1@school.org', 'coach1', 'person', '$2a$10$Px8bPIDgwpmiL6UuNtAp2.4BmSvlAGQF4gtY6/Wb7ZyKW5oSlz6oa','some class','https://www.nomadfoods.com/wp-content/uploads/2018/08/placeholder-1-e1533569576673-960x960.png', TRUE);
-INSERT INTO members (id, email, first_name, last_name, password, school_year, photo_url, account_enabled) VALUES (114, 'coach2@school.org', 'coach2', 'person', '$2a$10$Px8bPIDgwpmiL6UuNtAp2.4BmSvlAGQF4gtY6/Wb7ZyKW5oSlz6oa','some class','https://www.nomadfoods.com/wp-content/uploads/2018/08/placeholder-1-e1533569576673-960x960.png', TRUE);
-INSERT INTO members (id, email, first_name, last_name, password, school_year, photo_url, account_enabled) VALUES (115, 'admin1@school.org', 'admin1', 'person', '$2a$10$Px8bPIDgwpmiL6UuNtAp2.4BmSvlAGQF4gtY6/Wb7ZyKW5oSlz6oa','some class','https://www.nomadfoods.com/wp-content/uploads/2018/08/placeholder-1-e1533569576673-960x960.png', TRUE);
-INSERT INTO members (id, email, first_name, last_name, password, school_year, photo_url, account_enabled) VALUES (116, 'admin2@school.org', 'admin2', 'person', '$2a$10$Px8bPIDgwpmiL6UuNtAp2.4BmSvlAGQF4gtY6/Wb7ZyKW5oSlz6oa','some class','https://www.nomadfoods.com/wp-content/uploads/2018/08/placeholder-1-e1533569576673-960x960.png', TRUE);
+INSERT INTO members (id, email, first_name, last_name, password,school_year, photo_url, account_enabled) VALUES (111, 'coachee1@school.org', 'coachee1', 'person', '$2a$10$Px8bPIDgwpmiL6UuNtAp2.4BmSvlAGQF4gtY6/Wb7ZyKW5oSlz6oa','some class','/assets/img/placeholder.png', TRUE);
+INSERT INTO members (id, email, first_name, last_name, password,school_year, photo_url, account_enabled) VALUES (112, 'coachee2@school.org', 'coachee2', 'person', '$2a$10$Px8bPIDgwpmiL6UuNtAp2.4BmSvlAGQF4gtY6/Wb7ZyKW5oSlz6oa','some class','/assets/img/placeholder.png', TRUE);
+INSERT INTO members (id, email, first_name, last_name, password,school_year, photo_url, account_enabled) VALUES (113, 'coach1@school.org', 'coach1', 'person', '$2a$10$Px8bPIDgwpmiL6UuNtAp2.4BmSvlAGQF4gtY6/Wb7ZyKW5oSlz6oa','some class','/assets/img/placeholder.png', TRUE);
+INSERT INTO members (id, email, first_name, last_name, password, school_year, photo_url, account_enabled) VALUES (114, 'coach2@school.org', 'coach2', 'person', '$2a$10$Px8bPIDgwpmiL6UuNtAp2.4BmSvlAGQF4gtY6/Wb7ZyKW5oSlz6oa','some class','/assets/img/placeholder.png', TRUE);
+INSERT INTO members (id, email, first_name, last_name, password, school_year, photo_url, account_enabled) VALUES (115, 'admin1@school.org', 'admin1', 'person', '$2a$10$Px8bPIDgwpmiL6UuNtAp2.4BmSvlAGQF4gtY6/Wb7ZyKW5oSlz6oa','some class','/assets/img/placeholder.png', TRUE);
+INSERT INTO members (id, email, first_name, last_name, password, school_year, photo_url, account_enabled) VALUES (116, 'admin2@school.org', 'admin2', 'person', '$2a$10$Px8bPIDgwpmiL6UuNtAp2.4BmSvlAGQF4gtY6/Wb7ZyKW5oSlz6oa','some class','/assets/img/placeholder.png', TRUE);
 
 INSERT INTO coaches (user_id, availability, introduction, xp) VALUES (113,'my availability here','my introduction here', 100);
 INSERT INTO coaches (user_id, availability, introduction, xp) VALUES (114,'my availability here','my introduction here', 100);
