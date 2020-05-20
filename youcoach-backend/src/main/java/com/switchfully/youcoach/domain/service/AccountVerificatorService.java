@@ -93,6 +93,7 @@ public class AccountVerificatorService implements AccountVerificator {
 
                 sendVerificationEmail(user);
             } catch(MessagingException|IllegalStateException e){
+                e.printStackTrace();
                 result.set(false);
             }
         });
