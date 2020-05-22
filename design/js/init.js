@@ -12,7 +12,8 @@
 
     jQuery(document).ready(function(){
       jQuery('.timepicker').timepicker({
-        twelveHour: false
+        twelveHour: false,
+        autoClose: true
       });
     });
 
@@ -20,13 +21,16 @@
 
 
 var currYear = (new Date()).getFullYear();
+var currDate = (new Date());
 
 $(document).ready(function() {
   $(".datepicker").datepicker({
-    //defaultDate: new Date(currYear,05,13),
-    setDefaultDate: new Date(2020,05,14),
+    defaultDate: new Date(currDate),
+    setDefaultDate: false,
+    minDate: new Date(currDate),
     maxDate: new Date(currYear+1,12,31),
     yearRange: [currYear, currYear+1],
-    format: "yyyy/mm/dd"
+    format: "dd/mm/yyyy",
+    autoClose: true
   });
 });
