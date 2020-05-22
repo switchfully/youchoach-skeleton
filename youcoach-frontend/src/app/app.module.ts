@@ -8,9 +8,12 @@ import {LoginComponent} from './login/login.component';
 import {AppRoutingModule} from './app-routing.module';
 import {HelloWorldComponent} from './hello-world/hello-world.component';
 import {AuthenticationInterceptor} from './authentication/authentication.interceptor';
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import { HomeComponent } from './home/home.component';
+import { NavigationBarComponent } from './navigation-bar/navigation-bar.component';
+import { FooterComponent } from './footer/footer.component';
+import { TeamsComponent } from './teams/teams.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -20,7 +23,11 @@ export function HttpLoaderFactory(http: HttpClient) {
   declarations: [
     AppComponent,
     LoginComponent,
-    HelloWorldComponent
+    HelloWorldComponent,
+    HomeComponent,
+    NavigationBarComponent,
+    FooterComponent,
+    TeamsComponent
   ],
   imports: [
     BrowserModule,
@@ -28,7 +35,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     HttpClientModule,
     ReactiveFormsModule,
     AppRoutingModule,
-    NgbModule,
     TranslateModule.forRoot({
       defaultLanguage: 'en',
       loader: {
