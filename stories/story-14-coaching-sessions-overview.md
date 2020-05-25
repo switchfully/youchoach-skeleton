@@ -3,7 +3,7 @@
 
 > NOTE: There *IS NO DIFFERENCE* between a coaching request & a coaching session
 >
-> The only concept that exists is a coaching session with diffent statuses.
+> The only concept that exists is a coaching session with different statuses.
 
 Tables (3) of Coaching sessions 
 -  Upcoming sessions(coaching-sessions.title.upcoming)

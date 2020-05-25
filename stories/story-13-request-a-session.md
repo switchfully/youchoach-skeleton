@@ -4,7 +4,7 @@
 - Request a session screen (request-session.title)
     - Subject (request-session.label.subject)
     - Date (request-session.label.date)
-    - Time (used to sign in) (request-session.label.time)
+    - Time (request-session.label.time)
     - Location  (request-session.label.location)
     - Remarks  (request-session.label.remarks)
    
