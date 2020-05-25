@@ -1,8 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {CoachService} from '../coach-profile/coach.service';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {ISession} from './ISession';
 import {FormBuilder} from '@angular/forms';
+import {SessionService} from './session.service';
 
 @Component({
   selector: 'app-request-session',
@@ -12,15 +13,17 @@ import {FormBuilder} from '@angular/forms';
 export class RequestSessionComponent implements OnInit {
   session: ISession;
   sessionForm = this.fb.group({
-    idCoach : [''],
-    subject : [''],
-    date : [''],
-    time : [''],
+    idCoach: [''],
+    subject: [''],
+    date: [''],
+    time: [''],
     location: [''],
-    remarks : [''],
+    remarks: [''],
   });
   idToGet: number;
-  constructor(private coachService: CoachService, private route: ActivatedRoute, private fb: FormBuilder) {
+
+  constructor(private coachService: CoachService, private route: ActivatedRoute,
+              private fb: FormBuilder, private sessionService: SessionService, private router: Router) {
     this.idToGet = +this.route.snapshot.paramMap.get('id');
   }
 
@@ -38,6 +41,17 @@ export class RequestSessionComponent implements OnInit {
       location: this.sessionForm.get('location').value,
       remarks: this.sessionForm.get('remarks').value
     };
-    alert(this.session.idCoach);
+    this.sendRequest();
+    this.goProfile();
   }
+
+  sendRequest(): void {
+    alert('inside send request method');
+    // this.sessionService.sendASession(this.session).subscribe();
+  }
+
+  goProfile(): void {
+    this.router.navigateByUrl('/profile');
+  }
+
 }
