@@ -1,4 +1,4 @@
-package com.switchfully.youcoach.domain.service;
+package com.switchfully.youcoach.domain.exception;
 
 public class UserIdNotFoundException extends RuntimeException {
 }
