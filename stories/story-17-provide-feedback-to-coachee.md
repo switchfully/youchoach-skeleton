@@ -2,10 +2,16 @@
 **As a coach I want to be able to provide feedback to the coachee (feedback form).**
 
 -  Feedback on coaching session by Coach
-    - Action button Provide Feedback (coaching-sessions.button.feedback)
+    - Was the Coachee on time at the coaching session? (smiles)
+    - Was the Coachee well prepared for the coaching session? (smiles)
+    - Was the Coachee willing to learn and make progress? (smiles)
+    - Comments: (textarea)
+        - What did you like in the coaching session?
+        - How could your Coachee get better ?
    
     - Validation
-        - ??
+        - answer to the first three questions mandatory
+        - comments are optional
           
 - in scope
     - Feedback action button
