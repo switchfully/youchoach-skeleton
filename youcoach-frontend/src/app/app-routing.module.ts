@@ -18,6 +18,7 @@ import {PasswordChangeFailureComponent} from './password-change-failure/password
 import {EditCoachInformationComponent} from './coach-profile/edit-coach-information/edit-coach-information.component';
 import {FindACoachComponent} from './find-a-coach/find-a-coach.component';
 import {ChangeTopicsComponent} from './change-topics/change-topics.component';
+import {RequestSessionComponent} from './request-session/request-session.component';
 
 const routes: Routes = [
   {path: 'home', component: HomeComponent},
@@ -39,6 +40,7 @@ const routes: Routes = [
   {path: 'find-coach', component: FindACoachComponent },
   {path: 'validate-account', component: ValidateAccountComponent },
   {path: 'email-validation-success', component: EmailValidationSuccessComponent },
+  {path: 'coach-profile/:id/request-a-session', component: RequestSessionComponent },
   {path: 'forbidden', component: ForbiddenComponent},
   {path: '', redirectTo: 'home', pathMatch: 'full'},
   {path: '**', redirectTo: 'home', pathMatch: 'full'},

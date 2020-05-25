@@ -30,7 +30,6 @@ export class CoachProfileComponent implements OnInit {
 
   constructor(private coachService: CoachService, private route: ActivatedRoute) {
     this.idToGet = +this.route.snapshot.paramMap.get('id');
-
   }
 
   ngOnInit(): void {

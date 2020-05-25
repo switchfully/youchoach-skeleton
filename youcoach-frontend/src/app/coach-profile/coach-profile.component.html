@@ -18,7 +18,12 @@
       <div class="content-container">
 
         <section *ngIf="true" class="card-panel grey lighten-5">
+          <div class="right">
+            <a class="waves-effect waves-light btn-large btn-floating yellow darken-2"><i
+              class="material-icons left" routerLink="/coach-profile/{{coach.id}}/request-a-session">event</i>Request a session</a>
+          </div>
           <h5 translate>my-profile-menu.link.profile-information</h5>
+
           <div class="divider"></div>
           <div class="row">
             <div class="col l2 m2 s12">
