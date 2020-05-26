@@ -4,7 +4,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {ISession} from './ISession';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {SessionService} from './session.service';
-import {InitMaterializeComponent} from "../init-materialize.component";
+import {InitMaterializeComponent} from '../init-materialize.component';
 
 
 @Component({

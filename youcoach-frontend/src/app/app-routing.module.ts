@@ -19,6 +19,8 @@ import {EditCoachInformationComponent} from './coach-profile/edit-coach-informat
 import {FindACoachComponent} from './find-a-coach/find-a-coach.component';
 import {ChangeTopicsComponent} from './change-topics/change-topics.component';
 import {RequestSessionComponent} from './request-session/request-session.component';
+import {CoacheeMySessionsComponent} from "./coachee-my-sessions/coachee-my-sessions.component";
+import {CoachMysessionsComponent} from "./coach-my-sessions/coach-mysessions.component";
 
 const routes: Routes = [
   {path: 'home', component: HomeComponent},
@@ -41,6 +43,8 @@ const routes: Routes = [
   {path: 'validate-account', component: ValidateAccountComponent },
   {path: 'email-validation-success', component: EmailValidationSuccessComponent },
   {path: 'coach-profile/:id/request-a-session', component: RequestSessionComponent },
+  {path: 'coach-my-sessions', component: CoachMysessionsComponent },
+  {path: 'my-sessions', component: CoacheeMySessionsComponent },
   {path: 'forbidden', component: ForbiddenComponent},
   {path: '', redirectTo: 'home', pathMatch: 'full'},
   {path: '**', redirectTo: 'home', pathMatch: 'full'},
