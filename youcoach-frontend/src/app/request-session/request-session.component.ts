@@ -2,8 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {CoachService} from '../coach-profile/coach.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ISession} from './ISession';
-import {FormBuilder} from '@angular/forms';
+import {FormBuilder, Validators} from '@angular/forms';
 import {SessionService} from './session.service';
+import DateTimeFormat = Intl.DateTimeFormat;
 
 @Component({
   selector: 'app-request-session',
@@ -13,11 +14,11 @@ import {SessionService} from './session.service';
 export class RequestSessionComponent implements OnInit {
   session: ISession;
   sessionForm = this.fb.group({
-    idCoach: [''],
-    subject: [''],
-    date: [''],
-    time: [''],
-    location: [''],
+    idCoach: ['', [Validators.required]],
+    subject: ['', [Validators.required]],
+    date: ['', [Validators.required]],
+    time: ['', [Validators.required]],
+    location: ['', [Validators.required]],
     remarks: [''],
   });
   idToGet: number;
@@ -29,6 +30,7 @@ export class RequestSessionComponent implements OnInit {
 
 
   ngOnInit(): void {
+    alert(this.getTime());
   }
 
 
@@ -54,4 +56,13 @@ export class RequestSessionComponent implements OnInit {
     this.router.navigateByUrl('/profile');
   }
 
+  getTime(): string {
+    let today = new Date();
+    const dd = String(today.getDate()).padStart(2, '0');
+    const mm = String(today.getMonth() + 1).padStart(2, '0');
+    const yyyy = today.getFullYear();
+    // @ts-ignore
+    today = mm + '/' + dd + '/' + yyyy;
+    return today.toString();
+  }
 }
