@@ -1,5 +1,6 @@
 package com.switchfully.youcoach.domain.service;
 
+import com.switchfully.youcoach.domain.exception.SigningFailedException;
 import org.springframework.stereotype.Service;
 
 import java.nio.charset.StandardCharsets;

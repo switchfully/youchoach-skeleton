@@ -1,10 +1,11 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {CoachService} from '../coach-profile/coach.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ISession} from './ISession';
-import {FormBuilder, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {SessionService} from './session.service';
-import DateTimeFormat = Intl.DateTimeFormat;
+import {InitMaterializeComponent} from "../init-materialize.component";
+
 
 @Component({
   selector: 'app-request-session',
@@ -12,25 +13,64 @@ import DateTimeFormat = Intl.DateTimeFormat;
   styleUrls: ['./request-session.component.css']
 })
 export class RequestSessionComponent implements OnInit {
+
+  constructor(private coachService: CoachService, private route: ActivatedRoute,
+              private fb: FormBuilder, private sessionService: SessionService, private router: Router) {
+
+    this.idToGet = +this.route.snapshot.paramMap.get('id');
+
+  }
+
   session: ISession;
   sessionForm = this.fb.group({
-    idCoach: ['', [Validators.required]],
+    idCoach: [''],
     subject: ['', [Validators.required]],
     date: ['', [Validators.required]],
     time: ['', [Validators.required]],
     location: ['', [Validators.required]],
     remarks: [''],
-  });
-  idToGet: number;
+  }, { validator: group => this.validateDate(group)});
 
-  constructor(private coachService: CoachService, private route: ActivatedRoute,
-              private fb: FormBuilder, private sessionService: SessionService, private router: Router) {
-    this.idToGet = +this.route.snapshot.paramMap.get('id');
+
+  idToGet: number;
+  @Input() invalidDate = true;
+  @Input() invalidTime = true;
+  @Input() mustBeFuture = true;
+
+  private validateDate(group: FormGroup): boolean {
+    if (this.sessionForm === undefined) {
+      return false;
+    }
+
+    const date = group.get('date').value;
+    const time = group.get('time').value;
+
+    console.log(date);
+    console.log(time);
+
+    if (date === '') {
+      this.invalidDate = true;
+      return false;
+    }
+    this.invalidDate = false;
+    if ( time === '') {
+      this.invalidTime = true;
+      return false;
+    }
+    this.invalidTime = false;
+    // console.log(date , time);
+    let dateTopass: number = Date.parse(date + ' ' + time);
+    if (Date.now() > dateTopass){
+      this.mustBeFuture = true;
+    }
+    this.mustBeFuture = false;
+    return Date.now() < dateTopass;
+
   }
 
 
   ngOnInit(): void {
-    alert(this.getTime());
+    this.getTime();
   }
 
 
@@ -38,11 +78,13 @@ export class RequestSessionComponent implements OnInit {
     this.session = {
       idCoach: this.idToGet,
       subject: this.sessionForm.get('subject').value,
+      // dateAndTime:  this.sessionForm.get('date').value + this.sessionForm.get('time').value,
       date: this.sessionForm.get('date').value,
       time: this.sessionForm.get('time').value,
       location: this.sessionForm.get('location').value,
       remarks: this.sessionForm.get('remarks').value
     };
+    // alert(this.session.dateAndTime);
     this.sendRequest();
     this.goProfile();
   }
@@ -57,12 +99,12 @@ export class RequestSessionComponent implements OnInit {
   }
 
   getTime(): string {
-    let today = new Date();
+    const today = new Date();
     const dd = String(today.getDate()).padStart(2, '0');
     const mm = String(today.getMonth() + 1).padStart(2, '0');
     const yyyy = today.getFullYear();
-    // @ts-ignore
-    today = mm + '/' + dd + '/' + yyyy;
-    return today.toString();
+    return today.toDateString();
   }
+
+
 }

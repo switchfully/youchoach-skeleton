@@ -2,7 +2,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 
 import {AppComponent} from './app.component';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from '@angular/common/http';
 import {LoginComponent} from './login/login.component';
 import {AppRoutingModule} from './app-routing.module';
@@ -38,6 +38,7 @@ import { EditCoachInformationComponent } from './coach-profile/edit-coach-inform
 import { FindACoachComponent } from './find-a-coach/find-a-coach.component';
 import { ChangeTopicsComponent } from './change-topics/change-topics.component';
 import { RequestSessionComponent } from './request-session/request-session.component';
+import {CustomFormsModule} from "ngx-custom-validators";
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -71,7 +72,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     FindACoachComponent,
     ChangeTopicsComponent,
     RequestSessionComponent,
-  ],
+      ],
   imports: [
     BrowserModule,
     FormsModule,
@@ -91,7 +92,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatButtonModule,
     _MatMenuDirectivesModule,
     MatMenuModule,
-    MatIconModule
+    MatIconModule,
+    CustomFormsModule,
+
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true},

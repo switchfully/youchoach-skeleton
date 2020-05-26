@@ -1,11 +1,7 @@
 package com.switchfully.youcoach.datastore.entities;
 
 import javax.persistence.*;
-import javax.validation.constraints.Future;
-import javax.validation.constraints.FutureOrPresent;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.Objects;
 
 @Entity
@@ -23,23 +19,33 @@ public class CoachingSession {
     private String location;
     @Column(name = "remarks")
     private String remarks;
+    @OneToOne
+    @JoinColumn(name = "coach_id")
+    private User coach;
+    @OneToOne
+    @JoinColumn(name = "coachee_id")
+    private User coachee;
 
     public CoachingSession() {
     }
 
-    public CoachingSession(String subject, LocalDateTime dateAndTime, String location, String remarks) {
+    public CoachingSession(String subject, LocalDateTime dateAndTime, String location, String remarks, User coach, User coachee) {
         this.subject = subject;
         this.dateAndTime = dateAndTime;
         this.location = location;
         this.remarks = remarks;
+        this.coach = coach;
+        this.coachee = coachee;
     }
 
-    public CoachingSession(long id, String subject, LocalDateTime dateAndTime, String location, String remarks) {
+    public CoachingSession(long id, String subject, LocalDateTime dateAndTime, String location, String remarks, User coach, User coachee) {
         this.id = id;
         this.subject = subject;
         this.dateAndTime = dateAndTime;
         this.location = location;
         this.remarks = remarks;
+        this.coach = coach;
+        this.coachee = coachee;
     }
 
     public long getId() {
@@ -62,20 +68,24 @@ public class CoachingSession {
         return remarks;
     }
 
+    public User getCoach() {
+        return coach;
+    }
+
+    public User getCoachee() {
+        return coachee;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         CoachingSession that = (CoachingSession) o;
-        return id == that.id &&
-                Objects.equals(subject, that.subject) &&
-                Objects.equals(dateAndTime, that.dateAndTime) &&
-                Objects.equals(location, that.location) &&
-                Objects.equals(remarks, that.remarks);
+        return id == that.id;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, subject, dateAndTime, location, remarks);
+        return Objects.hash(id);
     }
 }

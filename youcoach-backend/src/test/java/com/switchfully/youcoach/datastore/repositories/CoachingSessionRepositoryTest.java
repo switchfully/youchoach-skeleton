@@ -1,17 +1,17 @@
 package com.switchfully.youcoach.datastore.repositories;
 
 import com.switchfully.youcoach.datastore.entities.CoachingSession;
+import com.switchfully.youcoach.datastore.entities.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.test.context.jdbc.Sql;
 
 import java.time.LocalDateTime;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 @AutoConfigureTestDatabase
 @DataJpaTest
@@ -27,8 +27,11 @@ class CoachingSessionRepositoryTest {
     }
 
     @Test
+    @Sql({"oneDefaultUser.sql", "anotherDefaultUser.sql"})
     void itShouldSaveCoachingSessions() {
-        CoachingSession coachingSession = new CoachingSession(1L, "Mathematics", LocalDateTime.now().plusDays(1), "school", "no remarks");
+        User coach = new User(1L, "firstName", "lastName", "firstName@mail.com", "password");
+        User coachee = new User(2L, "firstName", "lastName", "firstName@mail.com", "password");
+        CoachingSession coachingSession = new CoachingSession(1L, "Mathematics", LocalDateTime.now().plusDays(1), "school", "no remarks", coach, coachee);
         coachingSessionRepository.save(coachingSession);
 
         CoachingSession actual = coachingSessionRepository.findById(1L).get();

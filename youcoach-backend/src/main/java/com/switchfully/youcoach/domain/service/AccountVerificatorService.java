@@ -4,6 +4,7 @@ import com.switchfully.youcoach.datastore.entities.AccountVerification;
 import com.switchfully.youcoach.datastore.entities.User;
 import com.switchfully.youcoach.datastore.repositories.AccountVerificationRepository;
 import com.switchfully.youcoach.datastore.repositories.UserRepository;
+import com.switchfully.youcoach.domain.exception.AccountValidationFailedException;
 import com.switchfully.youcoach.domain.service.email.EmailSenderService;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
