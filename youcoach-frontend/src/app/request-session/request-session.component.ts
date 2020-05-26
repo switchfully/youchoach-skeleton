@@ -12,11 +12,11 @@ import {InitMaterializeComponent} from "../init-materialize.component";
   templateUrl: './request-session.component.html',
   styleUrls: ['./request-session.component.css']
 })
-export class RequestSessionComponent extends InitMaterializeComponent implements OnInit {
+export class RequestSessionComponent implements OnInit {
 
   constructor(private coachService: CoachService, private route: ActivatedRoute,
               private fb: FormBuilder, private sessionService: SessionService, private router: Router) {
-    super();
+
     this.idToGet = +this.route.snapshot.paramMap.get('id');
 
   }
@@ -42,10 +42,8 @@ export class RequestSessionComponent extends InitMaterializeComponent implements
       return false;
     }
 
-
-    console.log('validator' + new Date());
-    const date = this.sessionForm.get('date').value;
-    const time = this.sessionForm.get('time').value;
+    const date = group.get('date').value;
+    const time = group.get('time').value;
 
     console.log(date);
     console.log(time);
@@ -60,7 +58,7 @@ export class RequestSessionComponent extends InitMaterializeComponent implements
       return false;
     }
     this.invalidTime = false;
-    console.log(date , time);
+    // console.log(date , time);
     let dateTopass: number = Date.parse(date + ' ' + time);
     if (Date.now() > dateTopass){
       this.mustBeFuture = true;
