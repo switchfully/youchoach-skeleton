@@ -1,5 +1,4 @@
 <main>
-  <body>
   <div class="container">
 
     <div class="row">
@@ -17,15 +16,15 @@
                 </div>
               </div>
               <div class="row" >
-                <div *ngIf="mustBeFuture"> needs to be in the future</div>
+                <div *ngIf="sessionForm.errors?.mustBeFuture"> needs to be in the future</div>
                 <div class="input-field col s6">
-                  <input id="date" type="text" class="datepicker" formControlName="date" >
-                  <p *ngIf="invalidDate" > invalid date</p>
+                  <input id="date" type="text" class="datepicker" formControlName="date">
+                  <p *ngIf="sessionForm.errors?.dateNotSet" > invalid date</p>
                   <label for="date">Date</label>
                 </div>
                 <div class="input-field col s6">
                   <input id="timepicker" type="text" class="timepicker" formControlName="time">
-                  <p *ngIf="invalidTime" > invalid time</p>
+                  <p *ngIf="sessionForm.errors?.timeNotSet" > invalid time</p>
                   <label for="timepicker">Time</label>
                 </div>
               </div>
@@ -53,12 +52,4 @@
     </div>
 
   </div>
-
-
-  <!--&lt;!&ndash;  Scripts&ndash;&gt;-->
-  <!--<script src="js/jquery-3.5.0.min.js"></script>-->
-  <!--<script src="js/materialize.js"></script>-->
-  <!--<script src="js/init.js"></script>-->
-
-  </body>
 </main>

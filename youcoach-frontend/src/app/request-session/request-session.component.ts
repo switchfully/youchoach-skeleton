@@ -1,11 +1,11 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {CoachService} from '../coach-profile/coach.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ISession} from './ISession';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import { FormBuilder,ValidationErrors, Validators} from '@angular/forms';
 import {SessionService} from './session.service';
-import {InitMaterializeComponent} from "../init-materialize.component";
-
+import {InitMaterializeComponent} from '../init-materialize.component';
+import * as M from 'materialize-css';
 
 @Component({
   selector: 'app-request-session',
@@ -18,64 +18,119 @@ export class RequestSessionComponent extends InitMaterializeComponent implements
               private fb: FormBuilder, private sessionService: SessionService, private router: Router) {
     super();
     this.idToGet = +this.route.snapshot.paramMap.get('id');
-
   }
 
   session: ISession;
-  sessionForm = this.fb.group({
-    idCoach: [''],
-    subject: ['', [Validators.required]],
-    date: ['', [Validators.required]],
-    time: ['', [Validators.required]],
-    location: ['', [Validators.required]],
-    remarks: [''],
-  }, { validator: group => this.validateDate(group)});
-
+  sessionForm;
+  datePickerElem;
+  timePickerElem;
 
   idToGet: number;
-  @Input() invalidDate = true;
-  @Input() invalidTime = true;
-  @Input() mustBeFuture = true;
 
-  private validateDate(group: FormGroup): boolean {
-    if (this.sessionForm === undefined) {
-      return false;
+  private dateStringFormatMatches(input: string): boolean {
+    return /[0-9]{2}\/[0-9]{2}\/[0-9]{4}/.test(input);
+  }
+  private timeStringFormatMatches(input: string): boolean {
+    return /[0-9]{2}:[0-9]{2}/.test(input);
+  }
+
+  private parseDateStringToArray(input: string): number[] {
+    return input.split('/').map(v => parseInt(v));
+  }
+  private parseDateStringForYear(input: string): number {
+    return this.parseDateStringToArray(input)[2];
+  }
+  private parseDateStringForMonth(input: string): number {
+    return this.parseDateStringToArray(input)[1];
+  }
+  private parseDateStringForDay(input: string): number {
+    return this.parseDateStringToArray(input)[0];
+  }
+  private parseTimeStringToArray(input: string): number[]{
+    return input.split(':').map(v => parseInt(v));
+  }
+  private parseTimeStringForHour(input: string): number {
+    return this.parseTimeStringToArray(input)[0];
+  }
+  private parseTimeStringForMinutes(input: string): number {
+    return this.parseTimeStringToArray(input)[1];
+  }
+  private constructSessionDate(date: string, time: string): Date | null {
+    if(this.dateStringFormatMatches(date) && this.timeStringFormatMatches(time)){
+      const year = this.parseDateStringForYear(date);
+      const month = this.parseDateStringForMonth(date) - 1;
+      const day = this.parseDateStringForDay(date);
+      const hour = this.parseTimeStringForHour(time);
+      const minutes = this.parseTimeStringForMinutes(time);
+      return new Date(year, month, day, hour,minutes,0,0);
+    } else {
+      return null;
     }
-
-
-    console.log('validator' + new Date());
+  }
+  private validateDate(): ValidationErrors | null {
+    if(this.sessionForm === undefined) return null;
     const date = this.sessionForm.get('date').value;
     const time = this.sessionForm.get('time').value;
 
-    console.log(date);
-    console.log(time);
-
     if (date === '') {
-      this.invalidDate = true;
-      return false;
+      return {dateNotSet: true};
     }
-    this.invalidDate = false;
+
     if ( time === '') {
-      this.invalidTime = true;
-      return false;
+      return {timeNotSet: true};
     }
-    this.invalidTime = false;
-    console.log(date , time);
-    let dateTopass: number = Date.parse(date + ' ' + time);
-    if (Date.now() > dateTopass){
-      this.mustBeFuture = true;
-    }
-    this.mustBeFuture = false;
-    return Date.now() < dateTopass;
+
+    const dateTopass = this.constructSessionDate(date, time);
+    return new Date() > dateTopass ? { mustBeFuture: true } : null;
 
   }
 
+  private initializeDatePicker(): void{
+    const elems = document.querySelectorAll('.datepicker');
+    const instances = M.Datepicker.init(elems, {'format': 'dd/mm/yyyy',
+      'onClose': _ => {
+        this.sessionForm.get('date').value = this.datePickerElem.toString();
+        this.sessionForm.updateValueAndValidity({ onlySelf: false, emitEvent: true });
+      }
+    });
+    for(const instance of instances) {
+      if(instance !== undefined){
+        this.datePickerElem = instance;
+      }
+    }
+  }
+  private initializeTimePicker(): void{
+    const elems = document.querySelectorAll('.timepicker');
+    const instances = M.Timepicker.init(elems, {
+      'twelveHour': false,
+      'onCloseEnd': _ => {
+        this.sessionForm.get('time').value = this.timePickerElem.time;
+        this.sessionForm.updateValueAndValidity({ onlySelf: false, emitEvent: true });
+      }
+    });
+    for(const instance of instances) {
+      if(instance !== undefined){
+        this.timePickerElem = instance;
+      }
+    }
+  }
 
   ngOnInit(): void {
-    this.getTime();
+    this.sessionForm = this.fb.group({
+      idCoach: [''],
+      subject: ['', [Validators.required]],
+      date: ['', [Validators.required]],
+      time: ['', [Validators.required]],
+      location: ['', [Validators.required]],
+      remarks: ['']
+    }, {validators: [_ => this.validateDate()]});
+
+    setTimeout(() => {
+        this.initializeDatePicker();
+        this.initializeTimePicker();
+      }
+      , 1000);
   }
-
-
   onSubmit() {
     this.session = {
       idCoach: this.idToGet,

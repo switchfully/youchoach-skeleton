@@ -13,6 +13,7 @@ export class FindACoachComponent implements OnInit {
   searchText: string;
   coachList: ICoachList = {coaches: null};
   topicList = [];
+  // tslint:disable-next-line:variable-name
   private _filteredCoaches: ICoach [];
   selectedTopic = '';
   grades: number[];
