@@ -1,16 +1,26 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {CoachService} from '../coach-profile/coach.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ISession} from './ISession';
-import {FormBuilder, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {SessionService} from './session.service';
+import {InitMaterializeComponent} from "../init-materialize.component";
+
 
 @Component({
   selector: 'app-request-session',
   templateUrl: './request-session.component.html',
   styleUrls: ['./request-session.component.css']
 })
-export class RequestSessionComponent implements OnInit {
+export class RequestSessionComponent extends InitMaterializeComponent implements OnInit {
+
+  constructor(private coachService: CoachService, private route: ActivatedRoute,
+              private fb: FormBuilder, private sessionService: SessionService, private router: Router) {
+    super();
+    this.idToGet = +this.route.snapshot.paramMap.get('id');
+
+  }
+
   session: ISession;
   sessionForm = this.fb.group({
     idCoach: [''],
@@ -19,12 +29,44 @@ export class RequestSessionComponent implements OnInit {
     time: ['', [Validators.required]],
     location: ['', [Validators.required]],
     remarks: [''],
-  });
-  idToGet: number;
+  }, { validator: group => this.validateDate(group)});
 
-  constructor(private coachService: CoachService, private route: ActivatedRoute,
-              private fb: FormBuilder, private sessionService: SessionService, private router: Router) {
-    this.idToGet = +this.route.snapshot.paramMap.get('id');
+
+  idToGet: number;
+  @Input() invalidDate = true;
+  @Input() invalidTime = true;
+  @Input() mustBeFuture = true;
+
+  private validateDate(group: FormGroup): boolean {
+    if (this.sessionForm === undefined) {
+      return false;
+    }
+
+
+    console.log('validator' + new Date());
+    const date = this.sessionForm.get('date').value;
+    const time = this.sessionForm.get('time').value;
+
+    console.log(date);
+    console.log(time);
+
+    if (date === '') {
+      this.invalidDate = true;
+      return false;
+    }
+    this.invalidDate = false;
+    if ( time === '') {
+      this.invalidTime = true;
+      return false;
+    }
+    this.invalidTime = false;
+    console.log(date , time);
+    let dateTopass: number = Date.parse(date + ' ' + time);
+    if (Date.now() > dateTopass){
+      this.mustBeFuture = true;
+    }
+    this.mustBeFuture = false;
+    return Date.now() < dateTopass;
 
   }
 
@@ -38,11 +80,13 @@ export class RequestSessionComponent implements OnInit {
     this.session = {
       idCoach: this.idToGet,
       subject: this.sessionForm.get('subject').value,
+      // dateAndTime:  this.sessionForm.get('date').value + this.sessionForm.get('time').value,
       date: this.sessionForm.get('date').value,
       time: this.sessionForm.get('time').value,
       location: this.sessionForm.get('location').value,
       remarks: this.sessionForm.get('remarks').value
     };
+    // alert(this.session.dateAndTime);
     this.sendRequest();
     this.goProfile();
   }
@@ -61,9 +105,8 @@ export class RequestSessionComponent implements OnInit {
     const dd = String(today.getDate()).padStart(2, '0');
     const mm = String(today.getMonth() + 1).padStart(2, '0');
     const yyyy = today.getFullYear();
-
-    alert(today);
     return today.toDateString();
   }
+
 
 }

@@ -16,13 +16,16 @@
                   <label for="topic">On which topic/subject would you like to have a coaching session?</label>
                 </div>
               </div>
-              <div class="row">
+              <div class="row" >
+                <div *ngIf="mustBeFuture"> needs to be in the future</div>
                 <div class="input-field col s6">
                   <input id="date" type="text" class="datepicker" formControlName="date" >
+                  <p *ngIf="invalidDate" > invalid date</p>
                   <label for="date">Date</label>
                 </div>
                 <div class="input-field col s6">
                   <input id="timepicker" type="text" class="timepicker" formControlName="time">
+                  <p *ngIf="invalidTime" > invalid time</p>
                   <label for="timepicker">Time</label>
                 </div>
               </div>
