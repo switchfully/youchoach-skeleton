@@ -8,7 +8,8 @@ import java.util.Objects;
 public class CoachingSessionDto {
     private long id;
     private String subject;
-    private LocalDateTime dateAndTime;
+    private String date;
+    private String time;
     private String location;
     private String remarks;
     private Person coach;
@@ -22,7 +23,8 @@ public class CoachingSessionDto {
     public CoachingSessionDto(long id, String subject, LocalDateTime dateAndTime, String location, String remarks, Person coach, Person coachee, Status status) {
         this.id = id;
         this.subject = subject;
-        this.dateAndTime = dateAndTime;
+        this.date = date;
+        this.time = time;
         this.location = location;
         this.remarks = remarks;
         this.coach = coach;
@@ -36,10 +38,6 @@ public class CoachingSessionDto {
 
     public String getSubject() {
         return subject;
-    }
-
-    public LocalDateTime getDateAndTime() {
-        return dateAndTime;
     }
 
     public String getLocation() {
@@ -69,7 +67,8 @@ public class CoachingSessionDto {
         CoachingSessionDto that = (CoachingSessionDto) o;
         return id == that.id &&
                 Objects.equals(subject, that.subject) &&
-                Objects.equals(dateAndTime, that.dateAndTime) &&
+                Objects.equals(date, that.date) &&
+                Objects.equals(time, that.time) &&
                 Objects.equals(location, that.location) &&
                 Objects.equals(remarks, that.remarks) &&
                 Objects.equals(coach, that.coach) &&
@@ -79,7 +78,15 @@ public class CoachingSessionDto {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, subject, dateAndTime, location, remarks, coach, coachee, status);
+        return Objects.hash(id, subject, date, time, location, remarks, coach, coachee);
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public String getDate() {
+        return date;
     }
 
     public static class Person {

@@ -75,7 +75,7 @@ export class RequestSessionComponent extends InitMaterializeComponent implements
     }
   }
   private validateDate(): ValidationErrors | null {
-    if(this.sessionForm === undefined) return null;
+    if (this.sessionForm === undefined) return null;
     const date = this.sessionForm.get('date').value;
     const time = this.sessionForm.get('time').value;
 

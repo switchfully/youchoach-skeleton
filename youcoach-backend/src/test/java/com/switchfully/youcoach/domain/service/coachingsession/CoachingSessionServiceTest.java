@@ -24,10 +24,10 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 class CoachingSessionServiceTest {
-    CoachingSession coachingSession = new CoachingSession(1L, "Mathematics", LocalDateTime.now(), "school", "no remarks", new User(1L, null, null, null, null), null, Status.REQUESTED);
-    CreateCoachingSessionDto createCoachingSessionDto = new CreateCoachingSessionDto("Mathematics", LocalDateTime.now(), "school", "no remarks", 1L);
-    CoachingSessionDto coachingSessionDto = new CoachingSessionDto(1L, "Mathematics", LocalDateTime.now(), "school", "no remarks", new CoachingSessionDto.Person(1L, "Name"), new CoachingSessionDto.Person(2L, "Name"), Status.REQUESTED);
 
+    CoachingSession coachingSession = new CoachingSession(1L, "Mathematics", LocalDateTime.now(), "school", "no remarks", new User(1L, null, null, null, null), null, Status.REQUESTED);
+    CreateCoachingSessionDto createCoachingSessionDto = new CreateCoachingSessionDto("Mathematics", "30/05/2020", "11:50", "school", "no remarks", 1L);
+    CoachingSessionDto coachingSessionDto = new CoachingSessionDto(1L, "Mathematics", "30/05/2020", "11:50", "school", "no remarks", new CoachingSessionDto.Person(1L, "Name"), new CoachingSessionDto.Person(2L, "Name"));
 
     CoachingSessionRepository coachingSessionRepository = mock(CoachingSessionRepository.class);
     CoachingSessionMapper coachingSessionMapper = mock(CoachingSessionMapper.class);
