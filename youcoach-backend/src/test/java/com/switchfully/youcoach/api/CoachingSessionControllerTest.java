@@ -1,8 +1,10 @@
 package com.switchfully.youcoach.api;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.switchfully.youcoach.domain.dtos.CreateUserDto;
 import com.switchfully.youcoach.domain.dtos.request.CreateCoachingSessionDto;
+import com.switchfully.youcoach.domain.dtos.response.CoachingSessionDto;
 import com.switchfully.youcoach.domain.service.UserService;
 import com.switchfully.youcoach.domain.service.coachingsession.CoachingSessionService;
 import com.switchfully.youcoach.security.authentication.user.SecuredUserService;
@@ -28,8 +30,10 @@ import org.springframework.web.context.WebApplicationContext;
 import java.security.Principal;
 import java.time.LocalDateTime;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -65,23 +69,39 @@ class CoachingSessionControllerTest {
 
     }
 
-//    @WithMockUser
-//    @Sql({"../datastore/repositories/oneDefaultUser.sql", "../datastore/repositories/makeUsersCoach.sql"})
-//    @Test
-//    void createUser() throws Exception {
-//        Principal mockPrincipal = mock(Principal.class);
-//        CreateCoachingSessionDto createCoachingSessionDto = new CreateCoachingSessionDto("Mathematics", LocalDateTime.now(), "school", "no remarks", 1L);
-//        String actualResult =
-//                mockMvc.perform(post("/coaching-sessions").principal(mockPrincipal)
-//                        .with(csrf())
-//                        .contentType(MediaType.APPLICATION_JSON)
-//                        .content(new ObjectMapper().writeValueAsString(createCoachingSessionDto))
-//                ).andExpect(status().isCreated())
-//                        .andReturn()
-//                        .getResponse()
-//                        .getContentAsString();
-//        String expected = "{\"subject\":Mathematics,\"dateAndTime\":\"Integration\",\"lastName\":\"Test\",\"email\":\"test@integraition.be\"}";
-//        JSONAssert.assertEquals(expected, actualResult, false);
-//    }
+    @Test
+    void jacksonConverter() throws JsonProcessingException {
+        CreateCoachingSessionDto createCoachingSessionDto = new CreateCoachingSessionDto("Mathematics", "30/05/2020", "11:50", "school", "no remarks", 1L);
+        String value = new ObjectMapper().writeValueAsString(createCoachingSessionDto);
+        CreateCoachingSessionDto actualCoachingSessionDto = new ObjectMapper().readerFor(CreateCoachingSessionDto.class).readValue(value);
+        assertThat(actualCoachingSessionDto).isEqualTo(createCoachingSessionDto);        // Given
+
+        // When
+
+        // Then
+
+    }
+
+    @WithMockUser(username = "example2@example.com")
+    @Sql({"../datastore/repositories/oneDefaultUser.sql", "../datastore/repositories/makeUsersCoach.sql", "../datastore/repositories/anotherDefaultUser.sql"})
+    @Test
+    void createCoachingSession() throws Exception {
+        Principal mockPrincipal = mock(Principal.class);
+        when(mockPrincipal.getName()).thenReturn("example2@example.com");
+        CreateCoachingSessionDto createCoachingSessionDto = new CreateCoachingSessionDto("Mathematics", "30/05/2020", "11:50", "school", "no remarks", 1L);
+        CoachingSessionDto coachingSessionDto = new CoachingSessionDto(1L, "Mathematics", "30/05/2020", "11:50", "school", "no remarks", new CoachingSessionDto.Person(1L, "First Last"), new CoachingSessionDto.Person(2L, "First Last"));
+        String actualResult =
+                mockMvc.perform(post("/coaching-sessions")
+                        .principal(mockPrincipal)
+                        .with(csrf())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(new ObjectMapper().writeValueAsString(createCoachingSessionDto))
+                ).andExpect(status().isCreated())
+                        .andReturn()
+                        .getResponse()
+                        .getContentAsString();
+        String expected = new ObjectMapper().writeValueAsString(coachingSessionDto);
+        JSONAssert.assertEquals(expected, actualResult, true);
+    }
 
 }

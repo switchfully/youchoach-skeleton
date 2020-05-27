@@ -6,23 +6,32 @@ import com.switchfully.youcoach.domain.dtos.request.CreateCoachingSessionDto;
 import com.switchfully.youcoach.domain.dtos.response.CoachingSessionDto;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 @Component
 public class CoachingSessionMapper {
 
     public CoachingSession toModel(CreateCoachingSessionDto createCoachingSessionDto, User coach, User coachee) {
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy H:m");
+        LocalDateTime dateTime = LocalDateTime.parse(createCoachingSessionDto.getDate() + " " +createCoachingSessionDto.getTime(), dateTimeFormatter);
         return new CoachingSession(
                 createCoachingSessionDto.getSubject(),
-                createCoachingSessionDto.getDateAndTime(),
+                dateTime,
                 createCoachingSessionDto.getLocation(),
                 createCoachingSessionDto.getRemarks(),
                 coach, coachee);
     }
 
     public CoachingSessionDto toDto(CoachingSession coachingSession) {
+
+        String date = coachingSession.getDateAndTime().toLocalDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        String time = coachingSession.getDateAndTime().toLocalTime().format(DateTimeFormatter.ofPattern("H:m"));
         return new CoachingSessionDto(
                 coachingSession.getId(),
                 coachingSession.getSubject(),
-                coachingSession.getDateAndTime(),
+                date,
+                time,
                 coachingSession.getLocation(),
                 coachingSession.getRemarks(),
                 extractPerson(coachingSession.getCoach()),

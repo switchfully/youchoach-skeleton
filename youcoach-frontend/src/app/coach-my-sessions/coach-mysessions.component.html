@@ -1,0 +1,126 @@
+<main>
+
+  <div class="row">
+
+    <div class="col s12 m2">
+      <div class="content-container">
+        <h6>My Profile</h6>
+        <div class="collection">
+          <a href="#!" class="collection-item grey-text text-darken-2" routerLink="/coach-profile" translate>Profile Information</a>
+          <a href="#!" class="collection-item black-text active teal lighten-3" routerLink="/coach-my-sessions" translate>Coaching sessions</a>
+          <a class="collection-item grey-text text-darken-2" routerLink="/change-topics" translate >my-coach-profile-menu.link.request-profile-change</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="col s12 m10">
+      <div class="content-container">
+
+        <section class="card-panel grey lighten-5">
+          <h5>My upcoming sessions</h5>
+          <div class="divider"></div>
+          <div class="row">
+            <div class="col l12 s12">
+              <table class="highlight responsive-table">
+                <thead>
+                <tr>
+                  <th>Coachee</th>
+                  <th>Subject</th>
+                  <th>Date and Time</th>
+                  <th>Location</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let session of sessions">
+                  <td>{{session.coachee.firstName + " " + session.coachee.firstName}}</td>
+                  <td>{{session.subject}}</td>
+                  <td>{{session.dateAndTime}}</td>
+                  <td>{{session.location}}</td>
+                  <td>{{session.status}}</td>
+                  <td><a class="waves-effect waves-light  grey lighten-2 btn black-text">Accept<i
+                    class="material-icons right">assignment_turned_in</i></a><a class="waves-effect waves-light  grey lighten-2 btn black-text">Decline<i
+                    class="material-icons right">cancel</i></a></td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </section>
+
+        <section class="card-panel grey lighten-5">
+          <h5>Waiting for feedback</h5>
+          <div class="divider"></div>
+          <div class="row">
+            <div class="col l12 s12">
+              <table class="highlight responsive-table">
+                <thead>
+                <tr>
+                  <th>Coachee</th>
+                  <th>Subject</th>
+                  <th>Date</th>
+                  <th>Time</th>
+                  <th>Location</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let session of sessions">
+                  <td>{{session.coachee.firstName + " " + session.coachee.firstName}}</td>
+                  <td>{{session.subject}}</td>
+                  <td>{{session.dateAndTime}}</td>
+                  <td>{{session.location}}</td>
+                  <td>{{session.status}}</td>
+                  <td><a class="waves-effect waves-light  grey lighten-2 btn black-text">Accept<i
+                    class="material-icons right">assignment_turned_in</i></a><a class="waves-effect waves-light  grey lighten-2 btn black-text">Decline<i
+                    class="material-icons right">cancel</i></a></td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </section>
+
+        <section class="card-panel grey lighten-5">
+          <h5>Archive</h5>
+          <div class="divider"></div>
+          <div class="row">
+            <div class="col l12 s12">
+              <table class="highlight responsive-table">
+                <thead>
+                <tr>
+                  <th>Coach</th>
+                  <th>Subject</th>
+                  <th>Date</th>
+                  <th>Time</th>
+                  <th>Location</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let session of sessions">
+                  <td>{{session.coachee.firstName + " " + session.coachee.firstName}}</td>
+                  <td>{{session.subject}}</td>
+                  <td>{{session.dateAndTime}}</td>
+                  <td>{{session.location}}</td>
+                  <td>{{session.status}}</td>
+                  <td><a class="waves-effect waves-light  grey lighten-2 btn black-text">Accept<i
+                    class="material-icons right">assignment_turned_in</i></a><a class="waves-effect waves-light  grey lighten-2 btn black-text">Decline<i
+                    class="material-icons right">cancel</i></a></td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </div>
+  </div>
+
+</main>

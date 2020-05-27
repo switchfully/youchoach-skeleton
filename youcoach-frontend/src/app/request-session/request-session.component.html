@@ -1,5 +1,4 @@
 <main>
-  <body>
   <div class="container">
 
     <div class="row">
@@ -12,27 +11,31 @@
             <form class="col s12" [formGroup]="sessionForm" (ngSubmit)="onSubmit()">
               <div class="row">
                 <div class="input-field col s12">
-                  <textarea id="topic" class="materialize-textarea" formControlName="subject"></textarea>
+                  <textarea id="topic" class="materialize-textarea validate" formControlName="subject" required></textarea>
                   <label for="topic">On which topic/subject would you like to have a coaching session?</label>
+                  <span class="helper-text red-text darken-2" data-error="This field is required"></span>
                 </div>
               </div>
               <div class="row" >
-                <div *ngIf="mustBeFuture"> needs to be in the future</div>
+
                 <div class="input-field col s6">
-                  <input id="date" type="date"  formControlName="date" >
-                  <p *ngIf="invalidDate" > invalid date</p>
+                  <input id="date" type="text" class="datepicker validate" formControlName="date" required>
+                  <span class="helper-text red-text darken-2" data-error="This field is required"></span>
                   <label for="date">Date</label>
+<!--                  <span class="helper-text red-text darken-2" data-error="invalid date"></span>-->
                 </div>
                 <div class="input-field col s6">
-                  <input id="timepicker" type="time"  formControlName="time">
-                  <p *ngIf="invalidTime" > invalid time</p>
+                  <input id="timepicker" type="text" class="timepicker validate" formControlName="time" required>
+                  <span class="helper-text red-text darken-2" data-error="This field is required" ></span>
                   <label for="timepicker">Time</label>
                 </div>
+                <span class="helper-text red-text darken-2" *ngIf="sessionForm.errors?.mustBeFuture">date needs to be in the future</span>
               </div>
               <div class="row">
                 <div class="input-field col s12">
-                  <input id="location" type="text" class="autocomplete" formControlName="location">
+                  <input id="location" type="text" class="autocomplete validate" required formControlName="location">
                   <label for="location">Location</label>
+                  <span class="helper-text red-text darken-2" data-error="this field is required"></span>
                 </div>
               </div>
               <div class="row">
@@ -42,7 +45,7 @@
                 </div>
               </div>
               <div class="row right-align">
-                <button class="waves-effect waves-light yellow darken-2 btn-large black-text"  type="submit">Send request<i
+                <button class="waves-effect waves-light yellow darken-2 btn-large black-text" [disabled]="!enableSend()"  type="submit">Send request<i
                   class="material-icons right">send</i></button>
               </div>
             </form>
@@ -53,12 +56,4 @@
     </div>
 
   </div>
-
-
-  <!--&lt;!&ndash;  Scripts&ndash;&gt;-->
-  <!--<script src="js/jquery-3.5.0.min.js"></script>-->
-  <!--<script src="js/materialize.js"></script>-->
-  <!--<script src="js/init.js"></script>-->
-
-  </body>
 </main>

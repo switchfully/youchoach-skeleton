@@ -3,6 +3,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {ISession} from './ISession';
 import {Observable} from 'rxjs';
 import {environment} from '../../environments/environment';
+import {ISessionComplete} from '../coach-my-sessions/ISessionComplete';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +22,10 @@ export class SessionService {
 
   sendASession(session: ISession): Observable<ISession> {
     return this.http.post<ISession>(this.url, session, this.httpOptions);
+  }
+
+  getSessions(): Observable<ISessionComplete[]> {
+    return this.http.get<ISessionComplete[]>(this.url, this.httpOptions);
   }
 
 }

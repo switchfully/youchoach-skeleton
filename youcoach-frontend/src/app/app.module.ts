@@ -38,7 +38,9 @@ import { EditCoachInformationComponent } from './coach-profile/edit-coach-inform
 import { FindACoachComponent } from './find-a-coach/find-a-coach.component';
 import { ChangeTopicsComponent } from './change-topics/change-topics.component';
 import { RequestSessionComponent } from './request-session/request-session.component';
-import {CustomFormsModule} from "ngx-custom-validators";
+import {CustomFormsModule} from 'ngx-custom-validators';
+import { CoachMysessionsComponent } from './coach-my-sessions/coach-mysessions.component';
+import { CoacheeMySessionsComponent } from './coachee-my-sessions/coachee-my-sessions.component';
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -72,6 +74,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     FindACoachComponent,
     ChangeTopicsComponent,
     RequestSessionComponent,
+    CoachMysessionsComponent,
+    CoacheeMySessionsComponent,
       ],
   imports: [
     BrowserModule,
