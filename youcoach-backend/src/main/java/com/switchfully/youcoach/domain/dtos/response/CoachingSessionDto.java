@@ -20,7 +20,7 @@ public class CoachingSessionDto {
     public CoachingSessionDto() {
     }
 
-    public CoachingSessionDto(long id, String subject, LocalDateTime dateAndTime, String location, String remarks, Person coach, Person coachee, Status status) {
+    public CoachingSessionDto(long id, String subject, String date, String time, String location, String remarks, Person coach, Person coachee, Status status) {
         this.id = id;
         this.subject = subject;
         this.date = date;

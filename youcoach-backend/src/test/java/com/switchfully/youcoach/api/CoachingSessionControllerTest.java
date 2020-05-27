@@ -2,6 +2,7 @@ package com.switchfully.youcoach.api;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.switchfully.youcoach.datastore.Status;
 import com.switchfully.youcoach.domain.dtos.CreateUserDto;
 import com.switchfully.youcoach.domain.dtos.request.CreateCoachingSessionDto;
 import com.switchfully.youcoach.domain.dtos.response.CoachingSessionDto;
@@ -89,7 +90,7 @@ class CoachingSessionControllerTest {
         Principal mockPrincipal = mock(Principal.class);
         when(mockPrincipal.getName()).thenReturn("example2@example.com");
         CreateCoachingSessionDto createCoachingSessionDto = new CreateCoachingSessionDto("Mathematics", "30/05/2020", "11:50", "school", "no remarks", 1L);
-        CoachingSessionDto coachingSessionDto = new CoachingSessionDto(1L, "Mathematics", "30/05/2020", "11:50", "school", "no remarks", new CoachingSessionDto.Person(1L, "First Last"), new CoachingSessionDto.Person(2L, "First Last"));
+        CoachingSessionDto coachingSessionDto = new CoachingSessionDto(1L, "Mathematics", "30/05/2020", "11:50", "school", "no remarks", new CoachingSessionDto.Person(1L, "First Last"), new CoachingSessionDto.Person(2L, "First Last"), Status.REQUESTED);
         String actualResult =
                 mockMvc.perform(post("/coaching-sessions")
                         .principal(mockPrincipal)
