@@ -1,5 +1,6 @@
 package com.switchfully.youcoach.domain.service.coachingsession;
 
+import com.switchfully.youcoach.datastore.Status;
 import com.switchfully.youcoach.datastore.entities.Coach;
 import com.switchfully.youcoach.datastore.entities.CoachingSession;
 import com.switchfully.youcoach.datastore.entities.User;
@@ -13,11 +14,13 @@ import com.switchfully.youcoach.domain.exception.CoachNotFoundException;
 import com.switchfully.youcoach.domain.exception.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.security.Principal;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-
+@Transactional
 @Service
 public class CoachingSessionService {
     private final CoachingSessionRepository coachingSessionRepository;
@@ -45,7 +48,12 @@ public class CoachingSessionService {
     public List<CoachingSessionDto> getCoachingSessionsForUser(String email) {
         Optional<User> user = userRepository.findByEmail(email);
         List<CoachingSession> coachingSessionList = coachingSessionRepository.findAllByCoachee(user);
-     return    coachingSessionMapper.toDto(coachingSessionList);
+        coachingSessionList.forEach(coachingSession -> {
+        if (coachingSession.getDateAndTime().isBefore(LocalDateTime.now()) ) {
+            coachingSession.setStatus(Status.FINISHED);
+        }
+        });
+     return coachingSessionMapper.toDto(coachingSessionList);
     }
 
     public List<CoachingSessionDto> getCoachingSessionsForCoach(String email) {
