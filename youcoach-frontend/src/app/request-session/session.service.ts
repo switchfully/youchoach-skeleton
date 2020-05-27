@@ -9,7 +9,7 @@ import {ISessionComplete} from '../coach-my-sessions/ISessionComplete';
   providedIn: 'root'
 })
 export class SessionService {
-  readonly url = `${environment.backendUrl}/session`;
+  readonly url = `${environment.backendUrl}/coaching-sessions`;
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
