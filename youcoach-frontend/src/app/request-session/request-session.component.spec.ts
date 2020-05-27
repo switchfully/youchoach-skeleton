@@ -22,4 +22,8 @@ describe('RequestSessionComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should only be allowed to request a session if all fields are filled in', () => {
+    expect(component.sessionForm.valid).toBeFalsy();
+  });
 });
