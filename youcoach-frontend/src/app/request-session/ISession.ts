@@ -1,5 +1,5 @@
 export interface ISession {
-  idCoach: number;
+  coachId: number;
   subject: string;
   date: string;
   time: string;
