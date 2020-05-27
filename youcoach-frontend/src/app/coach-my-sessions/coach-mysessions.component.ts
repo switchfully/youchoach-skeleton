@@ -9,6 +9,8 @@ import {SessionService} from '../request-session/session.service';
 })
 export class CoachMysessionsComponent implements OnInit {
   sessions: ISessionComplete[];
+  sessionswithoutarchived: ISessionComplete[] = null;
+  sessionsarchived: ISessionComplete[] = null;
   constructor(private sessionService: SessionService) { }
 
   ngOnInit(): void {
@@ -16,7 +18,12 @@ export class CoachMysessionsComponent implements OnInit {
   }
 
   getSessions(): void {
-    this.sessionService.getSessions().subscribe(sessions => this.sessions = sessions);
+    this.sessionService.getSessionsforCoach().subscribe(
+      sessions => {
+        this.sessions = sessions;
+        this.sessionswithoutarchived = sessions.filter(session => new Date(session.date.replace('/', '-').replace('/', '-').replace( /(\d{2})-(\d{2})-(\d{4})/, '$2/$1/$3')).getTime() > Date.now());
+        this.sessionsarchived = this.sessions.filter(session => new Date(session.date.replace('/', '-').replace('/', '-').replace( /(\d{2})-(\d{2})-(\d{4})/, '$2/$1/$3')).getTime() < Date.now());
+  });
   }
 
 }

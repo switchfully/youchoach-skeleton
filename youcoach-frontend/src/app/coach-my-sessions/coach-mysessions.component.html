@@ -26,17 +26,19 @@
                 <tr>
                   <th>Coachee</th>
                   <th>Subject</th>
-                  <th>Date and Time</th>
+                  <th>Date</th>
+                  <th>Time</th>
                   <th>Location</th>
                   <th>Status</th>
                   <th>Actions</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr *ngFor="let session of sessions">
-                  <td>{{session.coachee.firstName + " " + session.coachee.firstName}}</td>
+                <tr *ngFor="let session of sessionswithoutarchived">
+                  <td>{{session.coachee.name}}</td>
                   <td>{{session.subject}}</td>
-                  <td>{{session.dateAndTime}}</td>
+                  <td>{{session.date}}</td>
+                  <td>{{session.time}}</td>
                   <td>{{session.location}}</td>
                   <td>{{session.status}}</td>
                   <td><a class="waves-effect waves-light  grey lighten-2 btn black-text">Accept<i
@@ -69,9 +71,10 @@
                 </thead>
                 <tbody>
                 <tr *ngFor="let session of sessions">
-                  <td>{{session.coachee.firstName + " " + session.coachee.firstName}}</td>
+                  <td>{{session.coachee.name}}</td>
                   <td>{{session.subject}}</td>
-                  <td>{{session.dateAndTime}}</td>
+                  <td>{{session.date}}</td>
+                  <td>{{session.time}}</td>
                   <td>{{session.location}}</td>
                   <td>{{session.status}}</td>
                   <td><a class="waves-effect waves-light  grey lighten-2 btn black-text">Accept<i
@@ -103,10 +106,11 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr *ngFor="let session of sessions">
-                  <td>{{session.coachee.firstName + " " + session.coachee.firstName}}</td>
+                <tr *ngFor="let session of sessionsarchived">
+                  <td>{{session.coachee.name}}</td>
                   <td>{{session.subject}}</td>
-                  <td>{{session.dateAndTime}}</td>
+                  <td>{{session.date}}</td>
+                  <td>{{session.time}}</td>
                   <td>{{session.location}}</td>
                   <td>{{session.status}}</td>
                   <td><a class="waves-effect waves-light  grey lighten-2 btn black-text">Accept<i

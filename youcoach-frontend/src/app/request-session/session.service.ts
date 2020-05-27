@@ -28,4 +28,8 @@ export class SessionService {
     return this.http.get<ISessionComplete[]>(this.url, this.httpOptions);
   }
 
+  getSessionsforCoach(): Observable<ISessionComplete[]> {
+    return this.http.get<ISessionComplete[]>(this.url + '/coach', this.httpOptions);
+  }
+
 }

@@ -37,4 +37,10 @@ public class CoachingSessionController {
         return coachingSessionService.getCoachingSessionsForUser(principal.getName());
     }
 
+    @GetMapping(produces = "application/json" , path = "/coach")
+    @ResponseStatus(HttpStatus.OK)
+    public List<CoachingSessionDto> getCoachingSessionforCoach(Principal principal) {
+        return coachingSessionService.getCoachingSessionsForCoach(principal.getName());
+    }
+
 }

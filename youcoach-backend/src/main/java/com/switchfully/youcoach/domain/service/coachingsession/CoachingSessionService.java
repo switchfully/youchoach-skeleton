@@ -47,4 +47,10 @@ public class CoachingSessionService {
         List<CoachingSession> coachingSessionList = coachingSessionRepository.findAllByCoachee(user);
      return    coachingSessionMapper.toDto(coachingSessionList);
     }
+
+    public List<CoachingSessionDto> getCoachingSessionsForCoach(String email) {
+        Optional<User> user = userRepository.findByEmail(email);
+        List<CoachingSession> coachingSessionList = coachingSessionRepository.findAllByCoach(user);
+        return    coachingSessionMapper.toDto(coachingSessionList);
+    }
 }

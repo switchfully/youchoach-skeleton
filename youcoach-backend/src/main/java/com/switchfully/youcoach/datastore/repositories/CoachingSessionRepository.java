@@ -13,5 +13,8 @@ public interface CoachingSessionRepository extends CrudRepository<CoachingSessio
 
     List<CoachingSession> findAllByCoachee(Optional<User> user);
 
+    List<CoachingSession> findAllByCoach(Optional<User> user);
+
+
 }
 
