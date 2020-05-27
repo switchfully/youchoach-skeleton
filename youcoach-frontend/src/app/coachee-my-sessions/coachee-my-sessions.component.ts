@@ -8,7 +8,7 @@ import {ISessionComplete} from '../coach-my-sessions/ISessionComplete';
   styleUrls: ['./coachee-my-sessions.component.css']
 })
 export class CoacheeMySessionsComponent implements OnInit {
-  sessions: ISessionComplete[];
+  sessions: ISessionComplete[] = null;
 
   constructor(private sessionService: SessionService) { }
 

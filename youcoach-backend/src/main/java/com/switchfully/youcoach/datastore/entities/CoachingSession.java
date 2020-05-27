@@ -1,5 +1,7 @@
 package com.switchfully.youcoach.datastore.entities;
 
+import com.switchfully.youcoach.datastore.Status;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -25,8 +27,20 @@ public class CoachingSession {
     @OneToOne
     @JoinColumn(name = "coachee_id")
     private User coachee;
+    @Column(name= "status")
+    private Status status;
 
     public CoachingSession() {
+    }
+
+    public CoachingSession(String subject, LocalDateTime dateAndTime, String location, String remarks, User coach, User coachee, Status status) {
+        this.subject = subject;
+        this.dateAndTime = dateAndTime;
+        this.location = location;
+        this.remarks = remarks;
+        this.coach = coach;
+        this.coachee = coachee;
+        this.status = status;
     }
 
     public CoachingSession(String subject, LocalDateTime dateAndTime, String location, String remarks, User coach, User coachee) {
@@ -38,7 +52,7 @@ public class CoachingSession {
         this.coachee = coachee;
     }
 
-    public CoachingSession(long id, String subject, LocalDateTime dateAndTime, String location, String remarks, User coach, User coachee) {
+    public CoachingSession(long id, String subject, LocalDateTime dateAndTime, String location, String remarks, User coach, User coachee, Status status) {
         this.id = id;
         this.subject = subject;
         this.dateAndTime = dateAndTime;
@@ -46,6 +60,7 @@ public class CoachingSession {
         this.remarks = remarks;
         this.coach = coach;
         this.coachee = coachee;
+        this.status = status;
     }
 
     public long getId() {
@@ -74,6 +89,10 @@ public class CoachingSession {
 
     public User getCoachee() {
         return coachee;
+    }
+
+    public Status getStatus() {
+        return status;
     }
 
     @Override
