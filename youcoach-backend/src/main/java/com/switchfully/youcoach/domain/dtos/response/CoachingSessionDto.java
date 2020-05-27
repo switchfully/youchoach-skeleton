@@ -1,5 +1,8 @@
 package com.switchfully.youcoach.domain.dtos.response;
 
+import com.switchfully.youcoach.datastore.Status;
+
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class CoachingSessionDto {
@@ -11,12 +14,13 @@ public class CoachingSessionDto {
     private String remarks;
     private Person coach;
     private Person coachee;
+    private Status status;
 
 
     public CoachingSessionDto() {
     }
 
-    public CoachingSessionDto(long id, String subject, String date, String time, String location, String remarks, Person coach, Person coachee) {
+    public CoachingSessionDto(long id, String subject, String date, String time, String location, String remarks, Person coach, Person coachee, Status status) {
         this.id = id;
         this.subject = subject;
         this.date = date;
@@ -25,6 +29,7 @@ public class CoachingSessionDto {
         this.remarks = remarks;
         this.coach = coach;
         this.coachee = coachee;
+        this.status = status;
     }
 
     public long getId() {
@@ -51,6 +56,10 @@ public class CoachingSessionDto {
         return coachee;
     }
 
+    public Status getStatus() {
+        return status;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -63,7 +72,8 @@ public class CoachingSessionDto {
                 Objects.equals(location, that.location) &&
                 Objects.equals(remarks, that.remarks) &&
                 Objects.equals(coach, that.coach) &&
-                Objects.equals(coachee, that.coachee);
+                Objects.equals(coachee, that.coachee) &&
+                status == that.status;
     }
 
     @Override

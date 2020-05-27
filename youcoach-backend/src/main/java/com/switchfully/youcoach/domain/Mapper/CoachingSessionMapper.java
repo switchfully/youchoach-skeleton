@@ -1,5 +1,6 @@
 package com.switchfully.youcoach.domain.Mapper;
 
+import com.switchfully.youcoach.datastore.Status;
 import com.switchfully.youcoach.datastore.entities.CoachingSession;
 import com.switchfully.youcoach.datastore.entities.User;
 import com.switchfully.youcoach.domain.dtos.request.CreateCoachingSessionDto;
@@ -8,6 +9,9 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class CoachingSessionMapper {
@@ -20,7 +24,7 @@ public class CoachingSessionMapper {
                 dateTime,
                 createCoachingSessionDto.getLocation(),
                 createCoachingSessionDto.getRemarks(),
-                coach, coachee);
+                coach, coachee, Status.REQUESTED);
     }
 
     public CoachingSessionDto toDto(CoachingSession coachingSession) {
@@ -35,7 +39,12 @@ public class CoachingSessionMapper {
                 coachingSession.getLocation(),
                 coachingSession.getRemarks(),
                 extractPerson(coachingSession.getCoach()),
-                extractPerson(coachingSession.getCoachee()));
+                extractPerson(coachingSession.getCoachee()),
+                coachingSession.getStatus());
+    }
+
+    public List<CoachingSessionDto> toDto(List<CoachingSession> coachingSessionlist) {
+        return coachingSessionlist.stream().map(coachingSession -> toDto(coachingSession)).collect(Collectors.toList());
     }
 
     private CoachingSessionDto.Person extractPerson(User user) {

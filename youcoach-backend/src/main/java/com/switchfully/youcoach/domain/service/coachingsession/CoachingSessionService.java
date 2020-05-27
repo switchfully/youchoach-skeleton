@@ -1,6 +1,7 @@
 package com.switchfully.youcoach.domain.service.coachingsession;
 
 import com.switchfully.youcoach.datastore.entities.Coach;
+import com.switchfully.youcoach.datastore.entities.CoachingSession;
 import com.switchfully.youcoach.datastore.entities.User;
 import com.switchfully.youcoach.datastore.repositories.CoachRepository;
 import com.switchfully.youcoach.datastore.repositories.CoachingSessionRepository;
@@ -14,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CoachingSessionService {
@@ -21,6 +24,7 @@ public class CoachingSessionService {
     private final CoachingSessionMapper coachingSessionMapper;
     private final CoachRepository coachRepository;
     private final UserRepository userRepository;
+
 
 
     @Autowired
@@ -31,9 +35,16 @@ public class CoachingSessionService {
         this.userRepository = userRepository;
     }
 
+
     public CoachingSessionDto save(CreateCoachingSessionDto createCoachingSessionDto, String username) {
         Coach coach = coachRepository.findById(createCoachingSessionDto.getCoachId()).orElseThrow(CoachNotFoundException::new);
         User coachee = userRepository.findByEmail(username).orElseThrow(() -> new UserNotFoundException("Username: " + username));
         return coachingSessionMapper.toDto(coachingSessionRepository.save(coachingSessionMapper.toModel(createCoachingSessionDto, coach.getUser(), coachee)));
+    }
+
+    public List<CoachingSessionDto> getCoachingSessionsForUser(String email) {
+        Optional<User> user = userRepository.findByEmail(email);
+        List<CoachingSession> coachingSessionList = coachingSessionRepository.findAllByCoachee(user);
+     return    coachingSessionMapper.toDto(coachingSessionList);
     }
 }
