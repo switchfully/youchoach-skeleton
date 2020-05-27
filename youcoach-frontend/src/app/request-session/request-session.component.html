@@ -19,7 +19,7 @@
                 <div *ngIf="sessionForm.errors?.mustBeFuture"> needs to be in the future</div>
                 <div class="input-field col s6">
                   <input id="date" type="text" class="datepicker" formControlName="date">
-                  <p *ngIf="sessionForm.errors?.dateNotSet" > invalid date</p>
+                  <p *ngIf="sessionForm.errors?.dateNotSet">invalid date</p>
                   <label for="date">Date</label>
                 </div>
                 <div class="input-field col s6">
@@ -41,7 +41,7 @@
                 </div>
               </div>
               <div class="row right-align">
-                <button class="waves-effect waves-light yellow darken-2 btn-large black-text"  type="submit">Send request<i
+                <button class="waves-effect waves-light yellow darken-2 btn-large black-text" [disabled]="!enableSend()"  type="submit">Send request<i
                   class="material-icons right">send</i></button>
               </div>
             </form>

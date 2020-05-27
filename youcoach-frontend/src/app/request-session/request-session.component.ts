@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import {CoachService} from '../coach-profile/coach.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ISession} from './ISession';
@@ -26,6 +26,13 @@ export class RequestSessionComponent extends InitMaterializeComponent implements
   timePickerElem;
 
   idToGet: number;
+
+  enableSend(): boolean {
+    return this.sessionForm !== null &&
+     this.validateDate() === null &&
+     this.sessionForm.get('subject').value.length > 0 &&
+     this.sessionForm.get('location').value.length > 0;
+  }
 
   private dateStringFormatMatches(input: string): boolean {
     return /[0-9]{2}\/[0-9]{2}\/[0-9]{4}/.test(input);
@@ -81,7 +88,7 @@ export class RequestSessionComponent extends InitMaterializeComponent implements
     }
 
     const dateTopass = this.constructSessionDate(date, time);
-    return new Date() > dateTopass ? { mustBeFuture: true } : null;
+    return dateTopass === null || new Date() > dateTopass ? { mustBeFuture: true } : null;
 
   }
 
@@ -124,44 +131,32 @@ export class RequestSessionComponent extends InitMaterializeComponent implements
       location: ['', [Validators.required]],
       remarks: ['']
     }, {validators: [_ => this.validateDate()]});
-
     setTimeout(() => {
         this.initializeDatePicker();
         this.initializeTimePicker();
       }
       , 1000);
+
   }
   onSubmit() {
     this.session = {
       idCoach: this.idToGet,
       subject: this.sessionForm.get('subject').value,
-      // dateAndTime:  this.sessionForm.get('date').value + this.sessionForm.get('time').value,
       date: this.sessionForm.get('date').value,
       time: this.sessionForm.get('time').value,
       location: this.sessionForm.get('location').value,
       remarks: this.sessionForm.get('remarks').value
     };
-    // alert(this.session.dateAndTime);
     this.sendRequest();
     this.goProfile();
   }
 
   sendRequest(): void {
-    alert('inside send request method');
-    // this.sessionService.sendASession(this.session).subscribe();
+    this.sessionService.sendASession(this.session).subscribe();
   }
 
   goProfile(): void {
     this.router.navigateByUrl('/profile');
   }
-
-  getTime(): string {
-    const today = new Date();
-    const dd = String(today.getDate()).padStart(2, '0');
-    const mm = String(today.getMonth() + 1).padStart(2, '0');
-    const yyyy = today.getFullYear();
-    return today.toDateString();
-  }
-
 
 }
