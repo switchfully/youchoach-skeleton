@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.List;
 
 @RestController
 @RequestMapping(path = "/coaching-sessions")
@@ -28,6 +29,12 @@ public class CoachingSessionController {
     public CoachingSessionDto saveCoachingSession(@RequestBody CreateCoachingSessionDto createCoachingSessionDto, Principal principal){
         LOGGER.info("attempting to create a coaching session");
         return coachingSessionService.save(createCoachingSessionDto, principal.getName());
+    }
+
+    @GetMapping(produces = "application/json")
+    @ResponseStatus(HttpStatus.OK)
+    public List<CoachingSessionDto> getCoachingSession(Principal principal) {
+        return coachingSessionService.getCoachingSessionsForUser(principal.getName());
     }
 
 }
