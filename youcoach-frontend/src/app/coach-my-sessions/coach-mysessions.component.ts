@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ISessionComplete} from './ISessionComplete';
 import {SessionService} from '../request-session/session.service';
+import {Action, Status} from '../request-session/Action';
 
 @Component({
   selector: 'app-coach-mysessions',
@@ -26,4 +27,13 @@ export class CoachMysessionsComponent implements OnInit {
   });
   }
 
+  acceptSession(sessionId: number): void {
+    const action = new Action(sessionId, Status.Accepted);
+    this.sessionService.sendStatus(action).subscribe(_ => null, _ => alert('Updating status failed!'));
+  }
+
+  declineSession(sessionId: number): void {
+    const action = new Action(sessionId, Status.Declined);
+    this.sessionService.sendStatus(action).subscribe(_ => null, _ => alert('Updating status failed!'));
+  }
 }

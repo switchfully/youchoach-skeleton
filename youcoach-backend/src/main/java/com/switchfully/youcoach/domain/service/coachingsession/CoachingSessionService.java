@@ -9,8 +9,10 @@ import com.switchfully.youcoach.datastore.repositories.CoachingSessionRepository
 import com.switchfully.youcoach.datastore.repositories.UserRepository;
 import com.switchfully.youcoach.domain.Mapper.CoachingSessionMapper;
 import com.switchfully.youcoach.domain.dtos.request.CreateCoachingSessionDto;
+import com.switchfully.youcoach.domain.dtos.request.UpdateStatusDto;
 import com.switchfully.youcoach.domain.dtos.response.CoachingSessionDto;
 import com.switchfully.youcoach.domain.exception.CoachNotFoundException;
+import com.switchfully.youcoach.domain.exception.CoachingSessionNotFoundException;
 import com.switchfully.youcoach.domain.exception.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,8 +42,10 @@ public class CoachingSessionService {
 
 
     public CoachingSessionDto save(CreateCoachingSessionDto createCoachingSessionDto, String username) {
-        Coach coach = coachRepository.findById(createCoachingSessionDto.getCoachId()).orElseThrow(CoachNotFoundException::new);
-        User coachee = userRepository.findByEmail(username).orElseThrow(() -> new UserNotFoundException("Username: " + username));
+        Coach coach = coachRepository.findById(createCoachingSessionDto.getCoachId())
+                .orElseThrow(CoachNotFoundException::new);
+        User coachee = userRepository.findByEmail(username)
+                .orElseThrow(() -> new UserNotFoundException("Username: " + username));
         return coachingSessionMapper.toDto(coachingSessionRepository.save(coachingSessionMapper.toModel(createCoachingSessionDto, coach.getUser(), coachee)));
     }
 
@@ -60,5 +64,12 @@ public class CoachingSessionService {
         Optional<User> user = userRepository.findByEmail(email);
         List<CoachingSession> coachingSessionList = coachingSessionRepository.findAllByCoach(user);
         return    coachingSessionMapper.toDto(coachingSessionList);
+    }
+
+    public CoachingSessionDto update(UpdateStatusDto updateStatusDto) {
+        CoachingSession coachingSession = coachingSessionRepository.findById(updateStatusDto.getSessionId())
+                .orElseThrow(() -> new CoachingSessionNotFoundException("Id: " + updateStatusDto.getSessionId()));
+        coachingSession.setStatus(updateStatusDto.getStatus());
+        return coachingSessionMapper.toDto(coachingSession);
     }
 }

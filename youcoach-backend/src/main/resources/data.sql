@@ -62,3 +62,7 @@ INSERT INTO coaching_topic_grades (coaching_topic_id, grades) VALUES (1002, 6);
 
 
 INSERT INTO admins (user_id) VALUES(115) ,(116);
+
+
+--coaching_session1
+INSERT INTO coaching_session (id, subject, date, location, remarks, coach_id, coachee_id) VALUES (1, 'Mathematics', now(), 'School', 'I have an exam next week', 113, 111);

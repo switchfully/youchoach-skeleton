@@ -9,6 +9,7 @@ import com.switchfully.youcoach.datastore.repositories.CoachingSessionRepository
 import com.switchfully.youcoach.datastore.repositories.UserRepository;
 import com.switchfully.youcoach.domain.Mapper.CoachingSessionMapper;
 import com.switchfully.youcoach.domain.dtos.request.CreateCoachingSessionDto;
+import com.switchfully.youcoach.domain.dtos.request.UpdateStatusDto;
 import com.switchfully.youcoach.domain.dtos.response.CoachingSessionDto;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -77,8 +78,11 @@ class CoachingSessionServiceTest {
         assertThat(coachingSessionsForUser).contains(coachingSessionDto);
     }
 
+    @Test
+    void updateStatus_shouldReturnDto_withUpdatedStatus() {
+//        UpdateStatusDto updateStatusDto = new UpdateStatusDto(1L)
 
 
 
-
+    }
 }
