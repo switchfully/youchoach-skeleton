@@ -10,7 +10,6 @@ import com.switchfully.youcoach.domain.Mapper.CoachingSessionMapper;
 import com.switchfully.youcoach.domain.dtos.request.CreateCoachingSessionDto;
 import com.switchfully.youcoach.domain.dtos.response.CoachingSessionDto;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.jdbc.Sql;
 
 import java.time.LocalDateTime;
@@ -23,8 +22,8 @@ import static org.mockito.Mockito.when;
 
 class CoachingSessionServiceTest {
     CoachingSession coachingSession = new CoachingSession(1L, "Mathematics", LocalDateTime.now(), "school", "no remarks", new User(1L, null, null, null, null), null);
-    CreateCoachingSessionDto createCoachingSessionDto = new CreateCoachingSessionDto("Mathematics", LocalDateTime.now(), "school", "no remarks", 1L);
-    CoachingSessionDto coachingSessionDto = new CoachingSessionDto(1L, "Mathematics", LocalDateTime.now(), "school", "no remarks", new CoachingSessionDto.Person(1L, "Name"), new CoachingSessionDto.Person(2L, "Name"));
+    CreateCoachingSessionDto createCoachingSessionDto = new CreateCoachingSessionDto("Mathematics", "30/05/2020", "11:50", "school", "no remarks", 1L);
+    CoachingSessionDto coachingSessionDto = new CoachingSessionDto(1L, "Mathematics", "30/05/2020", "11:50", "school", "no remarks", new CoachingSessionDto.Person(1L, "Name"), new CoachingSessionDto.Person(2L, "Name"));
 
     CoachingSessionRepository coachingSessionRepository = mock(CoachingSessionRepository.class);
     CoachingSessionMapper coachingSessionMapper = mock(CoachingSessionMapper.class);

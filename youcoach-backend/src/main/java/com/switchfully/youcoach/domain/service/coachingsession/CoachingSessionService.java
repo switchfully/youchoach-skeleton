@@ -33,7 +33,7 @@ public class CoachingSessionService {
 
     public CoachingSessionDto save(CreateCoachingSessionDto createCoachingSessionDto, String username) {
         Coach coach = coachRepository.findById(createCoachingSessionDto.getCoachId()).orElseThrow(CoachNotFoundException::new);
-        User coachee = userRepository.findByEmail(username).orElseThrow(UserNotFoundException::new);
+        User coachee = userRepository.findByEmail(username).orElseThrow(() -> new UserNotFoundException("Username: " + username));
         return coachingSessionMapper.toDto(coachingSessionRepository.save(coachingSessionMapper.toModel(createCoachingSessionDto, coach.getUser(), coachee)));
     }
 }
