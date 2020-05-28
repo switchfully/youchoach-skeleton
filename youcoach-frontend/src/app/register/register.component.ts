@@ -49,6 +49,7 @@ export class RegisterComponent implements OnInit {
   private transformResult(input: ICoacheeRegisterResult): ICoachee {
     return { id: input.id, firstName: input.firstName, lastName: input.lastName, email: input.email, password: '' };
   }
+
   private register(coachee: ICoachee) {
     this.coacheeService.register(coachee).subscribe(
       addedCoachee => {

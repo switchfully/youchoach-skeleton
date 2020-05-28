@@ -43,15 +43,6 @@ public class CoachingSession {
         this.status = status;
     }
 
-    public CoachingSession(String subject, LocalDateTime dateAndTime, String location, String remarks, User coach, User coachee) {
-        this.subject = subject;
-        this.dateAndTime = dateAndTime;
-        this.location = location;
-        this.remarks = remarks;
-        this.coach = coach;
-        this.coachee = coachee;
-    }
-
     public CoachingSession(long id, String subject, LocalDateTime dateAndTime, String location, String remarks, User coach, User coachee, Status status) {
         this.id = id;
         this.subject = subject;

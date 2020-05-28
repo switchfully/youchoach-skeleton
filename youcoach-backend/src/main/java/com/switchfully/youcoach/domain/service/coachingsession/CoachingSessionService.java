@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.List;
 import java.util.Optional;
 
@@ -52,8 +53,8 @@ public class CoachingSessionService {
         Optional<User> user = userRepository.findByEmail(email);
         List<CoachingSession> coachingSessionList = coachingSessionRepository.findAllByCoachee(user);
         coachingSessionList.forEach(coachingSession -> {
-            if (coachingSession.getDateAndTime().isBefore(LocalDateTime.now())) {
-                coachingSession.setStatus(Status.FINISHED);
+            if (coachingSession.getDateAndTime().isBefore(LocalDateTime.now(ZoneOffset.UTC))) {
+                coachingSession.setStatus(Status.AUTOMATICALLY_CLOSED);
             }
         });
         return coachingSessionMapper.toDto(coachingSessionList);
@@ -63,8 +64,8 @@ public class CoachingSessionService {
         Optional<User> user = userRepository.findByEmail(email);
         List<CoachingSession> coachingSessionList = coachingSessionRepository.findAllByCoach(user);
         coachingSessionList.forEach(coachingSession -> {
-            if (coachingSession.getDateAndTime().isBefore(LocalDateTime.now())) {
-                coachingSession.setStatus(Status.FINISHED);
+            if (coachingSession.getDateAndTime().isBefore(LocalDateTime.now(ZoneOffset.UTC))) {
+                coachingSession.setStatus(Status.AUTOMATICALLY_CLOSED);
             }
         });
         return coachingSessionMapper.toDto(coachingSessionList);

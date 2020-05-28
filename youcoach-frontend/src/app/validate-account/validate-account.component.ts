@@ -17,8 +17,8 @@ export class ValidateAccountComponent implements OnInit {
   constructor(private route: ActivatedRoute, private validationService: EmailValidationService, private router: Router) {
     // tslint:disable-next-line:max-line-length
     this.emailMatch = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
-    this.token = 'initial';
-    this.email = 'your email';
+    this.token = '';
+    this.email = '';
   }
 
   ngOnInit(): void {
