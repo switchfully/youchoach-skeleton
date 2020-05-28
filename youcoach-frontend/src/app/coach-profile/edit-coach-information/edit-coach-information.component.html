@@ -12,7 +12,7 @@
           <div class="row">
             <form class="col s12" [formGroup]="editForm" (ngSubmit)="onSubmit()">
               <div class="col l2 m2 s12">
-                <img src="img/dummy/profile-picture.jpg" class="responsive-img circle"
+                <img src="{{coach.photoUrl}}" class="responsive-img circle"
                      alt="Profile Picture">
               </div>
               <div class="col l10 m10 s12">
