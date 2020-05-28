@@ -111,7 +111,7 @@ export class RequestSessionComponent extends InitMaterializeComponent implements
       remarks: this.sessionForm.get('remarks').value
     };
     this.sendRequest();
-    this.goProfile();
+    this.goSessions();
   }
 
   sendRequest(): void {
@@ -120,6 +120,9 @@ export class RequestSessionComponent extends InitMaterializeComponent implements
 
   goProfile(): void {
     this.router.navigateByUrl('/profile');
+  }
+  goSessions(): void {
+    this.router.navigateByUrl('/my-sessions');
   }
 
 }
