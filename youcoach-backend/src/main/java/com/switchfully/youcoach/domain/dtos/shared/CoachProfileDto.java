@@ -1,7 +1,9 @@
-package com.switchfully.youcoach.domain.dtos;
+package com.switchfully.youcoach.domain.dtos.shared;
 
 import com.switchfully.youcoach.datastore.entities.CoachingTopic;
 import com.switchfully.youcoach.datastore.entities.Grade;
+import com.switchfully.youcoach.domain.dtos.response.CoacheeProfileDto;
+import com.switchfully.youcoach.domain.dtos.embedded.CoachingTopicDto;
 
 import java.util.*;
 import java.util.stream.Collectors;

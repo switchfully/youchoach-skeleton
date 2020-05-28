@@ -1,4 +1,4 @@
-package com.switchfully.youcoach.domain.dtos;
+package com.switchfully.youcoach.domain.dtos.shared;
 
 public class ResendValidationDto {
     private String email;

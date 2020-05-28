@@ -12,11 +12,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Profile("development")
 @EnableWebSecurity(debug=false)
-public class SecurityConfigJSON extends SecurityConfig {
+public class SecurityConfigJSONSwagger extends SecurityConfig {
     private final SecuredUserJSONService securedUserJSONService;
     private final PasswordEncoder passwordEncoder;
-    public SecurityConfigJSON(SecuredUserService securedUserService, SecuredUserJSONService securedUserJSONService,
-                              PasswordEncoder passwordEncoder, @Value("${jwt.secret}") String jwtSecret) {
+    public SecurityConfigJSONSwagger(SecuredUserService securedUserService, SecuredUserJSONService securedUserJSONService,
+                                     PasswordEncoder passwordEncoder, @Value("${jwt.secret}") String jwtSecret) {
         super(securedUserService, passwordEncoder, jwtSecret);
 
         this.securedUserJSONService = securedUserJSONService;

@@ -6,19 +6,16 @@ import com.switchfully.youcoach.datastore.entities.User;
 import com.switchfully.youcoach.datastore.repositories.CoachRepository;
 import com.switchfully.youcoach.datastore.repositories.CoachingSessionRepository;
 import com.switchfully.youcoach.datastore.repositories.UserRepository;
-import com.switchfully.youcoach.domain.Mapper.CoachingSessionMapper;
+import com.switchfully.youcoach.domain.mapper.CoachingSessionMapper;
 import com.switchfully.youcoach.domain.dtos.request.CreateCoachingSessionDto;
 import com.switchfully.youcoach.domain.dtos.response.CoachingSessionDto;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 

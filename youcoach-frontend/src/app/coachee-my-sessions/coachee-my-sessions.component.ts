@@ -11,6 +11,7 @@ export class CoacheeMySessionsComponent implements OnInit {
   sessions: ISessionComplete[] = null;
   sessionswithoutarchived: ISessionComplete[] = null;
   sessionsarchived: ISessionComplete[] = null;
+  sessionsfeedback: ISessionComplete[] = null;
   constructor(private sessionService: SessionService) { }
 
   ngOnInit(): void {

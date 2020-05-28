@@ -1,5 +1,7 @@
-package com.switchfully.youcoach.domain.dtos;
+package com.switchfully.youcoach.domain.dtos.response;
 
+
+import com.switchfully.youcoach.domain.dtos.embedded.CoachListingEntryDto;
 
 import java.util.List;
 import java.util.Objects;

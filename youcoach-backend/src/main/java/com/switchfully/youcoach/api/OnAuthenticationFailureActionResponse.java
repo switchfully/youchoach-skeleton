@@ -1,9 +1,9 @@
 package com.switchfully.youcoach.api;
 
-public class ErrorActionResponse {
+public class OnAuthenticationFailureActionResponse {
     private String name;
 
-    public ErrorActionResponse(String name){
+    public OnAuthenticationFailureActionResponse(String name){
         this.name = name;
     }
 

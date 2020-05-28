@@ -7,7 +7,7 @@ import com.switchfully.youcoach.datastore.entities.User;
 import com.switchfully.youcoach.datastore.repositories.CoachRepository;
 import com.switchfully.youcoach.datastore.repositories.CoachingSessionRepository;
 import com.switchfully.youcoach.datastore.repositories.UserRepository;
-import com.switchfully.youcoach.domain.Mapper.CoachingSessionMapper;
+import com.switchfully.youcoach.domain.mapper.CoachingSessionMapper;
 import com.switchfully.youcoach.domain.dtos.request.CreateCoachingSessionDto;
 import com.switchfully.youcoach.domain.dtos.request.UpdateStatusDto;
 import com.switchfully.youcoach.domain.dtos.response.CoachingSessionDto;
@@ -18,7 +18,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;

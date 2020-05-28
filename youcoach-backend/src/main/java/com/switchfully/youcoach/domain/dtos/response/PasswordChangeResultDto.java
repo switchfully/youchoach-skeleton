@@ -1,4 +1,4 @@
-package com.switchfully.youcoach.domain.dtos;
+package com.switchfully.youcoach.domain.dtos.response;
 
 public class PasswordChangeResultDto {
     private boolean passwordChanged;

@@ -2,7 +2,6 @@ package com.switchfully.youcoach.datastore.repositories;
 
 
 import com.switchfully.youcoach.datastore.entities.User;
-import com.switchfully.youcoach.domain.dtos.CreateUserDto;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

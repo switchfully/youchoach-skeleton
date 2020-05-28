@@ -1,4 +1,6 @@
-package com.switchfully.youcoach.domain.dtos;
+package com.switchfully.youcoach.domain.dtos.response;
+
+import com.switchfully.youcoach.domain.dtos.request.CreateCoacheeProfileDto;
 
 public class CoacheeProfileUpdatedDto extends CreateCoacheeProfileDto {
     private String token;

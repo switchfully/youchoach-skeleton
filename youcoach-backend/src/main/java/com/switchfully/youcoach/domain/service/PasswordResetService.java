@@ -2,9 +2,9 @@ package com.switchfully.youcoach.domain.service;
 
 import com.switchfully.youcoach.datastore.entities.User;
 import com.switchfully.youcoach.datastore.repositories.UserRepository;
-import com.switchfully.youcoach.domain.dtos.PasswordChangeRequestDto;
-import com.switchfully.youcoach.domain.dtos.PasswordChangeResultDto;
-import com.switchfully.youcoach.domain.dtos.PasswordResetRequestDto;
+import com.switchfully.youcoach.domain.dtos.request.PasswordChangeRequestDto;
+import com.switchfully.youcoach.domain.dtos.response.PasswordChangeResultDto;
+import com.switchfully.youcoach.domain.dtos.request.PasswordResetRequestDto;
 import com.switchfully.youcoach.domain.service.email.EmailSenderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
