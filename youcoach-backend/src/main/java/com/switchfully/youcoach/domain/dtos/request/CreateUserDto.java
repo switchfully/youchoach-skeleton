@@ -1,4 +1,4 @@
-package com.switchfully.youcoach.domain.dtos;
+package com.switchfully.youcoach.domain.dtos.request;
 
 public class CreateUserDto {
     private String firstName;

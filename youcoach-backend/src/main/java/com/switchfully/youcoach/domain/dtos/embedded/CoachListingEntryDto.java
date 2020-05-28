@@ -1,4 +1,4 @@
-package com.switchfully.youcoach.domain.dtos;
+package com.switchfully.youcoach.domain.dtos.embedded;
 
 import com.switchfully.youcoach.datastore.entities.CoachingTopic;
 import com.switchfully.youcoach.datastore.entities.Grade;

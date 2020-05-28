@@ -1,4 +1,4 @@
-package com.switchfully.youcoach.domain.dtos;
+package com.switchfully.youcoach.domain.dtos.embedded;
 
 import java.util.List;
 import java.util.Objects;

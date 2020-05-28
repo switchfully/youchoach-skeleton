@@ -1,6 +1,4 @@
-package com.switchfully.youcoach.domain.dtos;
-
-import java.util.Objects;
+package com.switchfully.youcoach.domain.dtos.request;
 
 public class CreateCoacheeProfileDto {
     private String schoolYear;
