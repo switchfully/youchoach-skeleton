@@ -18,10 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZoneOffset;
-import java.time.ZonedDateTime;
+import java.time.*;
 import java.util.List;
 import java.util.Optional;
 
@@ -67,7 +64,7 @@ public class CoachingSessionService {
 
     private void setStatusToAutomaticallyClosedWhenTimeIsPast(List<CoachingSession> coachingSessionList) {
         coachingSessionList.forEach(coachingSession -> {
-            if (coachingSession.getDateAndTime().toInstant(ZoneOffset.UTC).isBefore(LocalDateTime.now().toInstant(ZoneOffset.UTC))) {
+            if (coachingSession.getDateAndTime().toInstant(ZoneOffset.UTC).isBefore(Instant.from(LocalDateTime.now()))) {
                 coachingSession.setStatus(Status.AUTOMATICALLY_CLOSED);
             }
         });
