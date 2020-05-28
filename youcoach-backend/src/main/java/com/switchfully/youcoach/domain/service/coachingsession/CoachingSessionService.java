@@ -54,23 +54,23 @@ public class CoachingSessionService {
     public List<CoachingSessionDto> getCoachingSessionsForUser(String email) {
         Optional<User> user = userRepository.findByEmail(email);
         List<CoachingSession> coachingSessionList = coachingSessionRepository.findAllByCoachee(user);
-        coachingSessionList.forEach(coachingSession -> {
-            if (coachingSession.getDateAndTime().isBefore(LocalDateTime.now(ZoneOffset.UTC))) {
-                coachingSession.setStatus(Status.AUTOMATICALLY_CLOSED);
-            }
-        });
+        setStatusToAutomaticallyClosedWhenTimeIsPast(coachingSessionList);
         return coachingSessionMapper.toDto(coachingSessionList);
     }
 
     public List<CoachingSessionDto> getCoachingSessionsForCoach(String email) {
         Optional<User> user = userRepository.findByEmail(email);
         List<CoachingSession> coachingSessionList = coachingSessionRepository.findAllByCoach(user);
+        setStatusToAutomaticallyClosedWhenTimeIsPast(coachingSessionList);
+        return coachingSessionMapper.toDto(coachingSessionList);
+    }
+
+    private void setStatusToAutomaticallyClosedWhenTimeIsPast(List<CoachingSession> coachingSessionList) {
         coachingSessionList.forEach(coachingSession -> {
-            if (ZonedDateTime.of(coachingSession.getDateAndTime(), ZoneId.of("UTC")).isBefore(ZonedDateTime.of(LocalDateTime.now(), ZoneId.of("UTC")))) {
+            if (coachingSession.getDateAndTime().toInstant(ZoneOffset.UTC).isBefore(LocalDateTime.now().toInstant(ZoneOffset.UTC))) {
                 coachingSession.setStatus(Status.AUTOMATICALLY_CLOSED);
             }
         });
-        return coachingSessionMapper.toDto(coachingSessionList);
     }
 
     public CoachingSessionDto update(UpdateStatusDto updateStatusDto) {
