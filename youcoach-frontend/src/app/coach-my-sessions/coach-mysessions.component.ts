@@ -12,6 +12,7 @@ export class CoachMysessionsComponent implements OnInit {
   sessions: ISessionComplete[];
   sessionswithoutarchived: ISessionComplete[] = null;
   sessionsarchived: ISessionComplete[] = null;
+  sessionsfeedback: ISessionComplete[] = null;
   constructor(private sessionService: SessionService) { }
 
   ngOnInit(): void {
