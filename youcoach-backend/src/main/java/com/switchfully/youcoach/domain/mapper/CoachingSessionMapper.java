@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 public class CoachingSessionMapper {
 
     public CoachingSession toModel(CreateCoachingSessionDto createCoachingSessionDto, User coach, User coachee) {
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy H:m");
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy H:mm");
         LocalDateTime dateTime = LocalDateTime.parse(createCoachingSessionDto.getDate() + " " +createCoachingSessionDto.getTime(), dateTimeFormatter);
         return new CoachingSession(
                 createCoachingSessionDto.getSubject(),
@@ -30,7 +30,7 @@ public class CoachingSessionMapper {
     public CoachingSessionDto toDto(CoachingSession coachingSession) {
 
         String date = coachingSession.getDateAndTime().toLocalDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-        String time = coachingSession.getDateAndTime().toLocalTime().format(DateTimeFormatter.ofPattern("H:m"));
+        String time = coachingSession.getDateAndTime().toLocalTime().format(DateTimeFormatter.ofPattern("H:mm"));
         return new CoachingSessionDto(
                 coachingSession.getId(),
                 coachingSession.getSubject(),
@@ -47,7 +47,7 @@ public class CoachingSessionMapper {
         return coachingSessionlist.stream().map(coachingSession -> toDto(coachingSession)).collect(Collectors.toList());
     }
 
-    private CoachingSessionDto.Person extractPerson(User user) {
+    CoachingSessionDto.Person extractPerson(User user) {
         String fullName = String.format("%s %s", user.getFirstName(), user.getLastName());
         return new CoachingSessionDto.Person(user.getId(), fullName);
     }
