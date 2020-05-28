@@ -1,7 +1,7 @@
 package com.switchfully.youcoach.security.authentication;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.switchfully.youcoach.api.ErrorActionResponse;
+import com.switchfully.youcoach.api.OnAuthenticationFailureActionResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
@@ -33,7 +33,7 @@ public class OnAuthenticationFailureHandler implements AuthenticationFailureHand
     private void sendErrorResponse(HttpServletResponse httpServletResponse, HttpStatus status, String error) throws IOException {
         httpServletResponse.setStatus(status.value());
         httpServletResponse.getOutputStream()
-                .println(objectMapper.writeValueAsString(new ErrorActionResponse(error)));
+                .println(objectMapper.writeValueAsString(new OnAuthenticationFailureActionResponse(error)));
     }
 
 }
