@@ -15,8 +15,8 @@
     <div class="col s12 m10">
       <div class="content-container">
 
-        <section *ngIf="true" class="card-panel grey lighten-5">
-          <div class="right">
+        <section  class="card-panel grey lighten-5">
+          <div class="right" *ngIf="idToGet !== 0 && coach.email === null ">
             <button class="waves-effect waves-light yellow darken-2 btn-large black-text" routerLink="/coach-profile/{{coach.id}}/request-a-session" translate>request-session.button.request-session<i
               class="material-icons right" >event</i></button>
           </div>
