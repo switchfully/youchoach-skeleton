@@ -4,8 +4,7 @@ import {ISession} from './ISession';
 import {Observable} from 'rxjs';
 import {environment} from '../../environments/environment';
 import {ISessionComplete} from '../coach-my-sessions/ISessionComplete';
-import {Action, Status} from "./Action";
-
+import {Action} from './Action';
 
 
 @Injectable({
