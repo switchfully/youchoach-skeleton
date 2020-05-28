@@ -83,7 +83,7 @@ export class RequestSessionComponent extends InitMaterializeComponent implements
   }
 
   private validateDate(): ValidationErrors | null {
-    if (this.sessionForm === undefined) return null;
+    if (this.sessionForm === undefined) { return null; }
     const date = this.sessionForm.get('date').value;
     const time = this.sessionForm.get('time').value;
 
@@ -139,7 +139,7 @@ export class RequestSessionComponent extends InitMaterializeComponent implements
       date: ['', [Validators.required]],
       time: ['', [Validators.required]],
       location: ['', [Validators.required]],
-      remarks: ['']
+      remarks: ['', [Validators.required]]
     }, {validators: [_ => this.validateDate()]});
     setTimeout(() => {
         this.initializeDatePicker();

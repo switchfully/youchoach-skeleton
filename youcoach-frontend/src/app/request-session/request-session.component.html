@@ -41,8 +41,9 @@
               </div>
               <div class="row">
                 <div class="input-field col s12">
-                  <textarea id="remarks" class="materialize-textarea" formControlName="remarks"></textarea>
+                  <textarea id="remarks" class="materialize-textarea validate" required formControlName="remarks"></textarea>
                   <label for="remarks" translate>request-session.label.remarks</label>
+                  <span [attr.data-error]="required.innerText" class="helper-text red-text darken-2"></span>
                 </div>
               </div>
               <div class="row right-align">
