@@ -1,3 +1,4 @@
+delete from youcoach.coaching_session;
 delete from youcoach.account_verification;
 delete from youcoach.admins;
 delete from youcoach.coaches_topics;
