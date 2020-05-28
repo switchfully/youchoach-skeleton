@@ -30,7 +30,7 @@ class CoachingSessionServiceTeststatus {
 
 
     @Test
-    void If_Inthepast_StatusFinished() {
+    void If_Inthepast_StatusAutomaticallyClosed() {
 
         CoachingSessionService coachingSessionService = new CoachingSessionService(coachingSessionRepository, new CoachingSessionMapper(), coachRepository, userRepository);
 
@@ -40,7 +40,7 @@ class CoachingSessionServiceTeststatus {
 
         List<CoachingSessionDto> actual = coachingSessionService.getCoachingSessionsForUser("example@example.com");
 
-        assertThat(actual.get(0).getStatus()).isEqualTo(Status.FINISHED);
+        assertThat(actual.get(0).getStatus()).isEqualTo(Status.AUTOMATICALLY_CLOSED);
     }
 
 }
