@@ -37,4 +37,7 @@ public class CoachingSessionController {
         return coachingSessionService.getCoachingSessionsForUser(principal.getName());
     }
 
+
+
+
 }

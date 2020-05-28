@@ -47,4 +47,6 @@ public class CoachingSessionService {
         List<CoachingSession> coachingSessionList = coachingSessionRepository.findAllByCoachee(user);
      return    coachingSessionMapper.toDto(coachingSessionList);
     }
+
+
 }
