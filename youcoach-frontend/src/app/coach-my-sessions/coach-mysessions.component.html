@@ -117,8 +117,8 @@
                   <td>{{session.location}}</td>
                   <td>{{session.status}}<span *ngIf="session.cancelledByCoachee"><br>(by coachee)</span>
                     <span *ngIf="session.cancelledByCoach"><br>(by coach)</span></td>
-                  <td><a *ngIf="session.status !== 'ACCEPTED' && session.status !== 'DECLINED' && !session.status.includes('CANCELLED')" style="margin-right: 30px" class="waves-effect waves-light green lighten-2 btn black-text" (click)="acceptSession(session.id)">Accept<i
-                    class="material-icons right">assignment_turned_in</i></a><a *ngIf="session.status !== 'ACCEPTED' && session.status !== 'DECLINED' && session.status !== 'CANCELLED'" class="waves-effect waves-light red lighten-2 btn black-text" (click)="declineSession(session.id)">Decline<i
+                  <td><a *ngIf="session.status !== 'ACCEPTED' && session.status !== 'DECLINED' && !session.status.includes('CANCELLED') && session.status !== 'AUTOMATICALLY_CLOSED'" style="margin-right: 30px" class="waves-effect waves-light green lighten-2 btn black-text" (click)="acceptSession(session.id)">Accept<i
+                    class="material-icons right">assignment_turned_in</i></a><a *ngIf="session.status !== 'ACCEPTED' && session.status !== 'DECLINED' && session.status !== 'CANCELLED' && session.status !== 'AUTOMATICALLY_CLOSED'" class="waves-effect waves-light red lighten-2 btn black-text" (click)="declineSession(session.id)">Decline<i
                     class="material-icons right">cancel</i></a><a *ngIf="session.status === 'ACCEPTED'" style="margin-right: 30px"  class="waves-effect waves-light red lighten-2 btn black-text" (click)="cancelSession(session.id)">Cancel<i
                     class="material-icons right">cancel</i></a></td>
                 </tr>

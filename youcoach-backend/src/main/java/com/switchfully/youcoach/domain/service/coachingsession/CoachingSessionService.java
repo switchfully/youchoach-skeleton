@@ -62,6 +62,11 @@ public class CoachingSessionService {
         return coachingSessionMapper.toDto(coachingSessionList);
     }
 
+    /*
+    LocalDateTime.now() has 2 hours added to it because the dyno at Heroku is running at UTC and we are running at UTC+2 (GMT+1 + summerhour).
+    This is not a good solution and needs to be fixed before production. However we lacked the time to do it ourselves.
+    https://docs.oracle.com/javase/8/docs/api/java/time/Instant.html -> could possibly provide a solution, we think.
+     */
     private void setStatusToAutomaticallyClosedWhenTimeIsPast(List<CoachingSession> coachingSessionList) {
         coachingSessionList.forEach(coachingSession -> {
             if (coachingSession.getDateAndTime().isBefore(LocalDateTime.now().plusHours(2))) {
