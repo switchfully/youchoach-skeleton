@@ -6,7 +6,7 @@ import {FormBuilder, ValidationErrors, Validators} from '@angular/forms';
 import {SessionService} from './session.service';
 import {InitMaterializeComponent} from '../init-materialize.component';
 import * as M from 'materialize-css';
-import {TimeComparatorService} from "../time-comparator.service";
+import {TimeComparatorService} from '../time-comparator.service';
 
 @Component({
   selector: 'app-request-session',
