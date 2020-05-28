@@ -55,4 +55,7 @@ class CoachingSessionRepositoryTest {
         List<CoachingSession> actual = coachingSessionRepository.findAllByCoachee(optionalUser);
         assertThat(actual).contains(coachingSession);
     }
+
+
+
 }

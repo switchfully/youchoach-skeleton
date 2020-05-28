@@ -9,5 +9,4 @@ public enum Status {
     AUTOMATICALLY_CLOSED,
     FINISHED,
     DONE;
-
 }

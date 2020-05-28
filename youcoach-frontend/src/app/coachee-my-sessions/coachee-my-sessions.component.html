@@ -34,13 +34,14 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr *ngFor="let session of sessions">
-                  <td>{{session.coach.firstName + " " + session.coach.lastName}}</td>
+                <tr *ngFor="let session of sessionswithoutarchived">
+                  <td>{{session.coach.name}}</td>
                   <td>{{session.subject}}</td>
-                  <td>{{session.dateAndTime}}</td>
+                  <td>{{session.date}}</td>
+                  <td>{{session.time}}</td>
                   <td>{{session.location}}</td>
                   <td>{{session.status}}</td>
-                  <td><a class="waves-effect waves-light  grey lighten-2 btn black-text">Cancel<i
+                  <td><a style="margin-right: 30px"  class="waves-effect waves-light  red lighten-2 btn black-text">Cancel<i
                     class="material-icons right">cancel</i></a></td>
                 </tr>
                 </tbody>
@@ -69,12 +70,13 @@
                 </thead>
                 <tbody>
                 <tr *ngFor="let session of sessions">
-                  <td>{{session.coach.firstName + " " + session.coach.lastName}}</td>
+                  <td>{{session.coach.name}}</td>
                   <td>{{session.subject}}</td>
-                  <td>{{session.dateAndTime}}</td>
+                  <td>{{session.date}}</td>
+                  <td>{{session.time}}</td>
                   <td>{{session.location}}</td>
                   <td>{{session.status}}</td>
-                  <td><a class="waves-effect waves-light  grey lighten-2 btn black-text">Cancel<i
+                  <td><a style="margin-right: 30px"  class="waves-effect waves-light  red lighten-2 btn black-text">Cancel<i
                     class="material-icons right">cancel</i></a></td>
                 </tr>
                 </tbody>
@@ -101,13 +103,14 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr *ngFor="let session of sessions">
-                  <td>{{session.coach.firstName + " " + session.coach.lastName}}</td>
+                <tr *ngFor="let session of sessionsarchived">
+                  <td>{{session.coach.name}}</td>
                   <td>{{session.subject}}</td>
-                  <td>{{session.dateAndTime}}</td>
+                  <td>{{session.date}}</td>
+                  <td>{{session.time}}</td>
                   <td>{{session.location}}</td>
                   <td>{{session.status}}</td>
-                  <td><a class="waves-effect waves-light  grey lighten-2 btn black-text">Cancel<i
+                  <td><a style="margin-right: 30px"  class="waves-effect waves-light  red lighten-2 btn black-text">Cancel<i
                     class="material-icons right">cancel</i></a></td>
                 </tr>
                 </tbody>
