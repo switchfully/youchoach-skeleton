@@ -60,7 +60,6 @@ export class FindACoachComponent implements OnInit {
   }
 
   performFilter() {
-    // console.log(this.selectedTopics);
     if (this.selectedTopics && this.selectedTopics.length > 0) {
       this.filteredCoaches = this.coachList.coaches
         .filter(coach => {
