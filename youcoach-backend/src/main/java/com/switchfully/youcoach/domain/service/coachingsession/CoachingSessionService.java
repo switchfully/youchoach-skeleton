@@ -64,7 +64,7 @@ public class CoachingSessionService {
 
     private void setStatusToAutomaticallyClosedWhenTimeIsPast(List<CoachingSession> coachingSessionList) {
         coachingSessionList.forEach(coachingSession -> {
-            if (coachingSession.getDateAndTime().toInstant(ZoneOffset.UTC).isBefore(Instant.from(LocalDateTime.now()))) {
+            if (coachingSession.getDateAndTime().isBefore(LocalDateTime.now().plusHours(2))) {
                 coachingSession.setStatus(Status.AUTOMATICALLY_CLOSED);
             }
         });
