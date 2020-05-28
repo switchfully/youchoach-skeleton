@@ -1,7 +1,9 @@
-package com.switchfully.youcoach.domain.service;
+package com.switchfully.youcoach.domain.mapper;
 
 import com.switchfully.youcoach.datastore.entities.*;
-import com.switchfully.youcoach.domain.Mapper.UserMapper;
+import com.switchfully.youcoach.domain.dtos.request.CreateUserDto;
+import com.switchfully.youcoach.domain.dtos.response.UserDto;
+import com.switchfully.youcoach.domain.mapper.UserMapper;
 import com.switchfully.youcoach.domain.dtos.response.CoachListingDto;
 import com.switchfully.youcoach.domain.dtos.embedded.CoachListingEntryDto;
 import com.switchfully.youcoach.domain.dtos.shared.CoachProfileDto;
@@ -92,4 +94,43 @@ public class UserMapperTest {
 
 
     }
+    @Test
+    void userToUserDto(){
+        User user = getDefaultUser();
+
+        UserDto expected = new UserDto(user.getId(), user.getFirstName(), user.getLastName(), user.getEmail(), user.isAccountEnabled());
+
+        UserDto actual = userMapper.toUserDto(user);
+
+        Assertions.assertThat(actual).isEqualTo(expected);
+    }
+
+    @Test
+    void createUserDtoToUser(){
+        User expected = getDefaultUser();
+        CreateUserDto cud = new CreateUserDto(expected.getFirstName(),expected.getLastName(),expected.getEmail(),expected.getPassword());
+
+        User actual = userMapper.toUser(cud);
+
+        Assertions.assertThat(actual.getFirstName()).isEqualTo(expected.getFirstName());
+        Assertions.assertThat(actual.getLastName()).isEqualTo(expected.getLastName());
+        Assertions.assertThat(actual.getEmail()).isEqualTo(expected.getEmail());
+        Assertions.assertThat(actual.getPassword()).isEqualTo(expected.getPassword());
+    }
+
+    @Test
+    void listUserToListUserDto(){
+        User user = getDefaultUser();
+        User user2 = new User(2,"First","Last",
+                "example2@example.com","1Lpassword","1 - latin","/my/photo.png");
+        List<User> users = List.of(user, user2);
+        List<UserDto> expected = List.of(new UserDto(user.getId(), user.getFirstName(), user.getLastName(), user.getEmail(), user.isAccountEnabled()),
+                new UserDto(user2.getId(), user2.getFirstName(), user2.getLastName(), user2.getEmail(), user2.isAccountEnabled()));
+
+        List<UserDto> actual = userMapper.toUserDto(users);
+
+        Assertions.assertThat(actual).hasSameElementsAs(expected);
+    }
+
+
 }

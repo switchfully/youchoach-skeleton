@@ -1,4 +1,4 @@
-package com.switchfully.youcoach.domain.Mapper;
+package com.switchfully.youcoach.domain.mapper;
 
 import com.switchfully.youcoach.datastore.Status;
 import com.switchfully.youcoach.datastore.entities.CoachingSession;

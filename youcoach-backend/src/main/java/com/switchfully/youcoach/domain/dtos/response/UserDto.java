@@ -1,5 +1,7 @@
 package com.switchfully.youcoach.domain.dtos.response;
 
+import java.util.Objects;
+
 public class UserDto {
 
     private long id;
@@ -58,4 +60,20 @@ public class UserDto {
         return accountEnabled;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UserDto userDto = (UserDto) o;
+        return id == userDto.id &&
+                accountEnabled == userDto.accountEnabled &&
+                Objects.equals(firstName, userDto.firstName) &&
+                Objects.equals(lastName, userDto.lastName) &&
+                Objects.equals(email, userDto.email);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, firstName, lastName, email, accountEnabled);
+    }
 }

@@ -4,7 +4,7 @@ import com.switchfully.youcoach.datastore.entities.Coach;
 import com.switchfully.youcoach.datastore.entities.User;
 import com.switchfully.youcoach.datastore.repositories.CoachRepository;
 import com.switchfully.youcoach.datastore.repositories.UserRepository;
-import com.switchfully.youcoach.domain.Mapper.UserMapper;
+import com.switchfully.youcoach.domain.mapper.UserMapper;
 import com.switchfully.youcoach.domain.dtos.shared.CoachProfileDto;
 import com.switchfully.youcoach.domain.dtos.response.CoacheeProfileDto;
 import com.switchfully.youcoach.domain.dtos.request.CreateUserDto;

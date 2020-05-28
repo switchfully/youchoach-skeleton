@@ -7,22 +7,16 @@ import com.switchfully.youcoach.datastore.entities.User;
 import com.switchfully.youcoach.datastore.repositories.CoachRepository;
 import com.switchfully.youcoach.datastore.repositories.CoachingSessionRepository;
 import com.switchfully.youcoach.datastore.repositories.UserRepository;
-import com.switchfully.youcoach.domain.Mapper.CoachingSessionMapper;
+import com.switchfully.youcoach.domain.mapper.CoachingSessionMapper;
 import com.switchfully.youcoach.domain.dtos.request.CreateCoachingSessionDto;
-import com.switchfully.youcoach.domain.dtos.request.UpdateStatusDto;
 import com.switchfully.youcoach.domain.dtos.response.CoachingSessionDto;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentMatchers;
-import org.mockito.Matchers;
-import org.mockito.Mockito;
 import org.springframework.test.context.jdbc.Sql;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.regex.Matcher;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
