@@ -63,6 +63,11 @@ public class CoachingSessionService {
     public List<CoachingSessionDto> getCoachingSessionsForCoach(String email) {
         Optional<User> user = userRepository.findByEmail(email);
         List<CoachingSession> coachingSessionList = coachingSessionRepository.findAllByCoach(user);
+        coachingSessionList.forEach(coachingSession -> {
+            if (coachingSession.getDateAndTime().isBefore(LocalDateTime.now())) {
+                coachingSession.setStatus(Status.FINISHED);
+            }
+        });
         return coachingSessionMapper.toDto(coachingSessionList);
     }
 

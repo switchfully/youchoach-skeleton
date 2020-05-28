@@ -5,7 +5,6 @@ import com.switchfully.youcoach.datastore.entities.CoachingSession;
 import com.switchfully.youcoach.datastore.entities.User;
 import com.switchfully.youcoach.datastore.repositories.CoachingSessionRepository;
 import com.switchfully.youcoach.datastore.repositories.UserRepository;
-import com.switchfully.youcoach.domain.dtos.request.CreateCoachingSessionDto;
 import com.switchfully.youcoach.domain.dtos.response.CoachingSessionDto;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -23,7 +22,6 @@ import static org.mockito.Mockito.when;
 class CoachingSessionServiceGettingTest {
 
     CoachingSession coachingSession = new CoachingSession(1L, "Mathematics", LocalDateTime.now(), "school", "no remarks", new User(1L, null, null, null, null), null, Status.REQUESTED);
-    CreateCoachingSessionDto createCoachingSessionDto = new CreateCoachingSessionDto("Mathematics", "30/05/2020", "11:50", "school", "no remarks", 1L);
     CoachingSessionDto coachingSessionDto = new CoachingSessionDto(1L, "Mathematics", "30/05/2020", "11:50", "school", "no remarks", new CoachingSessionDto.Person(1L, "Name"), new CoachingSessionDto.Person(2L, "Name"), Status.REQUESTED);
 
 
@@ -38,16 +36,12 @@ class CoachingSessionServiceGettingTest {
     @Sql({"../../../datastore/repositories/oneDefaultUser.sql", "../../../datastore/repositories/makeUsersCoach.sql"})
     void itShouldget_list() {
 
-
         User coachee = new User(2L, null, null, null, null);
-
 
         when(coachingSessionRepository.findAllByCoachee(Optional.of(coachee))).thenReturn(List.of(coachingSession));
         when(userRepository.findByEmail("example@example.com")).thenReturn(Optional.of(coachee));
 
-
         List<CoachingSessionDto> actual = coachingSessionService.getCoachingSessionsForUser("example@example.com");
-
         assertThat(actual).contains(coachingSessionDto);
     }
 
