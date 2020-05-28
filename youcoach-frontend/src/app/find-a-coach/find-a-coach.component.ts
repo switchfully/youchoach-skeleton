@@ -15,7 +15,7 @@ export class FindACoachComponent implements OnInit {
   topicList = [];
   // tslint:disable-next-line:variable-name
   private _filteredCoaches: ICoach [];
-  selectedTopic = '';
+  selectedTopics: string[];
   grades: number[];
 
 
@@ -60,10 +60,15 @@ export class FindACoachComponent implements OnInit {
   }
 
   performFilter() {
-    if (this.selectedTopic && this.selectedTopic.valueOf() !== 'none') {
+    // console.log(this.selectedTopics);
+    if (this.selectedTopics && this.selectedTopics.length > 0) {
       this.filteredCoaches = this.coachList.coaches
         .filter(coach => {
-          const c = coach.topics.some(topic => topic.name === this.selectedTopic);
+          const c = coach.topics.some(topic => this.selectedTopics.some(sTopic => {
+            const a = sTopic === topic.name;
+            return a;
+          }
+          ));
           return c;
         });
     } else if (this.grades && this.grades.length > 0) {
