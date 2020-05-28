@@ -6,6 +6,7 @@ import {FormBuilder, ValidationErrors, Validators} from '@angular/forms';
 import {SessionService} from './session.service';
 import {InitMaterializeComponent} from '../init-materialize.component';
 import * as M from 'materialize-css';
+import {TimeComparatorService} from "../time-comparator.service";
 
 @Component({
   selector: 'app-request-session',
@@ -15,7 +16,7 @@ import * as M from 'materialize-css';
 export class RequestSessionComponent extends InitMaterializeComponent implements OnInit {
 
   constructor(private coachService: CoachService, private route: ActivatedRoute,
-              private fb: FormBuilder, private sessionService: SessionService, private router: Router) {
+              private fb: FormBuilder, private sessionService: SessionService, private router: Router, private timeComparator: TimeComparatorService) {
     super();
   }
 
@@ -33,55 +34,6 @@ export class RequestSessionComponent extends InitMaterializeComponent implements
       this.sessionForm.get('location').value.length > 0;
   }
 
-  private dateStringFormatMatches(input: string): boolean {
-    return /[0-9]{2}\/[0-9]{2}\/[0-9]{4}/.test(input);
-  }
-
-  private timeStringFormatMatches(input: string): boolean {
-    return /[0-9]{2}:[0-9]{2}/.test(input);
-  }
-
-  private parseDateStringToArray(input: string): number[] {
-    return input.split('/').map(v => parseInt(v));
-  }
-
-  private parseDateStringForYear(input: string): number {
-    return this.parseDateStringToArray(input)[2];
-  }
-
-  private parseDateStringForMonth(input: string): number {
-    return this.parseDateStringToArray(input)[1];
-  }
-
-  private parseDateStringForDay(input: string): number {
-    return this.parseDateStringToArray(input)[0];
-  }
-
-  private parseTimeStringToArray(input: string): number[] {
-    return input.split(':').map(v => parseInt(v));
-  }
-
-  private parseTimeStringForHour(input: string): number {
-    return this.parseTimeStringToArray(input)[0];
-  }
-
-  private parseTimeStringForMinutes(input: string): number {
-    return this.parseTimeStringToArray(input)[1];
-  }
-
-  private constructSessionDate(date: string, time: string): Date | null {
-    if (this.dateStringFormatMatches(date) && this.timeStringFormatMatches(time)) {
-      const year = this.parseDateStringForYear(date);
-      const month = this.parseDateStringForMonth(date) - 1;
-      const day = this.parseDateStringForDay(date);
-      const hour = this.parseTimeStringForHour(time);
-      const minutes = this.parseTimeStringForMinutes(time);
-      return new Date(year, month, day, hour, minutes, 0, 0);
-    } else {
-      return null;
-    }
-  }
-
   private validateDate(): ValidationErrors | null {
     if (this.sessionForm === undefined) { return null; }
     const date = this.sessionForm.get('date').value;
@@ -95,7 +47,7 @@ export class RequestSessionComponent extends InitMaterializeComponent implements
       return {timeNotSet: true};
     }
 
-    const dateTopass = this.constructSessionDate(date, time);
+    const dateTopass = this.timeComparator.constructSessionDate(date, time);
     return dateTopass === null || new Date() > dateTopass ? {mustBeFuture: true} : null;
 
   }

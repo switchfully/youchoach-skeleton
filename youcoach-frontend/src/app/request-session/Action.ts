@@ -9,7 +9,13 @@ export class Action {
 }
 
 export enum Status {
-  Accepted,
-  Declined,
-  Canceled
+  ACCEPTED,
+  DECLINED,
+  REQUESTED,
+  CANCELLED_BY_COACH,
+  CANCELLED_BY_COACHEE,
+  FEEDBACK_PROVIDED,
+  AUTOMATICALLY_CLOSED,
+  FINISHED,
+  DONE
 }
