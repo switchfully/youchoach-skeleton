@@ -5,8 +5,7 @@
         <h6 translate>my-profile-menu.title</h6>
         <div class="collection">
           <a class="collection-item black-text active teal lighten-3" routerLink="/coach-profile" translate >my-profile-menu.link.profile-information</a>
-          <a class="collection-item grey-text text-darken-2 "routerLink="/coach-my-sessions" translate >my-profile-menu.link.coaching-sessions<span
-            class="btn-floating btn-small teal lighten-3 pulse">1</span></a>
+          <a class="collection-item grey-text text-darken-2 "routerLink="/coach-my-sessions" translate >my-profile-menu.link.coaching-sessions</a>
           <a class="collection-item grey-text text-darken-2" routerLink="/change-topics" translate >my-coach-profile-menu.link.request-profile-change</a>
         </div>
       </div>
@@ -18,8 +17,8 @@
 
         <section *ngIf="true" class="card-panel grey lighten-5">
           <div class="right">
-            <a class="waves-effect waves-light btn-large btn-floating yellow darken-2"><i
-              class="material-icons left" routerLink="/coach-profile/{{coach.id}}/request-a-session">event</i>Request a session</a>
+            <button class="waves-effect waves-light yellow darken-2 btn-large black-text" routerLink="/coach-profile/{{coach.id}}/request-a-session" translate>request-session.button.request-session<i
+              class="material-icons right" >event</i></button>
           </div>
           <h5 translate>my-profile-menu.link.profile-information</h5>
 

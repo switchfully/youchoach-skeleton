@@ -1,6 +1,3 @@
-import {ICoach} from '../coach-profile/ICoach';
-import {ICoachee} from '../register/icoachee';
-
 export interface ISessionComplete {
   id: number;
   coach: IPerson;
@@ -11,6 +8,8 @@ export interface ISessionComplete {
   location: string;
   remarks: string;
   status: string;
+  cancelledByCoach: boolean;
+  cancelledByCoachee: boolean;
 }
 
 export interface IPerson {

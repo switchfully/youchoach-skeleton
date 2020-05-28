@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ISessionComplete} from './ISessionComplete';
 import {SessionService} from '../request-session/session.service';
 import {Action, Status} from '../request-session/Action';
+import {TimeComparatorService} from '../time-comparator.service';
 
 @Component({
   selector: 'app-coach-mysessions',
@@ -10,31 +11,69 @@ import {Action, Status} from '../request-session/Action';
 })
 export class CoachMysessionsComponent implements OnInit {
   sessions: ISessionComplete[];
-  sessionswithoutarchived: ISessionComplete[] = null;
-  sessionsarchived: ISessionComplete[] = null;
-  sessionsfeedback: ISessionComplete[] = null;
-  constructor(private sessionService: SessionService) { }
+  sessionswithoutarchived: ISessionComplete[];
+  sessionsarchived: ISessionComplete[];
+  sessionsfeedback: ISessionComplete[];
+
+  constructor(private sessionService: SessionService, private timeComparator: TimeComparatorService) {
+  }
 
   ngOnInit(): void {
     this.getSessions();
+    this.sessionsarchived = [];
+    this.sessionswithoutarchived = [];
   }
 
   getSessions(): void {
     this.sessionService.getSessionsforCoach().subscribe(
       sessions => {
         this.sessions = sessions;
-        this.sessionswithoutarchived = sessions.filter(session => new Date(session.date.replace('/', '-').replace('/', '-').replace( /(\d{2})-(\d{2})-(\d{4})/, '$2/$1/$3')).getTime() > Date.now());
-        this.sessionsarchived = this.sessions.filter(session => new Date(session.date.replace('/', '-').replace('/', '-').replace( /(\d{2})-(\d{2})-(\d{4})/, '$2/$1/$3')).getTime() < Date.now());
-  });
+        for (const session of sessions) {
+          if (session.status.includes('CANCELLED')) {
+            if (session.status === 'CANCELLED_BY_COACH') session.cancelledByCoach = true;
+            if (session.status.includes('COACHEE')) session.cancelledByCoachee = true;
+            session.status = 'CANCELLED';
+          }
+          const dateTopass = this.timeComparator.constructSessionDate(session.date, session.time);
+          if (new Date() > dateTopass) {
+            this.sessionsarchived.push(session);
+            return;
+          }
+          this.sessionswithoutarchived.push(session);
+        }
+      });
   }
 
   acceptSession(sessionId: number): void {
-    const action = new Action(sessionId, Status.Accepted);
-    this.sessionService.sendStatus(action).subscribe(_ => null, _ => alert('Updating status failed!'));
+    const status = Status.ACCEPTED;
+    const action = new Action(sessionId, status);
+    this.sessionService.sendStatus(action).subscribe(
+      _ => this.updateSessionStatus(sessionId, status),
+      _ => alert('Updating status failed!'));
   }
 
   declineSession(sessionId: number): void {
-    const action = new Action(sessionId, Status.Declined);
-    this.sessionService.sendStatus(action).subscribe(_ => null, _ => alert('Updating status failed!'));
+    const status = Status.DECLINED;
+    const action = new Action(sessionId, status);
+    this.sessionService.sendStatus(action).subscribe(
+      _ => this.updateSessionStatus(sessionId, status),
+      _ => alert('Updating status failed!'));
+  }
+
+  cancelSession(sessionId: number): void {
+    const status = Status.CANCELLED_BY_COACH;
+    const action = new Action(sessionId, status);
+    this.sessionService.sendStatus(action).subscribe(
+      _ => this.updateSessionStatus(sessionId, status),
+      _ => alert('Updating status failed!'));
+  }
+
+  private updateSessionStatus(sessionId: number, status: Status) {
+    this.sessions.forEach(session => {
+      if (session.id === sessionId) {
+        session.status = Status[status];
+      }
+      if (session.status.includes('CANCELLED')) session.status = 'CANCELLED';
+    });
   }
 }
