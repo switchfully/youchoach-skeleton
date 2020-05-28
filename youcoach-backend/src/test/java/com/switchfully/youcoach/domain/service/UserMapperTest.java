@@ -2,17 +2,15 @@ package com.switchfully.youcoach.domain.service;
 
 import com.switchfully.youcoach.datastore.entities.*;
 import com.switchfully.youcoach.domain.Mapper.UserMapper;
-import com.switchfully.youcoach.domain.dtos.CoachListingDto;
-import com.switchfully.youcoach.domain.dtos.CoachListingEntryDto;
-import com.switchfully.youcoach.domain.dtos.CoachProfileDto;
-import com.switchfully.youcoach.domain.dtos.CoacheeProfileDto;
+import com.switchfully.youcoach.domain.dtos.response.CoachListingDto;
+import com.switchfully.youcoach.domain.dtos.embedded.CoachListingEntryDto;
+import com.switchfully.youcoach.domain.dtos.shared.CoachProfileDto;
+import com.switchfully.youcoach.domain.dtos.response.CoacheeProfileDto;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class UserMapperTest {
     private final UserMapper userMapper = new UserMapper();

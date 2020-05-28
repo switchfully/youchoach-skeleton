@@ -3,7 +3,6 @@ package com.switchfully.youcoach.security.authentication.user;
 import com.switchfully.youcoach.datastore.repositories.AdminRepository;
 import com.switchfully.youcoach.datastore.repositories.CoachRepository;
 import com.switchfully.youcoach.datastore.repositories.UserRepository;
-import com.switchfully.youcoach.domain.dtos.CreateCoacheeProfileDto;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;

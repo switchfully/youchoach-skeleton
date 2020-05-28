@@ -1,29 +1,21 @@
 package com.switchfully.youcoach.api;
 
-import com.switchfully.youcoach.datastore.entities.User;
-import com.switchfully.youcoach.domain.dtos.*;
+import com.switchfully.youcoach.domain.dtos.request.*;
+import com.switchfully.youcoach.domain.dtos.response.*;
+import com.switchfully.youcoach.domain.dtos.shared.CoachProfileDto;
+import com.switchfully.youcoach.domain.dtos.shared.ResendValidationDto;
 import com.switchfully.youcoach.domain.service.PasswordResetService;
 import com.switchfully.youcoach.domain.service.UserService;
-import com.switchfully.youcoach.security.authentication.user.SecuredUserService;
-import com.switchfully.youcoach.security.authentication.user.UserRoles;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.security.Principal;
-import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "/users")

@@ -3,7 +3,12 @@ package com.switchfully.youcoach.domain.Mapper;
 
 import com.switchfully.youcoach.datastore.entities.Coach;
 import com.switchfully.youcoach.datastore.entities.User;
-import com.switchfully.youcoach.domain.dtos.*;
+import com.switchfully.youcoach.domain.dtos.request.CreateUserDto;
+import com.switchfully.youcoach.domain.dtos.response.CoachListingDto;
+import com.switchfully.youcoach.domain.dtos.embedded.CoachListingEntryDto;
+import com.switchfully.youcoach.domain.dtos.response.UserDto;
+import com.switchfully.youcoach.domain.dtos.shared.CoachProfileDto;
+import com.switchfully.youcoach.domain.dtos.response.CoacheeProfileDto;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;

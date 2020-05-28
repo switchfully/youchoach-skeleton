@@ -25,7 +25,6 @@ export class CoacheeMySessionsComponent implements OnInit {
         this.sessionswithoutarchived = sessions.filter(session => new Date(session.date.replace('/', '-').replace('/', '-').replace( /(\d{2})-(\d{2})-(\d{4})/, "$2/$1/$3")).getTime() > Date.now());
         this.sessionsarchived = this.sessions.filter(session => new Date(session.date.replace('/', '-').replace('/', '-').replace( /(\d{2})-(\d{2})-(\d{4})/, "$2/$1/$3")).getTime() < Date.now());
       }
-
     );
 
 
