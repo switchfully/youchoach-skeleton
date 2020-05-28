@@ -22,6 +22,7 @@ import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+
 @Transactional
 @Service
 public class CoachingSessionService {
@@ -29,7 +30,6 @@ public class CoachingSessionService {
     private final CoachingSessionMapper coachingSessionMapper;
     private final CoachRepository coachRepository;
     private final UserRepository userRepository;
-
 
 
     @Autowired
@@ -53,17 +53,17 @@ public class CoachingSessionService {
         Optional<User> user = userRepository.findByEmail(email);
         List<CoachingSession> coachingSessionList = coachingSessionRepository.findAllByCoachee(user);
         coachingSessionList.forEach(coachingSession -> {
-        if (coachingSession.getDateAndTime().isBefore(LocalDateTime.now()) ) {
-            coachingSession.setStatus(Status.FINISHED);
-        }
+            if (coachingSession.getDateAndTime().isBefore(LocalDateTime.now())) {
+                coachingSession.setStatus(Status.FINISHED);
+            }
         });
-     return coachingSessionMapper.toDto(coachingSessionList);
+        return coachingSessionMapper.toDto(coachingSessionList);
     }
 
     public List<CoachingSessionDto> getCoachingSessionsForCoach(String email) {
         Optional<User> user = userRepository.findByEmail(email);
         List<CoachingSession> coachingSessionList = coachingSessionRepository.findAllByCoach(user);
-        return    coachingSessionMapper.toDto(coachingSessionList);
+        return coachingSessionMapper.toDto(coachingSessionList);
     }
 
     public CoachingSessionDto update(UpdateStatusDto updateStatusDto) {
