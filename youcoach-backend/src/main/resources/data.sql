@@ -16,7 +16,7 @@
 -- -- alter table coaches_topics add constraint FKfhcuxfpmbn4inpk0vidwea8s6 foreign key (coach_user_id) references coaches
 -- -- alter table coaching_topic add constraint FKl62wqdgeidhvwvp5j6qhpb8df foreign key (topic_topic_id) references topics
 -- -- alter table coaching_topic_grades add constraint FK13ryigkrx2nw7bkg78irl6uqq foreign key (coaching_topic_id) references coaching_topica
--- set schema 'youcoach';
+set schema 'youcoach';
 -- DELETE FROM members;
 -- DELETE FROM coaches;
 -- DELETE FROM admins;
@@ -63,4 +63,3 @@ INSERT INTO coaching_topic_grades (coaching_topic_id, grades) VALUES (1002, 6);
 
 INSERT INTO admins (user_id) VALUES(115) ,(116);
 
-INSERT INTO coaching_session (subject, date, location, remarks, coach_id, coachee_id) VALUES ('Algebra - tables of multiplication', to_date('27/05/2020 12:00', 'DD/MM/YYYY HH:mm'), 'school L.1.13', 'Big test coming up', 113, 112);
