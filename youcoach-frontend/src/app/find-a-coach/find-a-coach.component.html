@@ -10,8 +10,8 @@
           <header>
             <div class="row">
               <div class="input-field col l3 m6 s12">
-                <select  [(ngModel)]="selectedTopic" >
-                  <option value="none" selected translate>coach-overview.label.filter-topic-dropdown</option>
+                <select [(ngModel)]="selectedTopics" multiple>
+                  <option value="none" selected disabled translate>coach-overview.label.filter-topic-dropdown</option>
                   <option *ngFor="let topic of topicList">{{topic}}</option>
                 </select>
                 <label translate>coach-overview.label.filter-topic</label>
