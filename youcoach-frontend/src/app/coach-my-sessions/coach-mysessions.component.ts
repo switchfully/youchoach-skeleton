@@ -37,9 +37,9 @@ export class CoachMysessionsComponent implements OnInit {
           const dateTopass = this.timeComparator.constructSessionDate(session.date, session.time);
           if (new Date() > dateTopass) {
             this.sessionsarchived.push(session);
-            return;
+          } else {
+            this.sessionswithoutarchived.push(session);
           }
-          this.sessionswithoutarchived.push(session);
         }
       });
   }

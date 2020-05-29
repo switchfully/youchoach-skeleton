@@ -63,3 +63,6 @@ INSERT INTO coaching_topic_grades (coaching_topic_id, grades) VALUES (1002, 6);
 
 INSERT INTO admins (user_id) VALUES(115) ,(116);
 
+UPDATE members
+    set school_year = '4B - Car mechanics'
+WHERE ID = 22;
