@@ -35,7 +35,7 @@ export class CoachMysessionsComponent implements OnInit {
             session.status = 'CANCELLED';
           }
           const dateTopass = this.timeComparator.constructSessionDate(session.date, session.time);
-          if (new Date() > dateTopass) {
+          if (new Date().getMilliseconds() > dateTopass.getMilliseconds()) {
             this.sessionsarchived.push(session);
           } else {
             this.sessionswithoutarchived.push(session);
