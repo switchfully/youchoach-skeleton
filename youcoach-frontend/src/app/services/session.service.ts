@@ -1,10 +1,10 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {ISession} from './ISession';
+import {ISession} from '../interfaces/ISession';
 import {Observable} from 'rxjs';
 import {environment} from '../../environments/environment';
-import {ISessionComplete} from '../coach-my-sessions/ISessionComplete';
-import {Action} from './Action';
+import {ISessionComplete} from '../interfaces/ISessionComplete';
+import {Action} from '../interfaces/Action';
 
 
 @Injectable({

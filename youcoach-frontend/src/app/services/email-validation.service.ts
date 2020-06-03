@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {MessageService} from '../message.service';
+import {MessageService} from './message.service';
 import {Observable} from 'rxjs';
-import {IValidationData} from './IValidationData';
-import {IResendValidation} from './IResendValidation';
-import {IValidationResult} from './IValidationResult';
-import {environment} from "../../environments/environment";
+import {IValidationData} from '../interfaces/IValidationData';
+import {IResendValidation} from '../interfaces/IResendValidation';
+import {IValidationResult} from '../interfaces/IValidationResult';
+import {environment} from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'

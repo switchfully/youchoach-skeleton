@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {ISessionComplete} from './ISessionComplete';
-import {SessionService} from '../request-session/session.service';
-import {Action, Status} from '../request-session/Action';
-import {TimeComparatorService} from '../time-comparator.service';
+import {SessionService} from '../services/session.service';
+import {Action, Status} from '../interfaces/Action';
+import {TimeComparatorService} from '../services/time-comparator.service';
+import {ISessionComplete} from '../interfaces/ISessionComplete';
 
 @Component({
   selector: 'app-coach-mysessions',
@@ -30,8 +30,8 @@ export class CoachMysessionsComponent implements OnInit {
         this.sessions = sessions;
         for (const session of sessions) {
           if (session.status.includes('CANCELLED')) {
-            if (session.status === 'CANCELLED_BY_COACH') session.cancelledByCoach = true;
-            if (session.status.includes('COACHEE')) session.cancelledByCoachee = true;
+            if (session.status === 'CANCELLED_BY_COACH') { session.cancelledByCoach = true; }
+            if (session.status.includes('COACHEE')) { session.cancelledByCoachee = true; }
             session.status = 'CANCELLED';
           }
           const dateTopass = this.timeComparator.constructSessionDate(session.date, session.time);
@@ -73,7 +73,7 @@ export class CoachMysessionsComponent implements OnInit {
       if (session.id === sessionId) {
         session.status = Status[status];
       }
-      if (session.status.includes('CANCELLED')) session.status = 'CANCELLED';
+      if (session.status.includes('CANCELLED')) { session.status = 'CANCELLED'; }
     });
   }
 }

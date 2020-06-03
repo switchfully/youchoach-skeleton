@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {SessionService} from '../request-session/session.service';
-import {ISessionComplete} from '../coach-my-sessions/ISessionComplete';
-import {Action, Status} from '../request-session/Action';
-import {TimeComparatorService} from '../time-comparator.service';
+import {SessionService} from '../services/session.service';
+import {ISessionComplete} from '../interfaces/ISessionComplete';
+import {Action, Status} from '../interfaces/Action';
+import {TimeComparatorService} from '../services/time-comparator.service';
 
 @Component({
   selector: 'app-coachee-my-sessions',

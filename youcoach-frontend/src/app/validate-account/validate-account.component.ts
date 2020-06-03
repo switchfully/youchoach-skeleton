@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {IValidationData} from './IValidationData';
-import {EmailValidationService} from './email-validation.service';
+import {IValidationData} from '../interfaces/IValidationData';
+import {EmailValidationService} from '../services/email-validation.service';
 
 @Component({
   selector: 'app-validate-account',

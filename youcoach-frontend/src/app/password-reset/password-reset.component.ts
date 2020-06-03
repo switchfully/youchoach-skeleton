@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {CoacheeService} from '../coacheeService/coachee.service';
+import {CoacheeService} from '../services/coacheeService/coachee.service';
 
 @Component({
   selector: 'app-password-reset',

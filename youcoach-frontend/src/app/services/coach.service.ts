@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {ICoach} from './ICoach';
+import {ICoach} from '../interfaces/ICoach';
 import {environment} from '../../environments/environment';
-import {ICoachList} from './ICoachList';
+import {ICoachList} from '../interfaces/ICoachList';
 
 @Injectable({
   providedIn: 'root'

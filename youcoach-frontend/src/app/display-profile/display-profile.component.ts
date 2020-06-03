@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {IMember} from '../IMember';
-import {CoacheeService} from '../coacheeService/coachee.service';
+import {IMember} from '../interfaces/IMember';
+import {CoacheeService} from '../services/coacheeService/coachee.service';
 import {ActivatedRoute} from '@angular/router';
 
 @Component({

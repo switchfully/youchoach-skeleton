@@ -1,12 +1,12 @@
 import {Component, OnInit} from '@angular/core';
-import {CoachService} from '../coach-profile/coach.service';
+import {CoachService} from '../services/coach.service';
 import {ActivatedRoute, Router} from '@angular/router';
-import {ISession} from './ISession';
+import {ISession} from '../interfaces/ISession';
 import {FormBuilder, ValidationErrors, Validators} from '@angular/forms';
-import {SessionService} from './session.service';
+import {SessionService} from '../services/session.service';
 import {InitMaterializeComponent} from '../init-materialize.component';
 import * as M from 'materialize-css';
-import {TimeComparatorService} from '../time-comparator.service';
+import {TimeComparatorService} from '../services/time-comparator.service';
 
 @Component({
   selector: 'app-request-session',

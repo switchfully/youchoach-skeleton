@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {ICoachList} from '../coach-profile/ICoachList';
-import {CoachService} from '../coach-profile/coach.service';
+import {ICoachList} from '../interfaces/ICoachList';
+import {CoachService} from '../services/coach.service';
 import * as M from 'materialize-css';
-import {ICoach} from '../coach-profile/ICoach';
+import {ICoach} from '../interfaces/ICoach';
 
 @Component({
   selector: 'app-find-a-coach',

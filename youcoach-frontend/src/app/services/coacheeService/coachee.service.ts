@@ -2,15 +2,15 @@ import {Injectable} from '@angular/core';
 import {Observable, of} from 'rxjs';
 import {HttpClient, HttpHeaders } from '@angular/common/http';
 import {MessageService} from '../message.service';
-import {ICoachee} from '../register/icoachee';
-import {IMember} from '../IMember';
+import {ICoachee} from '../../register/icoachee';
+import {IMember} from '../../interfaces/IMember';
 import {catchError} from 'rxjs/operators';
-import {ICoacheeRegisterResult} from './ICoacheeRegisterResult';
-import {IRequestPasswordResetToken} from '../IRequestPasswordResetToken';
-import {IPasswordChange} from '../IPasswordChange';
-import {IPasswordChangeResult} from '../IPasswordChangeResult';
-import {environment} from '../../environments/environment';
-import {IMemberProfileUpdated} from '../edit-profile/IMemberProfileUpdated';
+import {ICoacheeRegisterResult} from '../../interfaces/ICoacheeRegisterResult';
+import {IRequestPasswordResetToken} from '../../interfaces/IRequestPasswordResetToken';
+import {IPasswordChange} from '../../interfaces/IPasswordChange';
+import {IPasswordChangeResult} from '../../interfaces/IPasswordChangeResult';
+import {environment} from '../../../environments/environment';
+import {IMemberProfileUpdated} from '../../interfaces/IMemberProfileUpdated';
 
 @Injectable({
   providedIn: 'root'

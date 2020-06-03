@@ -5,7 +5,7 @@ import {FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from '@angular/common/http';
 import {LoginComponent} from './login/login.component';
 import {AppRoutingModule} from './app-routing.module';
-import {AuthenticationInterceptor} from './authentication/authentication.interceptor';
+import {AuthenticationInterceptor} from './services/authentication/authentication.interceptor';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';

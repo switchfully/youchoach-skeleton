@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {IMember} from '../IMember';
+import {IMember} from '../interfaces/IMember';
 import {FormBuilder, Validators} from '@angular/forms';
-import {CoacheeService} from '../coacheeService/coachee.service';
+import {CoacheeService} from '../services/coacheeService/coachee.service';
 import {Router} from '@angular/router';
-import {AuthenticationService} from '../authentication/authentication.service';
+import {AuthenticationService} from '../services/authentication/authentication.service';
 
 @Component({
   selector: 'app-edit-profile',

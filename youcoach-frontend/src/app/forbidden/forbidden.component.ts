@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {ForbiddenService} from './forbidden.service';
+import {ForbiddenService} from '../services/forbidden.service';
 
 @Component({
   selector: 'app-forbidden',

@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, Validators} from '@angular/forms';
-import {ICoach, ITopic} from '../ICoach';
-import {CoachService} from '../coach.service';
+import {CoachService} from '../../services/coach.service';
 import {Router} from '@angular/router';
 import {Location} from '@angular/common';
+import {ICoach} from '../../interfaces/ICoach';
 
 @Component({
   selector: 'app-edit-coach-information',

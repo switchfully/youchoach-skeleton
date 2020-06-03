@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {CoachService} from './coach.service';
-import {ICoach} from './ICoach';
+import {CoachService} from '../services/coach.service';
+import {ICoach} from '../interfaces/ICoach';
 import {ActivatedRoute} from '@angular/router';
 
 @Component({
