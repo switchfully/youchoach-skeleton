@@ -23,22 +23,22 @@ export class PasswordResetComponent implements OnInit {
     this.route.queryParams
       .subscribe(params => {
 
-        console.log(params);
+        // console.log(params);
         if (undefined !== params.token) {
           this.token = params.token;
         }
-        console.log(this.token);
+        // console.log(this.token);
       });
   }
 
   validEmailEntered(): boolean {
-    console.log(this.emailMatch.test(this.email), this.email);
+    // console.log(this.emailMatch.test(this.email), this.email);
     return this.emailMatch.test(this.email);
   }
 
   resetPassword(): void {
     this.coacheeService.performPasswordReset({email: this.email, token: this.token, password: this.password})
-      .subscribe(result => { console.log(result);
+      .subscribe(result => {
                              if (result.passwordChanged) {
                                this.router.navigateByUrl('/password-change-success');
                              } else {

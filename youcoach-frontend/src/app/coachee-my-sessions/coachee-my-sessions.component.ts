@@ -28,8 +28,8 @@ export class CoacheeMySessionsComponent implements OnInit {
         this.sessions = sessions;
         this.sessions.forEach(session => {
           if (session.status.includes('CANCELLED')) {
-            if (session.status === 'CANCELLED_BY_COACH') session.cancelledByCoach = true;
-            if (session.status.includes('COACHEE')) session.cancelledByCoachee = true;
+            if (session.status === 'CANCELLED_BY_COACH') { session.cancelledByCoach = true; }
+            if (session.status.includes('COACHEE')) { session.cancelledByCoachee = true; }
             session.status = 'CANCELLED';
           }
           const dateTopass = this.timeComparator.constructSessionDate(session.date, session.time);
@@ -56,7 +56,7 @@ export class CoacheeMySessionsComponent implements OnInit {
       if (session.id === sessionId) {
         session.status = Status[status];
         if (session.status.includes('CANCELLED')) {
-          console.log('cancel');
+          // console.log('cancel');
           session.status = 'CANCELLED';
         }
       }
