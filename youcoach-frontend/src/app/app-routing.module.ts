@@ -19,12 +19,14 @@ import {EditCoachInformationComponent} from './coach-profile/edit-coach-informat
 import {FindACoachComponent} from './find-a-coach/find-a-coach.component';
 import {ChangeTopicsComponent} from './change-topics/change-topics.component';
 import {RequestSessionComponent} from './request-session/request-session.component';
-import {CoacheeMySessionsComponent} from "./coachee-my-sessions/coachee-my-sessions.component";
-import {CoachMysessionsComponent} from "./coach-my-sessions/coach-mysessions.component";
+import {CoacheeMySessionsComponent} from './coachee-my-sessions/coachee-my-sessions.component';
+import {CoachMysessionsComponent} from './coach-my-sessions/coach-mysessions.component';
+import {NotFoundComponent} from './not-found/not-found.component';
 
 const routes: Routes = [
   {path: 'home', component: HomeComponent},
   {path: 'login', component: LoginComponent},
+  {path: 'not-found', component: NotFoundComponent},
   {path: 'password-reset-requested', component: PasswordResetRequestedComponent},
   {path: 'password-reset', component: PasswordResetComponent},
   {path: 'password-change-success', component: PasswordChangeSuccessComponent},
@@ -47,7 +49,6 @@ const routes: Routes = [
   {path: 'my-sessions', component: CoacheeMySessionsComponent },
   {path: 'forbidden', component: ForbiddenComponent},
   {path: '', redirectTo: 'home', pathMatch: 'full'},
-  {path: '**', redirectTo: 'home', pathMatch: 'full'},
   {path: '**', redirectTo: 'not-found', pathMatch: 'full'}
 ];
 
