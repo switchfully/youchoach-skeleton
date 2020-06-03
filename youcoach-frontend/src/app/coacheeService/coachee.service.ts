@@ -19,7 +19,8 @@ export class CoacheeService {
   readonly url = `${environment.backendUrl}/users`;
   httpOptions = {
     headers: new HttpHeaders({'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin' : 'http://localhost:4200'
+      // 'Access-Control-Allow-Origin' : 'http://localhost:4200'
+      'Access-Control-Allow-Origin' : 'https://youcoach-test.herokuapp.com/'
     }),
 
   };
