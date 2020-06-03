@@ -32,9 +32,9 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
     private static final Logger log = LoggerFactory.getLogger(JwtAuthorizationFilter.class);
 
     private final String jwtSecret;
-    private final RoleToFeatureMapper roleToFeatureMapper;
 
-    public JwtAuthorizationFilter(AuthenticationManager authenticationManager, String jwtSecret, RoleToFeatureMapper roleToFeatureMapper) {
+
+    public JwtAuthorizationFilter(AuthenticationManager authenticationManager, String jwtSecret) {
         super(authenticationManager);
         this.jwtSecret = jwtSecret;
 

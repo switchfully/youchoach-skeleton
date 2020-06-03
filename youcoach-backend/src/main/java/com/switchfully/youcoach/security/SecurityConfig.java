@@ -35,7 +35,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         this.securedUserService = securedUserService;
         this.passwordEncoder = passwordEncoder;
         this.jwtSecret = jwtSecret;
-        this.roleToFeatureMapper = roleToFeatureMapper;
+//        this.roleToFeatureMapper = roleToFeatureMapper;
     }
 
     @Override
