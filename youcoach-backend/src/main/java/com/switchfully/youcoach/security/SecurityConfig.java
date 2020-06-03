@@ -63,6 +63,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         corsConfig.setAllowCredentials(true);
         corsConfig.addAllowedOrigin(origins);
 //        corsConfig.addAllowedOrigin("https://you-coach-south.herokuapp.com");
+        corsConfig.addAllowedOrigin("https://youcoach-test-frontend.herokuapp.com/");
         corsConfig.addAllowedHeader("*");
         corsConfig.addAllowedMethod("GET");
         corsConfig.addAllowedMethod("POST");
