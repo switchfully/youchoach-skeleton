@@ -5,7 +5,6 @@ import {FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from '@angular/common/http';
 import {LoginComponent} from './login/login.component';
 import {AppRoutingModule} from './app-routing.module';
-import {HelloWorldComponent} from './hello-world/hello-world.component';
 import {AuthenticationInterceptor} from './authentication/authentication.interceptor';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
@@ -20,7 +19,6 @@ import { HomeComponent } from './home/home.component';
 import { BecomeCoachComponent } from './become-coach/become-coach.component';
 import { DisplayProfileComponent } from './display-profile/display-profile.component';
 import {CoachProfileComponent} from './coach-profile/coach-profile.component';
-import { ProfileHeaderComponent } from './profile-header/profile-header.component';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
 import { ValidateAccountComponent } from './validate-account/validate-account.component';
 import {RedirectOnErrorInterceptor} from './redirect-on-error.interceptor';
@@ -50,7 +48,6 @@ export function HttpLoaderFactory(http: HttpClient) {
   declarations: [
     AppComponent,
     LoginComponent,
-    HelloWorldComponent,
     HeaderComponent,
     FooterComponent,
     RegisterComponent,
@@ -58,7 +55,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     BecomeCoachComponent,
     DisplayProfileComponent,
     CoachProfileComponent,
-    ProfileHeaderComponent,
     EditProfileComponent,
     ValidateAccountComponent,
     ForbiddenComponent,
