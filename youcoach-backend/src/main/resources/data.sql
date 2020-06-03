@@ -68,4 +68,3 @@ INSERT INTO coaches_topics (coach_user_id, topics_id) VALUES (113, 1001); -- Fre
 -- UPDATE members
 --     set school_year = '4B - Car mechanics'
 -- WHERE ID = 22;
-
