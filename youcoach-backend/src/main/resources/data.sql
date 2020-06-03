@@ -36,7 +36,7 @@ INSERT INTO members (id, email, first_name, last_name, password,school_year, pho
 -- INSERT INTO members (id, email, first_name, last_name, password, school_year, photo_url, account_enabled) VALUES (115, 'admin1@school.org', 'Elvis', 'Presley', '$2a$10$Px8bPIDgwpmiL6UuNtAp2.4BmSvlAGQF4gtY6/Wb7ZyKW5oSlz6oa','Reception','/assets/img/admin1.jpg', TRUE);
 -- INSERT INTO members (id, email, first_name, last_name, password, school_year, photo_url, account_enabled) VALUES (116, 'admin2@school.org', 'Hilary', 'Clinton', '$2a$10$Px8bPIDgwpmiL6UuNtAp2.4BmSvlAGQF4gtY6/Wb7ZyKW5oSlz6oa','Teacher - French & English','/assets/img/admin2.jpg', TRUE);
 --
--- INSERT INTO coaches (user_id, availability, introduction, xp) VALUES (113,'I am free every wednesday afternoon','Hello, my name is Frank and I can give coaching sessions on algebra and French', 100);
+INSERT INTO coaches (user_id, availability, introduction, xp) VALUES (113,'I am free every wednesday afternoon','Hello, my name is Frank and I can give coaching sessions on algebra and French', 100);
 -- INSERT INTO coaches (user_id, availability, introduction, xp) VALUES (114,'I can make myself free every other weekend','Hello, my name is Warren and I am pretty good at Latin', 100);
 --
 -- INSERT INTO topics (topic_id, name) VALUES (100, 'Algebra');
@@ -52,7 +52,7 @@ INSERT INTO members (id, email, first_name, last_name, password,school_year, pho
 -- INSERT INTO coaching_topic_grades (coaching_topic_id, grades) VALUES (1000, 3);
 -- INSERT INTO coaching_topic_grades (coaching_topic_id, grades) VALUES (1000, 4);
 -- INSERT INTO coaching_topic_grades (coaching_topic_id, grades) VALUES (1000, 5);
--- INSERT INTO coaches_topics (coach_user_id, topics_id) VALUES (113, 1001); -- French
+INSERT INTO coaches_topics (coach_user_id, topics_id) VALUES (113, 1001); -- French
 -- INSERT INTO coaching_topic_grades (coaching_topic_id, grades) VALUES (1001, 1);
 -- INSERT INTO coaching_topic_grades (coaching_topic_id, grades) VALUES (1001, 6);
 --
