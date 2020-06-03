@@ -1,35 +1,49 @@
 package com.switchfully.youcoach.security.authentication.jwt;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.switchfully.youcoach.security.authentication.OnAuthenticationFailureHandler;
 import com.switchfully.youcoach.security.authentication.user.SecuredUser;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.security.Keys;
-import org.springframework.beans.factory.annotation.Value;
+import com.switchfully.youcoach.security.authentication.user.SecuredUserService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Date;
+
 
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
-    private static final int TOKEN_TIME_TO_LIVE  = 3600000;
 
     private final AuthenticationManager authenticationManager;
     private final String jwtSecret;
+    private final SecuredUserService securedUserService;
 
-    public JwtAuthenticationFilter(AuthenticationManager authenticationManager, String jwtSecret) {
+    public JwtAuthenticationFilter(AuthenticationManager authenticationManager, String jwtSecret,
+                                   SecuredUserService securedUserService, OnAuthenticationFailureHandler failureHandler) {
         this.authenticationManager = authenticationManager;
         this.jwtSecret = jwtSecret;
+        this.securedUserService = securedUserService;
 
         setFilterProcessesUrl("/login");
+        setAuthenticationFailureHandler(failureHandler);
     }
+
+    @Override
+    protected void unsuccessfulAuthentication(HttpServletRequest request,
+                                              HttpServletResponse response,
+                                              AuthenticationException failed)
+            throws IOException, ServletException {
+
+        getFailureHandler().onAuthenticationFailure(request, response, failed);
+    }
+
+
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) {
@@ -49,17 +63,13 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response,
                                             FilterChain filterChain, Authentication authentication) {
-        var token = Jwts.builder()
-                .signWith(Keys.hmacShaKeyFor(jwtSecret.getBytes()), SignatureAlgorithm.HS512)
-                .setHeaderParam("typ", "JWT")
-                .setIssuer("secure-api")
-                .setAudience("secure-app")
-                .setSubject(authentication.getName())
-                .setExpiration(new Date(new Date().getTime() + TOKEN_TIME_TO_LIVE))
-                .claim("roles", authentication.getAuthorities())
-                .compact();
+
+        String token = securedUserService.generateJwtToken(authentication, jwtSecret);
+
+
 
         response.addHeader("Authorization", "Bearer " + token);
         response.addHeader("Access-Control-Expose-Headers", "Authorization");
     }
+
 }

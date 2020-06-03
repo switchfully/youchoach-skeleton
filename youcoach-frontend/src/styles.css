@@ -1,4 +1,4 @@
-/* You can add global styles to this file, and also import other style files */
+
 body {
   display: flex;
   min-height: 100vh;
@@ -7,6 +7,12 @@ body {
 
 main {
   flex: 1 0 auto;
+  min-height: 62.5vh;
+}
+
+.not-yet-implemented {
+  display: none;
+
 }
 
 .black-opacity {
@@ -20,7 +26,6 @@ main {
 nav ul a,
 nav .brand-logo {
   color: #444;
-  font-family: gentium;
 }
 
 .content-container {
@@ -58,7 +63,15 @@ p {
   width: 100%;
 }
 
-@media only screen and (max-width : 992px) {
+
+@media only screen and (max-width: 1400px) {
+  .header-hidden {
+    display: none;
+  }
+}
+
+@media only screen and (max-width : 990px) {
+
   .parallax-container .section {
     position: absolute;
     top: 40%;

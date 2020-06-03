@@ -10,8 +10,8 @@ import io.jsonwebtoken.UnsupportedJwtException;
 import io.jsonwebtoken.security.SignatureException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -23,8 +23,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.stream.Collectors;
 
 import static org.springframework.util.StringUtils.isEmpty;
@@ -39,7 +37,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
     public JwtAuthorizationFilter(AuthenticationManager authenticationManager, String jwtSecret, RoleToFeatureMapper roleToFeatureMapper) {
         super(authenticationManager);
         this.jwtSecret = jwtSecret;
-        this.roleToFeatureMapper = roleToFeatureMapper;
+
     }
 
     @Override
@@ -67,12 +65,10 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
                         .getBody()
                         .getSubject();
 
-                List<LinkedHashMap<String, String>> authoritiesInToken
-                        = parsedToken.getBody().get("roles", ArrayList.class);
+
+                ArrayList<String> authoritiesInToken
+                        = parsedToken.getBody().get("rol", ArrayList.class);
                 var authorities = authoritiesInToken.stream()
-                        .map(linkedMap -> linkedMap.get("authority"))
-                        .flatMap(role -> roleToFeatureMapper.mapRoleToFeature(Role.valueOf(role)).stream())
-                        .map(Feature::getLabel)
                         .map(SimpleGrantedAuthority::new)
                         .collect(Collectors.toList());
 

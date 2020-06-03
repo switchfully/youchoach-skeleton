@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  backendUrl: 'http://localhost:8080'
+  backendUrl: 'https://you-coach-south-backend.herokuapp.com'
 };

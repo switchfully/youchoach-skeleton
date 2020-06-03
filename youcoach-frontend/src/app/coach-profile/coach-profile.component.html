@@ -1,0 +1,127 @@
+<main>
+  <div class="row">
+    <div class="col s12 m2" >
+      <div class="content-container" *ngIf="coach.email !== null && idToGet === 0">
+        <h6 translate>my-profile-menu.title</h6>
+        <div class="collection">
+          <a class="collection-item black-text active teal lighten-3" routerLink="/coach-profile" translate >my-profile-menu.link.profile-information</a>
+          <a class="collection-item grey-text text-darken-2 "routerLink="/coach-my-sessions" translate >my-profile-menu.link.coaching-sessions</a>
+          <a class="collection-item grey-text text-darken-2" routerLink="/change-topics" translate >my-coach-profile-menu.link.request-profile-change</a>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="col s12 m10">
+      <div class="content-container">
+
+        <section  class="card-panel grey lighten-5">
+          <div class="right" *ngIf="idToGet !== 0 && coach.email === null ">
+            <button class="waves-effect waves-light yellow darken-2 btn-large black-text" routerLink="/coach-profile/{{coach.id}}/request-a-session" translate>request-session.button.request-session<i
+              class="material-icons right" >event</i></button>
+          </div>
+          <h5 translate>my-profile-menu.link.profile-information</h5>
+
+          <div class="divider"></div>
+          <div class="row">
+            <div class="col l2 m2 s12">
+              <img src="{{coach.photoUrl}}" class="responsive-img circle"
+                   alt="Profile Picture">
+            </div>
+            <div class="col l10 m10 s12">
+              <table class="highlight">
+                <tbody>
+                <tr>
+                  <td><strong translate>coach-profile-information.label.first-name</strong></td>
+                  <td>{{coach.firstName}}</td>
+                </tr>
+                <tr>
+                  <td><strong translate>coach-profile-information.label.last-name</strong></td>
+                  <td>{{coach.lastName}}</td>
+                </tr>
+                <tr *ngIf="coach.email !== null">
+                  <td><strong translate>coach-profile-information.label.email</strong></td>
+                  <td>{{coach.email}}</td>
+                </tr>
+                <tr>
+                  <td><strong translate>coach-profile-information.label.class</strong></td>
+                  <td>{{coach.schoolYear}}</td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+        <div>
+        <div class="divider"></div>
+        <section  class="card-panel grey lighten-5 ">
+          <div class="right" *ngIf="coach.email !== null">
+            <a class="waves-effect waves-light btn-large btn-floating teal lighten-3" routerLink="/edit-coach-information"><i
+              class="material-icons left">edit</i>Edit</a>
+          </div>
+          <h5 translate>coach-information.title</h5>
+          <div class="divider"></div>
+          <div class="row">
+            <div class="col l12 m12 s12">
+              <table class="highlight">
+                <tbody>
+                <!--
+                <tr>
+                  <td><strong>Coach XP</strong></td>
+                  <td>
+                    <div class="center">
+                      <span class="new badge teal lighten-3 teal-text text-darken-3"
+                            data-badge-caption="(Silver)">{{coach.coachXP}}</span>
+                    </div>
+                    <div class="progress teal">
+                      <div class="determinate" style="width: 60%"></div>
+                    </div>
+                  </td>
+                </tr>
+                -->
+                <tr>
+                  <td><strong translate>coach-information.label.introduction</strong></td>
+                  <td translate>{{coach.introduction}}</td>
+                </tr>
+                <tr>
+                  <td><strong translate>coach-information.label.availability</strong></td>
+                  <td>{{coach.availability}}</td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <div class="divider"></div>
+        <section class="card-panel grey lighten-5">
+          <h5 translate>coaching-topics.title</h5>
+          <div class="divider"></div>
+          <div class="row">
+            <div class="col s12">
+              <table class="highlight">
+                <tbody>
+                <tr *ngFor="let topic of coach.topics">
+                  <td><strong>{{topic.name}}</strong></td>
+                  <td>
+                    <div class="center">
+                      <a class="btn-floating " [class.disabled]="!topic.grades.includes(1)"><i class="material-icons">filter_1</i></a>
+                      <a class="btn-floating " [class.disabled]="!topic.grades.includes(2)"><i class="material-icons">filter_2</i></a>
+                      <a class="btn-floating " [class.disabled]="!topic.grades.includes(3)"><i class="material-icons">filter_3</i></a>
+                      <a class="btn-floating " [class.disabled]="!topic.grades.includes(4)"><i class="material-icons">filter_4</i></a>
+                      <a class="btn-floating " [class.disabled]="!topic.grades.includes(5)"><i class="material-icons">filter_5</i></a>
+                      <a class="btn-floating " [class.disabled]="!topic.grades.includes(6)"><i class="material-icons">filter_6</i></a>
+                      <a class="btn-floating " [class.disabled]="!topic.grades.includes(7)"><i class="material-icons">filter_7</i></a>
+                    </div>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+        </div>
+        </div>
+      </div>
+    </div>
+</main>

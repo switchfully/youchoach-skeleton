@@ -1,8 +1,10 @@
-<footer class="page-footer yellow darken-2">
+
+<footer [ngClass]="calculateClass()">
   <div class="container">
     <div class="row">
       <div class="col l6 s12">
-        <h5 class="black-text">You-Coach</h5>
+        <h5 class="black-text">You-Coach South</h5>
+
         <p class="grey-text text-darken-3">You-Coach is an academic coaching program between students in
           secondary schools, supervised by the schools started by the <a class="grey-text text-darken-2"
                                                                          href="https://www.make-it-happen.org/">Make-It-Happen
@@ -13,14 +15,13 @@
       <div class="col l3 s12">
         <h5 class="black-text">Navigation</h5>
         <ul>
-          <li><a class="grey-text text-darken-3" href="#"><i class="tiny material-icons">chevron_right</i>Home</a>
+          <li ><a class="grey-text text-darken-3" routerLink="/home" translate><i class="tiny material-icons">chevron_right</i>menu.link.home</a>
           </li>
-          <li><a class="grey-text text-darken-3" href="#"><i class="tiny material-icons">chevron_right</i>Sign
-            in / Register</a></li>
-          <li><a class="grey-text text-darken-3" href="#"><i class="tiny material-icons">chevron_right</i>Contact</a>
+          <li class="black-text"><a class="grey-text text-darken-3" routerLink="/login" translate><i class="tiny material-icons">chevron_right</i>menu.button.sign-in </a> / <a class="grey-text text-darken-3" routerLink="/register" translate>menu.button.register</a></li>
+          <li class="not-yet-implemented"><a class="grey-text text-darken-3" translate><i class="tiny material-icons">chevron_right</i>menu.link.contact</a>
           </li>
-          <li><a class="grey-text text-darken-3" href="#"><i class="tiny material-icons">chevron_right</i>About
-            us</a></li>
+          <li class="not-yet-implemented"><a class="grey-text text-darken-3" translate><i class="tiny material-icons">chevron_right</i>menu.link.about-us</a></li>
+
         </ul>
       </div>
     </div>

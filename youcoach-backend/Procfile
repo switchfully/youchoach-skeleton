@@ -1,1 +1,3 @@
-web: java -Dserver.port=$PORT $JAVA_OPTS -jar target/youcoach-backend-1.0-SNAPSHOT.jar
+
+web: java -Dserver.port=$PORT $JAVA_OPTS -Dspring.profiles.active=production,secret -jar target/youcoach-backend-1.0-SNAPSHOT.jar
+

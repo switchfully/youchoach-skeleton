@@ -22,18 +22,26 @@
             "assets": [
               "src/favicon.ico",
               "src/assets",
-              { "glob": "**/??.json",
+              {
+                "glob": "**/??.json",
                 "input": "./node_modules/youcoach-i18n/i18n/",
-                "output": "./assets/i18n/" }
+                "output": "./assets/i18n/"
+              }
             ],
             "styles": [
-              "./node_modules/material-design-icons/iconfont/material-icons.css",
+
               "./node_modules/materialize-css/dist/css/materialize.css",
+              "./node_modules/material-design-icons/iconfont/material-icons.css",
+
               "src/styles.css"
+
             ],
             "scripts": [
-              "./node_modules/jquery/dist/jquery.js",
-              "./node_modules/materialize-css/dist/js/materialize.js"
+
+              "src/js/jquery-3.5.0.min.js",
+              "./node_modules/materialize-css/dist/js/materialize.js",
+              "src/js/init.js"
+
             ]
           },
           "configurations": {
@@ -94,9 +102,11 @@
             "assets": [
               "src/favicon.ico",
               "src/assets",
-              { "glob": "**/??.json",
+              {
+                "glob": "**/??.json",
                 "input": "./node_modules/youcoach-i18n/i18n/",
-                "output": "./assets/i18n/" }
+                "output": "./assets/i18n/"
+              }
             ],
             "styles": [
               "src/styles.css"
