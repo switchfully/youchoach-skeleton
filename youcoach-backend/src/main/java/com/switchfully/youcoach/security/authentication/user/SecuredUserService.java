@@ -1,5 +1,6 @@
 package com.switchfully.youcoach.security.authentication.user;
 
+
 import com.switchfully.youcoach.datastore.repositories.AdminRepository;
 import com.switchfully.youcoach.datastore.repositories.CoachRepository;
 import com.switchfully.youcoach.datastore.repositories.UserRepository;
@@ -14,9 +15,11 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+
 
 @Service
 public class SecuredUserService implements UserDetailsService {
@@ -34,6 +37,7 @@ public class SecuredUserService implements UserDetailsService {
     }
 
     @Override
+
     public UserDetails loadUserByUsername(final String userName) throws UsernameNotFoundException {
         com.switchfully.youcoach.datastore.entities.User user = userRepository.findByEmail(userName)
                 .orElseThrow(() -> new UsernameNotFoundException(userName));
@@ -63,6 +67,7 @@ public class SecuredUserService implements UserDetailsService {
 
     private boolean isCoach(com.switchfully.youcoach.datastore.entities.User user){
         return coachRepository.findCoachByUser(user).isPresent();
+
     }
 
 

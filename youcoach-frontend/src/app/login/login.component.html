@@ -8,13 +8,16 @@
             <form class="col s12" [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm.value)">
               <div class="row">
                 <div class="input-field col s12">
+
                   <input id="username" type="text" class="validate" formControlName="username">
                   <label for="username"  translate>sign-in.label.email</label>
+
                 </div>
               </div>
               <div class="row">
                 <div class="input-field col s12">
                   <input id="password" type="password" class="validate" formControlName="password">
+
                   <label for="password" translate>sign-in.label.password</label>
                 </div>
               </div>
@@ -26,6 +29,7 @@
                   class="material-icons right">send</i></button>
                 <button class="waves-effect waves-light teal lighten-3 btn-large black-text" style="margin: 0 25px" type="reset" (click)="resetPassword()" translate>sign-in.button.reset-password<i
                   class="material-icons right">autorenew</i></button>
+
               </div>
             </form>
           </div>
@@ -35,5 +39,4 @@
 
   </div>
 </main>
-
 

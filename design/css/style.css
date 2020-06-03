@@ -1,0 +1,82 @@
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+main {
+  flex: 1 0 auto;
+}
+
+.black-opacity {
+  background-color: rgba(0,0,0,0.25);
+}
+
+.clear-opacity {
+  opacity: 1;
+}
+
+nav ul a,
+nav .brand-logo {
+  color: #444;
+  font-family: gentium;
+}
+
+.content-container {
+  margin: 2rem 0.5rem 3rem 0.5rem;
+}
+
+.content-container-with-padding {
+  padding: 1rem 2rem 1rem 2rem;
+  margin: 2rem 0.5rem 3rem 0.5rem;
+}
+
+.divider {
+  margin: 2rem 0 2rem 0;
+}
+
+p {
+  line-height: 2rem;
+}
+
+.sidenav-trigger {
+  color: #26a69a;
+}
+
+.extra-large {
+  font-size: 16rem;
+}
+
+.parallax-container {
+  min-height: 380px;
+  line-height: 0;
+  height: auto;
+  color: rgba(255,255,255,.9);
+}
+  .parallax-container .section {
+    width: 100%;
+  }
+
+@media only screen and (max-width : 992px) {
+  .parallax-container .section {
+    position: absolute;
+    top: 40%;
+  }
+  #index-banner .section {
+    top: 10%;
+  }
+}
+
+@media only screen and (max-width : 600px) {
+  #index-banner .section {
+    top: 0;
+  }
+}
+
+.icon-block {
+  padding: 0 15px;
+}
+.icon-block .material-icons {
+  font-size: inherit;
+}
+

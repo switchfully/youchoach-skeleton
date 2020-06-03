@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {AuthenticationService} from '../authentication/authentication.service';
 import {ActivatedRoute} from "@angular/router";
 
+
 @Component({
   selector: 'app-footer',
   templateUrl: './footer.component.html',
@@ -10,6 +11,7 @@ import {ActivatedRoute} from "@angular/router";
 export class FooterComponent implements OnInit {
 
   constructor(private authenticationService: AuthenticationService, private route: ActivatedRoute) { }
+
 
   ngOnInit(): void {
   }

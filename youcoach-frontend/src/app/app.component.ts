@@ -1,15 +1,12 @@
-import {Component, OnInit} from '@angular/core';
-import {AuthenticationService} from './authentication/authentication.service';
-import {TranslateService} from '@ngx-translate/core';
+import {Component} from '@angular/core';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: []
 })
-export class AppComponent implements OnInit {
-  username;
-  language = 'en';
+export class AppComponent {
+
 
   constructor(private authenticationService: AuthenticationService, private translate: TranslateService) {
     translate.setDefaultLang('en');
@@ -21,4 +18,5 @@ export class AppComponent implements OnInit {
       this.username = this.authenticationService.getUsername();
     });
   }
+
 }

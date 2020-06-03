@@ -1,6 +1,5 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
-
 import {AppComponent} from './app.component';
 import {FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from '@angular/common/http';
@@ -8,7 +7,6 @@ import {LoginComponent} from './login/login.component';
 import {AppRoutingModule} from './app-routing.module';
 import {HelloWorldComponent} from './hello-world/hello-world.component';
 import {AuthenticationInterceptor} from './authentication/authentication.interceptor';
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -41,6 +39,7 @@ import { RequestSessionComponent } from './request-session/request-session.compo
 import {CustomFormsModule} from 'ngx-custom-validators';
 import { CoachMysessionsComponent } from './coach-my-sessions/coach-mysessions.component';
 import { CoacheeMySessionsComponent } from './coachee-my-sessions/coachee-my-sessions.component';
+
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -77,13 +76,13 @@ export function HttpLoaderFactory(http: HttpClient) {
     CoachMysessionsComponent,
     CoacheeMySessionsComponent,
       ],
+
   imports: [
     BrowserModule,
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
     AppRoutingModule,
-    NgbModule,
     TranslateModule.forRoot({
       defaultLanguage: 'en',
       loader: {

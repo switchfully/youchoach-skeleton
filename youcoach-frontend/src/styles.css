@@ -1,3 +1,4 @@
+
 body {
   display: flex;
   min-height: 100vh;
@@ -11,6 +12,7 @@ main {
 
 .not-yet-implemented {
   display: none;
+
 }
 
 .black-opacity {
@@ -51,7 +53,6 @@ p {
   font-size: 16rem;
 }
 
-
 .parallax-container {
   min-height: 380px;
   line-height: 0;
@@ -62,6 +63,7 @@ p {
   width: 100%;
 }
 
+
 @media only screen and (max-width: 1400px) {
   .header-hidden {
     display: none;
@@ -69,6 +71,7 @@ p {
 }
 
 @media only screen and (max-width : 990px) {
+
   .parallax-container .section {
     position: absolute;
     top: 40%;

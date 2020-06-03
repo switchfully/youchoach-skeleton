@@ -4,6 +4,7 @@ import com.switchfully.youcoach.security.authentication.OnAuthenticationFailureH
 import com.switchfully.youcoach.security.authentication.jwt.JwtAuthenticationFilter;
 import com.switchfully.youcoach.security.authentication.jwt.JwtAuthorizationFilter;
 import com.switchfully.youcoach.security.authentication.user.SecuredUserService;
+import com.switchfully.youcoach.security.authorization.RoleToFeatureMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
@@ -24,14 +25,17 @@ import org.springframework.web.filter.CorsFilter;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final PasswordEncoder passwordEncoder;
+
     private final String jwtSecret;
     private final SecuredUserService securedUserService;
 
     public SecurityConfig(SecuredUserService securedUserService, PasswordEncoder passwordEncoder,
                           @Value("${jwt.secret}") String jwtSecret) {
+
         this.securedUserService = securedUserService;
         this.passwordEncoder = passwordEncoder;
         this.jwtSecret = jwtSecret;
+        this.roleToFeatureMapper = roleToFeatureMapper;
     }
 
     @Override
@@ -44,8 +48,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/users/password/reset").permitAll()
                 .anyRequest().authenticated()
                 .and()
+
                 .addFilter(new JwtAuthenticationFilter(authenticationManager(), jwtSecret, securedUserService, new OnAuthenticationFailureHandler()))
                 .addFilter(new JwtAuthorizationFilter(authenticationManager(), jwtSecret))
+
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
 

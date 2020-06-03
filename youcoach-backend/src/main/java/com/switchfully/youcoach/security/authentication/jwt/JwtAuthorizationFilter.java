@@ -1,5 +1,8 @@
 package com.switchfully.youcoach.security.authentication.jwt;
 
+import com.switchfully.youcoach.security.authorization.Feature;
+import com.switchfully.youcoach.security.authorization.Role;
+import com.switchfully.youcoach.security.authorization.RoleToFeatureMapper;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.MalformedJwtException;
@@ -29,8 +32,9 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
     private static final Logger log = LoggerFactory.getLogger(JwtAuthorizationFilter.class);
 
     private final String jwtSecret;
+    private final RoleToFeatureMapper roleToFeatureMapper;
 
-    public JwtAuthorizationFilter(AuthenticationManager authenticationManager, String jwtSecret) {
+    public JwtAuthorizationFilter(AuthenticationManager authenticationManager, String jwtSecret, RoleToFeatureMapper roleToFeatureMapper) {
         super(authenticationManager);
         this.jwtSecret = jwtSecret;
 
@@ -60,6 +64,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
                 var username = parsedToken
                         .getBody()
                         .getSubject();
+
 
                 ArrayList<String> authoritiesInToken
                         = parsedToken.getBody().get("rol", ArrayList.class);
