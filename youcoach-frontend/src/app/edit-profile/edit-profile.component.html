@@ -9,7 +9,7 @@
 
           <h5>Edit profile Information</h5>
           <div class="divider"></div>
-          <div class="row">
+          <div class="row" *ngIf="member">
             <form class="col s12" [formGroup]="editForm" (ngSubmit)="onSubmit()">
               <div class="col l2 m2 s12">
                 <img src="{{member.photoUrl}}" class="responsive-img circle"
@@ -53,7 +53,7 @@
                     <td><strong translate>profile-information.label.profile-picture</strong></td>
                     <div class="input-field col s12">
                       <input id="photoUrl" type="email" class="validate"
-                             name='member.photoUrl' required formControlName="photoUrl" name='member.photoUrl'
+                             name='member.photoUrl' formControlName="photoUrl" name='member.photoUrl'
                              [(ngModel)]="member.photoUrl" >
                     </div>
                   </tr>
