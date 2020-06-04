@@ -1,3 +1,6 @@
+create schema IF NOT EXISTS youcoach;
+set schema 'youcoach';
+
 -- create table account_verification (created_on timestamp not null, verification_code varchar(255) not null, user_id bigint not null, primary key (user_id))
 -- create table admins (user_id bigint not null, primary key (user_id))
 -- create table coaches (availability varchar(255), introduction varchar(255), xp integer, user_id bigint not null, primary key (user_id))
@@ -9,16 +12,15 @@
 -- alter table coaches_topics add constraint UK_9l964dg81lk07ofqagvxbupow unique (topics_id)
 -- alter table members add constraint UK_9d30a9u1qpg8eou0otgkwrp5d unique (email)
 -- alter table topics add constraint UK_7tuhnscjpohbffmp7btit1uff unique (name)
--- alter tble account_verification add constraint FKglx0w7njieyv9xprt465m2i6q foreign key (user_id) references members
--- -- alter table admins add constraint FKjoasa92wy96dlicsbfcdl5krg foreign key (user_id) references members
--- -- alter table coaches add constraint FK5h0cksgba49yg6apbiie5wlvy foreign key (user_id) references members
--- -- alter table coaches_topics add constraint FKhihfdn0xxsvr4bx9jaokql5pf foreign key (topics_id) references coaching_topic
--- -- alter table coaches_topics add constraint FKfhcuxfpmbn4inpk0vidwea8s6 foreign key (coach_user_id) references coaches
--- -- alter table coaching_topic add constraint FKl62wqdgeidhvwvp5j6qhpb8df foreign key (topic_topic_id) references topics
--- -- alter table coaching_topic_grades add constraint FK13ryigkrx2nw7bkg78irl6uqq foreign key (coaching_topic_id) references coaching_topica
+-- alter table account_verification add constraint FKglx0w7njieyv9xprt465m2i6q foreign key (user_id) references members
+-- alter table admins add constraint FKjoasa92wy96dlicsbfcdl5krg foreign key (user_id) references members
+-- alter table coaches add constraint FK5h0cksgba49yg6apbiie5wlvy foreign key (user_id) references members
+-- alter table coaches_topics add constraint FKhihfdn0xxsvr4bx9jaokql5pf foreign key (topics_id) references coaching_topic
+-- alter table coaches_topics add constraint FKfhcuxfpmbn4inpk0vidwea8s6 foreign key (coach_user_id) references coaches
+-- alter table coaching_topic add constraint FKl62wqdgeidhvwvp5j6qhpb8df foreign key (topic_topic_id) references topics
+-- alter table coaching_topic_grades add constraint FK13ryigkrx2nw7bkg78irl6uqq foreign key (coaching_topic_id) references coaching_topic
 
-create schema IF NOT EXISTS youcoach;
-set schema 'youcoach';
+
 -- DELETE FROM members;
 -- DELETE FROM coaches;
 -- DELETE FROM admins;

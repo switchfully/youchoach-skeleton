@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
 
+
 public interface AccountVerificator {
     AccountVerification generateAccountVerification(User user);
     void sendVerificationEmail(User user) throws MessagingException;
