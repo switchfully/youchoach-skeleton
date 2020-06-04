@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {InitMaterializeComponent} from '../init-materialize.component';
+import {TranslateService} from '@ngx-translate/core';
+import {environment} from '../../environments/environment';
 
 @Component({
   selector: 'app-become-coach',
@@ -7,11 +9,24 @@ import {InitMaterializeComponent} from '../init-materialize.component';
   styleUrls: ['./become-coach.component.css']
 })
 export class BecomeCoachComponent extends InitMaterializeComponent implements OnInit {
+  private mailto: string;
 
-  constructor() {
+  constructor(public translateService: TranslateService) {
     super();
   }
 
+  mail() {
+    this.mailto = 'mailto:' + environment.adminEmail;
+
+    this.translateService.get('email-subject').subscribe((subject: string) => {
+      this.mailto += '?subject=' + subject;
+    });
+
+    this.translateService.get('email-body').subscribe((body: string) => {
+      this.mailto += '&body=' + body;
+    });
+    location.href = this.mailto;
+  }
 
   ngOnInit() {
   }
