@@ -3,7 +3,7 @@ export interface IMember {
   firstName: string;
   lastName: string;
   email: string;
-  schoolYear: string;
+  classYear: string;
   youcoachRole: string;
   photoUrl: string;
 }

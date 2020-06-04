@@ -3,7 +3,6 @@ package com.switchfully.youcoach.domain.mapper;
 import com.switchfully.youcoach.datastore.entities.*;
 import com.switchfully.youcoach.domain.dtos.request.CreateUserDto;
 import com.switchfully.youcoach.domain.dtos.response.UserDto;
-import com.switchfully.youcoach.domain.mapper.UserMapper;
 import com.switchfully.youcoach.domain.dtos.response.CoachListingDto;
 import com.switchfully.youcoach.domain.dtos.embedded.CoachListingEntryDto;
 import com.switchfully.youcoach.domain.dtos.shared.CoachProfileDto;
@@ -29,7 +28,7 @@ public class UserMapperTest {
                 .withEmail(input.getEmail())
                 .withFirstName(input.getFirstName())
                 .withLastName(input.getLastName())
-                .withSchoolYear(input.getSchoolYear())
+                .withSchoolYear(input.getClassYear())
                 .withPhotoUrl(input.getPhotoUrl());
 
         CoacheeProfileDto actual = userMapper.toCoacheeProfileDto(input);
@@ -55,7 +54,7 @@ public class UserMapperTest {
                 .withIntroduction(coach.getIntroduction())
                 .withAvailability(coach.getAvailability())
                 .withCoachingTopics(coach.getTopics())
-                .withSchoolYear(user.getSchoolYear())
+                .withSchoolYear(user.getClassYear())
                 .withId(user.getId())
                 .withEmail(user.getEmail())
                 .withFirstName(user.getFirstName())

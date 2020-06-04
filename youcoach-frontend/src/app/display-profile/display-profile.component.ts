@@ -16,9 +16,10 @@ export class DisplayProfileComponent implements OnInit {
     firstName: null,
     lastName: null,
     photoUrl: null,
-    schoolYear: null,
+    classYear: null,
     youcoachRole: null
   };
+
 
   constructor(private coacheeService: CoacheeService, private route: ActivatedRoute) {
   }

@@ -18,20 +18,20 @@ public class User {
     private String email;
     @Column(name = "password")
     private String password;
-    @Column(name = "school_year")
-    private String schoolYear;
+    @Column(name = "class_year")
+    private String classYear;
     @Column(name = "photo_url")
     private String photoUrl;
     @Column(name = "account_enabled", nullable = false)
     private boolean accountEnabled = false;
 
-    public User(long id, String firstName, String lastName, String email, String password, String schoolYear, String photoUrl) {
+    public User(long id, String firstName, String lastName, String email, String password, String classYear, String photoUrl) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
-        this.schoolYear = schoolYear;
+        this.classYear = classYear;
         this.photoUrl = photoUrl;
     }
     public User(String firstName, String lastName, String email, String password) {
@@ -69,8 +69,8 @@ public class User {
         this.password = password;
     }
 
-    public String getSchoolYear() {
-        return schoolYear;
+    public String getClassYear() {
+        return classYear;
     }
 
     public String getPhotoUrl() {
