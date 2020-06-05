@@ -1,15 +1,15 @@
 package com.switchfully.youcoach.domain.dtos.request;
 
 public class CreateCoacheeProfileDto {
-    private String schoolYear;
+    private String classYear;
     private String firstName;
     private String lastName;
     private String email;
     private String photoUrl;
     private String youcoachRole;
 
-    public CreateCoacheeProfileDto(String schoolYear, String firstName, String lastName, String email, String photoUrl, String youcoachRole) {
-        this.schoolYear = schoolYear;
+    public CreateCoacheeProfileDto(String classYear, String firstName, String lastName, String email, String photoUrl, String youcoachRole) {
+        this.classYear = classYear;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -20,8 +20,8 @@ public class CreateCoacheeProfileDto {
     public CreateCoacheeProfileDto() {
     }
 
-    public CreateCoacheeProfileDto withSchoolYear(String schoolYear) {
-        this.schoolYear = schoolYear;
+    public CreateCoacheeProfileDto withClassYear(String classYear) {
+        this.classYear = classYear;
         return this;
     }
     public CreateCoacheeProfileDto withFirstName(String firstName){
@@ -46,8 +46,8 @@ public class CreateCoacheeProfileDto {
         return this;
     }
 
-    public String getSchoolYear() {
-        return schoolYear;
+    public String getClassYear() {
+        return classYear;
     }
 
     public String getYoucoachRole() {

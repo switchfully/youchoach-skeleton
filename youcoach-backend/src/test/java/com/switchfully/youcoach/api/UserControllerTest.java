@@ -105,7 +105,7 @@ class UserControllerTest {
                 .andReturn()
                         .getResponse()
                         .getContentAsString();
-        String expected = "{\"id\":1,\"firstName\":\"First\",\"lastName\":\"Last\",\"email\":\"example@example.com\",\"schoolYear\":\"1 - latin\",\"photoUrl\":\"/my/photo.png\"}";
+        String expected = "{\"id\":1,\"firstName\":\"First\",\"lastName\":\"Last\",\"email\":\"example@example.com\",\"classYear\":\"1 - latin\",\"photoUrl\":\"/my/photo.png\"}";
         JSONAssert.assertEquals(expected, actualResult, true);
     }
 
@@ -125,7 +125,7 @@ class UserControllerTest {
                 .andReturn()
                 .getResponse()
                 .getContentAsString();
-        String expected = "{\"id\":1,\"firstName\":\"First\",\"lastName\":\"Last\",\"email\":\"example@example.com\",\"schoolYear\":\"1 - latin\",\"photoUrl\":\"/my/photo.png\"}";
+        String expected = "{\"id\":1,\"firstName\":\"First\",\"lastName\":\"Last\",\"email\":\"example@example.com\",\"classYear\":\"1 - latin\",\"photoUrl\":\"/my/photo.png\"}";
         JSONAssert.assertEquals(expected, actualResult, true);
     }
 
@@ -146,7 +146,7 @@ class UserControllerTest {
                 .withFirstName("First")
                 .withLastName("Last")
                 .withId(1L)
-                .withSchoolYear("1 - latin");
+                .withClassYear("1 - latin");
         String expected = new ObjectMapper().writeValueAsString(expectedDto);
 
         String actualResult = mockMvc.perform(get("/users/coach/profile")

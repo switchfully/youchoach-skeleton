@@ -80,7 +80,7 @@ public class UserService {
                 .withFirstName(createCoacheeProfileDto.getFirstName())
                 .withLastName(createCoacheeProfileDto.getLastName())
                 .withPhotoUrl(createCoacheeProfileDto.getPhotoUrl())
-                .withSchoolYear(createCoacheeProfileDto.getSchoolYear())
+                .withClassYear(createCoacheeProfileDto.getClassYear())
                 .withYoucoachRole(createCoacheeProfileDto.getYoucoachRole());
         if(!email.equals(createCoacheeProfileDto.getEmail())) {
             String jwtSecret = environment.getProperty("jwt.secret");

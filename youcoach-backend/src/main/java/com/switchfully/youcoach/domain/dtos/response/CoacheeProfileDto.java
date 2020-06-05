@@ -3,15 +3,15 @@ package com.switchfully.youcoach.domain.dtos.response;
 import java.util.Objects;
 
 public class CoacheeProfileDto {
-    private String schoolYear;
+    private String classYear;
     private long id;
     private String firstName;
     private String lastName;
     private String email;
     private String photoUrl;
 
-    public CoacheeProfileDto withSchoolYear(String schoolYear) {
-        this.schoolYear = schoolYear;
+    public CoacheeProfileDto withClassYear(String classYear) {
+        this.classYear = classYear;
         return this;
     }
     public CoacheeProfileDto withId(long id){
@@ -35,8 +35,8 @@ public class CoacheeProfileDto {
         return this;
     }
 
-    public String getSchoolYear() {
-        return schoolYear;
+    public String getClassYear() {
+        return classYear;
     }
 
     public long getId() {
@@ -70,7 +70,7 @@ public class CoacheeProfileDto {
         if (o == null || getClass() != o.getClass()) return false;
         CoacheeProfileDto that = (CoacheeProfileDto) o;
         return id == that.id &&
-                Objects.equals(schoolYear, that.schoolYear) &&
+                Objects.equals(classYear, that.classYear) &&
                 Objects.equals(firstName, that.firstName) &&
                 Objects.equals(lastName, that.lastName) &&
                 Objects.equals(photoUrl, that.photoUrl) &&
@@ -79,6 +79,6 @@ public class CoacheeProfileDto {
 
     @Override
     public int hashCode() {
-        return Objects.hash(schoolYear, id, firstName, lastName, email, photoUrl);
+        return Objects.hash(classYear, id, firstName, lastName, email, photoUrl);
     }
 }

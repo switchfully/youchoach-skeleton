@@ -36,7 +36,7 @@ public class UserMapper {
                 .withEmail(model.getEmail())
                 .withFirstName(model.getFirstName())
                 .withLastName(model.getLastName())
-                .withSchoolYear(model.getClassYear())
+                .withClassYear(model.getClassYear())
                 .withPhotoUrl(model.getPhotoUrl());
     }
 
@@ -50,7 +50,7 @@ public class UserMapper {
                 .withEmail(model.getUser().getEmail())
                 .withFirstName(model.getUser().getFirstName())
                 .withLastName(model.getUser().getLastName())
-                .withSchoolYear(model.getUser().getClassYear())
+                .withClassYear(model.getUser().getClassYear())
                 .withPhotoUrl(model.getUser().getPhotoUrl());
 
     }

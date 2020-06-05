@@ -28,7 +28,7 @@ public class UserMapperTest {
                 .withEmail(input.getEmail())
                 .withFirstName(input.getFirstName())
                 .withLastName(input.getLastName())
-                .withSchoolYear(input.getClassYear())
+                .withClassYear(input.getClassYear())
                 .withPhotoUrl(input.getPhotoUrl());
 
         CoacheeProfileDto actual = userMapper.toCoacheeProfileDto(input);
@@ -54,7 +54,7 @@ public class UserMapperTest {
                 .withIntroduction(coach.getIntroduction())
                 .withAvailability(coach.getAvailability())
                 .withCoachingTopics(coach.getTopics())
-                .withSchoolYear(user.getClassYear())
+                .withClassYear(user.getClassYear())
                 .withId(user.getId())
                 .withEmail(user.getEmail())
                 .withFirstName(user.getFirstName())
