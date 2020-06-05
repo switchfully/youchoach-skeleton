@@ -75,7 +75,7 @@ export class EditProfileComponent implements OnInit {
       lastName: this.editForm.get('lastName').value,
       email: this.editForm.get('email').value,
       photoUrl: this.editForm.get('photoUrl').value,
-      schoolYear: this.member.schoolYear,
+      classYear: this.member.classYear,
       youcoachRole: 'coachee',
     };
     this.updateProfile();

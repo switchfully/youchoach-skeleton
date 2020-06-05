@@ -19,10 +19,12 @@ export class BecomeCoachComponent extends InitMaterializeComponent implements On
     this.mailto = 'mailto:' + environment.adminEmail;
 
     this.translateService.get('email-subject').subscribe((subject: string) => {
+      console.log(subject);
       this.mailto += '?subject=' + subject;
     });
 
     this.translateService.get('email-body').subscribe((body: string) => {
+      console.log(body);
       this.mailto += '&body=' + body;
     });
     location.href = this.mailto;

@@ -41,8 +41,8 @@ export class EditCoachInformationComponent implements OnInit {
       firstName: this.coach.firstName,
       lastName: this.coach.lastName,
       email: this.coach.email,
-      schoolYear: this.coach.schoolYear,
-      youcoachRole: this.coach.schoolYear,
+      classYear: this.coach.classYear,
+      youcoachRole: this.coach.youcoachRole,
       photoUrl: this.coach.photoUrl
     };
     this.updateProfile();

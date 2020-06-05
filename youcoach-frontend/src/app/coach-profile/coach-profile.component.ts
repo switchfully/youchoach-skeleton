@@ -19,7 +19,7 @@ export class CoachProfileComponent implements OnInit {
     introduction: null,
     lastName: null,
     photoUrl: null,
-    schoolYear: null,
+    classYear: null,
     topicYear: null,
     youcoachRole: null
   };
