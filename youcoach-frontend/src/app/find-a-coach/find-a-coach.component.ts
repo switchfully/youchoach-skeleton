@@ -62,7 +62,7 @@ export class FindACoachComponent implements OnInit {
   performFilter() {
     this.filteredCoaches = this.coachList.coaches;
     if (this.selectedTopics && this.selectedTopics.length > 0) {
-      this.filteredCoaches = this.coachList.coaches
+      this.filteredCoaches = this.filteredCoaches
         .filter(coach => {
           const c = coach.topics.some(topic => this.selectedTopics.some(sTopic => {
             const a = sTopic === topic.name;
@@ -73,7 +73,7 @@ export class FindACoachComponent implements OnInit {
         });
     }
     if (this.grades && this.grades.length > 0) {
-      this.filteredCoaches = this.coachList.coaches
+      this.filteredCoaches = this.filteredCoaches
         .filter(coach => {
           const c = coach.topics.some(topic => topic.grades.some(grade => this.grades.some(grd => {
             const a = (grd.toString() === grade.toString());
@@ -83,7 +83,7 @@ export class FindACoachComponent implements OnInit {
         });
     }
     if (this.searchText !== undefined && this.searchText.length > 2) {
-      this.filteredCoaches = this.coachList.coaches
+      this.filteredCoaches = this.filteredCoaches
         .filter(coach => coach.firstName.toLowerCase().startsWith(this.searchText.toLowerCase()) ||
           coach.lastName.toLowerCase().startsWith(this.searchText.toLowerCase())
         );
