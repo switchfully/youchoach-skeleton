@@ -20,6 +20,8 @@ export class DisplayProfileComponent implements OnInit {
     youcoachRole: null
   };
 
+  adminEdit = false;
+
 
   constructor(private coacheeService: CoacheeService, private route: ActivatedRoute) {
   }
@@ -29,6 +31,7 @@ export class DisplayProfileComponent implements OnInit {
     if (url.endsWith('/profile')) {
       this.getCoachee();
     } else {
+      this.adminEdit = true;
       this.getCoacheeByID(+this.route.snapshot.paramMap.get('id'));
     }
   }

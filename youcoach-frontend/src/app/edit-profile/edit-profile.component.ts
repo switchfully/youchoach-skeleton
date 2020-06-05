@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {IMember} from '../interfaces/IMember';
 import {FormBuilder, Validators} from '@angular/forms';
 import {CoacheeService} from '../services/coacheeService/coachee.service';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {AuthenticationService} from '../services/authentication/authentication.service';
 
 @Component({
@@ -22,15 +22,24 @@ export class EditProfileComponent implements OnInit {
   oldEmail = '';
   emailExistsError = false;
   constructor(private fb: FormBuilder, private coacheeService: CoacheeService, private router: Router,
-              private authenticationService: AuthenticationService) {
+              private authenticationService: AuthenticationService, private route: ActivatedRoute) {
   }
   ngOnInit(): void {
-    this.coacheeService.getCoachee().subscribe(coachee => this.oldEmail = coachee.email);
-    this.getCoachee();
+    const url: string = this.route.snapshot['_routerState'].url;
+    if (url.endsWith('/edit-profile')) {
+      this.getCoachee();
+    } else {
+      this.getCoacheeByID(+this.route.snapshot.paramMap.get('id'));
+    }
   }
 
   getCoachee(): void {
     this.coacheeService.getCoachee().subscribe(
+      member => this.member = member);
+  }
+
+  getCoacheeByID(id: number): void {
+    this.coacheeService.getCoacheeById(id).subscribe(
       member => this.member = member);
   }
 

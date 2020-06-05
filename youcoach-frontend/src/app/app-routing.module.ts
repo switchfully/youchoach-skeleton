@@ -38,6 +38,7 @@ const routes: Routes = [
   {path: 'profile', component: DisplayProfileComponent },
   {path: 'profile/:id', component: DisplayProfileComponent},
   {path: 'edit-profile', component: EditProfileComponent },
+  {path: 'edit-profile/:id', component: EditProfileComponent },
   {path: 'coach-profile', component: CoachProfileComponent },
   {path: 'coach-profile/:id', component: CoachProfileComponent },
   {path: 'edit-coach-information', component: EditCoachInformationComponent},
