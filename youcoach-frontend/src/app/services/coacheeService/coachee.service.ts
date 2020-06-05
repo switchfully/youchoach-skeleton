@@ -11,6 +11,7 @@ import {IPasswordChange} from '../../interfaces/IPasswordChange';
 import {IPasswordChangeResult} from '../../interfaces/IPasswordChangeResult';
 import {environment} from '../../../environments/environment';
 import {IMemberProfileUpdated} from '../../interfaces/IMemberProfileUpdated';
+import {AuthenticationService} from "../authentication/authentication.service";
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +26,7 @@ export class CoacheeService {
 
   };
 
-  constructor(private http: HttpClient, private messageService: MessageService) {
+  constructor(private http: HttpClient, private messageService: MessageService, private authenticationService: AuthenticationService) {
   }
 
   register(coachee: ICoachee): Observable<ICoacheeRegisterResult> {
@@ -49,7 +50,11 @@ export class CoacheeService {
   }
 
   updateProfile(member: IMember): Observable<IMemberProfileUpdated> {
-    return this.http.put<IMemberProfileUpdated>(this.url + '/profile', member, this.httpOptions);
+    if (this.authenticationService.isAdmin()) {
+      return this.http.put<IMemberProfileUpdated>(this.url + '/profile/' + member.id, member, this.httpOptions);
+    } else {
+      return this.http.put<IMemberProfileUpdated>(this.url + '/profile', member, this.httpOptions);
+    }
   }
 
   private handleError<T>(operation = 'operation', result?: T) {

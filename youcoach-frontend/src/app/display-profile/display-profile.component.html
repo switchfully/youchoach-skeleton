@@ -18,8 +18,14 @@
 
         <section class="card-panel grey lighten-5">
           <div class="right">
-            <a class="waves-effect waves-light btn-large btn-floating yellow darken-2"><i
-              class="material-icons left" routerLink="/edit-profile">edit</i>Edit</a>
+            <div *ngIf="adminEdit === false">
+              <a class="waves-effect waves-light btn-large btn-floating yellow darken-2"><i
+                class="material-icons left" routerLink="/edit-profile">edit</i>Edit</a>
+            </div>
+            <div *ngIf="adminEdit === true">
+              <a class="waves-effect waves-light btn-large btn-floating yellow darken-2"><i
+                class="material-icons left" routerLink="/edit-profile/{{member.id}}">edit</i>Edit</a>
+            </div>
           </div>
           <h5 translate>profile-information.title</h5>
           <div class="divider"></div>
