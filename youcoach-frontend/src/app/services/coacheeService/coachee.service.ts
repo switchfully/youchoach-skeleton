@@ -49,6 +49,7 @@ export class CoacheeService {
   }
 
   updateProfile(member: IMember): Observable<IMemberProfileUpdated> {
+
     return this.http.put<IMemberProfileUpdated>(this.url + '/profile', member, this.httpOptions);
   }
 

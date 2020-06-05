@@ -36,7 +36,7 @@ const routes: Routes = [
   {path: 'becomecoach', component: BecomeCoachComponent },
   {path: 'change-topics', component: ChangeTopicsComponent },
   {path: 'profile', component: DisplayProfileComponent },
-  {path: 'profile/:id', component: DisplayProfileComponent },
+  {path: 'profile/:id', component: DisplayProfileComponent},
   {path: 'edit-profile', component: EditProfileComponent },
   {path: 'coach-profile', component: CoachProfileComponent },
   {path: 'coach-profile/:id', component: CoachProfileComponent },
