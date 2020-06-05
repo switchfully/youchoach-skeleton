@@ -3,3 +3,4 @@ export const environment = {
   backendUrl: 'https://youcoach-test.herokuapp.com',
   adminEmail: 'nicolas.sougnez@gmail.com'
 };
+
