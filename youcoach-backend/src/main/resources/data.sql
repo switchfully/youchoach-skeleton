@@ -44,7 +44,7 @@ INSERT INTO coaches (user_id, availability, introduction, xp) VALUES (113,'I am 
 -- INSERT INTO topics (topic_id, name) VALUES (100, 'Algebra');
 -- INSERT INTO topics (topic_id, name) VALUES (101, 'French');
 -- INSERT INTO topics (topic_id, name) VALUES (102, 'Biology');
---
+
 -- INSERT INTO coaching_topic (id, topic_topic_id) VALUES (1000, 100);
 -- INSERT INTO coaching_topic (id, topic_topic_id) VALUES (1001, 101);
 -- INSERT INTO coaching_topic (id, topic_topic_id) VALUES (1002, 102);
