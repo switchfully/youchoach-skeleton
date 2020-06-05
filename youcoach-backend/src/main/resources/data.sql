@@ -40,7 +40,7 @@ INSERT INTO members (id, email, first_name, last_name, password,class_year, phot
 --
 INSERT INTO coaches (user_id, availability, introduction, xp) VALUES (113,'I am free every wednesday afternoon','Hello, my name is Frank and I can give coaching sessions on algebra and French', 100);
 -- INSERT INTO coaches (user_id, availability, introduction, xp) VALUES (114,'I can make myself free every other weekend','Hello, my name is Warren and I am pretty good at Latin', 100);
---
+
 -- INSERT INTO topics (topic_id, name) VALUES (100, 'Algebra');
 -- INSERT INTO topics (topic_id, name) VALUES (101, 'French');
 -- INSERT INTO topics (topic_id, name) VALUES (102, 'Biology');
