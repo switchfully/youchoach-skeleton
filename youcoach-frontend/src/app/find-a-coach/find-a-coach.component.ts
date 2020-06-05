@@ -86,7 +86,7 @@ export class FindACoachComponent implements OnInit {
       this.filteredCoaches = this._filteredCoaches
         .filter(coach => coach.firstName.toLowerCase().startsWith(this.searchText.toLowerCase()) ||
           coach.lastName.toLowerCase().startsWith(this.searchText.toLowerCase())
-        );
+        ); 
     }
   }
 }
