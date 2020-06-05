@@ -34,6 +34,8 @@ export class CoachMysessionsComponent implements OnInit {
             if (session.status.includes('COACHEE')) { session.cancelledByCoachee = true; }
             session.status = 'CANCELLED';
           }
+          console.log(session.date);
+          console.log(session.time);
           const dateTopass = this.timeComparator.constructSessionDate(session.date, session.time);
           console.log(dateTopass);
           console.log(new Date());
