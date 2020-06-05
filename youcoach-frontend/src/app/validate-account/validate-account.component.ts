@@ -48,7 +48,7 @@ export class ValidateAccountComponent implements OnInit {
   }
 
   validEmailEntered(): boolean {
-    console.log(this.emailMatch.test(this.email), this.email);
+    // console.log(this.emailMatch.test(this.email), this.email);
     return this.emailMatch.test(this.email);
   }
 
