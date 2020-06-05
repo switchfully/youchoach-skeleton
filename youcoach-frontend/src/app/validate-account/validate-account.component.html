@@ -6,8 +6,8 @@
       <form style="padding-bottom: 15px;padding-top: 15px;">
         <label>Token: <input id="token" name="token" [(ngModel)]="token" type="text" /></label><br />
         <label>Email: <input id="email" name="email" [(ngModel)]="email" type="text" /></label><br />
-        <button class="btn waves-effect waves-light" [disabled]="!validEmailEntered()" (click)="validateAccount()">validate<i class="material-icons right">send</i></button>&nbsp;
-        <button class="btn waves-effect waves-light" [disabled]="!validEmailEntered()" (click)="resendValidationtoken()">Resend validation token<i class="material-icons right">send</i></button>
+        <button class="btn waves-effect waves-light teal lighten-3" [disabled]="!validEmailEntered()" (click)="resendValidationtoken()">Resend validation token<i class="material-icons right">send</i></button>
+        <button class="btn waves-effect waves-light yellow darken-2" [disabled]="!validEmailEntered()" (click)="validateAccount()">validate<i class="material-icons right">send</i></button>&nbsp;
         <div *ngIf="validationFailed" style="color: red; font-weight: bold;">Validation failed.</div>
       </form>
 
