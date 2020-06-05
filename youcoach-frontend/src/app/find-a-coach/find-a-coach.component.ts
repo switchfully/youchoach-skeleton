@@ -60,6 +60,7 @@ export class FindACoachComponent implements OnInit {
   }
 
   performFilter() {
+    this.filteredCoaches = this.coachList.coaches;
     if (this.selectedTopics && this.selectedTopics.length > 0) {
       this.filteredCoaches = this.coachList.coaches
         .filter(coach => {
@@ -70,7 +71,8 @@ export class FindACoachComponent implements OnInit {
           ));
           return c;
         });
-    } else if (this.grades && this.grades.length > 0) {
+    }
+    if (this.grades && this.grades.length > 0) {
       this.filteredCoaches = this.coachList.coaches
         .filter(coach => {
           const c = coach.topics.some(topic => topic.grades.some(grade => this.grades.some(grd => {
@@ -79,13 +81,12 @@ export class FindACoachComponent implements OnInit {
           })));
           return c;
         });
-    } else if (this.searchText !== undefined && this.searchText.length > 2) {
+    }
+    if (this.searchText !== undefined && this.searchText.length > 2) {
       this.filteredCoaches = this.coachList.coaches
         .filter(coach => coach.firstName.toLowerCase().startsWith(this.searchText.toLowerCase()) ||
           coach.lastName.toLowerCase().startsWith(this.searchText.toLowerCase())
         );
-    } else {
-      this.filteredCoaches = this.coachList.coaches;
     }
   }
 }
