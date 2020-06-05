@@ -24,7 +24,7 @@ set schema 'youcoach';
 -- DELETE FROM members;
 -- DELETE FROM coaches;
 -- DELETE FROM admins;
---
+
 -- DELETE FROM coaches_topics;
 -- DELETE FROM topics;
 
