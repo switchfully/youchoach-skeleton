@@ -12,7 +12,7 @@ export class TimeComparatorService {
   }
 
   private timeStringFormatMatches(input: string): boolean {
-    return /[0-9]{2}:[0-9]{2}/.test(input);
+    return /[0-9]{1,2}:[0-9]{2}/.test(input);
   }
 
   private parseDateStringToArray(input: string): number[] {
