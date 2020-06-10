@@ -1,6 +1,6 @@
 package com.switchfully.youcoach.domain.coach;
 
-import com.switchfully.youcoach.domain.profile.Member;
+import com.switchfully.youcoach.domain.profile.Profile;
 
 import javax.persistence.*;
 import java.util.*;
@@ -9,7 +9,7 @@ import java.util.*;
 @Table(name="coaches")
 public class Coach {
     @Id
-    private Long userId;
+    private Long id;
 
     @Column(name="introduction")
     private String introduction = "";
@@ -21,24 +21,24 @@ public class Coach {
     private Integer xp = 0;
 
     @OneToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "user_id")
-    private Member member;
+    @JoinColumn(name = "id")
+    private Profile profile;
 
-    @OneToMany()
+    @OneToMany
     List<CoachingTopic> topics = new ArrayList<>();
 
     public Coach(){}
-    public Coach(Member member){
-        this.userId = member.getId();
-        this.member = member;
+    public Coach(Profile profile){
+        this.id = profile.getId();
+        this.profile = profile;
     }
 
     public Long getUserId() {
-        return userId;
+        return id;
     }
 
-    public Member getMember() {
-        return member;
+    public Profile getProfile() {
+        return profile;
     }
 
     public String getIntroduction() {
@@ -78,12 +78,11 @@ public class Coach {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Coach coach = (Coach) o;
-        return Objects.equals(userId, coach.userId) &&
-                Objects.equals(member, coach.member);
+        return Objects.equals(id, coach.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userId, member);
+        return Objects.hash(id);
     }
 }

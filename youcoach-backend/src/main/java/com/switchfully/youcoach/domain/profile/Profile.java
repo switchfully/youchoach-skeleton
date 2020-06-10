@@ -4,8 +4,8 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "members")
-public class Member {
+@Table(name = "profile")
+public class Profile {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id")
@@ -25,7 +25,7 @@ public class Member {
     @Column(name = "account_enabled", nullable = false)
     private boolean accountEnabled = false;
 
-    public Member(long id, String firstName, String lastName, String email, String password, String classYear, String photoUrl) {
+    public Profile(long id, String firstName, String lastName, String email, String password, String classYear, String photoUrl) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -34,14 +34,14 @@ public class Member {
         this.classYear = classYear;
         this.photoUrl = photoUrl;
     }
-    public Member(String firstName, String lastName, String email, String password) {
+    public Profile(String firstName, String lastName, String email, String password) {
         this(0,firstName,lastName,email,password);
     }
-    public Member(long id, String firstName, String lastName, String email, String password){
+    public Profile(long id, String firstName, String lastName, String email, String password){
         this(id,firstName,lastName,email,password,"","");
     }
 
-    public Member() {
+    public Profile() {
     }
 
 
@@ -105,8 +105,8 @@ public class Member {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Member member = (Member) o;
-        return id == member.id;
+        Profile profile = (Profile) o;
+        return id == profile.id;
     }
 
     @Override

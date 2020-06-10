@@ -3,8 +3,8 @@ DELETE FROM coaches_topics;
 DELETE FROM coaching_topic;
 DELETE FROM topics;
 
---INSERT INTO coaches (user_id) SELECT id FROM members WHERE id NOT IN (SELECT user_id FROM coaches);
-INSERT INTO coaches (user_id) values (1);
+--INSERT INTO coaches (id) SELECT id FROM profiles WHERE id NOT IN (SELECT id FROM coaches);
+INSERT INTO coaches (id) values (1);
 
 UPDATE coaches SET xp = 100, availability = 'Whenever you want.', introduction = 'Endorsed by your mom.';
 

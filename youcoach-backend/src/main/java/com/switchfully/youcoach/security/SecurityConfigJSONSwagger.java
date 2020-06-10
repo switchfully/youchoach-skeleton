@@ -1,7 +1,6 @@
 package com.switchfully.youcoach.security;
 
-import com.switchfully.youcoach.security.authentication.user.SecuredUserJSONService;
-import com.switchfully.youcoach.security.authentication.user.SecuredUserService;
+import com.switchfully.youcoach.security.authentication.user.ValidatedUserService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -13,13 +12,14 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Profile("development")
 @EnableWebSecurity(debug=false)
 public class SecurityConfigJSONSwagger extends SecurityConfig {
-    private final SecuredUserJSONService securedUserJSONService;
+    private final ValidatedUserService validatedUserService;
     private final PasswordEncoder passwordEncoder;
-    public SecurityConfigJSONSwagger(SecuredUserService securedUserService, SecuredUserJSONService securedUserJSONService,
-                                     PasswordEncoder passwordEncoder, @Value("${jwt.secret}") String jwtSecret) {
-        super(securedUserService, passwordEncoder, jwtSecret);
 
-        this.securedUserJSONService = securedUserJSONService;
+    public SecurityConfigJSONSwagger(ValidatedUserService validatedUserService,
+                                     PasswordEncoder passwordEncoder, @Value("${jwt.secret}") String jwtSecret) {
+        super(validatedUserService, passwordEncoder, jwtSecret);
+
+        this.validatedUserService = validatedUserService;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -38,7 +38,7 @@ public class SecurityConfigJSONSwagger extends SecurityConfig {
 
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(securedUserJSONService).passwordEncoder(passwordEncoder);
+        auth.userDetailsService(validatedUserService).passwordEncoder(passwordEncoder);
         super.configure(auth);
     }
 

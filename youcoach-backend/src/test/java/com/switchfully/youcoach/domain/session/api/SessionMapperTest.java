@@ -1,8 +1,8 @@
 package com.switchfully.youcoach.domain.session.api;
 
+import com.switchfully.youcoach.domain.profile.Profile;
 import com.switchfully.youcoach.domain.session.Status;
 import com.switchfully.youcoach.domain.session.Session;
-import com.switchfully.youcoach.domain.profile.Member;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -13,16 +13,16 @@ import java.util.List;
 public class SessionMapperTest {
     private final SessionMapper sessionMapper = new SessionMapper();
 
-    private Member getDefaultUser() {
-        return new Member(1,"First","Last",
+    private Profile getDefaultUser() {
+        return new Profile(1,"First","Last",
                 "example@example.com","1Lpassword","1 - latin","/my/photo.png");
     }
 
     @Test
     void toCoachingSessionModel(){
         CreateSessionDto ccsd = new CreateSessionDto("subject","01/05/2020","13:01","Cafeteria","Bring food", 1L);
-        Member coach = getDefaultUser();
-        Member coachee = getDefaultUser();
+        Profile coach = getDefaultUser();
+        Profile coachee = getDefaultUser();
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy H:mm");
         LocalDateTime dateTime = LocalDateTime.parse("01/05/2020 13:01", dateTimeFormatter);
 
@@ -35,8 +35,8 @@ public class SessionMapperTest {
     @Test
     void toCoachingSessionDto(){
         CreateSessionDto ccsd = new CreateSessionDto("subject","01/05/2020","13:01","Cafeteria","Bring food", 1L);
-        Member coach = getDefaultUser();
-        Member coachee = getDefaultUser();
+        Profile coach = getDefaultUser();
+        Profile coachee = getDefaultUser();
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy H:mm");
         LocalDateTime dateTime = LocalDateTime.parse("01/05/2020 13:01", dateTimeFormatter);
 
@@ -52,8 +52,8 @@ public class SessionMapperTest {
     @Test
     void toListCoachingSessionDto(){
         CreateSessionDto ccsd = new CreateSessionDto("subject","01/05/2020","13:01","Cafeteria","Bring food", 1L);
-        Member coach = getDefaultUser();
-        Member coachee = getDefaultUser();
+        Profile coach = getDefaultUser();
+        Profile coachee = getDefaultUser();
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy H:mm");
         LocalDateTime dateTime = LocalDateTime.parse("01/05/2020 13:01", dateTimeFormatter);
 

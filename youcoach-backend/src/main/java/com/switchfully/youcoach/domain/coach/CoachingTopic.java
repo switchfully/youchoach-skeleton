@@ -5,15 +5,16 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
+@Table(name = "COACHING_TOPIC")
 public class CoachingTopic {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
 
-    @OneToOne()
+    @OneToOne
     private Topic topic;
 
-    @ElementCollection()
+    @ElementCollection
     private List<Grade> grades;
 
     public CoachingTopic(){}

@@ -1,6 +1,6 @@
 package com.switchfully.youcoach.security.verification;
 
-import com.switchfully.youcoach.domain.profile.Member;
+import com.switchfully.youcoach.domain.profile.Profile;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -18,9 +18,9 @@ public class AccountVerification {
     private LocalDateTime createdOn = LocalDateTime.now();
 
     public AccountVerification(){}
-    public AccountVerification(Member member){
-        this.member = member;
-        this.user_id = member.getId();
+    public AccountVerification(Profile profile){
+        this.profile = profile;
+        this.user_id = profile.getId();
     }
 
     public long getUser_id() {
@@ -39,13 +39,13 @@ public class AccountVerification {
         return createdOn;
     }
 
-    public Member getMember() {
-        return member;
+    public Profile getProfile() {
+        return profile;
     }
 
     @OneToOne
     @MapsId
-    private Member member;
+    private Profile profile;
 
     @Override
     public boolean equals(Object o) {
@@ -53,11 +53,11 @@ public class AccountVerification {
         if (o == null || getClass() != o.getClass()) return false;
         AccountVerification that = (AccountVerification) o;
         return user_id == that.user_id &&
-                Objects.equals(member, that.member);
+                Objects.equals(profile, that.profile);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(user_id, member);
+        return Objects.hash(user_id, profile);
     }
 }

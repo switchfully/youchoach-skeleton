@@ -1,7 +1,7 @@
 package com.switchfully.youcoach.datastore.repositories;
 
 import com.switchfully.youcoach.domain.coach.*;
-import com.switchfully.youcoach.domain.profile.Member;
+import com.switchfully.youcoach.domain.profile.Profile;
 import com.switchfully.youcoach.domain.profile.ProfileRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -29,8 +29,8 @@ public class CoachRepositoryTest {
         this.profileRepository = profileRepository;
     }
 
-    private Member getDefaultUser() {
-        return new Member(1L, "First", "Last", "example@example.com",
+    private Profile getDefaultUser() {
+        return new Profile(1L, "First", "Last", "example@example.com",
                 "1Lpassword", "1 - latin","/my/photo.png");
     }
 
@@ -38,10 +38,10 @@ public class CoachRepositoryTest {
     @Sql("oneDefaultUser.sql")
     @Sql("makeUsersCoach.sql")
     public void getCoachForUser(){
-        Member member = getDefaultUser();
-        Coach expected = new Coach(member);
+        Profile profile = getDefaultUser();
+        Coach expected = new Coach(profile);
 
-        Optional<Coach> actual = coachRepository.findCoachByMember(member);
+        Optional<Coach> actual = coachRepository.findCoachByProfile(profile);
 
         Assertions.assertThat(actual).isInstanceOf(Optional.class)
                 .isNotEmpty()
@@ -62,10 +62,10 @@ public class CoachRepositoryTest {
     @Sql("oneDefaultUser.sql")
     @Sql("makeUsersCoach.sql")
     public void addTopicForCoach(){
-        Member member = getDefaultUser();
-        Coach expected = new Coach(member);
+        Profile profile = getDefaultUser();
+        Coach expected = new Coach(profile);
 
-        Optional<Coach> actual = coachRepository.findCoachByMember(member);
+        Optional<Coach> actual = coachRepository.findCoachByProfile(profile);
 
         Assertions.assertThat(actual).isInstanceOf(Optional.class)
                 .isNotEmpty()
@@ -75,7 +75,7 @@ public class CoachRepositoryTest {
         Coach result = actual.get();
         result.getTopics().add(new CoachingTopic(new Topic("Another Topic"), List.of(Grade.FOUR) ));
         coachRepository.save(result);
-        result = coachRepository.findCoachByMember(member).get();
+        result = coachRepository.findCoachByProfile(profile).get();
 
         Assertions.assertThat(result.getXp()).isEqualTo(100);
         Assertions.assertThat(result.getAvailability()).isEqualTo("Whenever you want.");
@@ -87,8 +87,8 @@ public class CoachRepositoryTest {
     @Sql("oneDefaultUser.sql")
     @Sql("makeUsersCoach.sql")
     public void getCoach(){
-        Member member = getDefaultUser();
-        Coach expected = new Coach(member);
+        Profile profile = getDefaultUser();
+        Coach expected = new Coach(profile);
 
         Optional<Coach> actual = coachRepository.findById(1L);
 
@@ -103,10 +103,10 @@ public class CoachRepositoryTest {
     @Sql("oneDefaultUser.sql")
     @Sql("makeUsersCoach.sql")
     public void getCoachByUser(){
-        Member member = getDefaultUser();
-        Coach expected = new Coach(member);
+        Profile profile = getDefaultUser();
+        Coach expected = new Coach(profile);
 
-        Optional<Coach> actual = coachRepository.findCoachByMember(member);
+        Optional<Coach> actual = coachRepository.findCoachByProfile(profile);
 
         Assertions.assertThat(actual).isInstanceOf(Optional.class)
                 .isNotEmpty()
@@ -118,10 +118,10 @@ public class CoachRepositoryTest {
     @Sql("oneDefaultUser.sql")
     @Sql("makeUsersCoach.sql")
     public void getCoachByUserWithEmail(){
-        Member member = getDefaultUser();
-        Coach expected = new Coach(member);
+        Profile profile = getDefaultUser();
+        Coach expected = new Coach(profile);
 
-        Optional<Coach> actual = coachRepository.findCoachByMember_Email(member.getEmail());
+        Optional<Coach> actual = coachRepository.findCoachByProfile_Email(profile.getEmail());
 
         Assertions.assertThat(actual).isInstanceOf(Optional.class)
                 .isNotEmpty()
@@ -133,8 +133,8 @@ public class CoachRepositoryTest {
     @Test
     @Sql("oneDefaultUser.sql")
     public void makeUserCoach(){
-        Member member = getDefaultUser();
-        Coach expected = new Coach(member);
+        Profile profile = getDefaultUser();
+        Coach expected = new Coach(profile);
 
         coachRepository.save(expected);
         Optional<Coach> actual = coachRepository.findById(1L);
@@ -158,14 +158,14 @@ public class CoachRepositoryTest {
     @Sql("oneDefaultUser.sql")
     @Sql("makeUsersCoach.sql")
     public void removeCoachRightsForUser(){
-        coachRepository.deleteCoachByMember(getDefaultUser());
+        coachRepository.deleteCoachByProfile(getDefaultUser());
 
         Assertions.assertThat(coachRepository.findById(1L)).isEmpty();
     }
 
     @Test
     public void assertPreentered(){
-        Optional<Coach> coach = coachRepository.findCoachByMember_Email("coach1@school.org");
+        Optional<Coach> coach = coachRepository.findCoachByProfile_Email("coach1@school.org");
 
         Assertions.assertThat(coach).isNotEmpty();
     }

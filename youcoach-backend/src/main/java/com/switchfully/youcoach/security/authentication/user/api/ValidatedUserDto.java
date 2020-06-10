@@ -2,7 +2,7 @@ package com.switchfully.youcoach.security.authentication.user.api;
 
 import java.util.Objects;
 
-public class SecuredUserDto {
+public class ValidatedUserDto {
 
     private long id;
     private String firstName;
@@ -10,32 +10,32 @@ public class SecuredUserDto {
     private String email;
     private boolean accountEnabled;
 
-    public SecuredUserDto(long id, String firstName, String lastName, String email, boolean accountEnabled) {
+    public ValidatedUserDto(long id, String firstName, String lastName, String email, boolean accountEnabled) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.accountEnabled = accountEnabled;
     }
-    public SecuredUserDto(){}
+    public ValidatedUserDto(){}
 
-    public SecuredUserDto withId(long id){
+    public ValidatedUserDto withId(long id){
         this.id = id;
         return this;
     }
-    public SecuredUserDto withFirstName(String firstName){
+    public ValidatedUserDto withFirstName(String firstName){
         this.firstName = firstName;
         return this;
     }
-    public SecuredUserDto withLastName(String lastname){
+    public ValidatedUserDto withLastName(String lastname){
         this.lastName = lastname;
         return this;
     }
-    public SecuredUserDto withEmail(String email){
+    public ValidatedUserDto withEmail(String email){
         this.email = email;
         return this;
     }
-    public SecuredUserDto withAccountEnabled(boolean accountEnabled){
+    public ValidatedUserDto withAccountEnabled(boolean accountEnabled){
         this.accountEnabled = accountEnabled;
         return this;
     }
@@ -64,12 +64,12 @@ public class SecuredUserDto {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        SecuredUserDto securedUserDto = (SecuredUserDto) o;
-        return id == securedUserDto.id &&
-                accountEnabled == securedUserDto.accountEnabled &&
-                Objects.equals(firstName, securedUserDto.firstName) &&
-                Objects.equals(lastName, securedUserDto.lastName) &&
-                Objects.equals(email, securedUserDto.email);
+        ValidatedUserDto validatedUserDto = (ValidatedUserDto) o;
+        return id == validatedUserDto.id &&
+                accountEnabled == validatedUserDto.accountEnabled &&
+                Objects.equals(firstName, validatedUserDto.firstName) &&
+                Objects.equals(lastName, validatedUserDto.lastName) &&
+                Objects.equals(email, validatedUserDto.email);
     }
 
     @Override

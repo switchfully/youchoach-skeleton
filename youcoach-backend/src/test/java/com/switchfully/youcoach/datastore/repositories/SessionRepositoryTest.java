@@ -1,8 +1,8 @@
 package com.switchfully.youcoach.datastore.repositories;
 
+import com.switchfully.youcoach.domain.profile.Profile;
 import com.switchfully.youcoach.domain.session.Status;
 import com.switchfully.youcoach.domain.session.Session;
-import com.switchfully.youcoach.domain.profile.Member;
 import com.switchfully.youcoach.domain.session.SessionRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,8 +33,8 @@ class SessionRepositoryTest {
     @Test
     @Sql({"oneDefaultUser.sql", "anotherDefaultUser.sql"})
     void itShouldSaveCoachingSessions() {
-        Member coach = new Member(1L, "firstName", "lastName", "firstName@mail.com", "password");
-        Member coachee = new Member(2L, "firstName", "lastName", "firstName@mail.com", "password");
+        Profile coach = new Profile(1L, "firstName", "lastName", "firstName@mail.com", "password");
+        Profile coachee = new Profile(2L, "firstName", "lastName", "firstName@mail.com", "password");
         Session session = new Session(1L, "Mathematics", LocalDateTime.now().plusDays(1), "school", "no remarks", coach, coachee, Status.REQUESTED);
         sessionRepository.save(session);
 
@@ -46,12 +46,12 @@ class SessionRepositoryTest {
     @Test
     @Sql({"oneDefaultUser.sql", "anotherDefaultUser.sql"})
     void findAllByEmail() {
-        Member coach = new Member(1L, "firstName", "lastName", "firstName@mail.com", "password");
-        Member coachee = new Member(2L, "firstName", "lastName", "firstName@mail.com", "password");
+        Profile coach = new Profile(1L, "firstName", "lastName", "firstName@mail.com", "password");
+        Profile coachee = new Profile(2L, "firstName", "lastName", "firstName@mail.com", "password");
         Session session = new Session(1L, "Mathematics", LocalDateTime.now().plusDays(1), "school", "no remarks", coach, coachee, Status.REQUESTED);
         sessionRepository.save(session);
 
-        Optional<Member> optionalUser = Optional.ofNullable(coachee);
+        Optional<Profile> optionalUser = Optional.ofNullable(coachee);
 
         List<Session> actual = sessionRepository.findAllByCoachee(optionalUser);
         assertThat(actual).contains(session);

@@ -6,9 +6,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 
 public class ValidatedUser implements UserDetails {
-    private final String password;
-    private final String username;
-    private final Collection<? extends GrantedAuthority> authorities;
+    private String password;
+    private String username;
+    private Collection<? extends GrantedAuthority> authorities;
     private boolean enabled;
 
     public ValidatedUser(String username, String password, Collection<? extends GrantedAuthority> authorities, boolean enabled){
@@ -16,6 +16,10 @@ public class ValidatedUser implements UserDetails {
         this.password = password;
         this.authorities = authorities;
         this.enabled = enabled;
+    }
+
+    public ValidatedUser() {
+
     }
 
     @Override

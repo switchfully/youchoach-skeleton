@@ -7,13 +7,13 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface ProfileRepository extends JpaRepository<Member, Long> {
+public interface ProfileRepository extends JpaRepository<Profile, Long> {
 
     @Override
-    List<Member> findAll();
+    List<Profile> findAll();
 
     boolean existsByEmail(String email);
 
 
-    Optional<Member> findByEmail(String email);
+    Optional<Profile> findByEmail(String email);
 }

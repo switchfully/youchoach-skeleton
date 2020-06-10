@@ -1,7 +1,7 @@
 package com.switchfully.youcoach.domain.service;
 
 import com.switchfully.youcoach.security.verification.AccountVerification;
-import com.switchfully.youcoach.domain.profile.Member;
+import com.switchfully.youcoach.domain.profile.Profile;
 import com.switchfully.youcoach.security.verification.AccountVerificationRepository;
 import com.switchfully.youcoach.domain.profile.ProfileRepository;
 import com.switchfully.youcoach.email.EmailSenderService;
@@ -22,8 +22,8 @@ public class AccountVerificatorServiceTest {
     private final AccountVerificatorService accountVerificatorService = new AccountVerificatorService(accountVerificationRepository, profileRepository,
             environment, emailSenderService, templateEngine);
 
-    private Member getDefaultUser() {
-        return new Member(1L, "First", "Last", "example@example.com",
+    private Profile getDefaultUser() {
+        return new Profile(1L, "First", "Last", "example@example.com",
                 "1Lpassword", "1 - latin","/my/photo.png");
     }
 

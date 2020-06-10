@@ -2,7 +2,7 @@ package com.switchfully.youcoach.datastore.repositories;
 
 import com.switchfully.youcoach.domain.admin.Admin;
 import com.switchfully.youcoach.domain.admin.AdminRepository;
-import com.switchfully.youcoach.domain.profile.Member;
+import com.switchfully.youcoach.domain.profile.Profile;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,8 +27,8 @@ public class AdminRepositoryTest {
         this.adminRepository = adminRepository;
     }
 
-    private Member getDefaultUser() {
-        return new Member(1L, "First", "Last", "example@example.com",
+    private Profile getDefaultUser() {
+        return new Profile(1L, "First", "Last", "example@example.com",
                 "1Lpassword", "1 - latin","/my/photo.png");
     }
 
@@ -36,10 +36,10 @@ public class AdminRepositoryTest {
     @Sql("oneDefaultUser.sql")
     @Sql("makeUsersAdmin.sql")
     public void getAdminForUser() {
-        Member member = getDefaultUser();
-        Admin expected = new Admin(member);
+        Profile profile = getDefaultUser();
+        Admin expected = new Admin(profile);
 
-        Optional<Admin> admin = adminRepository.findAdminByMember(member);
+        Optional<Admin> admin = adminRepository.findAdminByProfile(profile);
 
         Assertions.assertThat(admin).isInstanceOf(Optional.class).containsInstanceOf(Admin.class)
                 .contains(expected);
@@ -50,8 +50,8 @@ public class AdminRepositoryTest {
     @Sql("oneDefaultUser.sql")
     @Sql("makeUsersAdmin.sql")
     public void getAdminById() {
-        Member member = getDefaultUser();
-        Admin expected = new Admin(member);
+        Profile profile = getDefaultUser();
+        Admin expected = new Admin(profile);
 
         Optional<Admin> admin = adminRepository.findById(1L);
 
@@ -63,10 +63,10 @@ public class AdminRepositoryTest {
     @Test
     @Sql("oneDefaultUser.sql")
     public void makeUserAdmin(){
-        Member member = getDefaultUser();
-        Admin expected = new Admin(member);
+        Profile profile = getDefaultUser();
+        Admin expected = new Admin(profile);
 
-        Admin admin = new Admin(member);
+        Admin admin = new Admin(profile);
         admin = adminRepository.save(admin);
 
         Assertions.assertThat(admin).isEqualTo(expected);
@@ -87,7 +87,7 @@ public class AdminRepositoryTest {
     @Sql("oneDefaultUser.sql")
     @Sql("makeUsersAdmin.sql")
     public void deleteAdminRightsForUser(){
-        adminRepository.deleteAdminByMember(getDefaultUser());
+        adminRepository.deleteAdminByProfile(getDefaultUser());
 
         Assertions.assertThat(adminRepository.findById(1L)).isEmpty();
     }

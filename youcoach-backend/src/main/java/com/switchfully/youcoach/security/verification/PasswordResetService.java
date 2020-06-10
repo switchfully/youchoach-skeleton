@@ -1,6 +1,6 @@
 package com.switchfully.youcoach.security.verification;
 
-import com.switchfully.youcoach.domain.profile.Member;
+import com.switchfully.youcoach.domain.profile.Profile;
 import com.switchfully.youcoach.domain.profile.ProfileRepository;
 import com.switchfully.youcoach.security.verification.api.PasswordChangeRequestDto;
 import com.switchfully.youcoach.security.verification.api.PasswordChangeResultDto;
@@ -43,7 +43,7 @@ public class PasswordResetService {
     public void requestPasswordReset(PasswordResetRequestDto request) {
         if(!verificationService.isSigningAndVerifyingAvailable()) return;
 
-        Optional<Member> userOpt = profileRepository.findByEmail(request.getEmail());
+        Optional<Profile> userOpt = profileRepository.findByEmail(request.getEmail());
         userOpt.ifPresent(user -> {
             try { sendResetEmail(user); } catch(MessagingException ignore){}
         });
@@ -51,10 +51,10 @@ public class PasswordResetService {
 
     public PasswordChangeResultDto performPasswordChange(PasswordChangeRequestDto request){
         if(digitalSigningAvailableAndSignatureMatchesAndPasswordFollowsValidFormat(request)){
-            Optional<Member> userOpt = profileRepository.findByEmail(request.getEmail());
+            Optional<Profile> userOpt = profileRepository.findByEmail(request.getEmail());
             if(userOpt.isPresent()){
-                Member member = userOpt.get();
-                member.setPassword(passwordEncoder.encode(request.getPassword()));
+                Profile profile = userOpt.get();
+                profile.setPassword(passwordEncoder.encode(request.getPassword()));
                 return new PasswordChangeResultDto(true);
             }
         }
@@ -70,19 +70,19 @@ public class PasswordResetService {
     }
 
 
-    public void sendResetEmail(Member member) throws MessagingException {
+    public void sendResetEmail(Profile profile) throws MessagingException {
         String subject = environment.getProperty("app.passwordreset.subject");
         String from = environment.getProperty("app.passwordreset.sender");
 
         final Context ctx = new Context();
-        ctx.setVariable("fullName", member.getFirstName() + " " + member.getLastName());
+        ctx.setVariable("fullName", profile.getFirstName() + " " + profile.getLastName());
         ctx.setVariable("firmName", environment.getProperty("app.passwordreset.firmName"));
         ctx.setVariable("hostName", environment.getProperty("app.passwordreset.hostName"));
         ctx.setVariable("url", environment.getProperty("app.passwordreset.hostName") + "/password-reset");
-        ctx.setVariable("token", verificationService.digitallySignAndEncodeBase64(member.getEmail()));
+        ctx.setVariable("token", verificationService.digitallySignAndEncodeBase64(profile.getEmail()));
         final String body = this.templateEngine.process("PasswordResetTemplate.html", ctx);
 
-        emailSenderService.sendMail(from, member.getEmail(), subject, body, true);
+        emailSenderService.sendMail(from, profile.getEmail(), subject, body, true);
 
     }
 }

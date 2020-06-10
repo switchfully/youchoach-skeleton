@@ -2,12 +2,12 @@ package com.switchfully.youcoach.domain.profile.api;
 
 
 import com.switchfully.youcoach.domain.coach.Coach;
-import com.switchfully.youcoach.domain.profile.Member;
+import com.switchfully.youcoach.domain.profile.Profile;
 import com.switchfully.youcoach.domain.coach.api.CoachListingDto;
 import com.switchfully.youcoach.domain.coach.api.CoachListingEntryDto;
-import com.switchfully.youcoach.security.authentication.user.api.SecuredUserDto;
+import com.switchfully.youcoach.security.authentication.user.api.ValidatedUserDto;
 import com.switchfully.youcoach.domain.coach.api.CoachProfileDto;
-import com.switchfully.youcoach.security.authentication.user.api.CreateSecuredUserDto;
+import com.switchfully.youcoach.security.authentication.user.api.CreateValidatedUserDto;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -17,19 +17,19 @@ import java.util.stream.Collectors;
 @Component
 public class ProfileMapper {
 
-    public SecuredUserDto toUserDto(Member member) {
-        return new SecuredUserDto(member.getId(), member.getFirstName(), member.getLastName(), member.getEmail(), member.isAccountEnabled());
+    public ValidatedUserDto toUserDto(Profile profile) {
+        return new ValidatedUserDto(profile.getId(), profile.getFirstName(), profile.getLastName(), profile.getEmail(), profile.isAccountEnabled());
     }
 
-    public Member toUser(CreateSecuredUserDto createSecuredUserDto) {
-        return new Member(createSecuredUserDto.getFirstName(), createSecuredUserDto.getLastName(), createSecuredUserDto.getEmail(), createSecuredUserDto.getPassword());
+    public Profile toUser(CreateValidatedUserDto createValidatedUserDto) {
+        return new Profile(createValidatedUserDto.getFirstName(), createValidatedUserDto.getLastName(), createValidatedUserDto.getEmail(), createValidatedUserDto.getPassword());
     }
 
-    public List<SecuredUserDto> toUserDto(List<Member> members) {
-        return members.stream().map(this::toUserDto).collect(Collectors.toList());
+    public List<ValidatedUserDto> toUserDto(List<Profile> profiles) {
+        return profiles.stream().map(this::toUserDto).collect(Collectors.toList());
     }
 
-    public ProfileDto toCoacheeProfileDto(Member model) {
+    public ProfileDto toCoacheeProfileDto(Profile model) {
         return new ProfileDto()
                 .withId(model.getId())
                 .withEmail(model.getEmail())
@@ -45,12 +45,12 @@ public class ProfileMapper {
                 .withIntroduction(model.getIntroduction())
                 .withXp(model.getXp())
                 .withCoachingTopics(model.getTopics())
-                .withId(model.getMember().getId())
-                .withEmail(model.getMember().getEmail())
-                .withFirstName(model.getMember().getFirstName())
-                .withLastName(model.getMember().getLastName())
-                .withClassYear(model.getMember().getClassYear())
-                .withPhotoUrl(model.getMember().getPhotoUrl());
+                .withId(model.getProfile().getId())
+                .withEmail(model.getProfile().getEmail())
+                .withFirstName(model.getProfile().getFirstName())
+                .withLastName(model.getProfile().getLastName())
+                .withClassYear(model.getProfile().getClassYear())
+                .withPhotoUrl(model.getProfile().getPhotoUrl());
 
     }
 
@@ -60,11 +60,11 @@ public class ProfileMapper {
         coachList.forEach(coach -> {
             CoachListingEntryDto cli = new CoachListingEntryDto()
                     .withId(coach.getUserId())
-                    .withFirstName(coach.getMember().getFirstName())
-                    .withLastName(coach.getMember().getLastName())
+                    .withFirstName(coach.getProfile().getFirstName())
+                    .withLastName(coach.getProfile().getLastName())
                     .withCoachingTopics(coach.getTopics())
-                    .withUrl(coach.getMember().getPhotoUrl())
-                    .withEmail(coach.getMember().getEmail());
+                    .withUrl(coach.getProfile().getPhotoUrl())
+                    .withEmail(coach.getProfile().getEmail());
             coachListingEntryDtoList.add(cli);
         });
 

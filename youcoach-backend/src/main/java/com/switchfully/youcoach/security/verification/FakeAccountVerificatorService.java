@@ -1,17 +1,16 @@
 package com.switchfully.youcoach.security.verification;
 
-import com.switchfully.youcoach.domain.profile.Member;
+import com.switchfully.youcoach.domain.profile.Profile;
 import com.switchfully.youcoach.domain.profile.ProfileRepository;
 import com.switchfully.youcoach.email.EmailSenderService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Profile;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 
 import javax.mail.MessagingException;
 
-@Profile("development")
+@org.springframework.context.annotation.Profile("development")
 @Service
 public class FakeAccountVerificatorService extends AccountVerificatorService {
     @Autowired
@@ -21,12 +20,12 @@ public class FakeAccountVerificatorService extends AccountVerificatorService {
 
 
     @Override
-    public AccountVerification generateAccountVerification(Member member) {
-        return super.generateAccountVerification(member);
+    public AccountVerification generateAccountVerification(Profile profile) {
+        return super.generateAccountVerification(profile);
     }
 
     @Override
-    public void sendVerificationEmail(Member member) throws MessagingException {
+    public void sendVerificationEmail(Profile profile) throws MessagingException {
         // ignored on purpose
     }
 
@@ -36,13 +35,13 @@ public class FakeAccountVerificatorService extends AccountVerificatorService {
     }
 
     @Override
-    public void createAccountVerification(Member member){
-        super.createAccountVerification(member);
+    public void createAccountVerification(Profile profile){
+        super.createAccountVerification(profile);
     }
 
     @Override
-    public void removeAccountVerification(Member member){
-        super.removeAccountVerification(member);
+    public void removeAccountVerification(Profile profile){
+        super.removeAccountVerification(profile);
     }
 
     @Override

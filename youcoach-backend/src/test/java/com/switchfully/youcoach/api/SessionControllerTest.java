@@ -7,7 +7,7 @@ import com.switchfully.youcoach.domain.session.api.CreateSessionDto;
 import com.switchfully.youcoach.domain.session.api.SessionDto;
 import com.switchfully.youcoach.domain.profile.ProfileService;
 import com.switchfully.youcoach.domain.session.SessionService;
-import com.switchfully.youcoach.security.authentication.user.SecuredUserService;
+import com.switchfully.youcoach.security.authentication.user.ValidatedUserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
@@ -48,7 +48,7 @@ class SessionControllerTest {
     @Autowired
     WebApplicationContext webApplicationContext;
     @Autowired
-    SecuredUserService securedUserService;
+    ValidatedUserService validatedUserService;
     @Autowired
     Environment environment;
     @Autowired

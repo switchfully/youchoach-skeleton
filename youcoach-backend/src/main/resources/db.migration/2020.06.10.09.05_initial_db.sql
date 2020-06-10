@@ -12,15 +12,15 @@ create table admins
 );
 create table coaches
 (
+    id           number not null,
     availability varchar(255),
     introduction varchar(255),
     xp           integer,
-    user_id      number not null,
-    primary key (user_id)
+    primary key (id)
 );
 create table coaches_topics
 (
-    coach_user_id number not null,
+    coach_id number not null,
     topics_id     number not null
 );
 create table coaching_topic
@@ -34,7 +34,7 @@ create table coaching_topic_grades
     coaching_topic_id number not null,
     grades            integer
 );
-create table members
+create table profile
 (
     id              number       not null,
     account_enabled boolean      not null,

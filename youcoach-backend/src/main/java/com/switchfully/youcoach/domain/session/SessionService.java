@@ -1,7 +1,7 @@
 package com.switchfully.youcoach.domain.session;
 
 import com.switchfully.youcoach.domain.coach.Coach;
-import com.switchfully.youcoach.domain.profile.Member;
+import com.switchfully.youcoach.domain.profile.Profile;
 import com.switchfully.youcoach.domain.coach.CoachRepository;
 import com.switchfully.youcoach.domain.profile.ProfileRepository;
 import com.switchfully.youcoach.domain.session.api.CreateSessionDto;
@@ -40,20 +40,20 @@ public class SessionService {
     public SessionDto save(CreateSessionDto createSessionDto, String username) {
         Coach coach = coachRepository.findById(createSessionDto.getCoachId())
                 .orElseThrow(CoachNotFoundException::new);
-        Member coachee = profileRepository.findByEmail(username)
+        Profile coachee = profileRepository.findByEmail(username)
                 .orElseThrow(() -> new ProfileNotFoundException("Username: " + username));
-        return sessionMapper.toDto(sessionRepository.save(sessionMapper.toModel(createSessionDto, coach.getMember(), coachee)));
+        return sessionMapper.toDto(sessionRepository.save(sessionMapper.toModel(createSessionDto, coach.getProfile(), coachee)));
     }
 
     public List<SessionDto> getCoachingSessionsForUser(String email) {
-        Optional<Member> user = profileRepository.findByEmail(email);
+        Optional<Profile> user = profileRepository.findByEmail(email);
         List<Session> sessionList = sessionRepository.findAllByCoachee(user);
         setStatusToAutomaticallyClosedWhenTimeIsPast(sessionList);
         return sessionMapper.toDto(sessionList);
     }
 
     public List<SessionDto> getCoachingSessionsForCoach(String email) {
-        Optional<Member> user = profileRepository.findByEmail(email);
+        Optional<Profile> user = profileRepository.findByEmail(email);
         List<Session> sessionList = sessionRepository.findAllByCoach(user);
         setStatusToAutomaticallyClosedWhenTimeIsPast(sessionList);
         return sessionMapper.toDto(sessionList);

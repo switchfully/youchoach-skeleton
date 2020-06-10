@@ -1,9 +1,9 @@
 package com.switchfully.youcoach.domain.service.coachingsession;
 
+import com.switchfully.youcoach.domain.profile.Profile;
 import com.switchfully.youcoach.domain.session.Status;
 import com.switchfully.youcoach.domain.coach.Coach;
 import com.switchfully.youcoach.domain.session.Session;
-import com.switchfully.youcoach.domain.profile.Member;
 import com.switchfully.youcoach.domain.coach.CoachRepository;
 import com.switchfully.youcoach.domain.session.SessionRepository;
 import com.switchfully.youcoach.domain.profile.ProfileRepository;
@@ -26,7 +26,7 @@ import static org.mockito.Mockito.when;
 
 class SessionServiceTest {
 
-    Session session = new Session(1L, "Mathematics", LocalDateTime.now(), "school", "no remarks", new Member(1L, null, null, null, null), null, Status.REQUESTED);
+    Session session = new Session(1L, "Mathematics", LocalDateTime.now(), "school", "no remarks", new Profile(1L, null, null, null, null), null, Status.REQUESTED);
     CreateSessionDto createSessionDto = new CreateSessionDto("Mathematics", "30/05/2020", "11:50", "school", "no remarks", 1L);
     SessionDto sessionDto = new SessionDto(1L, "Mathematics", "30/05/2020", "11:50", "school", "no remarks", new SessionDto.Person(1L, "Name"), new SessionDto.Person(2L, "Name"), Status.REQUESTED);
 
@@ -40,11 +40,11 @@ class SessionServiceTest {
     @Test
     @Sql({"../../../datastore/repositories/oneDefaultUser.sql", "../../../datastore/repositories/makeUsersCoach.sql"})
     void itShouldSave_andReturn_aDto() {
-        when(sessionMapper.toModel(any(CreateSessionDto.class), any(Member.class), any(Member.class))).thenReturn(session);
+        when(sessionMapper.toModel(any(CreateSessionDto.class), any(Profile.class), any(Profile.class))).thenReturn(session);
         when(sessionMapper.toDto(any(Session.class))).thenReturn(sessionDto);
         when(sessionRepository.save(any(Session.class))).thenReturn(session);
-        when(profileRepository.findByEmail("example@example.com")).thenReturn(Optional.of(new Member(2L, null, null, null, null)));
-        when(coachRepository.findById(1L)).thenReturn(Optional.of(new Coach(new Member(1L, null, null, null, null))));
+        when(profileRepository.findByEmail("example@example.com")).thenReturn(Optional.of(new Profile(2L, null, null, null, null)));
+        when(coachRepository.findById(1L)).thenReturn(Optional.of(new Coach(new Profile(1L, null, null, null, null))));
 
         SessionDto actual = sessionService.save(createSessionDto, "example@example.com");
 
@@ -56,13 +56,13 @@ class SessionServiceTest {
     @Sql({"../../../datastore/repositories/oneDefaultUser.sql", "../../../datastore/repositories/makeUsersCoach.sql"})
     void itShouldget_list() {
 
-        Optional<Member> optionalUser = Optional.of(new Member(2L, null, null, null, null));
+        Optional<Profile> optionalUser = Optional.of(new Profile(2L, null, null, null, null));
 
-        when(sessionMapper.toModel(any(CreateSessionDto.class), any(Member.class), any(Member.class))).thenReturn(session);
+        when(sessionMapper.toModel(any(CreateSessionDto.class), any(Profile.class), any(Profile.class))).thenReturn(session);
         when(sessionMapper.toDto(any(Session.class))).thenReturn(sessionDto);
         when(sessionRepository.save(any(Session.class))).thenReturn(session);
         when(profileRepository.findByEmail("example@example.com")).thenReturn(optionalUser);
-        when(coachRepository.findById(1L)).thenReturn(Optional.of(new Coach(new Member(1L, null, null, null, null))));
+        when(coachRepository.findById(1L)).thenReturn(Optional.of(new Coach(new Profile(1L, null, null, null, null))));
 //        when(coachingSessionService.getCoachingSessionsForUser("example@example.com")).thenReturn(List.of(coachingSessionDto));
         when(sessionRepository.findAllByCoachee(optionalUser)).thenReturn(List.of(session));
 

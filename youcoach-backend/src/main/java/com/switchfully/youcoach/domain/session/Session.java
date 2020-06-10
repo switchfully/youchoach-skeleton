@@ -1,6 +1,6 @@
 package com.switchfully.youcoach.domain.session;
 
-import com.switchfully.youcoach.domain.profile.Member;
+import com.switchfully.youcoach.domain.profile.Profile;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -23,17 +23,17 @@ public class Session {
     private String remarks;
     @OneToOne
     @JoinColumn(name = "coach_id")
-    private Member coach;
+    private Profile coach;
     @OneToOne
     @JoinColumn(name = "coachee_id")
-    private Member coachee;
+    private Profile coachee;
     @Column(name= "status")
     private Status status;
 
     public Session() {
     }
 
-    public Session(String subject, LocalDateTime dateAndTime, String location, String remarks, Member coach, Member coachee, Status status) {
+    public Session(String subject, LocalDateTime dateAndTime, String location, String remarks, Profile coach, Profile coachee, Status status) {
         this.subject = subject;
         this.dateAndTime = dateAndTime;
         this.location = location;
@@ -43,7 +43,7 @@ public class Session {
         this.status = status;
     }
 
-    public Session(long id, String subject, LocalDateTime dateAndTime, String location, String remarks, Member coach, Member coachee, Status status) {
+    public Session(long id, String subject, LocalDateTime dateAndTime, String location, String remarks, Profile coach, Profile coachee, Status status) {
         this.id = id;
         this.subject = subject;
         this.dateAndTime = dateAndTime;
@@ -74,11 +74,11 @@ public class Session {
         return remarks;
     }
 
-    public Member getCoach() {
+    public Profile getCoach() {
         return coach;
     }
 
-    public Member getCoachee() {
+    public Profile getCoachee() {
         return coachee;
     }
 

@@ -6,15 +6,16 @@ import com.switchfully.youcoach.security.verification.api.ResendVerificationDto;
 import com.switchfully.youcoach.security.verification.PasswordResetService;
 import com.switchfully.youcoach.domain.profile.api.ProfileUpdatedDto;
 import com.switchfully.youcoach.domain.profile.api.ProfileDto;
-import com.switchfully.youcoach.security.authentication.user.api.CreateSecuredUserDto;
+import com.switchfully.youcoach.security.authentication.user.api.CreateValidatedUserDto;
 import com.switchfully.youcoach.domain.profile.api.UpdateProfileDto;
-import com.switchfully.youcoach.security.authentication.user.api.SecuredUserDto;
+import com.switchfully.youcoach.security.authentication.user.api.ValidatedUserDto;
 import com.switchfully.youcoach.security.verification.api.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
@@ -37,9 +38,9 @@ public class ProfileController {
 
     @PostMapping(produces = "application/json", consumes = "application/json")
     @ResponseStatus(HttpStatus.CREATED)
-    public SecuredUserDto createUser(@RequestBody CreateSecuredUserDto createSecuredUserDto) {
+    public ValidatedUserDto createUser(@RequestBody CreateValidatedUserDto createValidatedUserDto) {
         LOGGER.info("user was added");
-        return profileService.createUser(createSecuredUserDto);
+        return profileService.createUser(createValidatedUserDto);
     }
 
     @PreAuthorize("hasRole('ROLE_COACHEE')")
@@ -82,7 +83,7 @@ public class ProfileController {
 
     @PreAuthorize("hasRole('ROLE_COACH')")
     @GetMapping(produces = "application/json;charset=UTF-8", path="/coach/profile")
-    public CoachProfileDto getCoachProfile(Principal principal){
+    public CoachProfileDto getCoachProfile(Authentication principal){
         return profileService.getCoachProfileForUserWithEmail(principal.getName());
     }
 

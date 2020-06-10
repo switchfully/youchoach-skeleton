@@ -1,6 +1,6 @@
 package com.switchfully.youcoach.domain.admin;
 
-import com.switchfully.youcoach.domain.profile.Member;
+import com.switchfully.youcoach.domain.profile.Profile;
 
 import javax.persistence.*;
 import java.util.Objects;
@@ -14,19 +14,19 @@ public class Admin {
 
     @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name="id")
-    private Member member;
+    private Profile profile;
 
     private Admin(){
 
     }
 
-    public Admin(Member member){
-        this.id = member == null ? null : member.getId();
-        this.member = member;
+    public Admin(Profile profile){
+        this.id = profile == null ? null : profile.getId();
+        this.profile = profile;
     }
 
-    public Member getMember() {
-        return member;
+    public Profile getProfile() {
+        return profile;
     }
 
     @Override

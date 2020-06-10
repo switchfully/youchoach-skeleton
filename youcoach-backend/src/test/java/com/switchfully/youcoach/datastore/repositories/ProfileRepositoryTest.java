@@ -1,7 +1,7 @@
 package com.switchfully.youcoach.datastore.repositories;
 
 
-import com.switchfully.youcoach.domain.profile.Member;
+import com.switchfully.youcoach.domain.profile.Profile;
 import com.switchfully.youcoach.domain.profile.ProfileRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -27,25 +27,25 @@ class ProfileRepositoryTest {
     @Autowired
     private ProfileRepository profileRepository;
 
-    private Member getDefaultUser() {
-        return new Member(1,"First", "Last","example@example.com","1lpassword",
+    private Profile getDefaultProfile() {
+        return new Profile(1,"First", "Last","example@example.com","1lpassword",
                 "1 - latin","/my/photo.png");
     }
 
     @Test
     void saveAUser() {
-        Member member = new Member(1L, "Test", "Service", "test@ehb.be", "test123");
-        profileRepository.save(member);
-        Member actualMember = profileRepository.findById(member.getId()).get();
-        assertThat(actualMember.getId()).isEqualTo(member.getId());
+        Profile profile = new Profile(1L, "Test", "Service", "test@ehb.be", "test123");
+        profileRepository.save(profile);
+        Profile actualProfile = profileRepository.findById(profile.getId()).get();
+        assertThat(actualProfile.getId()).isEqualTo(profile.getId());
     }
 
     @Test
     @Sql("oneDefaultUser.sql")
     void retrieveProfile(){
-        Member expected = new Member(1L, "First", "Last","example@example.com",
+        Profile expected = new Profile(1L, "First", "Last","example@example.com",
                 "1Lpassword","1 - Latin","/my/photo.png");
-        Member actual = profileRepository.findById(1L).get();
+        Profile actual = profileRepository.findById(1L).get();
         Assertions.assertThat(actual).isEqualTo(expected);
     }
 
@@ -62,7 +62,7 @@ class ProfileRepositoryTest {
     @Test
     @Sql("oneDefaultUser.sql")
     void emailDuplication() {
-        Member duplicateEmail = new Member(2,"DuplicateFirst","DuplicateLast","example@example.com",
+        Profile duplicateEmail = new Profile(2,"DuplicateFirst","DuplicateLast","example@example.com",
                 "1Lpassword","1 - latin","/my/photo.png");
         profileRepository.save(duplicateEmail);
 
@@ -73,7 +73,7 @@ class ProfileRepositoryTest {
     @Sql("oneDefaultUser.sql")
     void findByEmail(){
         assertThat(profileRepository.findByEmail("example@example.com")).isInstanceOf(Optional.class);
-        assertThat(profileRepository.findByEmail("example@example.com")).containsInstanceOf(Member.class);
+        assertThat(profileRepository.findByEmail("example@example.com")).containsInstanceOf(Profile.class);
         assertThat(profileRepository.findByEmail("example@example.com").get().getId()).isEqualTo(1);
     }
 
@@ -84,11 +84,11 @@ class ProfileRepositoryTest {
 
     @Test
     void byDefaultAccountEnabledIsFalse(){
-        Member member = getDefaultUser();
-        member = profileRepository.save(member);
-        member = profileRepository.findByEmail(member.getEmail()).get();
+        Profile profile = getDefaultProfile();
+        profile = profileRepository.save(profile);
+        profile = profileRepository.findByEmail(profile.getEmail()).get();
 
-        Assertions.assertThat(member.isAccountEnabled()).isFalse();
+        Assertions.assertThat(profile.isAccountEnabled()).isFalse();
     }
 
 }

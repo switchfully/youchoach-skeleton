@@ -1,11 +1,10 @@
 package com.switchfully.youcoach.security.authentication.user;
 
 
-import com.switchfully.youcoach.domain.profile.Member;
+import com.switchfully.youcoach.domain.profile.Profile;
 import com.switchfully.youcoach.domain.admin.AdminRepository;
 import com.switchfully.youcoach.domain.coach.CoachRepository;
 import com.switchfully.youcoach.domain.profile.ProfileRepository;
-import com.switchfully.youcoach.domain.profile.api.UpdateProfileDto;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
@@ -25,17 +24,17 @@ import java.util.Date;
 
 
 @Service
-public class SecuredUserService implements UserDetailsService {
+public class ValidatedUserService implements UserDetailsService {
 
     private static final int TOKEN_TIME_TO_LIVE  = 3600000;
 
-    private final ProfileRepository userRepository;
+    private final ProfileRepository profileRepository;
     private final AdminRepository adminRepository;
     private final CoachRepository coachRepository;
     private String jwtSecret;
 
-    public SecuredUserService(ProfileRepository profileRepository, CoachRepository coachRepository, AdminRepository adminRepository, @Value("${jwt.secret}") String jwtSecret) {
-        this.userRepository = profileRepository;
+    public ValidatedUserService(ProfileRepository profileRepository, CoachRepository coachRepository, AdminRepository adminRepository, @Value("${jwt.secret}") String jwtSecret) {
+        this.profileRepository = profileRepository;
         this.coachRepository = coachRepository;
         this.adminRepository = adminRepository;
         this.jwtSecret = jwtSecret;
@@ -43,25 +42,25 @@ public class SecuredUserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(final String userName) throws UsernameNotFoundException {
-        Member member = userRepository.findByEmail(userName)
+        Profile profile = profileRepository.findByEmail(userName)
                 .orElseThrow(() -> new UsernameNotFoundException(userName));
 
-        Collection<GrantedAuthority> authorities = determineGrantedAuthorities(member);
+        Collection<GrantedAuthority> authorities = determineGrantedAuthorities(profile);
 
-        return new ValidatedUser(member.getEmail(), member.getPassword(), authorities, member.isAccountEnabled());
+        return new ValidatedUser(profile.getEmail(), profile.getPassword(), authorities, profile.isAccountEnabled());
     }
 
-    public Collection<GrantedAuthority> determineGrantedAuthorities(Member member) {
+    public Collection<GrantedAuthority> determineGrantedAuthorities(Profile profile) {
         Collection<GrantedAuthority> authorities = new ArrayList<>();
 
         authorities.add(UserRoles.ROLE_COACHEE);
-        if(isAdmin(member)) authorities.add(UserRoles.ROLE_ADMIN);
-        if(isCoach(member)) authorities.add(UserRoles.ROLE_COACH);
+        if(isAdmin(profile)) authorities.add(UserRoles.ROLE_ADMIN);
+        if(isCoach(profile)) authorities.add(UserRoles.ROLE_COACH);
         return authorities;
     }
 
-    private boolean isAdmin(Member member){
-        return adminRepository.findAdminByMember(member).isPresent();
+    private boolean isAdmin(Profile profile){
+        return adminRepository.findAdminByProfile(profile).isPresent();
     }
 
     public boolean isAdmin(String email){
@@ -69,11 +68,10 @@ public class SecuredUserService implements UserDetailsService {
         return ud.getAuthorities().contains(UserRoles.ROLE_ADMIN);
     }
 
-    private boolean isCoach(Member member){
-        return coachRepository.findCoachByMember(member).isPresent();
+    private boolean isCoach(Profile profile){
+        return coachRepository.findCoachByProfile(profile).isPresent();
 
     }
-
 
     public String generateAuthorizationBearerTokenForUser(String email) {
         UserDetails ud = loadUserByUsername(email);
