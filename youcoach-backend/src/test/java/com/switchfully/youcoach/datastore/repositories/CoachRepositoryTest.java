@@ -15,18 +15,13 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 
-@AutoConfigureTestDatabase
 @DataJpaTest
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
-@Transactional
 public class CoachRepositoryTest {
     private final CoachRepository coachRepository;
-    private final ProfileRepository profileRepository;
 
     @Autowired
-    CoachRepositoryTest(CoachRepository coachRepository, ProfileRepository profileRepository){
+    CoachRepositoryTest(CoachRepository coachRepository){
         this.coachRepository = coachRepository;
-        this.profileRepository = profileRepository;
     }
 
     private Profile getDefaultUser() {

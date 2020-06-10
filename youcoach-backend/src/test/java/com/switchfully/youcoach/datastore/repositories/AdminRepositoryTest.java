@@ -14,10 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
-@AutoConfigureTestDatabase
 @DataJpaTest
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
-@Transactional
 public class AdminRepositoryTest {
 
     private final AdminRepository adminRepository;
