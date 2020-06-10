@@ -2,7 +2,7 @@ package com.switchfully.youcoach.domain.session.api;
 
 import com.switchfully.youcoach.domain.session.Status;
 import com.switchfully.youcoach.domain.session.Session;
-import com.switchfully.youcoach.domain.member.Member;
+import com.switchfully.youcoach.domain.profile.Member;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 

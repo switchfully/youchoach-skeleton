@@ -2,10 +2,10 @@ package com.switchfully.youcoach.security.authentication.user;
 
 import com.switchfully.youcoach.domain.admin.Admin;
 import com.switchfully.youcoach.domain.coach.Coach;
-import com.switchfully.youcoach.domain.member.Member;
+import com.switchfully.youcoach.domain.profile.Member;
 import com.switchfully.youcoach.domain.admin.AdminRepository;
 import com.switchfully.youcoach.domain.coach.CoachRepository;
-import com.switchfully.youcoach.domain.member.MemberRepository;
+import com.switchfully.youcoach.domain.profile.ProfileRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -14,10 +14,10 @@ import java.util.Optional;
 
 
 public class SecuredUserServiceDatabaseBasedAuthoritiesTest {
-    private final MemberRepository memberRepository = Mockito.mock(MemberRepository.class);
+    private final ProfileRepository profileRepository = Mockito.mock(ProfileRepository.class);
     private final CoachRepository coachRepository = Mockito.mock(CoachRepository.class);
     private final AdminRepository adminRepository = Mockito.mock(AdminRepository.class);
-    private final SecuredUserService securedUserService = new SecuredUserService(memberRepository, coachRepository, adminRepository);
+    private final SecuredUserService securedUserService = new SecuredUserService(profileRepository, coachRepository, adminRepository, "jwtToken");
 
     private Member getDefaultUser() {
         return new Member(1L, "First", "Last", "example@example.com",

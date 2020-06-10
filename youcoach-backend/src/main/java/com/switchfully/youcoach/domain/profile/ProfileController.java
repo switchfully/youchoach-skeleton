@@ -1,13 +1,13 @@
-package com.switchfully.youcoach.domain.member;
+package com.switchfully.youcoach.domain.profile;
 
 import com.switchfully.youcoach.domain.coach.api.CoachListingDto;
 import com.switchfully.youcoach.domain.coach.api.CoachProfileDto;
 import com.switchfully.youcoach.security.verification.api.ResendVerificationDto;
 import com.switchfully.youcoach.security.verification.PasswordResetService;
-import com.switchfully.youcoach.domain.member.api.CoacheeMemberUpdatedDto;
-import com.switchfully.youcoach.domain.member.api.CoacheeProfileDto;
+import com.switchfully.youcoach.domain.profile.api.ProfileUpdatedDto;
+import com.switchfully.youcoach.domain.profile.api.ProfileDto;
 import com.switchfully.youcoach.security.authentication.user.api.CreateSecuredUserDto;
-import com.switchfully.youcoach.domain.member.api.UpdateMemberDto;
+import com.switchfully.youcoach.domain.profile.api.UpdateProfileDto;
 import com.switchfully.youcoach.security.authentication.user.api.SecuredUserDto;
 import com.switchfully.youcoach.security.verification.api.*;
 import org.slf4j.Logger;
@@ -24,14 +24,14 @@ import java.security.Principal;
 @RestController
 @RequestMapping(path = "/users")
 @CrossOrigin
-public class MemberController {
-    private final MemberService memberService;
-    private final static Logger LOGGER = LoggerFactory.getLogger(MemberController.class);
+public class ProfileController {
+    private final ProfileService profileService;
+    private final static Logger LOGGER = LoggerFactory.getLogger(ProfileController.class);
     private final PasswordResetService passwordResetService;
 
     @Autowired
-    public MemberController(MemberService memberService, PasswordResetService passwordResetService) {
-        this.memberService = memberService;
+    public ProfileController(ProfileService profileService, PasswordResetService passwordResetService) {
+        this.profileService = profileService;
         this.passwordResetService = passwordResetService;
     }
 
@@ -39,69 +39,69 @@ public class MemberController {
     @ResponseStatus(HttpStatus.CREATED)
     public SecuredUserDto createUser(@RequestBody CreateSecuredUserDto createSecuredUserDto) {
         LOGGER.info("user was added");
-        return memberService.createUser(createSecuredUserDto);
+        return profileService.createUser(createSecuredUserDto);
     }
 
     @PreAuthorize("hasRole('ROLE_COACHEE')")
     @GetMapping(produces = "application/json;charset=UTF-8", path = "/profile")
-    public CoacheeProfileDto getCoacheeProfile(Principal principal){
-        return memberService.getCoacheeProfile(principal.getName());
+    public ProfileDto getCoacheeProfile(Principal principal){
+        return profileService.getCoacheeProfile(principal.getName());
     }
 
     @PreAuthorize("hasRole('ROLE_COACHEE')")
     @GetMapping(produces = "application/json;charset=UTF-8", path = "/find-coach")
     public CoachListingDto getCoachProfiles(){
-        return memberService.getCoachProfiles();
+        return profileService.getCoachProfiles();
     }
 
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping(produces = "application/json;charset=UTF-8", path = "/profile/{id}")
-    public CoacheeProfileDto getSpecificCoacheeProfile(@PathVariable("id") long id){
-        return memberService.getCoacheeProfile(id);
+    public ProfileDto getSpecificCoacheeProfile(@PathVariable("id") long id){
+        return profileService.getCoacheeProfile(id);
     }
 
     @PreAuthorize("hasRole('ROLE_COACHEE')")
     @GetMapping(produces = "application/json;charset=UTF-8", path = "/coach/profile/{id}")
     public CoachProfileDto getSpecificCoachProfile(Principal principal, @PathVariable("id") long id){
-        return memberService.getCoachProfile(principal, id);
+        return profileService.getCoachProfile(principal, id);
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping(produces = "application/json;charset=UTF-8", path = "/profile/{id}")
-    public CoacheeMemberUpdatedDto updateCoacheeProfile(@RequestBody UpdateMemberDto updateMemberDto, @PathVariable("id") long id){
-        String email = memberService.getUserById(id).getEmail();
-        return memberService.updateProfile(email, updateMemberDto);
+    public ProfileUpdatedDto updateCoacheeProfile(@RequestBody UpdateProfileDto updateProfileDto, @PathVariable("id") long id){
+        String email = profileService.getUserById(id).getEmail();
+        return profileService.updateProfile(email, updateProfileDto);
     }
 
     @PreAuthorize("hasRole('ROLE_COACHEE')")
     @PutMapping(produces = "application/json;charset=UTF-8", path = "/profile")
-    public CoacheeMemberUpdatedDto updateCoacheeProfile(Principal principal, @RequestBody UpdateMemberDto updateMemberDto){
-        return memberService.updateProfile(principal.getName(), updateMemberDto);
+    public ProfileUpdatedDto updateCoacheeProfile(Principal principal, @RequestBody UpdateProfileDto updateProfileDto){
+        return profileService.updateProfile(principal.getName(), updateProfileDto);
     }
 
     @PreAuthorize("hasRole('ROLE_COACH')")
     @GetMapping(produces = "application/json;charset=UTF-8", path="/coach/profile")
     public CoachProfileDto getCoachProfile(Principal principal){
-        return memberService.getCoachProfileForUserWithEmail(principal.getName());
+        return profileService.getCoachProfileForUserWithEmail(principal.getName());
     }
 
     @PreAuthorize("hasRole('ROLE_COACH')")
     @PutMapping(produces = "application/json;charset=UTF-8", path="/coach/profile")
     public CoachProfileDto updateCoachInformation(Principal principal, @RequestBody CoachProfileDto coachProfileDto){
-        return memberService.updateCoachInformation(principal.getName(),coachProfileDto);
+        return profileService.updateCoachInformation(principal.getName(),coachProfileDto);
     }
 
     @PreAuthorize("isAnonymous()")
     @PostMapping(consumes = "application/json;charset=UTF-8", produces = "application/json;charset=UTF-8", path="/validate")
     public VerificationResultDto validateAccount(@RequestBody ValidateAccountDto validationData){
-        return memberService.validateAccount(validationData);
+        return profileService.validateAccount(validationData);
     }
 
     @PreAuthorize("isAnonymous()")
     @PatchMapping(consumes = "application/json;charset=UTF-8", produces = "application/json;charset=UTF-8", path = "/validate")
     public ResendVerificationDto resendValidation(@RequestBody ResendVerificationDto validationData){
-        return memberService.resendValidation(validationData);
+        return profileService.resendValidation(validationData);
     }
 
     @PreAuthorize("isAnonymous()")

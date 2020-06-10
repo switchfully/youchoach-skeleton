@@ -1,6 +1,6 @@
 package com.switchfully.youcoach.datastore.repositories;
 
-import com.switchfully.youcoach.domain.member.Member;
+import com.switchfully.youcoach.domain.profile.Member;
 import org.mockito.Mockito;
 import org.springframework.core.env.Environment;
 

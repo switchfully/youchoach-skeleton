@@ -1,6 +1,6 @@
-package com.switchfully.youcoach.domain.member.api;
+package com.switchfully.youcoach.domain.profile.api;
 
-public class CoacheeMemberUpdatedDto extends UpdateMemberDto {
+public class ProfileUpdatedDto extends ProfileDto {
     private String token;
 
     public String getToken() {

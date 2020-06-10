@@ -1,7 +1,7 @@
 package com.switchfully.youcoach.security.verification;
 
-import com.switchfully.youcoach.domain.member.Member;
-import com.switchfully.youcoach.domain.member.MemberRepository;
+import com.switchfully.youcoach.domain.profile.Member;
+import com.switchfully.youcoach.domain.profile.ProfileRepository;
 import com.switchfully.youcoach.security.verification.api.PasswordChangeRequestDto;
 import com.switchfully.youcoach.security.verification.api.PasswordChangeResultDto;
 import com.switchfully.youcoach.security.verification.api.PasswordResetRequestDto;
@@ -21,19 +21,19 @@ import java.util.Optional;
 @Transactional
 public class PasswordResetService {
     private final PasswordEncoder passwordEncoder;
-    private final MemberRepository memberRepository;
+    private final ProfileRepository profileRepository;
     private final EmailSenderService emailSenderService;
     private final Environment environment;
     private final VerificationService verificationService;
     private final TemplateEngine templateEngine;
 
     @Autowired
-    public PasswordResetService(PasswordEncoder passwordEncoder, MemberRepository memberRepository,
+    public PasswordResetService(PasswordEncoder passwordEncoder, ProfileRepository profileRepository,
                                 EmailSenderService emailSenderService, Environment environment,
                                 VerificationService verificationService, TemplateEngine templateEngine){
 
         this.passwordEncoder = passwordEncoder;
-        this.memberRepository = memberRepository;
+        this.profileRepository = profileRepository;
         this.emailSenderService = emailSenderService;
         this.environment = environment;
         this.verificationService = verificationService;
@@ -43,7 +43,7 @@ public class PasswordResetService {
     public void requestPasswordReset(PasswordResetRequestDto request) {
         if(!verificationService.isSigningAndVerifyingAvailable()) return;
 
-        Optional<Member> userOpt = memberRepository.findByEmail(request.getEmail());
+        Optional<Member> userOpt = profileRepository.findByEmail(request.getEmail());
         userOpt.ifPresent(user -> {
             try { sendResetEmail(user); } catch(MessagingException ignore){}
         });
@@ -51,7 +51,7 @@ public class PasswordResetService {
 
     public PasswordChangeResultDto performPasswordChange(PasswordChangeRequestDto request){
         if(digitalSigningAvailableAndSignatureMatchesAndPasswordFollowsValidFormat(request)){
-            Optional<Member> userOpt = memberRepository.findByEmail(request.getEmail());
+            Optional<Member> userOpt = profileRepository.findByEmail(request.getEmail());
             if(userOpt.isPresent()){
                 Member member = userOpt.get();
                 member.setPassword(passwordEncoder.encode(request.getPassword()));

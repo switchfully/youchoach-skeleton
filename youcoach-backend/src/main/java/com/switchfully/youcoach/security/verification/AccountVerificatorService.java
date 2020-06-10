@@ -1,7 +1,7 @@
 package com.switchfully.youcoach.security.verification;
 
-import com.switchfully.youcoach.domain.member.Member;
-import com.switchfully.youcoach.domain.member.MemberRepository;
+import com.switchfully.youcoach.domain.profile.Member;
+import com.switchfully.youcoach.domain.profile.ProfileRepository;
 import com.switchfully.youcoach.security.verification.exception.AccountVerificationFailedException;
 import com.switchfully.youcoach.email.EmailSenderService;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -23,16 +23,16 @@ import java.util.concurrent.atomic.AtomicBoolean;
 @Transactional
 public class AccountVerificatorService implements AccountVerificator {
     private final AccountVerificationRepository accountVerificationRepository;
-    private final MemberRepository memberRepository;
+    private final ProfileRepository profileRepository;
     private final Environment environment;
     private final EmailSenderService emailSenderService;
     private final TemplateEngine templateEngine;
 
     @Autowired
-    public AccountVerificatorService(AccountVerificationRepository accountVerificationRepository, MemberRepository memberRepository, Environment environment,
+    public AccountVerificatorService(AccountVerificationRepository accountVerificationRepository, ProfileRepository profileRepository, Environment environment,
                                      EmailSenderService emailSenderService, TemplateEngine templateEngine){
         this.accountVerificationRepository = accountVerificationRepository;
-        this.memberRepository = memberRepository;
+        this.profileRepository = profileRepository;
         this.environment = environment;
         this.emailSenderService = emailSenderService;
         this.templateEngine = templateEngine;
@@ -78,7 +78,7 @@ public class AccountVerificatorService implements AccountVerificator {
     }
     @Override
     public boolean resendVerificationEmailFor(String email){
-        Optional<Member> userOpt = memberRepository.findByEmail(email);
+        Optional<Member> userOpt = profileRepository.findByEmail(email);
         return recreateVerificationAndResendEmailIfUserFound(userOpt);
     }
 
@@ -110,7 +110,7 @@ public class AccountVerificatorService implements AccountVerificator {
 
     @Override
     public void enableAccount(String email){
-        Member member = memberRepository.findByEmail(email).orElseThrow(AccountVerificationFailedException::new);
+        Member member = profileRepository.findByEmail(email).orElseThrow(AccountVerificationFailedException::new);
         member.setAccountEnabled(true);
         removeAccountVerification(member);
     }

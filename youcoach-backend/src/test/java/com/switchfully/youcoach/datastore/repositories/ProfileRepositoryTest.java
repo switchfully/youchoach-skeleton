@@ -1,8 +1,8 @@
 package com.switchfully.youcoach.datastore.repositories;
 
 
-import com.switchfully.youcoach.domain.member.Member;
-import com.switchfully.youcoach.domain.member.MemberRepository;
+import com.switchfully.youcoach.domain.profile.Member;
+import com.switchfully.youcoach.domain.profile.ProfileRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +22,10 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 @DataJpaTest
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @Transactional
-class MemberRepositoryTest {
+class ProfileRepositoryTest {
 
     @Autowired
-    private MemberRepository memberRepository;
+    private ProfileRepository profileRepository;
 
     private Member getDefaultUser() {
         return new Member(1,"First", "Last","example@example.com","1lpassword",
@@ -35,8 +35,8 @@ class MemberRepositoryTest {
     @Test
     void saveAUser() {
         Member member = new Member(1L, "Test", "Service", "test@ehb.be", "test123");
-        memberRepository.save(member);
-        Member actualMember = memberRepository.findById(member.getId()).get();
+        profileRepository.save(member);
+        Member actualMember = profileRepository.findById(member.getId()).get();
         assertThat(actualMember.getId()).isEqualTo(member.getId());
     }
 
@@ -45,18 +45,18 @@ class MemberRepositoryTest {
     void retrieveProfile(){
         Member expected = new Member(1L, "First", "Last","example@example.com",
                 "1Lpassword","1 - Latin","/my/photo.png");
-        Member actual = memberRepository.findById(1L).get();
+        Member actual = profileRepository.findById(1L).get();
         Assertions.assertThat(actual).isEqualTo(expected);
     }
 
     @Test
     @Sql("oneDefaultUser.sql")
     void emailExists(){
-        Assertions.assertThat(memberRepository.existsByEmail("example@example.com")).isTrue();
+        Assertions.assertThat(profileRepository.existsByEmail("example@example.com")).isTrue();
     }
     @Test
     void emailDoesNotExist(){
-        Assertions.assertThat(memberRepository.existsByEmail("example@example.com")).isFalse();
+        Assertions.assertThat(profileRepository.existsByEmail("example@example.com")).isFalse();
     }
 
     @Test
@@ -64,29 +64,29 @@ class MemberRepositoryTest {
     void emailDuplication() {
         Member duplicateEmail = new Member(2,"DuplicateFirst","DuplicateLast","example@example.com",
                 "1Lpassword","1 - latin","/my/photo.png");
-        memberRepository.save(duplicateEmail);
+        profileRepository.save(duplicateEmail);
 
-        assertThatExceptionOfType(DataIntegrityViolationException.class).isThrownBy(() -> memberRepository.flush() );
+        assertThatExceptionOfType(DataIntegrityViolationException.class).isThrownBy(() -> profileRepository.flush() );
     }
 
     @Test
     @Sql("oneDefaultUser.sql")
     void findByEmail(){
-        assertThat(memberRepository.findByEmail("example@example.com")).isInstanceOf(Optional.class);
-        assertThat(memberRepository.findByEmail("example@example.com")).containsInstanceOf(Member.class);
-        assertThat(memberRepository.findByEmail("example@example.com").get().getId()).isEqualTo(1);
+        assertThat(profileRepository.findByEmail("example@example.com")).isInstanceOf(Optional.class);
+        assertThat(profileRepository.findByEmail("example@example.com")).containsInstanceOf(Member.class);
+        assertThat(profileRepository.findByEmail("example@example.com").get().getId()).isEqualTo(1);
     }
 
     @Test
     void findByEmailThatDoesNotExistReturnsEmpty(){
-        assertThat(memberRepository.findByEmail("example@example.com")).isEmpty();
+        assertThat(profileRepository.findByEmail("example@example.com")).isEmpty();
     }
 
     @Test
     void byDefaultAccountEnabledIsFalse(){
         Member member = getDefaultUser();
-        member = memberRepository.save(member);
-        member = memberRepository.findByEmail(member.getEmail()).get();
+        member = profileRepository.save(member);
+        member = profileRepository.findByEmail(member.getEmail()).get();
 
         Assertions.assertThat(member.isAccountEnabled()).isFalse();
     }

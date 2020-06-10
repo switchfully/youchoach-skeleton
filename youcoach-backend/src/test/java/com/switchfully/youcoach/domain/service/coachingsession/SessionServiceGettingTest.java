@@ -2,9 +2,9 @@ package com.switchfully.youcoach.domain.service.coachingsession;
 
 import com.switchfully.youcoach.domain.session.Status;
 import com.switchfully.youcoach.domain.session.Session;
-import com.switchfully.youcoach.domain.member.Member;
+import com.switchfully.youcoach.domain.profile.Member;
 import com.switchfully.youcoach.domain.session.SessionRepository;
-import com.switchfully.youcoach.domain.member.MemberRepository;
+import com.switchfully.youcoach.domain.profile.ProfileRepository;
 import com.switchfully.youcoach.domain.session.api.SessionDto;
 import com.switchfully.youcoach.domain.session.SessionService;
 import org.junit.jupiter.api.Disabled;
@@ -27,7 +27,7 @@ class SessionServiceGettingTest {
 
 
     SessionRepository sessionRepository = mock(SessionRepository.class);
-    MemberRepository memberRepository = mock(MemberRepository.class);
+    ProfileRepository profileRepository = mock(ProfileRepository.class);
 
     @Autowired
     SessionService sessionService;
@@ -40,7 +40,7 @@ class SessionServiceGettingTest {
         Member coachee = new Member(2L, null, null, null, null);
 
         when(sessionRepository.findAllByCoachee(Optional.of(coachee))).thenReturn(List.of(session));
-        when(memberRepository.findByEmail("example@example.com")).thenReturn(Optional.of(coachee));
+        when(profileRepository.findByEmail("example@example.com")).thenReturn(Optional.of(coachee));
 
         List<SessionDto> actual = sessionService.getCoachingSessionsForUser("example@example.com");
         assertThat(actual).contains(sessionDto);

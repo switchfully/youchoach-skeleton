@@ -1,8 +1,8 @@
-package com.switchfully.youcoach.domain.member.api;
+package com.switchfully.youcoach.domain.profile.api;
 
 
 import com.switchfully.youcoach.domain.coach.Coach;
-import com.switchfully.youcoach.domain.member.Member;
+import com.switchfully.youcoach.domain.profile.Member;
 import com.switchfully.youcoach.domain.coach.api.CoachListingDto;
 import com.switchfully.youcoach.domain.coach.api.CoachListingEntryDto;
 import com.switchfully.youcoach.security.authentication.user.api.SecuredUserDto;
@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
-public class MemberMapper {
+public class ProfileMapper {
 
     public SecuredUserDto toUserDto(Member member) {
         return new SecuredUserDto(member.getId(), member.getFirstName(), member.getLastName(), member.getEmail(), member.isAccountEnabled());
@@ -29,8 +29,8 @@ public class MemberMapper {
         return members.stream().map(this::toUserDto).collect(Collectors.toList());
     }
 
-    public CoacheeProfileDto toCoacheeProfileDto(Member model) {
-        return new CoacheeProfileDto()
+    public ProfileDto toCoacheeProfileDto(Member model) {
+        return new ProfileDto()
                 .withId(model.getId())
                 .withEmail(model.getEmail())
                 .withFirstName(model.getFirstName())

@@ -1,8 +1,8 @@
-package com.switchfully.youcoach.domain.member.api;
+package com.switchfully.youcoach.domain.profile.api;
 
 import java.util.Objects;
 
-public class CoacheeProfileDto {
+public class ProfileDto {
     private String classYear;
     private long id;
     private String firstName;
@@ -10,27 +10,27 @@ public class CoacheeProfileDto {
     private String email;
     private String photoUrl;
 
-    public CoacheeProfileDto withClassYear(String classYear) {
+    public ProfileDto withClassYear(String classYear) {
         this.classYear = classYear;
         return this;
     }
-    public CoacheeProfileDto withId(long id){
+    public ProfileDto withId(long id){
         this.id = id;
         return this;
     }
-    public CoacheeProfileDto withFirstName(String firstName){
+    public ProfileDto withFirstName(String firstName){
         this.firstName = firstName;
         return this;
     }
-    public CoacheeProfileDto withLastName(String lastName){
+    public ProfileDto withLastName(String lastName){
         this.lastName = lastName;
         return this;
     }
-    public CoacheeProfileDto withEmail(String email){
+    public ProfileDto withEmail(String email){
         this.email = email;
         return this;
     }
-    public CoacheeProfileDto withPhotoUrl(String photoUrl){
+    public ProfileDto withPhotoUrl(String photoUrl){
         this.photoUrl = photoUrl;
         return this;
     }
@@ -68,7 +68,7 @@ public class CoacheeProfileDto {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        CoacheeProfileDto that = (CoacheeProfileDto) o;
+        ProfileDto that = (ProfileDto) o;
         return id == that.id &&
                 Objects.equals(classYear, that.classYear) &&
                 Objects.equals(firstName, that.firstName) &&

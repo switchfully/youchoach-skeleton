@@ -1,4 +1,4 @@
-package com.switchfully.youcoach.domain.member;
+package com.switchfully.youcoach.domain.profile;
 
 import javax.persistence.*;
 import java.util.Objects;

@@ -7,7 +7,7 @@ import com.switchfully.youcoach.domain.coach.Grade;
 import com.switchfully.youcoach.domain.coach.Topic;
 import com.switchfully.youcoach.domain.coach.api.CoachProfileDto;
 import com.switchfully.youcoach.security.authentication.user.api.CreateSecuredUserDto;
-import com.switchfully.youcoach.domain.member.MemberService;
+import com.switchfully.youcoach.domain.profile.ProfileService;
 import com.switchfully.youcoach.security.authentication.user.SecuredUserService;
 import com.switchfully.youcoach.security.authentication.user.UserRoles;
 import org.junit.jupiter.api.BeforeEach;
@@ -47,11 +47,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @ComponentScan(basePackages = "com.switchfully.youcoach")
 @Transactional
-class MemberControllerTest {
+class ProfileControllerTest {
     @Autowired
     MockMvc mockMvc;
     @Autowired
-    MemberService memberService;
+    ProfileService profileService;
     @Autowired
     WebApplicationContext webApplicationContext;
     @Autowired
@@ -69,7 +69,6 @@ class MemberControllerTest {
                 .apply(SecurityMockMvcConfigurers.springSecurity())
                 .dispatchOptions(true)
                 .build();
-
     }
 
     @WithMockUser
@@ -92,9 +91,8 @@ class MemberControllerTest {
     @Test
     @Sql("../datastore/repositories/oneDefaultUser.sql")
     void getCoacheeProfile() throws Exception {
-        String jwtSecret = environment.getProperty("jwt.secret");
         UsernamePasswordAuthenticationToken user = new UsernamePasswordAuthenticationToken("example@example.com", null, List.of(UserRoles.ROLE_COACHEE));
-        String token = securedUserService.generateJwtToken(user, jwtSecret);
+        String token = securedUserService.generateJwtToken(user);
 
         String actualResult = mockMvc.perform(get("/users/profile").header("Authorization", "Bearer " + token)
                 //.with(csrf())
@@ -110,9 +108,8 @@ class MemberControllerTest {
     @Test
     @Sql("../datastore/repositories/oneDefaultUser.sql")
     void getSpecificCoacheeProfile() throws Exception {
-        String jwtSecret = environment.getProperty("jwt.secret");
         UsernamePasswordAuthenticationToken user = new UsernamePasswordAuthenticationToken("example@example.com", null, List.of(UserRoles.ROLE_ADMIN));
-        String token = securedUserService.generateJwtToken(user, jwtSecret);
+        String token = securedUserService.generateJwtToken(user);
 
         String actualResult = mockMvc.perform(get("/users/profile/1")
                 .header("Authorization", "Bearer " + token)
@@ -131,9 +128,8 @@ class MemberControllerTest {
     @Sql("../datastore/repositories/oneDefaultUser.sql")
     @Sql("../datastore/repositories/makeUsersCoach.sql")
     void getCoachProfile() throws Exception {
-        String jwtSecret = environment.getProperty("jwt.secret");
         UsernamePasswordAuthenticationToken user = new UsernamePasswordAuthenticationToken("example@example.com", null, List.of(UserRoles.ROLE_COACH));
-        String token = securedUserService.generateJwtToken(user, jwtSecret);
+        String token = securedUserService.generateJwtToken(user);
 
         CoachProfileDto expectedDto = (CoachProfileDto) new CoachProfileDto().withXp(100)
                 .withIntroduction("Endorsed by your mom.")

@@ -64,7 +64,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response,
                                             FilterChain filterChain, Authentication authentication) {
 
-        String token = securedUserService.generateJwtToken(authentication, jwtSecret);
+        String token = securedUserService.generateJwtToken(authentication);
 
 
 

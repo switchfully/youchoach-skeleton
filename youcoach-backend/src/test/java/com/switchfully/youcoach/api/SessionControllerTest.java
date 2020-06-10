@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.switchfully.youcoach.domain.session.Status;
 import com.switchfully.youcoach.domain.session.api.CreateSessionDto;
 import com.switchfully.youcoach.domain.session.api.SessionDto;
-import com.switchfully.youcoach.domain.member.MemberService;
+import com.switchfully.youcoach.domain.profile.ProfileService;
 import com.switchfully.youcoach.domain.session.SessionService;
 import com.switchfully.youcoach.security.authentication.user.SecuredUserService;
 import org.junit.jupiter.api.BeforeEach;
@@ -54,7 +54,7 @@ class SessionControllerTest {
     @Autowired
     PasswordEncoder passwordEncoder;
     @Autowired
-    MemberService memberService;
+    ProfileService profileService;
 
 
     @BeforeEach

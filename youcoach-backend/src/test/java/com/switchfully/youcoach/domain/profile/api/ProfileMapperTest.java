@@ -1,4 +1,4 @@
-package com.switchfully.youcoach.domain.member.api;
+package com.switchfully.youcoach.domain.profile.api;
 
 import com.switchfully.youcoach.domain.coach.Coach;
 import com.switchfully.youcoach.domain.coach.CoachingTopic;
@@ -8,7 +8,7 @@ import com.switchfully.youcoach.security.authentication.user.api.SecuredUserDto;
 import com.switchfully.youcoach.domain.coach.api.CoachListingDto;
 import com.switchfully.youcoach.domain.coach.api.CoachListingEntryDto;
 import com.switchfully.youcoach.domain.coach.api.CoachProfileDto;
-import com.switchfully.youcoach.domain.member.Member;
+import com.switchfully.youcoach.domain.profile.Member;
 import com.switchfully.youcoach.security.authentication.user.api.CreateSecuredUserDto;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -16,8 +16,8 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MemberMapperTest {
-    private final MemberMapper memberMapper = new MemberMapper();
+public class ProfileMapperTest {
+    private final ProfileMapper profileMapper = new ProfileMapper();
 
     private Member getDefaultUser() {
         return new Member(1,"First","Last",
@@ -27,14 +27,14 @@ public class MemberMapperTest {
     @Test
     public void fromUserToCoacheeProfileDto(){
         Member input = getDefaultUser();
-        CoacheeProfileDto expected = new CoacheeProfileDto().withId(input.getId())
+        ProfileDto expected = new ProfileDto().withId(input.getId())
                 .withEmail(input.getEmail())
                 .withFirstName(input.getFirstName())
                 .withLastName(input.getLastName())
                 .withClassYear(input.getClassYear())
                 .withPhotoUrl(input.getPhotoUrl());
 
-        CoacheeProfileDto actual = memberMapper.toCoacheeProfileDto(input);
+        ProfileDto actual = profileMapper.toCoacheeProfileDto(input);
 
         Assertions.assertThat(actual).isEqualTo(expected);
     }
@@ -64,7 +64,7 @@ public class MemberMapperTest {
                 .withLastName(member.getLastName())
                 .withPhotoUrl(member.getPhotoUrl());
 
-        CoachProfileDto actual = memberMapper.toCoachProfileDto(coach);
+        CoachProfileDto actual = profileMapper.toCoachProfileDto(coach);
 
         Assertions.assertThat(actual).isEqualTo(expected);
     }
@@ -90,7 +90,7 @@ public class MemberMapperTest {
 
         CoachListingDto expected = new CoachListingDto(List.of(cpd));
 
-        CoachListingDto actual = memberMapper.toCoachListingDto(List.of(coach));
+        CoachListingDto actual = profileMapper.toCoachListingDto(List.of(coach));
 
         Assertions.assertThat(actual).isEqualTo(expected);
 
@@ -102,7 +102,7 @@ public class MemberMapperTest {
 
         SecuredUserDto expected = new SecuredUserDto(member.getId(), member.getFirstName(), member.getLastName(), member.getEmail(), member.isAccountEnabled());
 
-        SecuredUserDto actual = memberMapper.toUserDto(member);
+        SecuredUserDto actual = profileMapper.toUserDto(member);
 
         Assertions.assertThat(actual).isEqualTo(expected);
     }
@@ -112,7 +112,7 @@ public class MemberMapperTest {
         Member expected = getDefaultUser();
         CreateSecuredUserDto cud = new CreateSecuredUserDto(expected.getFirstName(),expected.getLastName(),expected.getEmail(),expected.getPassword());
 
-        Member actual = memberMapper.toUser(cud);
+        Member actual = profileMapper.toUser(cud);
 
         Assertions.assertThat(actual.getFirstName()).isEqualTo(expected.getFirstName());
         Assertions.assertThat(actual.getLastName()).isEqualTo(expected.getLastName());
@@ -129,7 +129,7 @@ public class MemberMapperTest {
         List<SecuredUserDto> expected = List.of(new SecuredUserDto(member.getId(), member.getFirstName(), member.getLastName(), member.getEmail(), member.isAccountEnabled()),
                 new SecuredUserDto(member2.getId(), member2.getFirstName(), member2.getLastName(), member2.getEmail(), member2.isAccountEnabled()));
 
-        List<SecuredUserDto> actual = memberMapper.toUserDto(members);
+        List<SecuredUserDto> actual = profileMapper.toUserDto(members);
 
         Assertions.assertThat(actual).hasSameElementsAs(expected);
     }

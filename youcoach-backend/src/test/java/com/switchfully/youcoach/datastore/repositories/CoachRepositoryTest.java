@@ -1,8 +1,8 @@
 package com.switchfully.youcoach.datastore.repositories;
 
 import com.switchfully.youcoach.domain.coach.*;
-import com.switchfully.youcoach.domain.member.Member;
-import com.switchfully.youcoach.domain.member.MemberRepository;
+import com.switchfully.youcoach.domain.profile.Member;
+import com.switchfully.youcoach.domain.profile.ProfileRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,12 +21,12 @@ import java.util.Optional;
 @Transactional
 public class CoachRepositoryTest {
     private final CoachRepository coachRepository;
-    private final MemberRepository memberRepository;
+    private final ProfileRepository profileRepository;
 
     @Autowired
-    CoachRepositoryTest(CoachRepository coachRepository, MemberRepository memberRepository){
+    CoachRepositoryTest(CoachRepository coachRepository, ProfileRepository profileRepository){
         this.coachRepository = coachRepository;
-        this.memberRepository = memberRepository;
+        this.profileRepository = profileRepository;
     }
 
     private Member getDefaultUser() {

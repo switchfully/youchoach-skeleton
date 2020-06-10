@@ -1,13 +1,15 @@
 package com.switchfully.youcoach.security.authentication.user;
 
 
-import com.switchfully.youcoach.domain.member.Member;
+import com.switchfully.youcoach.domain.profile.Member;
 import com.switchfully.youcoach.domain.admin.AdminRepository;
 import com.switchfully.youcoach.domain.coach.CoachRepository;
-import com.switchfully.youcoach.domain.member.MemberRepository;
+import com.switchfully.youcoach.domain.profile.ProfileRepository;
+import com.switchfully.youcoach.domain.profile.api.UpdateProfileDto;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -27,18 +29,19 @@ public class SecuredUserService implements UserDetailsService {
 
     private static final int TOKEN_TIME_TO_LIVE  = 3600000;
 
-    private final MemberRepository userRepository;
+    private final ProfileRepository userRepository;
     private final AdminRepository adminRepository;
     private final CoachRepository coachRepository;
+    private String jwtSecret;
 
-    public SecuredUserService(MemberRepository memberRepository, CoachRepository coachRepository, AdminRepository adminRepository) {
-        this.userRepository = memberRepository;
+    public SecuredUserService(ProfileRepository profileRepository, CoachRepository coachRepository, AdminRepository adminRepository, @Value("${jwt.secret}") String jwtSecret) {
+        this.userRepository = profileRepository;
         this.coachRepository = coachRepository;
         this.adminRepository = adminRepository;
+        this.jwtSecret = jwtSecret;
     }
 
     @Override
-
     public UserDetails loadUserByUsername(final String userName) throws UsernameNotFoundException {
         Member member = userRepository.findByEmail(userName)
                 .orElseThrow(() -> new UsernameNotFoundException(userName));
@@ -72,13 +75,14 @@ public class SecuredUserService implements UserDetailsService {
     }
 
 
-    public String generateAuthorizationBearerTokenForUser(String email, String jwtSecret) {
+    public String generateAuthorizationBearerTokenForUser(String email) {
         UserDetails ud = loadUserByUsername(email);
         UsernamePasswordAuthenticationToken user = new UsernamePasswordAuthenticationToken(ud.getUsername(),null, ud.getAuthorities());
 
-        return generateJwtToken(user,jwtSecret);
+        return generateJwtToken(user);
     }
-    public String generateJwtToken(Authentication authentication, String jwtSecret) {
+
+    public String generateJwtToken(Authentication authentication) {
         return Jwts.builder()
                 .signWith(Keys.hmacShaKeyFor(jwtSecret.getBytes()), SignatureAlgorithm.HS512)
                 .setHeaderParam("typ", "JWT")

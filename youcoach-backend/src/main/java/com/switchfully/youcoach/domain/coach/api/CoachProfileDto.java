@@ -2,12 +2,12 @@ package com.switchfully.youcoach.domain.coach.api;
 
 import com.switchfully.youcoach.domain.coach.CoachingTopic;
 import com.switchfully.youcoach.domain.coach.Grade;
-import com.switchfully.youcoach.domain.member.api.CoacheeProfileDto;
+import com.switchfully.youcoach.domain.profile.api.ProfileDto;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class CoachProfileDto extends CoacheeProfileDto {
+public class CoachProfileDto extends ProfileDto {
     private String availability;
     private int xp;
     private String introduction;

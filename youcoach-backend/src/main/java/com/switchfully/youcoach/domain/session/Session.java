@@ -1,6 +1,6 @@
 package com.switchfully.youcoach.domain.session;
 
-import com.switchfully.youcoach.domain.member.Member;
+import com.switchfully.youcoach.domain.profile.Member;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;

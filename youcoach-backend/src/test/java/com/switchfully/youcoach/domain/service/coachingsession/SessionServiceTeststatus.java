@@ -2,10 +2,10 @@ package com.switchfully.youcoach.domain.service.coachingsession;
 
 import com.switchfully.youcoach.domain.session.Status;
 import com.switchfully.youcoach.domain.session.Session;
-import com.switchfully.youcoach.domain.member.Member;
+import com.switchfully.youcoach.domain.profile.Member;
 import com.switchfully.youcoach.domain.coach.CoachRepository;
 import com.switchfully.youcoach.domain.session.SessionRepository;
-import com.switchfully.youcoach.domain.member.MemberRepository;
+import com.switchfully.youcoach.domain.profile.ProfileRepository;
 import com.switchfully.youcoach.domain.session.api.SessionMapper;
 import com.switchfully.youcoach.domain.session.api.CreateSessionDto;
 import com.switchfully.youcoach.domain.session.api.SessionDto;
@@ -27,13 +27,13 @@ class SessionServiceTeststatus {
 
     SessionRepository sessionRepository = mock(SessionRepository.class);
     CoachRepository coachRepository = mock(CoachRepository.class);
-    MemberRepository memberRepository = mock(MemberRepository.class);
+    ProfileRepository profileRepository = mock(ProfileRepository.class);
 
 
     @Test
     void If_Inthepast_StatusAutomaticallyClosed() {
 
-        SessionService sessionService = new SessionService(sessionRepository, new SessionMapper(), coachRepository, memberRepository);
+        SessionService sessionService = new SessionService(sessionRepository, new SessionMapper(), coachRepository, profileRepository);
 
         Session session1 = new Session(1L, "Mathematics", LocalDateTime.now().minusDays(1), "school", "no remarks", new Member(1L, null, null, null, null), new Member(2L, null, null, null, null), Status.REQUESTED);
 

@@ -1,4 +1,4 @@
-package com.switchfully.youcoach.domain.member;
+package com.switchfully.youcoach.domain.profile;
 
 
 import com.switchfully.youcoach.domain.coach.Coach;
@@ -6,17 +6,17 @@ import com.switchfully.youcoach.domain.coach.CoachRepository;
 import com.switchfully.youcoach.domain.coach.api.CoachListingDto;
 import com.switchfully.youcoach.security.verification.AccountVerificator;
 import com.switchfully.youcoach.security.verification.VerificationService;
-import com.switchfully.youcoach.domain.member.api.CoacheeMemberUpdatedDto;
-import com.switchfully.youcoach.domain.member.api.CoacheeProfileDto;
-import com.switchfully.youcoach.domain.member.api.UpdateMemberDto;
+import com.switchfully.youcoach.domain.profile.api.ProfileUpdatedDto;
+import com.switchfully.youcoach.domain.profile.api.ProfileDto;
+import com.switchfully.youcoach.domain.profile.api.UpdateProfileDto;
 import com.switchfully.youcoach.security.authentication.user.api.SecuredUserDto;
 import com.switchfully.youcoach.security.verification.api.ValidateAccountDto;
 import com.switchfully.youcoach.domain.coach.api.CoachProfileDto;
 import com.switchfully.youcoach.security.verification.api.ResendVerificationDto;
 import com.switchfully.youcoach.domain.coach.exception.CoachNotFoundException;
 import com.switchfully.youcoach.security.authentication.user.api.CreateSecuredUserDto;
-import com.switchfully.youcoach.domain.member.api.MemberMapper;
-import com.switchfully.youcoach.domain.member.exception.MemberIdNotFoundException;
+import com.switchfully.youcoach.domain.profile.api.ProfileMapper;
+import com.switchfully.youcoach.domain.profile.exception.ProfileIdNotFoundException;
 import com.switchfully.youcoach.security.authentication.user.SecuredUserService;
 import com.switchfully.youcoach.security.verification.api.VerificationResultDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,35 +32,33 @@ import java.util.List;
 
 @Service
 @Transactional
-public class MemberService {
-    private final MemberRepository memberRepository;
-    private final MemberMapper memberMapper;
+public class ProfileService {
+    private final ProfileRepository profileRepository;
+    private final ProfileMapper profileMapper;
     private final VerificationService verificationService;
     private final PasswordEncoder passwordEncoder;
     private final CoachRepository coachRepository;
     private final AccountVerificator accountVerificator;
     private final SecuredUserService securedUserService;
-    private final Environment environment;
 
     @Autowired
-    public MemberService(MemberRepository memberRepository, CoachRepository coachRepository, MemberMapper memberMapper,
-                         VerificationService verificationService, PasswordEncoder passwordEncoder,
-                         AccountVerificator accountVerificator, SecuredUserService securedUserService, Environment environment) {
-        this.memberRepository = memberRepository;
+    public ProfileService(ProfileRepository profileRepository, CoachRepository coachRepository, ProfileMapper profileMapper,
+                          VerificationService verificationService, PasswordEncoder passwordEncoder,
+                          AccountVerificator accountVerificator, SecuredUserService securedUserService) {
+        this.profileRepository = profileRepository;
         this.coachRepository = coachRepository;
-        this.memberMapper = memberMapper;
+        this.profileMapper = profileMapper;
         this.verificationService = verificationService;
         this.passwordEncoder = passwordEncoder;
         this.accountVerificator = accountVerificator;
         this.securedUserService = securedUserService;
-        this.environment = environment;
     }
 
     public SecuredUserDto createUser(CreateSecuredUserDto createSecuredUserDto) {
         performValidation(createSecuredUserDto);
-        Member newMember = memberMapper.toUser(createSecuredUserDto);
+        Member newMember = profileMapper.toUser(createSecuredUserDto);
         newMember.setPassword(passwordEncoder.encode(newMember.getPassword()));
-        newMember = memberRepository.save(newMember);
+        newMember = profileRepository.save(newMember);
         accountVerificator.createAccountVerification(newMember);
         try {
             accountVerificator.sendVerificationEmail(newMember);
@@ -68,42 +66,41 @@ public class MemberService {
             newMember.setAccountEnabled(true);
             accountVerificator.removeAccountVerification(newMember);
         }
-        return memberMapper.toUserDto(newMember);
+        return profileMapper.toUserDto(newMember);
     }
 
-    public CoacheeMemberUpdatedDto updateProfile(String email, UpdateMemberDto updateMemberDto){
-        performUpdateValidation(email, updateMemberDto);
+    public ProfileUpdatedDto updateProfile(String email, UpdateProfileDto updateProfileDto){
+        performUpdateValidation(email, updateProfileDto);
         Member member = assertUserExistsAndRetrieve(email);
-        member.setEmail(updateMemberDto.getEmail());
-        member.setFirstName(updateMemberDto.getFirstName());
-        member.setLastName(updateMemberDto.getLastName());
-        member.setPhotoUrl(updateMemberDto.getPhotoUrl());
+        member.setEmail(updateProfileDto.getEmail());
+        member.setFirstName(updateProfileDto.getFirstName());
+        member.setLastName(updateProfileDto.getLastName());
+        member.setPhotoUrl(updateProfileDto.getPhotoUrl());
 
-        CoacheeMemberUpdatedDto cpu = (CoacheeMemberUpdatedDto) new CoacheeMemberUpdatedDto()
-                .withEmail(updateMemberDto.getEmail())
-                .withFirstName(updateMemberDto.getFirstName())
-                .withLastName(updateMemberDto.getLastName())
-                .withPhotoUrl(updateMemberDto.getPhotoUrl())
-                .withClassYear(updateMemberDto.getClassYear())
-                .withYoucoachRole(updateMemberDto.getYoucoachRole());
-        if(!email.equals(updateMemberDto.getEmail())) {
-            String jwtSecret = environment.getProperty("jwt.secret");
-            cpu.setToken(securedUserService.generateAuthorizationBearerTokenForUser(updateMemberDto.getEmail(),jwtSecret));
+        ProfileUpdatedDto cpu = (ProfileUpdatedDto) new ProfileUpdatedDto()
+                .withEmail(updateProfileDto.getEmail())
+                .withFirstName(updateProfileDto.getFirstName())
+                .withLastName(updateProfileDto.getLastName())
+                .withPhotoUrl(updateProfileDto.getPhotoUrl())
+                .withClassYear(updateProfileDto.getClassYear());
+
+        if(!email.equals(updateProfileDto.getEmail())) {
+            cpu.setToken(securedUserService.generateAuthorizationBearerTokenForUser(updateProfileDto.getEmail()));
         }
         return cpu;
     }
 
 
     public SecuredUserDto getUserById(long id) {
-        return memberMapper.toUserDto(memberRepository.findById(id).get());
+        return profileMapper.toUserDto(profileRepository.findById(id).get());
     }
 
     public List<SecuredUserDto> getAllusers() {
-        return memberMapper.toUserDto(memberRepository.findAll());
+        return profileMapper.toUserDto(profileRepository.findAll());
     }
 
     public boolean emailExists(String email){
-        return memberRepository.existsByEmail(email);
+        return profileRepository.existsByEmail(email);
     }
 
     private void performValidation(CreateSecuredUserDto createSecuredUserDto) {
@@ -115,29 +112,29 @@ public class MemberService {
             throw new IllegalStateException("Password needs te be 8 characters : --> 1 capital, 1 lowercase and 1 one number ");
         }
     }
-    public void performUpdateValidation(String email, UpdateMemberDto updateMemberDto) {
-        if (!email.equalsIgnoreCase(updateMemberDto.getEmail()) && emailExists(updateMemberDto.getEmail())) {
+    public void performUpdateValidation(String email, UpdateProfileDto updateProfileDto) {
+        if (!email.equalsIgnoreCase(updateProfileDto.getEmail()) && emailExists(updateProfileDto.getEmail())) {
         throw new IllegalStateException("Email already exists!");
     }
 }
 
-    public CoacheeProfileDto getCoacheeProfile(long id){
+    public ProfileDto getCoacheeProfile(long id){
         Member member = assertUserExistsAndRetrieve(id);
-        return memberMapper.toCoacheeProfileDto(member);
+        return profileMapper.toCoacheeProfileDto(member);
     }
 
-    public CoacheeProfileDto getCoacheeProfile(String email){
+    public ProfileDto getCoacheeProfile(String email){
         Member member = assertUserExistsAndRetrieve(email);
-        return memberMapper.toCoacheeProfileDto(member);
+        return profileMapper.toCoacheeProfileDto(member);
     }
 
     public CoachProfileDto getCoachProfileForUser(Member member){
         Coach coach = assertCoachExistsAndRetrieve(member);
-        return memberMapper.toCoachProfileDto(coach);
+        return profileMapper.toCoachProfileDto(coach);
     }
     public CoachProfileDto getCoachProfileForUserWithEmail(String email){
         Coach coach = assertCoachExistsAndRetrieve(email);
-        return memberMapper.toCoachProfileDto(coach);
+        return profileMapper.toCoachProfileDto(coach);
     }
 
     public CoachProfileDto updateCoachInformation(String email, CoachProfileDto coachProfileDto){
@@ -153,7 +150,7 @@ public class MemberService {
 
     public CoachProfileDto getCoachProfile(Principal principal, long id){
         Coach coach = assertCoachExistsAndRetrieve(id);
-        CoachProfileDto coachDto = memberMapper.toCoachProfileDto(coach);
+        CoachProfileDto coachDto = profileMapper.toCoachProfileDto(coach);
 
         obliterateEmailForNonAdminsAndStrangers(principal, coachDto);
 
@@ -166,7 +163,7 @@ public class MemberService {
 
     public CoachProfileDto getCoachProfile(String id){
         Coach coach = assertCoachExistsAndRetrieve(id);
-        return memberMapper.toCoachProfileDto(coach);
+        return profileMapper.toCoachProfileDto(coach);
     }
 
     public Coach assertCoachExistsAndRetrieve(long id){
@@ -178,10 +175,10 @@ public class MemberService {
     }
 
     private Member assertUserExistsAndRetrieve(long id) {
-        return memberRepository.findById(id).orElseThrow(MemberIdNotFoundException::new);
+        return profileRepository.findById(id).orElseThrow(ProfileIdNotFoundException::new);
     }
     private Member assertUserExistsAndRetrieve(final String email){
-        return memberRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException(email));
+        return profileRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException(email));
     }
 
     public VerificationResultDto validateAccount(ValidateAccountDto validationData) {
@@ -205,7 +202,7 @@ public class MemberService {
     public CoachListingDto getCoachProfiles() {
         List<Coach> coachList = coachRepository.findAll();
 
-        CoachListingDto cl = memberMapper.toCoachListingDto(coachList);
+        CoachListingDto cl = profileMapper.toCoachListingDto(coachList);
         cl.getCoaches().forEach(coach -> coach.setEmail(null));
         return cl;
     }

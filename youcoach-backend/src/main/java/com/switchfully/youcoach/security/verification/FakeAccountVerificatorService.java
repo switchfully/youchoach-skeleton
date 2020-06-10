@@ -1,7 +1,7 @@
 package com.switchfully.youcoach.security.verification;
 
-import com.switchfully.youcoach.domain.member.Member;
-import com.switchfully.youcoach.domain.member.MemberRepository;
+import com.switchfully.youcoach.domain.profile.Member;
+import com.switchfully.youcoach.domain.profile.ProfileRepository;
 import com.switchfully.youcoach.email.EmailSenderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
@@ -15,8 +15,8 @@ import javax.mail.MessagingException;
 @Service
 public class FakeAccountVerificatorService extends AccountVerificatorService {
     @Autowired
-    public FakeAccountVerificatorService(AccountVerificationRepository accountVerificationRepository, MemberRepository memberRepository, Environment environment, EmailSenderService emailSenderService, TemplateEngine templateEngine) {
-        super(accountVerificationRepository, memberRepository, environment, emailSenderService, templateEngine);
+    public FakeAccountVerificatorService(AccountVerificationRepository accountVerificationRepository, ProfileRepository profileRepository, Environment environment, EmailSenderService emailSenderService, TemplateEngine templateEngine) {
+        super(accountVerificationRepository, profileRepository, environment, emailSenderService, templateEngine);
     }
 
 
