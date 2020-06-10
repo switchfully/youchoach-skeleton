@@ -20,7 +20,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 @org.springframework.context.annotation.Profile("production")
 @Service
 @Transactional
-public class AccountVerificatorService implements AccountVerificator {
+public class MailAccountVerificator implements AccountVerificator {
     private final AccountVerificationRepository accountVerificationRepository;
     private final ProfileRepository profileRepository;
     private final Environment environment;
@@ -28,8 +28,8 @@ public class AccountVerificatorService implements AccountVerificator {
     private final TemplateEngine templateEngine;
 
     @Autowired
-    public AccountVerificatorService(AccountVerificationRepository accountVerificationRepository, ProfileRepository profileRepository, Environment environment,
-                                     EmailSenderService emailSenderService, TemplateEngine templateEngine){
+    public MailAccountVerificator(AccountVerificationRepository accountVerificationRepository, ProfileRepository profileRepository, Environment environment,
+                                  EmailSenderService emailSenderService, TemplateEngine templateEngine){
         this.accountVerificationRepository = accountVerificationRepository;
         this.profileRepository = profileRepository;
         this.environment = environment;

@@ -1,17 +1,14 @@
 package com.switchfully.youcoach.domain.profile;
 
 import com.switchfully.youcoach.domain.coach.Coach;
-import com.switchfully.youcoach.domain.profile.Profile;
 import com.switchfully.youcoach.domain.coach.CoachRepository;
-import com.switchfully.youcoach.domain.profile.ProfileRepository;
 import com.switchfully.youcoach.domain.profile.api.ProfileMapper;
 import com.switchfully.youcoach.domain.coach.api.CoachProfileDto;
 import com.switchfully.youcoach.domain.profile.api.ProfileDto;
-import com.switchfully.youcoach.security.authentication.user.api.CreateValidatedUserDto;
-import com.switchfully.youcoach.security.authentication.user.api.ValidatedUserDto;
-import com.switchfully.youcoach.domain.profile.ProfileService;
-import com.switchfully.youcoach.security.authentication.user.ValidatedUserService;
-import com.switchfully.youcoach.security.verification.AccountVerificatorService;
+import com.switchfully.youcoach.security.authentication.user.api.CreateSecuredUserDto;
+import com.switchfully.youcoach.security.authentication.user.api.SecuredUserDto;
+import com.switchfully.youcoach.security.authentication.user.SecuredUserService;
+import com.switchfully.youcoach.security.verification.MailAccountVerificator;
 import com.switchfully.youcoach.security.verification.VerificationService;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -28,11 +25,11 @@ class ProfileServiceTest {
     private final ProfileRepository profileRepository = Mockito.mock(ProfileRepository.class);
     private final CoachRepository coachRepository = Mockito.mock(CoachRepository.class);
     private final PasswordEncoder passwordEncoder = Mockito.mock(PasswordEncoder.class);
-    private final AccountVerificatorService accountVerificatorService = Mockito.mock(AccountVerificatorService.class);
-    private final ValidatedUserService validatedUserService = Mockito.mock(ValidatedUserService.class);
+    private final MailAccountVerificator mailAccountVerificator = Mockito.mock(MailAccountVerificator.class);
+    private final SecuredUserService securedUserService = Mockito.mock(SecuredUserService.class);
 
     private final ProfileService profileService = new ProfileService(profileRepository, coachRepository, new ProfileMapper(), new VerificationService(),
-            passwordEncoder, accountVerificatorService, validatedUserService);
+            passwordEncoder, mailAccountVerificator, securedUserService);
 
     private Profile getDefaultUser() {
         return new Profile(1,"First", "Last","example@example.com","1lpassword",
@@ -45,22 +42,22 @@ class ProfileServiceTest {
         Mockito.when(profileRepository.findById(Mockito.anyLong())).thenReturn(Optional.of(profile));
         Mockito.when(profileRepository.save(Mockito.any(Profile.class))).thenReturn(profile);
 
-        CreateValidatedUserDto createValidatedUserDto = new CreateValidatedUserDto("Test", "Service", "test@hb.be",
+        CreateSecuredUserDto createSecuredUserDto = new CreateSecuredUserDto("Test", "Service", "test@hb.be",
                 "Test123456");
-        profileService.createUser(createValidatedUserDto);
-        ValidatedUserDto actualUser = profileService.getUserById(1);
-        assertThat(actualUser.getEmail()).isEqualTo(createValidatedUserDto.getEmail());
+        profileService.createUser(createSecuredUserDto);
+        SecuredUserDto actualUser = profileService.getUserById(1);
+        assertThat(actualUser.getEmail()).isEqualTo(createSecuredUserDto.getEmail());
     }
 
     @Test
     void emailValidator() {
-        CreateValidatedUserDto createValidatedUserDto = new CreateValidatedUserDto("Test", "Service", "dummyMail", "Test12346");
-        assertThatExceptionOfType(IllegalStateException.class).isThrownBy(() -> profileService.createUser(createValidatedUserDto) );
+        CreateSecuredUserDto createSecuredUserDto = new CreateSecuredUserDto("Test", "Service", "dummyMail", "Test12346");
+        assertThatExceptionOfType(IllegalStateException.class).isThrownBy(() -> profileService.createUser(createSecuredUserDto) );
     }
 
     @Test
     void emailDuplication() {
-        CreateValidatedUserDto userWithDuplicateEmail = new CreateValidatedUserDto("Test", "Service", "dummy@Mail.com", "Test123456");
+        CreateSecuredUserDto userWithDuplicateEmail = new CreateSecuredUserDto("Test", "Service", "dummy@Mail.com", "Test123456");
         Mockito.when(profileRepository.existsByEmail(Mockito.anyString())).thenReturn(true);
 
         assertThatExceptionOfType(IllegalStateException.class).isThrownBy(() -> profileService.createUser(userWithDuplicateEmail) );
@@ -68,8 +65,8 @@ class ProfileServiceTest {
 
     @Test
     void passwordValidator() {
-        CreateValidatedUserDto createValidatedUserDto1 = new CreateValidatedUserDto("Test", "Service", "dummy@Mail.com", "test1234564");
-        assertThatExceptionOfType(IllegalStateException.class).isThrownBy(() -> profileService.createUser(createValidatedUserDto1) );
+        CreateSecuredUserDto createSecuredUserDto1 = new CreateSecuredUserDto("Test", "Service", "dummy@Mail.com", "test1234564");
+        assertThatExceptionOfType(IllegalStateException.class).isThrownBy(() -> profileService.createUser(createSecuredUserDto1) );
     }
 
     @Test
@@ -103,7 +100,7 @@ class ProfileServiceTest {
 
 
         Mockito.when(coachRepository.findById(Mockito.anyLong())).thenReturn(Optional.of(coach));
-        Mockito.when(validatedUserService.isAdmin(Mockito.anyString())).thenReturn(true);
+        Mockito.when(securedUserService.isAdmin(Mockito.anyString())).thenReturn(true);
         Mockito.when(principal.getName()).thenReturn("");
 
        CoachProfileDto expected = (CoachProfileDto) new CoachProfileDto()

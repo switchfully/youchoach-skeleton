@@ -5,20 +5,20 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 
-public class ValidatedUser implements UserDetails {
-    private String password;
+public class SecuredUser implements UserDetails {
     private String username;
+    private String password;
     private Collection<? extends GrantedAuthority> authorities;
     private boolean enabled;
 
-    public ValidatedUser(String username, String password, Collection<? extends GrantedAuthority> authorities, boolean enabled){
+    public SecuredUser(String username, String password, Collection<? extends GrantedAuthority> authorities, boolean enabled){
         this.username = username;
         this.password = password;
         this.authorities = authorities;
         this.enabled = enabled;
     }
 
-    public ValidatedUser() {
+    public SecuredUser() {
 
     }
 

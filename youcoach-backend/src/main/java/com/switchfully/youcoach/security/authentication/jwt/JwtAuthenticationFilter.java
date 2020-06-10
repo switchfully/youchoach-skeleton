@@ -2,8 +2,8 @@ package com.switchfully.youcoach.security.authentication.jwt;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.switchfully.youcoach.security.authentication.OnAuthenticationFailureHandler;
-import com.switchfully.youcoach.security.authentication.user.ValidatedUserService;
-import com.switchfully.youcoach.security.authentication.user.ValidatedUser;
+import com.switchfully.youcoach.security.authentication.user.SecuredUserService;
+import com.switchfully.youcoach.security.authentication.user.SecuredUser;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -22,13 +22,13 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
     private final AuthenticationManager authenticationManager;
     private final String jwtSecret;
-    private final ValidatedUserService validatedUserService;
+    private final SecuredUserService securedUserService;
 
     public JwtAuthenticationFilter(AuthenticationManager authenticationManager, String jwtSecret,
-                                   ValidatedUserService validatedUserService, OnAuthenticationFailureHandler failureHandler) {
+                                   SecuredUserService securedUserService, OnAuthenticationFailureHandler failureHandler) {
         this.authenticationManager = authenticationManager;
         this.jwtSecret = jwtSecret;
-        this.validatedUserService = validatedUserService;
+        this.securedUserService = securedUserService;
 
         setFilterProcessesUrl("/login");
         setAuthenticationFailureHandler(failureHandler);
@@ -47,14 +47,14 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) {
-        ValidatedUser securedUser = getSecuredUser(request);
+        SecuredUser securedUser = getSecuredUser(request);
 
         return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(securedUser.getUsername(), securedUser.getPassword()));
     }
 
-    private ValidatedUser getSecuredUser(HttpServletRequest request) {
+    private SecuredUser getSecuredUser(HttpServletRequest request) {
         try {
-            return new ObjectMapper().readValue(request.getInputStream(), ValidatedUser.class);
+            return new ObjectMapper().readValue(request.getInputStream(), SecuredUser.class);
         } catch (IOException e) {
             throw new RuntimeException("Could not read body from request", e);
         }
@@ -64,7 +64,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response,
                                             FilterChain filterChain, Authentication authentication) {
 
-        String token = validatedUserService.generateJwtToken(authentication);
+        String token = securedUserService.generateJwtToken(authentication);
 
 
 

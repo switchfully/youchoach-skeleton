@@ -9,15 +9,15 @@ import com.switchfully.youcoach.security.verification.VerificationService;
 import com.switchfully.youcoach.domain.profile.api.ProfileUpdatedDto;
 import com.switchfully.youcoach.domain.profile.api.ProfileDto;
 import com.switchfully.youcoach.domain.profile.api.UpdateProfileDto;
-import com.switchfully.youcoach.security.authentication.user.api.ValidatedUserDto;
+import com.switchfully.youcoach.security.authentication.user.api.SecuredUserDto;
 import com.switchfully.youcoach.security.verification.api.ValidateAccountDto;
 import com.switchfully.youcoach.domain.coach.api.CoachProfileDto;
 import com.switchfully.youcoach.security.verification.api.ResendVerificationDto;
 import com.switchfully.youcoach.domain.coach.exception.CoachNotFoundException;
-import com.switchfully.youcoach.security.authentication.user.api.CreateValidatedUserDto;
+import com.switchfully.youcoach.security.authentication.user.api.CreateSecuredUserDto;
 import com.switchfully.youcoach.domain.profile.api.ProfileMapper;
 import com.switchfully.youcoach.domain.profile.exception.ProfileIdNotFoundException;
-import com.switchfully.youcoach.security.authentication.user.ValidatedUserService;
+import com.switchfully.youcoach.security.authentication.user.SecuredUserService;
 import com.switchfully.youcoach.security.verification.api.VerificationResultDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -38,24 +38,24 @@ public class ProfileService {
     private final PasswordEncoder passwordEncoder;
     private final CoachRepository coachRepository;
     private final AccountVerificator accountVerificator;
-    private final ValidatedUserService validatedUserService;
+    private final SecuredUserService securedUserService;
 
     @Autowired
     public ProfileService(ProfileRepository profileRepository, CoachRepository coachRepository, ProfileMapper profileMapper,
                           VerificationService verificationService, PasswordEncoder passwordEncoder,
-                          AccountVerificator accountVerificator, ValidatedUserService validatedUserService) {
+                          AccountVerificator accountVerificator, SecuredUserService securedUserService) {
         this.profileRepository = profileRepository;
         this.coachRepository = coachRepository;
         this.profileMapper = profileMapper;
         this.verificationService = verificationService;
         this.passwordEncoder = passwordEncoder;
         this.accountVerificator = accountVerificator;
-        this.validatedUserService = validatedUserService;
+        this.securedUserService = securedUserService;
     }
 
-    public ValidatedUserDto createUser(CreateValidatedUserDto createValidatedUserDto) {
-        performValidation(createValidatedUserDto);
-        Profile newProfile = profileMapper.toUser(createValidatedUserDto);
+    public SecuredUserDto createUser(CreateSecuredUserDto createSecuredUserDto) {
+        performValidation(createSecuredUserDto);
+        Profile newProfile = profileMapper.toUser(createSecuredUserDto);
         newProfile.setPassword(passwordEncoder.encode(newProfile.getPassword()));
         newProfile = profileRepository.save(newProfile);
         accountVerificator.createAccountVerification(newProfile);
@@ -84,17 +84,17 @@ public class ProfileService {
                 .withClassYear(updateProfileDto.getClassYear());
 
         if(!email.equals(updateProfileDto.getEmail())) {
-            cpu.setToken(validatedUserService.generateAuthorizationBearerTokenForUser(updateProfileDto.getEmail()));
+            cpu.setToken(securedUserService.generateAuthorizationBearerTokenForUser(updateProfileDto.getEmail()));
         }
         return cpu;
     }
 
 
-    public ValidatedUserDto getUserById(long id) {
+    public SecuredUserDto getUserById(long id) {
         return profileMapper.toUserDto(profileRepository.findById(id).get());
     }
 
-    public List<ValidatedUserDto> getAllusers() {
+    public List<SecuredUserDto> getAllusers() {
         return profileMapper.toUserDto(profileRepository.findAll());
     }
 
@@ -102,12 +102,12 @@ public class ProfileService {
         return profileRepository.existsByEmail(email);
     }
 
-    private void performValidation(CreateValidatedUserDto createValidatedUserDto) {
-        if (!verificationService.isEmailValid(createValidatedUserDto.getEmail())) {
+    private void performValidation(CreateSecuredUserDto createSecuredUserDto) {
+        if (!verificationService.isEmailValid(createSecuredUserDto.getEmail())) {
             throw new IllegalStateException("Email is not valid !");
-        } else if (emailExists(createValidatedUserDto.getEmail())) {
+        } else if (emailExists(createSecuredUserDto.getEmail())) {
             throw new IllegalStateException("Email already exists!");
-        } else if (!verificationService.isPasswordValid(createValidatedUserDto.getPassword())) {
+        } else if (!verificationService.isPasswordValid(createSecuredUserDto.getPassword())) {
             throw new IllegalStateException("Password needs te be 8 characters : --> 1 capital, 1 lowercase and 1 one number ");
         }
     }
@@ -157,7 +157,7 @@ public class ProfileService {
     }
 
     private void obliterateEmailForNonAdminsAndStrangers(Principal principal, CoachProfileDto coach) {
-        if(!validatedUserService.isAdmin(principal.getName()) && !coach.getEmail().equals(principal.getName())) coach.setEmail(null);
+        if(!securedUserService.isAdmin(principal.getName()) && !coach.getEmail().equals(principal.getName())) coach.setEmail(null);
     }
 
     public CoachProfileDto getCoachProfile(String id){

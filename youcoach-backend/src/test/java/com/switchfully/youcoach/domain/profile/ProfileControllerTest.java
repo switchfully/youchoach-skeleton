@@ -6,9 +6,8 @@ import com.switchfully.youcoach.domain.coach.CoachingTopic;
 import com.switchfully.youcoach.domain.coach.Grade;
 import com.switchfully.youcoach.domain.coach.Topic;
 import com.switchfully.youcoach.domain.coach.api.CoachProfileDto;
-import com.switchfully.youcoach.security.authentication.user.api.CreateValidatedUserDto;
-import com.switchfully.youcoach.domain.profile.ProfileService;
-import com.switchfully.youcoach.security.authentication.user.ValidatedUserService;
+import com.switchfully.youcoach.security.authentication.user.api.CreateSecuredUserDto;
+import com.switchfully.youcoach.security.authentication.user.SecuredUserService;
 import com.switchfully.youcoach.security.authentication.user.UserRoles;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -55,7 +54,7 @@ class ProfileControllerTest {
     @Autowired
     WebApplicationContext webApplicationContext;
     @Autowired
-    ValidatedUserService validatedUserService;
+    SecuredUserService securedUserService;
     @Autowired
     Environment environment;
     @Autowired
@@ -74,12 +73,12 @@ class ProfileControllerTest {
     @WithMockUser
     @Test
     void createUser() throws Exception {
-        CreateValidatedUserDto createValidatedUserDto = new CreateValidatedUserDto("Integration", "Test", "test@integraition.be", "test123TT");
+        CreateSecuredUserDto createSecuredUserDto = new CreateSecuredUserDto("Integration", "Test", "test@integraition.be", "test123TT");
         String actualResult =
                 mockMvc.perform(post("/users")
                         .with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(new ObjectMapper().writeValueAsString(createValidatedUserDto))
+                        .content(new ObjectMapper().writeValueAsString(createSecuredUserDto))
                 ).andExpect(status().isCreated())
                         .andReturn()
                         .getResponse()
@@ -92,7 +91,7 @@ class ProfileControllerTest {
     @Sql("classpath:oneDefaultUser.sql")
     void getCoacheeProfile() throws Exception {
         UsernamePasswordAuthenticationToken user = new UsernamePasswordAuthenticationToken("example@example.com", null, List.of(UserRoles.ROLE_COACHEE));
-        String token = validatedUserService.generateJwtToken(user);
+        String token = securedUserService.generateJwtToken(user);
 
         String actualResult = mockMvc.perform(get("/users/profile").header("Authorization", "Bearer " + token)
                 //.with(csrf())
@@ -109,7 +108,7 @@ class ProfileControllerTest {
     @Sql("classpath:oneDefaultUser.sql")
     void getSpecificCoacheeProfile() throws Exception {
         UsernamePasswordAuthenticationToken user = new UsernamePasswordAuthenticationToken("example@example.com", null, List.of(UserRoles.ROLE_ADMIN));
-        String token = validatedUserService.generateJwtToken(user);
+        String token = securedUserService.generateJwtToken(user);
 
         String actualResult = mockMvc.perform(get("/users/profile/1")
                 .header("Authorization", "Bearer " + token)
@@ -129,7 +128,7 @@ class ProfileControllerTest {
     @Sql("classpath:makeUsersCoach.sql")
     void getCoachProfile() throws Exception {
         UsernamePasswordAuthenticationToken user = new UsernamePasswordAuthenticationToken("example@example.com", null, List.of(UserRoles.ROLE_COACH));
-        String token = validatedUserService.generateJwtToken(user);
+        String token = securedUserService.generateJwtToken(user);
 
         CoachProfileDto expectedDto = (CoachProfileDto) new CoachProfileDto().withXp(100)
                 .withIntroduction("Endorsed by your mom.")

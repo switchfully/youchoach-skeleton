@@ -6,9 +6,9 @@ import com.switchfully.youcoach.security.verification.api.ResendVerificationDto;
 import com.switchfully.youcoach.security.verification.PasswordResetService;
 import com.switchfully.youcoach.domain.profile.api.ProfileUpdatedDto;
 import com.switchfully.youcoach.domain.profile.api.ProfileDto;
-import com.switchfully.youcoach.security.authentication.user.api.CreateValidatedUserDto;
+import com.switchfully.youcoach.security.authentication.user.api.CreateSecuredUserDto;
 import com.switchfully.youcoach.domain.profile.api.UpdateProfileDto;
-import com.switchfully.youcoach.security.authentication.user.api.ValidatedUserDto;
+import com.switchfully.youcoach.security.authentication.user.api.SecuredUserDto;
 import com.switchfully.youcoach.security.verification.api.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,7 +38,7 @@ public class ProfileController {
 
     @PostMapping(produces = "application/json", consumes = "application/json")
     @ResponseStatus(HttpStatus.CREATED)
-    public ValidatedUserDto createUser(@RequestBody CreateValidatedUserDto createValidatedUserDto) {
+    public SecuredUserDto createUser(@RequestBody CreateSecuredUserDto createValidatedUserDto) {
         LOGGER.info("user was added");
         return profileService.createUser(createValidatedUserDto);
     }
@@ -83,7 +83,7 @@ public class ProfileController {
 
     @PreAuthorize("hasRole('ROLE_COACH')")
     @GetMapping(produces = "application/json;charset=UTF-8", path="/coach/profile")
-    public CoachProfileDto getCoachProfile(Authentication principal){
+    public CoachProfileDto getCoachProfile(Principal principal){
         return profileService.getCoachProfileForUserWithEmail(principal.getName());
     }
 

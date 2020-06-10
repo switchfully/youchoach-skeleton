@@ -1,12 +1,12 @@
 package com.switchfully.youcoach.security.authentication.user.api;
 
-public class CreateValidatedUserDto {
+public class CreateSecuredUserDto {
     private String firstName;
     private String lastName;
     private String email;
     private String password;
 
-    public CreateValidatedUserDto(String firstName, String lastName, String email, String password) {
+    public CreateSecuredUserDto(String firstName, String lastName, String email, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;

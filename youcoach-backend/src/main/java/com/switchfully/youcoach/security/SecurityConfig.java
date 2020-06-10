@@ -3,7 +3,7 @@ package com.switchfully.youcoach.security;
 import com.switchfully.youcoach.security.authentication.OnAuthenticationFailureHandler;
 import com.switchfully.youcoach.security.authentication.jwt.JwtAuthenticationFilter;
 import com.switchfully.youcoach.security.authentication.jwt.JwtAuthorizationFilter;
-import com.switchfully.youcoach.security.authentication.user.ValidatedUserService;
+import com.switchfully.youcoach.security.authentication.user.SecuredUserService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
@@ -26,12 +26,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final PasswordEncoder passwordEncoder;
 
     private final String jwtSecret;
-    private final ValidatedUserService validatedUserService;
+    private final SecuredUserService securedUserService;
 
-    public SecurityConfig(ValidatedUserService validatedUserService, PasswordEncoder passwordEncoder,
+    public SecurityConfig(SecuredUserService securedUserService, PasswordEncoder passwordEncoder,
                           @Value("${jwt.secret}") String jwtSecret) {
 
-        this.validatedUserService = validatedUserService;
+        this.securedUserService = securedUserService;
         this.passwordEncoder = passwordEncoder;
         this.jwtSecret = jwtSecret;
 //        this.roleToFeatureMapper = roleToFeatureMapper;
@@ -48,7 +48,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
                 .and()
 
-                .addFilter(new JwtAuthenticationFilter(authenticationManager(), jwtSecret, validatedUserService, new OnAuthenticationFailureHandler()))
+                .addFilter(new JwtAuthenticationFilter(authenticationManager(), jwtSecret, securedUserService, new OnAuthenticationFailureHandler()))
                 .addFilter(new JwtAuthorizationFilter(authenticationManager(), jwtSecret))
 
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
@@ -79,7 +79,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(validatedUserService).passwordEncoder(passwordEncoder);
+        auth.userDetailsService(securedUserService).passwordEncoder(passwordEncoder);
     }
 
 }

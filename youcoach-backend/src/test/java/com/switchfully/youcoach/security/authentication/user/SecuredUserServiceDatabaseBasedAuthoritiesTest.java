@@ -13,11 +13,11 @@ import org.mockito.Mockito;
 import java.util.Optional;
 
 
-public class ValidatedUserServiceDatabaseBasedAuthoritiesTest {
+public class SecuredUserServiceDatabaseBasedAuthoritiesTest {
     private final ProfileRepository profileRepository = Mockito.mock(ProfileRepository.class);
     private final CoachRepository coachRepository = Mockito.mock(CoachRepository.class);
     private final AdminRepository adminRepository = Mockito.mock(AdminRepository.class);
-    private final ValidatedUserService validatedUserService = new ValidatedUserService(profileRepository, coachRepository, adminRepository, "jwtToken");
+    private final SecuredUserService securedUserService = new SecuredUserService(profileRepository, coachRepository, adminRepository, "jwtToken");
 
     private Profile getDefaultUser() {
         return new Profile(1L, "First", "Last", "example@example.com",
@@ -29,7 +29,7 @@ public class ValidatedUserServiceDatabaseBasedAuthoritiesTest {
     public void defaultRegisteredUserIsCoacheeOnly(){
         Mockito.when(coachRepository.findCoachByProfile(Mockito.any())).thenReturn(Optional.empty());
         Mockito.when(adminRepository.findAdminByProfile(Mockito.any())).thenReturn(Optional.empty());
-        Assertions.assertThat(validatedUserService.determineGrantedAuthorities(getDefaultUser()))
+        Assertions.assertThat(securedUserService.determineGrantedAuthorities(getDefaultUser()))
                 .containsExactly(UserRoles.ROLE_COACHEE);
     }
 
@@ -37,7 +37,7 @@ public class ValidatedUserServiceDatabaseBasedAuthoritiesTest {
     public void userIsAlsoCoachee(){
         Mockito.when(coachRepository.findCoachByProfile(Mockito.any())).thenReturn(Optional.of(new Coach()));
         Mockito.when(adminRepository.findAdminByProfile(Mockito.any())).thenReturn(Optional.empty());
-        Assertions.assertThat(validatedUserService.determineGrantedAuthorities(getDefaultUser()))
+        Assertions.assertThat(securedUserService.determineGrantedAuthorities(getDefaultUser()))
                 .contains(UserRoles.ROLE_COACHEE);
 
     }
@@ -46,7 +46,7 @@ public class ValidatedUserServiceDatabaseBasedAuthoritiesTest {
     public void userIsAdminAndCoachee(){
         Mockito.when(coachRepository.findCoachByProfile(Mockito.any())).thenReturn(Optional.empty());
         Mockito.when(adminRepository.findAdminByProfile(Mockito.any())).thenReturn(Optional.of(new Admin(null)));
-        Assertions.assertThat(validatedUserService.determineGrantedAuthorities(getDefaultUser()))
+        Assertions.assertThat(securedUserService.determineGrantedAuthorities(getDefaultUser()))
                 .containsExactlyInAnyOrder(UserRoles.ROLE_COACHEE, UserRoles.ROLE_ADMIN);
     }
 
@@ -54,7 +54,7 @@ public class ValidatedUserServiceDatabaseBasedAuthoritiesTest {
     public void userIsCoachAndCoachee(){
         Mockito.when(coachRepository.findCoachByProfile(Mockito.any())).thenReturn(Optional.of(new Coach()));
         Mockito.when(adminRepository.findAdminByProfile(Mockito.any())).thenReturn(Optional.empty());
-        Assertions.assertThat(validatedUserService.determineGrantedAuthorities(getDefaultUser()))
+        Assertions.assertThat(securedUserService.determineGrantedAuthorities(getDefaultUser()))
                 .containsExactlyInAnyOrder(UserRoles.ROLE_COACHEE, UserRoles.ROLE_COACH);
     }
 
@@ -62,7 +62,7 @@ public class ValidatedUserServiceDatabaseBasedAuthoritiesTest {
     public void userIsCoachAndCoacheeAndAdmin(){
         Mockito.when(coachRepository.findCoachByProfile(Mockito.any())).thenReturn(Optional.of(new Coach()));
         Mockito.when(adminRepository.findAdminByProfile(Mockito.any())).thenReturn(Optional.of(new Admin(null)));
-        Assertions.assertThat(validatedUserService.determineGrantedAuthorities(getDefaultUser()))
+        Assertions.assertThat(securedUserService.determineGrantedAuthorities(getDefaultUser()))
                 .containsExactlyInAnyOrder(UserRoles.ROLE_COACHEE, UserRoles.ROLE_ADMIN, UserRoles.ROLE_COACH);
     }
 

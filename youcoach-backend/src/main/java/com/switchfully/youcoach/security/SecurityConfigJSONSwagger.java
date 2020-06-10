@@ -1,6 +1,6 @@
 package com.switchfully.youcoach.security;
 
-import com.switchfully.youcoach.security.authentication.user.ValidatedUserService;
+import com.switchfully.youcoach.security.authentication.user.SecuredUserService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -12,14 +12,14 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Profile("development")
 @EnableWebSecurity(debug=false)
 public class SecurityConfigJSONSwagger extends SecurityConfig {
-    private final ValidatedUserService validatedUserService;
+    private final SecuredUserService securedUserService;
     private final PasswordEncoder passwordEncoder;
 
-    public SecurityConfigJSONSwagger(ValidatedUserService validatedUserService,
+    public SecurityConfigJSONSwagger(SecuredUserService securedUserService,
                                      PasswordEncoder passwordEncoder, @Value("${jwt.secret}") String jwtSecret) {
-        super(validatedUserService, passwordEncoder, jwtSecret);
+        super(securedUserService, passwordEncoder, jwtSecret);
 
-        this.validatedUserService = validatedUserService;
+        this.securedUserService = securedUserService;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -38,7 +38,7 @@ public class SecurityConfigJSONSwagger extends SecurityConfig {
 
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(validatedUserService).passwordEncoder(passwordEncoder);
+        auth.userDetailsService(securedUserService).passwordEncoder(passwordEncoder);
         super.configure(auth);
     }
 

@@ -12,9 +12,9 @@ import javax.mail.MessagingException;
 
 @org.springframework.context.annotation.Profile("development")
 @Service
-public class FakeAccountVerificatorService extends AccountVerificatorService {
+public class FakeAccountVerificator extends MailAccountVerificator {
     @Autowired
-    public FakeAccountVerificatorService(AccountVerificationRepository accountVerificationRepository, ProfileRepository profileRepository, Environment environment, EmailSenderService emailSenderService, TemplateEngine templateEngine) {
+    public FakeAccountVerificator(AccountVerificationRepository accountVerificationRepository, ProfileRepository profileRepository, Environment environment, EmailSenderService emailSenderService, TemplateEngine templateEngine) {
         super(accountVerificationRepository, profileRepository, environment, emailSenderService, templateEngine);
     }
 

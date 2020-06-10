@@ -5,11 +5,11 @@ import com.switchfully.youcoach.domain.coach.CoachingTopic;
 import com.switchfully.youcoach.domain.coach.Grade;
 import com.switchfully.youcoach.domain.coach.Topic;
 import com.switchfully.youcoach.domain.profile.Profile;
-import com.switchfully.youcoach.security.authentication.user.api.ValidatedUserDto;
+import com.switchfully.youcoach.security.authentication.user.api.SecuredUserDto;
 import com.switchfully.youcoach.domain.coach.api.CoachListingDto;
 import com.switchfully.youcoach.domain.coach.api.CoachListingEntryDto;
 import com.switchfully.youcoach.domain.coach.api.CoachProfileDto;
-import com.switchfully.youcoach.security.authentication.user.api.CreateValidatedUserDto;
+import com.switchfully.youcoach.security.authentication.user.api.CreateSecuredUserDto;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -100,9 +100,9 @@ public class ProfileMapperTest {
     void userToUserDto(){
         Profile profile = getDefaultUser();
 
-        ValidatedUserDto expected = new ValidatedUserDto(profile.getId(), profile.getFirstName(), profile.getLastName(), profile.getEmail(), profile.isAccountEnabled());
+        SecuredUserDto expected = new SecuredUserDto(profile.getId(), profile.getFirstName(), profile.getLastName(), profile.getEmail(), profile.isAccountEnabled());
 
-        ValidatedUserDto actual = profileMapper.toUserDto(profile);
+        SecuredUserDto actual = profileMapper.toUserDto(profile);
 
         Assertions.assertThat(actual).isEqualTo(expected);
     }
@@ -110,7 +110,7 @@ public class ProfileMapperTest {
     @Test
     void createUserDtoToUser(){
         Profile expected = getDefaultUser();
-        CreateValidatedUserDto cud = new CreateValidatedUserDto(expected.getFirstName(),expected.getLastName(),expected.getEmail(),expected.getPassword());
+        CreateSecuredUserDto cud = new CreateSecuredUserDto(expected.getFirstName(),expected.getLastName(),expected.getEmail(),expected.getPassword());
 
         Profile actual = profileMapper.toUser(cud);
 
@@ -126,10 +126,10 @@ public class ProfileMapperTest {
         Profile profile2 = new Profile(2,"First","Last",
                 "example2@example.com","1Lpassword","1 - latin","/my/photo.png");
         List<Profile> profiles = List.of(profile, profile2);
-        List<ValidatedUserDto> expected = List.of(new ValidatedUserDto(profile.getId(), profile.getFirstName(), profile.getLastName(), profile.getEmail(), profile.isAccountEnabled()),
-                new ValidatedUserDto(profile2.getId(), profile2.getFirstName(), profile2.getLastName(), profile2.getEmail(), profile2.isAccountEnabled()));
+        List<SecuredUserDto> expected = List.of(new SecuredUserDto(profile.getId(), profile.getFirstName(), profile.getLastName(), profile.getEmail(), profile.isAccountEnabled()),
+                new SecuredUserDto(profile2.getId(), profile2.getFirstName(), profile2.getLastName(), profile2.getEmail(), profile2.isAccountEnabled()));
 
-        List<ValidatedUserDto> actual = profileMapper.toUserDto(profiles);
+        List<SecuredUserDto> actual = profileMapper.toUserDto(profiles);
 
         Assertions.assertThat(actual).hasSameElementsAs(expected);
     }

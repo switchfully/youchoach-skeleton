@@ -5,9 +5,9 @@ import com.switchfully.youcoach.domain.coach.Coach;
 import com.switchfully.youcoach.domain.profile.Profile;
 import com.switchfully.youcoach.domain.coach.api.CoachListingDto;
 import com.switchfully.youcoach.domain.coach.api.CoachListingEntryDto;
-import com.switchfully.youcoach.security.authentication.user.api.ValidatedUserDto;
+import com.switchfully.youcoach.security.authentication.user.api.SecuredUserDto;
 import com.switchfully.youcoach.domain.coach.api.CoachProfileDto;
-import com.switchfully.youcoach.security.authentication.user.api.CreateValidatedUserDto;
+import com.switchfully.youcoach.security.authentication.user.api.CreateSecuredUserDto;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -17,15 +17,15 @@ import java.util.stream.Collectors;
 @Component
 public class ProfileMapper {
 
-    public ValidatedUserDto toUserDto(Profile profile) {
-        return new ValidatedUserDto(profile.getId(), profile.getFirstName(), profile.getLastName(), profile.getEmail(), profile.isAccountEnabled());
+    public SecuredUserDto toUserDto(Profile profile) {
+        return new SecuredUserDto(profile.getId(), profile.getFirstName(), profile.getLastName(), profile.getEmail(), profile.isAccountEnabled());
     }
 
-    public Profile toUser(CreateValidatedUserDto createValidatedUserDto) {
-        return new Profile(createValidatedUserDto.getFirstName(), createValidatedUserDto.getLastName(), createValidatedUserDto.getEmail(), createValidatedUserDto.getPassword());
+    public Profile toUser(CreateSecuredUserDto createSecuredUserDto) {
+        return new Profile(createSecuredUserDto.getFirstName(), createSecuredUserDto.getLastName(), createSecuredUserDto.getEmail(), createSecuredUserDto.getPassword());
     }
 
-    public List<ValidatedUserDto> toUserDto(List<Profile> profiles) {
+    public List<SecuredUserDto> toUserDto(List<Profile> profiles) {
         return profiles.stream().map(this::toUserDto).collect(Collectors.toList());
     }
 

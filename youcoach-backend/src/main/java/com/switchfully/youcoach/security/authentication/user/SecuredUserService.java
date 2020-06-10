@@ -24,7 +24,7 @@ import java.util.Date;
 
 
 @Service
-public class ValidatedUserService implements UserDetailsService {
+public class SecuredUserService implements UserDetailsService {
 
     private static final int TOKEN_TIME_TO_LIVE  = 3600000;
 
@@ -33,7 +33,7 @@ public class ValidatedUserService implements UserDetailsService {
     private final CoachRepository coachRepository;
     private String jwtSecret;
 
-    public ValidatedUserService(ProfileRepository profileRepository, CoachRepository coachRepository, AdminRepository adminRepository, @Value("${jwt.secret}") String jwtSecret) {
+    public SecuredUserService(ProfileRepository profileRepository, CoachRepository coachRepository, AdminRepository adminRepository, @Value("${jwt.secret}") String jwtSecret) {
         this.profileRepository = profileRepository;
         this.coachRepository = coachRepository;
         this.adminRepository = adminRepository;
@@ -47,7 +47,7 @@ public class ValidatedUserService implements UserDetailsService {
 
         Collection<GrantedAuthority> authorities = determineGrantedAuthorities(profile);
 
-        return new ValidatedUser(profile.getEmail(), profile.getPassword(), authorities, profile.isAccountEnabled());
+        return new SecuredUser(profile.getEmail(), profile.getPassword(), authorities, profile.isAccountEnabled());
     }
 
     public Collection<GrantedAuthority> determineGrantedAuthorities(Profile profile) {
