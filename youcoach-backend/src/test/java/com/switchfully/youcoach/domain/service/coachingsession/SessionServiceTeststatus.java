@@ -1,15 +1,15 @@
 package com.switchfully.youcoach.domain.service.coachingsession;
 
-import com.switchfully.youcoach.session.Status;
-import com.switchfully.youcoach.session.Session;
-import com.switchfully.youcoach.member.Member;
-import com.switchfully.youcoach.coach.CoachRepository;
-import com.switchfully.youcoach.session.SessionRepository;
-import com.switchfully.youcoach.member.MemberRepository;
-import com.switchfully.youcoach.session.api.SessionMapper;
-import com.switchfully.youcoach.session.api.CreateSessionDto;
-import com.switchfully.youcoach.session.api.SessionDto;
-import com.switchfully.youcoach.session.SessionService;
+import com.switchfully.youcoach.domain.session.Status;
+import com.switchfully.youcoach.domain.session.Session;
+import com.switchfully.youcoach.domain.member.Member;
+import com.switchfully.youcoach.domain.coach.CoachRepository;
+import com.switchfully.youcoach.domain.session.SessionRepository;
+import com.switchfully.youcoach.domain.member.MemberRepository;
+import com.switchfully.youcoach.domain.session.api.SessionMapper;
+import com.switchfully.youcoach.domain.session.api.CreateSessionDto;
+import com.switchfully.youcoach.domain.session.api.SessionDto;
+import com.switchfully.youcoach.domain.session.SessionService;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 

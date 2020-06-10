@@ -2,11 +2,11 @@ package com.switchfully.youcoach.api;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.switchfully.youcoach.session.Status;
-import com.switchfully.youcoach.session.api.CreateSessionDto;
-import com.switchfully.youcoach.session.api.SessionDto;
-import com.switchfully.youcoach.member.MemberService;
-import com.switchfully.youcoach.session.SessionService;
+import com.switchfully.youcoach.domain.session.Status;
+import com.switchfully.youcoach.domain.session.api.CreateSessionDto;
+import com.switchfully.youcoach.domain.session.api.SessionDto;
+import com.switchfully.youcoach.domain.member.MemberService;
+import com.switchfully.youcoach.domain.session.SessionService;
 import com.switchfully.youcoach.security.authentication.user.SecuredUserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

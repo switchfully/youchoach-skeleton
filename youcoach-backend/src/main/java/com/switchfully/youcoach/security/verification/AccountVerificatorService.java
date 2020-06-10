@@ -1,7 +1,7 @@
 package com.switchfully.youcoach.security.verification;
 
-import com.switchfully.youcoach.member.Member;
-import com.switchfully.youcoach.member.MemberRepository;
+import com.switchfully.youcoach.domain.member.Member;
+import com.switchfully.youcoach.domain.member.MemberRepository;
 import com.switchfully.youcoach.security.verification.exception.AccountVerificationFailedException;
 import com.switchfully.youcoach.email.EmailSenderService;
 import org.apache.commons.codec.digest.DigestUtils;

@@ -1,8 +1,8 @@
 package com.switchfully.youcoach.datastore.repositories;
 
-import com.switchfully.youcoach.admin.Admin;
-import com.switchfully.youcoach.admin.AdminRepository;
-import com.switchfully.youcoach.member.Member;
+import com.switchfully.youcoach.domain.admin.Admin;
+import com.switchfully.youcoach.domain.admin.AdminRepository;
+import com.switchfully.youcoach.domain.member.Member;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

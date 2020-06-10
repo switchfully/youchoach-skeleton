@@ -2,12 +2,12 @@ package com.switchfully.youcoach.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.switchfully.youcoach.ApplicationTest;
-import com.switchfully.youcoach.coach.CoachingTopic;
-import com.switchfully.youcoach.coach.Grade;
-import com.switchfully.youcoach.coach.Topic;
-import com.switchfully.youcoach.coach.api.CoachProfileDto;
+import com.switchfully.youcoach.domain.coach.CoachingTopic;
+import com.switchfully.youcoach.domain.coach.Grade;
+import com.switchfully.youcoach.domain.coach.Topic;
+import com.switchfully.youcoach.domain.coach.api.CoachProfileDto;
 import com.switchfully.youcoach.security.authentication.user.api.CreateSecuredUserDto;
-import com.switchfully.youcoach.member.MemberService;
+import com.switchfully.youcoach.domain.member.MemberService;
 import com.switchfully.youcoach.security.authentication.user.SecuredUserService;
 import com.switchfully.youcoach.security.authentication.user.UserRoles;
 import org.junit.jupiter.api.BeforeEach;

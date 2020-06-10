@@ -1,9 +1,9 @@
 package com.switchfully.youcoach.domain.service;
 
 import com.switchfully.youcoach.security.verification.AccountVerification;
-import com.switchfully.youcoach.member.Member;
+import com.switchfully.youcoach.domain.member.Member;
 import com.switchfully.youcoach.security.verification.AccountVerificationRepository;
-import com.switchfully.youcoach.member.MemberRepository;
+import com.switchfully.youcoach.domain.member.MemberRepository;
 import com.switchfully.youcoach.email.EmailSenderService;
 import com.switchfully.youcoach.security.verification.AccountVerificatorService;
 import org.apache.commons.codec.digest.DigestUtils;

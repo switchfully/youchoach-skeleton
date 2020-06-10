@@ -1,12 +1,12 @@
 package com.switchfully.youcoach.domain.service.coachingsession;
 
-import com.switchfully.youcoach.session.Status;
-import com.switchfully.youcoach.session.Session;
-import com.switchfully.youcoach.member.Member;
-import com.switchfully.youcoach.session.SessionRepository;
-import com.switchfully.youcoach.member.MemberRepository;
-import com.switchfully.youcoach.session.api.SessionDto;
-import com.switchfully.youcoach.session.SessionService;
+import com.switchfully.youcoach.domain.session.Status;
+import com.switchfully.youcoach.domain.session.Session;
+import com.switchfully.youcoach.domain.member.Member;
+import com.switchfully.youcoach.domain.session.SessionRepository;
+import com.switchfully.youcoach.domain.member.MemberRepository;
+import com.switchfully.youcoach.domain.session.api.SessionDto;
+import com.switchfully.youcoach.domain.session.SessionService;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

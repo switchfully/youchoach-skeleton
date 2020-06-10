@@ -1,15 +1,15 @@
 package com.switchfully.youcoach.domain.service;
 
-import com.switchfully.youcoach.coach.Coach;
-import com.switchfully.youcoach.member.Member;
-import com.switchfully.youcoach.coach.CoachRepository;
-import com.switchfully.youcoach.member.MemberRepository;
-import com.switchfully.youcoach.member.api.MemberMapper;
-import com.switchfully.youcoach.coach.api.CoachProfileDto;
-import com.switchfully.youcoach.member.api.CoacheeProfileDto;
+import com.switchfully.youcoach.domain.coach.Coach;
+import com.switchfully.youcoach.domain.member.Member;
+import com.switchfully.youcoach.domain.coach.CoachRepository;
+import com.switchfully.youcoach.domain.member.MemberRepository;
+import com.switchfully.youcoach.domain.member.api.MemberMapper;
+import com.switchfully.youcoach.domain.coach.api.CoachProfileDto;
+import com.switchfully.youcoach.domain.member.api.CoacheeProfileDto;
 import com.switchfully.youcoach.security.authentication.user.api.CreateSecuredUserDto;
 import com.switchfully.youcoach.security.authentication.user.api.SecuredUserDto;
-import com.switchfully.youcoach.member.MemberService;
+import com.switchfully.youcoach.domain.member.MemberService;
 import com.switchfully.youcoach.security.authentication.user.SecuredUserService;
 import com.switchfully.youcoach.security.verification.AccountVerificatorService;
 import com.switchfully.youcoach.security.verification.VerificationService;

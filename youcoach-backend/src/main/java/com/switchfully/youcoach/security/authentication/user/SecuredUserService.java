@@ -1,10 +1,10 @@
 package com.switchfully.youcoach.security.authentication.user;
 
 
-import com.switchfully.youcoach.member.Member;
-import com.switchfully.youcoach.admin.AdminRepository;
-import com.switchfully.youcoach.coach.CoachRepository;
-import com.switchfully.youcoach.member.MemberRepository;
+import com.switchfully.youcoach.domain.member.Member;
+import com.switchfully.youcoach.domain.admin.AdminRepository;
+import com.switchfully.youcoach.domain.coach.CoachRepository;
+import com.switchfully.youcoach.domain.member.MemberRepository;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;

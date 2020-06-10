@@ -1,9 +1,9 @@
 package com.switchfully.youcoach.datastore.repositories;
 
-import com.switchfully.youcoach.session.Status;
-import com.switchfully.youcoach.session.Session;
-import com.switchfully.youcoach.member.Member;
-import com.switchfully.youcoach.session.SessionRepository;
+import com.switchfully.youcoach.domain.session.Status;
+import com.switchfully.youcoach.domain.session.Session;
+import com.switchfully.youcoach.domain.member.Member;
+import com.switchfully.youcoach.domain.session.SessionRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;

@@ -1,7 +1,7 @@
 package com.switchfully.youcoach.security.verification;
 
-import com.switchfully.youcoach.member.Member;
-import com.switchfully.youcoach.member.MemberRepository;
+import com.switchfully.youcoach.domain.member.Member;
+import com.switchfully.youcoach.domain.member.MemberRepository;
 import com.switchfully.youcoach.security.verification.api.PasswordChangeRequestDto;
 import com.switchfully.youcoach.security.verification.api.PasswordChangeResultDto;
 import com.switchfully.youcoach.security.verification.api.PasswordResetRequestDto;
