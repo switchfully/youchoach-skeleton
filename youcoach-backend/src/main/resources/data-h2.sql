@@ -34,5 +34,5 @@ INSERT INTO coaching_topic_grades (coaching_topic_id, grades) VALUES (1002, 7);
 INSERT INTO coaching_topic_grades (coaching_topic_id, grades) VALUES (1002, 6);
 
 
-INSERT INTO admins (user_id) VALUES(115);
-INSERT INTO admins (user_id) VALUES(116);
+INSERT INTO admins (ID) VALUES(115);
+INSERT INTO admins (ID) VALUES(116);

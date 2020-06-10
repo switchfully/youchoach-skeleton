@@ -7,8 +7,8 @@ create table account_verification
 );
 create table admins
 (
-    user_id number not null,
-    primary key (user_id)
+    id number not null,
+    primary key (id)
 );
 create table coaches
 (

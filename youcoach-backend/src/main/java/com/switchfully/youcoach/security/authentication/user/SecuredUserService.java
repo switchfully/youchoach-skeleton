@@ -1,9 +1,10 @@
 package com.switchfully.youcoach.security.authentication.user;
 
 
-import com.switchfully.youcoach.datastore.repositories.AdminRepository;
-import com.switchfully.youcoach.datastore.repositories.CoachRepository;
-import com.switchfully.youcoach.datastore.repositories.UserRepository;
+import com.switchfully.youcoach.member.Member;
+import com.switchfully.youcoach.admin.AdminRepository;
+import com.switchfully.youcoach.coach.CoachRepository;
+import com.switchfully.youcoach.member.MemberRepository;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
@@ -26,12 +27,12 @@ public class SecuredUserService implements UserDetailsService {
 
     private static final int TOKEN_TIME_TO_LIVE  = 3600000;
 
-    private final UserRepository userRepository;
+    private final MemberRepository userRepository;
     private final AdminRepository adminRepository;
     private final CoachRepository coachRepository;
 
-    public SecuredUserService(UserRepository userRepository, CoachRepository coachRepository, AdminRepository adminRepository) {
-        this.userRepository = userRepository;
+    public SecuredUserService(MemberRepository memberRepository, CoachRepository coachRepository, AdminRepository adminRepository) {
+        this.userRepository = memberRepository;
         this.coachRepository = coachRepository;
         this.adminRepository = adminRepository;
     }
@@ -39,25 +40,25 @@ public class SecuredUserService implements UserDetailsService {
     @Override
 
     public UserDetails loadUserByUsername(final String userName) throws UsernameNotFoundException {
-        com.switchfully.youcoach.datastore.entities.User user = userRepository.findByEmail(userName)
+        Member member = userRepository.findByEmail(userName)
                 .orElseThrow(() -> new UsernameNotFoundException(userName));
 
-        Collection<GrantedAuthority> authorities = determineGrantedAuthorities(user);
+        Collection<GrantedAuthority> authorities = determineGrantedAuthorities(member);
 
-        return new ValidatedUser(user.getEmail(), user.getPassword(), authorities, user.isAccountEnabled());
+        return new ValidatedUser(member.getEmail(), member.getPassword(), authorities, member.isAccountEnabled());
     }
 
-    public Collection<GrantedAuthority> determineGrantedAuthorities(com.switchfully.youcoach.datastore.entities.User user) {
+    public Collection<GrantedAuthority> determineGrantedAuthorities(Member member) {
         Collection<GrantedAuthority> authorities = new ArrayList<>();
 
         authorities.add(UserRoles.ROLE_COACHEE);
-        if(isAdmin(user)) authorities.add(UserRoles.ROLE_ADMIN);
-        if(isCoach(user)) authorities.add(UserRoles.ROLE_COACH);
+        if(isAdmin(member)) authorities.add(UserRoles.ROLE_ADMIN);
+        if(isCoach(member)) authorities.add(UserRoles.ROLE_COACH);
         return authorities;
     }
 
-    private boolean isAdmin(com.switchfully.youcoach.datastore.entities.User user){
-        return adminRepository.findAdminByUser(user).isPresent();
+    private boolean isAdmin(Member member){
+        return adminRepository.findAdminByMember(member).isPresent();
     }
 
     public boolean isAdmin(String email){
@@ -65,8 +66,8 @@ public class SecuredUserService implements UserDetailsService {
         return ud.getAuthorities().contains(UserRoles.ROLE_ADMIN);
     }
 
-    private boolean isCoach(com.switchfully.youcoach.datastore.entities.User user){
-        return coachRepository.findCoachByUser(user).isPresent();
+    private boolean isCoach(Member member){
+        return coachRepository.findCoachByMember(member).isPresent();
 
     }
 

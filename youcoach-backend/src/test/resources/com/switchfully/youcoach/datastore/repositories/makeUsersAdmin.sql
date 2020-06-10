@@ -1,1 +1,1 @@
-INSERT INTO admins (user_id) SELECT id FROM members WHERE id NOT IN (SELECT user_id FROM admins);
+INSERT INTO admins (id) SELECT id FROM members WHERE id NOT IN (SELECT id FROM admins);

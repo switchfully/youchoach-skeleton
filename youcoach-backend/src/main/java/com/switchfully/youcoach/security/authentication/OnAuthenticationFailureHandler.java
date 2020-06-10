@@ -1,7 +1,6 @@
 package com.switchfully.youcoach.security.authentication;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.switchfully.youcoach.api.OnAuthenticationFailureActionResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
@@ -34,6 +33,18 @@ public class OnAuthenticationFailureHandler implements AuthenticationFailureHand
         httpServletResponse.setStatus(status.value());
         httpServletResponse.getOutputStream()
                 .println(objectMapper.writeValueAsString(new OnAuthenticationFailureActionResponse(error)));
+    }
+
+    public static class OnAuthenticationFailureActionResponse {
+        private String name;
+
+        public OnAuthenticationFailureActionResponse(String name){
+            this.name = name;
+        }
+
+        public String getName() {
+            return name;
+        }
     }
 
 }

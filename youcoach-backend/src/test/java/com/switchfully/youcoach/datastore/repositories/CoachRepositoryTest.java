@@ -1,6 +1,8 @@
 package com.switchfully.youcoach.datastore.repositories;
 
-import com.switchfully.youcoach.datastore.entities.*;
+import com.switchfully.youcoach.coach.*;
+import com.switchfully.youcoach.member.Member;
+import com.switchfully.youcoach.member.MemberRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,13 +21,16 @@ import java.util.Optional;
 @Transactional
 public class CoachRepositoryTest {
     private final CoachRepository coachRepository;
+    private final MemberRepository memberRepository;
 
     @Autowired
-    CoachRepositoryTest(CoachRepository coachRepository){
+    CoachRepositoryTest(CoachRepository coachRepository, MemberRepository memberRepository){
         this.coachRepository = coachRepository;
+        this.memberRepository = memberRepository;
     }
-    private User getDefaultUser() {
-        return new User(1L, "First", "Last", "example@example.com",
+
+    private Member getDefaultUser() {
+        return new Member(1L, "First", "Last", "example@example.com",
                 "1Lpassword", "1 - latin","/my/photo.png");
     }
 
@@ -33,10 +38,10 @@ public class CoachRepositoryTest {
     @Sql("oneDefaultUser.sql")
     @Sql("makeUsersCoach.sql")
     public void getCoachForUser(){
-        User user = getDefaultUser();
-        Coach expected = new Coach(user);
+        Member member = getDefaultUser();
+        Coach expected = new Coach(member);
 
-        Optional<Coach> actual = coachRepository.findCoachByUser(user);
+        Optional<Coach> actual = coachRepository.findCoachByMember(member);
 
         Assertions.assertThat(actual).isInstanceOf(Optional.class)
                 .isNotEmpty()
@@ -57,10 +62,10 @@ public class CoachRepositoryTest {
     @Sql("oneDefaultUser.sql")
     @Sql("makeUsersCoach.sql")
     public void addTopicForCoach(){
-        User user = getDefaultUser();
-        Coach expected = new Coach(user);
+        Member member = getDefaultUser();
+        Coach expected = new Coach(member);
 
-        Optional<Coach> actual = coachRepository.findCoachByUser(user);
+        Optional<Coach> actual = coachRepository.findCoachByMember(member);
 
         Assertions.assertThat(actual).isInstanceOf(Optional.class)
                 .isNotEmpty()
@@ -70,7 +75,7 @@ public class CoachRepositoryTest {
         Coach result = actual.get();
         result.getTopics().add(new CoachingTopic(new Topic("Another Topic"), List.of(Grade.FOUR) ));
         coachRepository.save(result);
-        result = coachRepository.findCoachByUser(user).get();
+        result = coachRepository.findCoachByMember(member).get();
 
         Assertions.assertThat(result.getXp()).isEqualTo(100);
         Assertions.assertThat(result.getAvailability()).isEqualTo("Whenever you want.");
@@ -82,8 +87,8 @@ public class CoachRepositoryTest {
     @Sql("oneDefaultUser.sql")
     @Sql("makeUsersCoach.sql")
     public void getCoach(){
-        User user = getDefaultUser();
-        Coach expected = new Coach(user);
+        Member member = getDefaultUser();
+        Coach expected = new Coach(member);
 
         Optional<Coach> actual = coachRepository.findById(1L);
 
@@ -98,26 +103,25 @@ public class CoachRepositoryTest {
     @Sql("oneDefaultUser.sql")
     @Sql("makeUsersCoach.sql")
     public void getCoachByUser(){
-        User user = getDefaultUser();
-        Coach expected = new Coach(user);
+        Member member = getDefaultUser();
+        Coach expected = new Coach(member);
 
-        Optional<Coach> actual = coachRepository.findCoachByUser(user);
+        Optional<Coach> actual = coachRepository.findCoachByMember(member);
 
         Assertions.assertThat(actual).isInstanceOf(Optional.class)
                 .isNotEmpty()
                 .containsInstanceOf(Coach.class)
                 .contains(expected);
-
     }
 
     @Test
     @Sql("oneDefaultUser.sql")
     @Sql("makeUsersCoach.sql")
     public void getCoachByUserWithEmail(){
-        User user = getDefaultUser();
-        Coach expected = new Coach(user);
+        Member member = getDefaultUser();
+        Coach expected = new Coach(member);
 
-        Optional<Coach> actual = coachRepository.findCoachByUser_Email(user.getEmail());
+        Optional<Coach> actual = coachRepository.findCoachByMember_Email(member.getEmail());
 
         Assertions.assertThat(actual).isInstanceOf(Optional.class)
                 .isNotEmpty()
@@ -126,16 +130,11 @@ public class CoachRepositoryTest {
 
     }
 
-
-
-
-
-
     @Test
     @Sql("oneDefaultUser.sql")
     public void makeUserCoach(){
-        User user = getDefaultUser();
-        Coach expected = new Coach(user);
+        Member member = getDefaultUser();
+        Coach expected = new Coach(member);
 
         coachRepository.save(expected);
         Optional<Coach> actual = coachRepository.findById(1L);
@@ -159,14 +158,14 @@ public class CoachRepositoryTest {
     @Sql("oneDefaultUser.sql")
     @Sql("makeUsersCoach.sql")
     public void removeCoachRightsForUser(){
-        coachRepository.deleteCoachByUser(getDefaultUser());
+        coachRepository.deleteCoachByMember(getDefaultUser());
 
         Assertions.assertThat(coachRepository.findById(1L)).isEmpty();
     }
 
     @Test
     public void assertPreentered(){
-        Optional<Coach> coach = coachRepository.findCoachByUser_Email("coach1@school.org");
+        Optional<Coach> coach = coachRepository.findCoachByMember_Email("coach1@school.org");
 
         Assertions.assertThat(coach).isNotEmpty();
     }
