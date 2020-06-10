@@ -17,10 +17,8 @@ import org.thymeleaf.templateresolver.StringTemplateResolver;
 
 
 @Configuration
-public class TemplateEngineConfig implements ApplicationContextAware, EnvironmentAware {
+public class TemplateEngineConfig {
 
-    private ApplicationContext applicationContext;
-    private Environment environment;
     public static final String EMAIL_TEMPLATE_ENCODING = "UTF-8";
 
     @Bean
@@ -29,7 +27,6 @@ public class TemplateEngineConfig implements ApplicationContextAware, Environmen
         messageSource.setBasename("templates/MailMessages");
         return messageSource;
     }
-
 
     @Bean
     public TemplateEngine emailTemplateEngine() {
@@ -73,16 +70,5 @@ public class TemplateEngineConfig implements ApplicationContextAware, Environmen
         templateResolver.setTemplateMode("HTML");
         templateResolver.setCacheable(false);
         return templateResolver;
-    }
-
-    public void setApplicationContext(final ApplicationContext applicationContext)
-            throws BeansException {
-        this.applicationContext = applicationContext;
-    }
-
-
-    @Override
-    public void setEnvironment(Environment environment) {
-        this.environment = environment;
     }
 }
