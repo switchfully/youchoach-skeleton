@@ -7,15 +7,15 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
-@Table(name = "coaching_session")
+@Table(name = "session")
 public class Session {
     @Id
-    @Column(name = "coaching_session_id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(name = "session_seq", sequenceName = "session_seq", initialValue = 1, allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "session_seq")
     private long id;
     @Column(name = "subject", nullable = false)
     private String subject;
-    @Column(name = "date", nullable = false)
+    @Column(name = "date_and_time", nullable = false)
     private LocalDateTime dateAndTime;
     @Column(name = "location")
     private String location;
@@ -27,7 +27,7 @@ public class Session {
     @OneToOne
     @JoinColumn(name = "coachee_id")
     private Profile coachee;
-    @Column(name= "status")
+    @Column(name = "status")
     private Status status;
 
     public Session() {
