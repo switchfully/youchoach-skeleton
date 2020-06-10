@@ -1,20 +1,17 @@
 package com.switchfully.youcoach.domain.admin;
 
-import com.switchfully.youcoach.domain.admin.Admin;
-import com.switchfully.youcoach.domain.admin.AdminRepository;
 import com.switchfully.youcoach.domain.profile.Profile;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.jdbc.Sql;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
 @DataJpaTest
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class AdminRepositoryTest {
 
     private final AdminRepository adminRepository;
@@ -30,8 +27,8 @@ public class AdminRepositoryTest {
     }
 
     @Test
-    @Sql("oneDefaultUser.sql")
-    @Sql("makeUsersAdmin.sql")
+    @Sql("classpath:oneDefaultUser.sql")
+    @Sql("classpath:makeUsersAdmin.sql")
     public void getAdminForUser() {
         Profile profile = getDefaultUser();
         Admin expected = new Admin(profile);
@@ -44,8 +41,8 @@ public class AdminRepositoryTest {
     }
 
     @Test
-    @Sql("oneDefaultUser.sql")
-    @Sql("makeUsersAdmin.sql")
+    @Sql("classpath:oneDefaultUser.sql")
+    @Sql("classpath:makeUsersAdmin.sql")
     public void getAdminById() {
         Profile profile = getDefaultUser();
         Admin expected = new Admin(profile);
@@ -58,7 +55,7 @@ public class AdminRepositoryTest {
     }
 
     @Test
-    @Sql("oneDefaultUser.sql")
+    @Sql("classpath:oneDefaultUser.sql")
     public void makeUserAdmin(){
         Profile profile = getDefaultUser();
         Admin expected = new Admin(profile);
@@ -71,8 +68,8 @@ public class AdminRepositoryTest {
 
 
     @Test
-    @Sql("oneDefaultUser.sql")
-    @Sql("makeUsersAdmin.sql")
+    @Sql("classpath:oneDefaultUser.sql")
+    @Sql("classpath:makeUsersAdmin.sql")
     public void deleteAdminRights(){
         adminRepository.deleteById(1L);
 
@@ -81,8 +78,8 @@ public class AdminRepositoryTest {
 
 
     @Test
-    @Sql("oneDefaultUser.sql")
-    @Sql("makeUsersAdmin.sql")
+    @Sql("classpath:oneDefaultUser.sql")
+    @Sql("classpath:makeUsersAdmin.sql")
     public void deleteAdminRightsForUser(){
         adminRepository.deleteAdminByProfile(getDefaultUser());
 

@@ -1,12 +1,9 @@
 package com.switchfully.youcoach.domain.profile;
 
 
-import com.switchfully.youcoach.domain.profile.Profile;
-import com.switchfully.youcoach.domain.profile.ProfileRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.annotation.DirtiesContext;
@@ -19,6 +16,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 @DataJpaTest
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 class ProfileRepositoryTest {
 
     @Autowired
@@ -38,7 +36,7 @@ class ProfileRepositoryTest {
     }
 
     @Test
-    @Sql("oneDefaultUser.sql")
+    @Sql("classpath:oneDefaultUser.sql")
     void retrieveProfile(){
         Profile expected = new Profile(1L, "First", "Last","example@example.com",
                 "1Lpassword","1 - Latin","/my/photo.png");
@@ -47,7 +45,7 @@ class ProfileRepositoryTest {
     }
 
     @Test
-    @Sql("oneDefaultUser.sql")
+    @Sql("classpath:oneDefaultUser.sql")
     void emailExists(){
         Assertions.assertThat(profileRepository.existsByEmail("example@example.com")).isTrue();
     }
@@ -57,7 +55,7 @@ class ProfileRepositoryTest {
     }
 
     @Test
-    @Sql("oneDefaultUser.sql")
+    @Sql("classpath:oneDefaultUser.sql")
     void emailDuplication() {
         Profile duplicateEmail = new Profile(2,"DuplicateFirst","DuplicateLast","example@example.com",
                 "1Lpassword","1 - latin","/my/photo.png");
@@ -67,7 +65,7 @@ class ProfileRepositoryTest {
     }
 
     @Test
-    @Sql("oneDefaultUser.sql")
+    @Sql("classpath:oneDefaultUser.sql")
     void findByEmail(){
         assertThat(profileRepository.findByEmail("example@example.com")).isInstanceOf(Optional.class);
         assertThat(profileRepository.findByEmail("example@example.com")).containsInstanceOf(Profile.class);

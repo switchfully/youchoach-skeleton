@@ -81,7 +81,7 @@ class SessionControllerTest {
     }
 
     @WithMockUser(username = "example2@example.com")
-    @Sql({"../datastore/repositories/oneDefaultUser.sql", "../datastore/repositories/makeUsersCoach.sql", "../datastore/repositories/anotherDefaultUser.sql"})
+    @Sql({"classpath:oneDefaultUser.sql", "classpath:makeUsersCoach.sql", "classpath:anotherDefaultUser.sql"})
     @Test
     void createCoachingSession() throws Exception {
         Principal mockPrincipal = mock(Principal.class);

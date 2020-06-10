@@ -18,6 +18,7 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 class SessionRepositoryTest {
 
     @Autowired
@@ -29,7 +30,7 @@ class SessionRepositoryTest {
     }
 
     @Test
-    @Sql({"oneDefaultUser.sql", "anotherDefaultUser.sql"})
+    @Sql({"classpath:oneDefaultUser.sql", "classpath:anotherDefaultUser.sql"})
     void itShouldSaveCoachingSessions() {
         Profile coach = new Profile(1L, "firstName", "lastName", "firstName@mail.com", "password");
         Profile coachee = new Profile(2L, "firstName", "lastName", "firstName@mail.com", "password");
@@ -42,7 +43,7 @@ class SessionRepositoryTest {
     }
 
     @Test
-    @Sql({"oneDefaultUser.sql", "anotherDefaultUser.sql"})
+    @Sql({"classpath:oneDefaultUser.sql", "classpath:anotherDefaultUser.sql"})
     void findAllByEmail() {
         Profile coach = new Profile(1L, "firstName", "lastName", "firstName@mail.com", "password");
         Profile coachee = new Profile(2L, "firstName", "lastName", "firstName@mail.com", "password");

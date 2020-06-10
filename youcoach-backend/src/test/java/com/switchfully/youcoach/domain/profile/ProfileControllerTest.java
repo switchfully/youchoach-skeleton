@@ -89,7 +89,7 @@ class ProfileControllerTest {
     }
 
     @Test
-    @Sql("../datastore/repositories/oneDefaultUser.sql")
+    @Sql("classpath:oneDefaultUser.sql")
     void getCoacheeProfile() throws Exception {
         UsernamePasswordAuthenticationToken user = new UsernamePasswordAuthenticationToken("example@example.com", null, List.of(UserRoles.ROLE_COACHEE));
         String token = validatedUserService.generateJwtToken(user);
@@ -106,7 +106,7 @@ class ProfileControllerTest {
     }
 
     @Test
-    @Sql("../datastore/repositories/oneDefaultUser.sql")
+    @Sql("classpath:oneDefaultUser.sql")
     void getSpecificCoacheeProfile() throws Exception {
         UsernamePasswordAuthenticationToken user = new UsernamePasswordAuthenticationToken("example@example.com", null, List.of(UserRoles.ROLE_ADMIN));
         String token = validatedUserService.generateJwtToken(user);
@@ -125,8 +125,8 @@ class ProfileControllerTest {
     }
 
     @Test
-    @Sql("../datastore/repositories/oneDefaultUser.sql")
-    @Sql("../datastore/repositories/makeUsersCoach.sql")
+    @Sql("classpath:oneDefaultUser.sql")
+    @Sql("classpath:makeUsersCoach.sql")
     void getCoachProfile() throws Exception {
         UsernamePasswordAuthenticationToken user = new UsernamePasswordAuthenticationToken("example@example.com", null, List.of(UserRoles.ROLE_COACH));
         String token = validatedUserService.generateJwtToken(user);

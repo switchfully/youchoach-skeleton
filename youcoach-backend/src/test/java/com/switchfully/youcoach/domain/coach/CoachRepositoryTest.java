@@ -30,8 +30,8 @@ public class CoachRepositoryTest {
     }
 
     @Test
-    @Sql("oneDefaultUser.sql")
-    @Sql("makeUsersCoach.sql")
+    @Sql("classpath:oneDefaultUser.sql")
+    @Sql("classpath:makeUsersCoach.sql")
     public void getCoachForUser(){
         Profile profile = getDefaultUser();
         Coach expected = new Coach(profile);
@@ -54,8 +54,8 @@ public class CoachRepositoryTest {
     }
 
     @Test
-    @Sql("oneDefaultUser.sql")
-    @Sql("makeUsersCoach.sql")
+    @Sql("classpath:oneDefaultUser.sql")
+    @Sql("classpath:makeUsersCoach.sql")
     public void addTopicForCoach(){
         Profile profile = getDefaultUser();
         Coach expected = new Coach(profile);
@@ -79,8 +79,8 @@ public class CoachRepositoryTest {
     }
 
     @Test
-    @Sql("oneDefaultUser.sql")
-    @Sql("makeUsersCoach.sql")
+    @Sql("classpath:oneDefaultUser.sql")
+    @Sql("classpath:makeUsersCoach.sql")
     public void getCoach(){
         Profile profile = getDefaultUser();
         Coach expected = new Coach(profile);
@@ -95,8 +95,8 @@ public class CoachRepositoryTest {
     }
 
     @Test
-    @Sql("oneDefaultUser.sql")
-    @Sql("makeUsersCoach.sql")
+    @Sql("classpath:oneDefaultUser.sql")
+    @Sql("classpath:makeUsersCoach.sql")
     public void getCoachByUser(){
         Profile profile = getDefaultUser();
         Coach expected = new Coach(profile);
@@ -110,8 +110,8 @@ public class CoachRepositoryTest {
     }
 
     @Test
-    @Sql("oneDefaultUser.sql")
-    @Sql("makeUsersCoach.sql")
+    @Sql("classpath:oneDefaultUser.sql")
+    @Sql("classpath:makeUsersCoach.sql")
     public void getCoachByUserWithEmail(){
         Profile profile = getDefaultUser();
         Coach expected = new Coach(profile);
@@ -126,7 +126,7 @@ public class CoachRepositoryTest {
     }
 
     @Test
-    @Sql("oneDefaultUser.sql")
+    @Sql("classpath:oneDefaultUser.sql")
     public void makeUserCoach(){
         Profile profile = getDefaultUser();
         Coach expected = new Coach(profile);
@@ -141,8 +141,8 @@ public class CoachRepositoryTest {
     }
 
     @Test
-    @Sql("oneDefaultUser.sql")
-    @Sql("makeUsersCoach.sql")
+    @Sql("classpath:oneDefaultUser.sql")
+    @Sql("classpath:makeUsersCoach.sql")
     public void removeCoachRights(){
         coachRepository.deleteById(1L);
 
@@ -150,8 +150,8 @@ public class CoachRepositoryTest {
     }
 
     @Test
-    @Sql("oneDefaultUser.sql")
-    @Sql("makeUsersCoach.sql")
+    @Sql("classpath:oneDefaultUser.sql")
+    @Sql("classpath:makeUsersCoach.sql")
     public void removeCoachRightsForUser(){
         coachRepository.deleteCoachByProfile(getDefaultUser());
 
