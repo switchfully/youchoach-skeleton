@@ -1,4 +1,4 @@
-package com.switchfully.youcoach.domain.service;
+package com.switchfully.youcoach.domain.profile;
 
 import com.switchfully.youcoach.domain.coach.Coach;
 import com.switchfully.youcoach.domain.profile.Profile;

@@ -1,4 +1,4 @@
-package com.switchfully.youcoach.api;
+package com.switchfully.youcoach.domain.session;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

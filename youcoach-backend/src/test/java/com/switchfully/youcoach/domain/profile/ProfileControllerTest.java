@@ -1,4 +1,4 @@
-package com.switchfully.youcoach.api;
+package com.switchfully.youcoach.domain.profile;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.switchfully.youcoach.ApplicationTest;

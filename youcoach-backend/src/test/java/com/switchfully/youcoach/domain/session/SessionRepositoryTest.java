@@ -1,4 +1,4 @@
-package com.switchfully.youcoach.datastore.repositories;
+package com.switchfully.youcoach.domain.session;
 
 import com.switchfully.youcoach.domain.profile.Profile;
 import com.switchfully.youcoach.domain.session.Status;

@@ -1,4 +1,4 @@
-package com.switchfully.youcoach.domain.service;
+package com.switchfully.youcoach.security.verification;
 
 import com.switchfully.youcoach.security.verification.AccountVerification;
 import com.switchfully.youcoach.domain.profile.Profile;

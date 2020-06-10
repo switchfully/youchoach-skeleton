@@ -1,4 +1,4 @@
-package com.switchfully.youcoach.datastore.repositories;
+package com.switchfully.youcoach.domain.admin;
 
 import com.switchfully.youcoach.domain.admin.Admin;
 import com.switchfully.youcoach.domain.admin.AdminRepository;

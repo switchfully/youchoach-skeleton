@@ -1,4 +1,4 @@
-package com.switchfully.youcoach.datastore.repositories;
+package com.switchfully.youcoach.domain.profile;
 
 
 import com.switchfully.youcoach.domain.profile.Profile;

@@ -1,4 +1,4 @@
-package com.switchfully.youcoach.domain.service;
+package com.switchfully.youcoach.security.verification;
 
 import com.switchfully.youcoach.security.verification.VerificationService;
 import org.assertj.core.api.Assertions;

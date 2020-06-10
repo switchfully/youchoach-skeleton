@@ -1,49 +1,47 @@
-package com.switchfully.youcoach.domain.service.coachingsession;
+package com.switchfully.youcoach.domain.session;
 
+import com.switchfully.youcoach.domain.profile.Profile;
 import com.switchfully.youcoach.domain.session.Status;
 import com.switchfully.youcoach.domain.session.Session;
-import com.switchfully.youcoach.domain.profile.Profile;
+import com.switchfully.youcoach.domain.coach.CoachRepository;
 import com.switchfully.youcoach.domain.session.SessionRepository;
 import com.switchfully.youcoach.domain.profile.ProfileRepository;
+import com.switchfully.youcoach.domain.session.api.SessionMapper;
+import com.switchfully.youcoach.domain.session.api.CreateSessionDto;
 import com.switchfully.youcoach.domain.session.api.SessionDto;
 import com.switchfully.youcoach.domain.session.SessionService;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.jdbc.Sql;
+import org.mockito.Mockito;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-class SessionServiceGettingTest {
-
+class SessionServiceTeststatus {
     Session session = new Session(1L, "Mathematics", LocalDateTime.now(), "school", "no remarks", new Profile(1L, null, null, null, null), null, Status.REQUESTED);
+    CreateSessionDto createSessionDto = new CreateSessionDto("Mathematics", "30/05/2020", "11:50", "school", "no remarks", 1L);
     SessionDto sessionDto = new SessionDto(1L, "Mathematics", "30/05/2020", "11:50", "school", "no remarks", new SessionDto.Person(1L, "Name"), new SessionDto.Person(2L, "Name"), Status.REQUESTED);
 
-
     SessionRepository sessionRepository = mock(SessionRepository.class);
+    CoachRepository coachRepository = mock(CoachRepository.class);
     ProfileRepository profileRepository = mock(ProfileRepository.class);
 
-    @Autowired
-    SessionService sessionService;
 
-    @Disabled
     @Test
-    @Sql({"../../../datastore/repositories/oneDefaultUser.sql", "../../../datastore/repositories/makeUsersCoach.sql"})
-    void itShouldget_list() {
+    void If_Inthepast_StatusAutomaticallyClosed() {
 
-        Profile coachee = new Profile(2L, null, null, null, null);
+        SessionService sessionService = new SessionService(sessionRepository, new SessionMapper(), coachRepository, profileRepository);
 
-        when(sessionRepository.findAllByCoachee(Optional.of(coachee))).thenReturn(List.of(session));
-        when(profileRepository.findByEmail("example@example.com")).thenReturn(Optional.of(coachee));
+        Session session1 = new Session(1L, "Mathematics", LocalDateTime.now().minusDays(1), "school", "no remarks", new Profile(1L, null, null, null, null), new Profile(2L, null, null, null, null), Status.REQUESTED);
+
+        when(sessionRepository.findAllByCoachee(Mockito.any())).thenReturn(List.of(session1));
 
         List<SessionDto> actual = sessionService.getCoachingSessionsForUser("example@example.com");
-        assertThat(actual).contains(sessionDto);
+
+        assertThat(actual.get(0).getStatus()).isEqualTo(Status.AUTOMATICALLY_CLOSED);
     }
 
 }
