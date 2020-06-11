@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {AuthenticationService} from './services/authentication/authentication.service';
+import {AuthenticationService} from './security/services/authentication/authentication.service';
 import {TranslateService} from '@ngx-translate/core';
 
 @Component({

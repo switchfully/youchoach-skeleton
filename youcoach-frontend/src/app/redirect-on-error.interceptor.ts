@@ -7,9 +7,9 @@ import {
 } from '@angular/common/http';
 import {Observable, of, throwError} from 'rxjs';
 import {catchError, tap} from 'rxjs/operators';
-import {AuthenticationService} from './services/authentication/authentication.service';
+import {AuthenticationService} from './security/services/authentication/authentication.service';
 import {Router} from '@angular/router';
-import {ForbiddenService} from './services/forbidden.service';
+import {ForbiddenService} from './security/services/forbidden.service';
 
 @Injectable()
 export class RedirectOnErrorInterceptor implements HttpInterceptor {
