@@ -22,7 +22,7 @@ public class SessionMapper {
                 dateTime,
                 createSessionDto.getLocation(),
                 createSessionDto.getRemarks(),
-                coach, coachee, Status.REQUESTED);
+                coach, coachee);
     }
 
     public SessionDto toDto(Session session) {

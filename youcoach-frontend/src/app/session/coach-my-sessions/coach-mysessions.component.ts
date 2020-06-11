@@ -1,8 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {SessionService} from '../services/session.service';
-import {Action, Status} from '../interfaces/Action';
 import {TimeComparatorService} from '../services/time-comparator.service';
-import {ISessionComplete} from '../interfaces/ISessionComplete';
+import {ISessionComplete, Status} from '../interfaces/ISessionComplete';
 
 @Component({
   selector: 'app-coach-mysessions',
@@ -26,58 +25,24 @@ export class CoachMysessionsComponent implements OnInit {
 
   getSessions(): void {
     this.sessionService.getSessionsforCoach().subscribe(
-      sessions => {
-        this.sessions = sessions;
-        for (const session of sessions) {
-          if (session.status.includes('CANCELLED')) {
-            if (session.status === 'CANCELLED_BY_COACH') { session.cancelledByCoach = true; }
-            if (session.status.includes('COACHEE')) { session.cancelledByCoachee = true; }
-            session.status = 'CANCELLED';
-          }
-          console.log(session.date);
-          console.log(session.time);
-          const dateTopass = this.timeComparator.constructSessionDate(session.date, session.time);
-          console.log(dateTopass);
-          console.log(new Date());
-          if (new Date() > dateTopass) {
-            this.sessionsarchived.push(session);
-          } else {
-            this.sessionswithoutarchived.push(session);
-          }
-        }
-      });
+      sessions => this.sessions = sessions);
   }
 
-  acceptSession(sessionId: number): void {
-    const status = Status.ACCEPTED;
-    const action = new Action(sessionId, status);
-    this.sessionService.sendStatus(action).subscribe(
-      _ => this.updateSessionStatus(sessionId, status),
+  acceptSession(session: ISessionComplete): void {
+    this.sessionService.accept(session.id).subscribe(
+      _ => session.status = Status.ACCEPTED,
       _ => alert('Updating status failed!'));
   }
 
-  declineSession(sessionId: number): void {
-    const status = Status.DECLINED;
-    const action = new Action(sessionId, status);
-    this.sessionService.sendStatus(action).subscribe(
-      _ => this.updateSessionStatus(sessionId, status),
+  declineSession(session: ISessionComplete): void {
+    this.sessionService.decline(session.id).subscribe(
+      _ => session.status = Status.DECLINED,
       _ => alert('Updating status failed!'));
   }
 
-  cancelSession(sessionId: number): void {
-    const status = Status.CANCELLED_BY_COACH;
-    const action = new Action(sessionId, status);
-    this.sessionService.sendStatus(action).subscribe(
-      _ => this.updateSessionStatus(sessionId, status),
+  cancelSession(session: ISessionComplete): void {
+    this.sessionService.cancel(session.id).subscribe(
+      _ => session.status = Status.CANCELLED,
       _ => alert('Updating status failed!'));
-  }
-
-  private updateSessionStatus(sessionId: number, status: Status) {
-    this.sessions.forEach(session => {
-      if (session.id === sessionId) {
-        session.status = Status[status];
-      }
-      if (session.status.includes('CANCELLED')) { session.status = 'CANCELLED'; }
-    });
   }
 }

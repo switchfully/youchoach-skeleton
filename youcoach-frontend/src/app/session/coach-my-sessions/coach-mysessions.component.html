@@ -33,19 +33,22 @@
                   <th translate>coaching-sessions.label.action </th>
                 </tr>
                 </thead>
-                <tbody>
-                <tr *ngFor="let session of sessionswithoutarchived">
+                <tbody *ngIf="sessions">
+                <tr *ngFor="let session of sessions | FilterSessionsOnStatus:'initial'">
                   <td>{{session.coachee.name}}</td>
                   <td>{{session.subject}}</td>
                   <td>{{session.date}}</td>
                   <td>{{session.time}}</td>
                   <td>{{session.location}}</td>
-                  <td>{{session.status}}<span *ngIf="session.cancelledByCoachee"><br>(by coachee)</span>
-                    <span *ngIf="session.cancelledByCoach"><br>(by coach)</span></td>
-                  <td><a *ngIf="session.status !== 'ACCEPTED' && session.status !== 'DECLINED' && !session.status.includes('CANCELLED')" style="margin-right: 30px" class="waves-effect waves-light green lighten-2 btn black-text" (click)="acceptSession(session.id)">Accept<i
-                    class="material-icons right">assignment_turned_in</i></a><a *ngIf="session.status !== 'ACCEPTED' && session.status !== 'DECLINED' && !session.status.includes('CANCELLED')" class="waves-effect waves-light red lighten-2 btn black-text" (click)="declineSession(session.id)">Decline<i
-                    class="material-icons right">cancel</i></a><a *ngIf="session.status === 'ACCEPTED'" style="margin-right: 30px"  class="waves-effect waves-light red lighten-2 btn black-text" (click)="cancelSession(session.id)">Cancel<i
-                    class="material-icons right">cancel</i></a></td>
+                  <td>{{session.status | SessionStatusLabel}}</td>
+                  <td *ngIf="session.status !== 'ACCEPTED' ">
+                    <a style="margin-right: 30px" class="waves-effect waves-light green lighten-2 btn black-text" (click)="acceptSession(session)">Accept
+                      <i class="material-icons green right">assignment_turned_in</i>
+                    </a>
+                    <a class="waves-effect waves-light red lighten-2 btn black-text" (click)="declineSession(session)">Decline
+                      <i class="material-icons red right">cancel</i>
+                    </a>
+                  </td>
                 </tr>
                 </tbody>
               </table>
@@ -54,42 +57,43 @@
 
         </section>
 
-<!--        <section class="card-panel grey lighten-5">-->
-<!--          <h5>Waiting for feedback</h5>-->
-<!--          <div class="divider"></div>-->
-<!--          <div class="row">-->
-<!--            <div class="col l12 s12">-->
-<!--              <table class="highlight responsive-table">-->
-<!--                <thead>-->
-<!--                <tr>-->
-<!--                  <th>Coachee</th>-->
-<!--                  <th>Subject</th>-->
-<!--                  <th>Date</th>-->
-<!--                  <th>Time</th>-->
-<!--                  <th>Location</th>-->
-<!--                  <th>Status</th>-->
-<!--                  <th>Actions</th>-->
-<!--                </tr>-->
-<!--                </thead>-->
-<!--                <tbody>-->
-<!--                <tr *ngFor="let session of sessionsfeedback">-->
-<!--                  <td>{{session.coachee.name}}</td>-->
-<!--                  <td>{{session.subject}}</td>-->
-<!--                  <td>{{session.date}}</td>-->
-<!--                  <td>{{session.time}}</td>-->
-<!--                  <td>{{session.location}}</td>-->
-<!--                  <td>{{session.status}}</td>-->
-<!--                  <td><a *ngIf="session.status !== 'ACCEPTED' && session.status !== 'DECLINED' && session.status !== 'CANCELLED'" style="margin-right: 30px" class="waves-effect waves-light green lighten-2 btn black-text" (click)="acceptSession(session.id)">Accept<i-->
-<!--                    class="material-icons green right">assignment_turned_in</i></a><a *ngIf="session.status !== 'ACCEPTED' && session.status !== 'DECLINED' && session.status !== 'CANCELLED'" class="waves-effect waves-light red lighten-2 btn black-text" (click)="declineSession(session.id)">Decline<i-->
-<!--                    class="material-icons red right">cancel</i></a><a *ngIf="session.status === 'ACCEPTED'" style="margin-right: 30px"  class="waves-effect waves-light red lighten-2 btn black-text" (click)="cancelSession(session.id)">Cancel<i-->
-<!--                    class="material-icons red right">cancel</i></a></td>-->
-<!--                </tr>-->
-<!--                </tbody>-->
-<!--              </table>-->
-<!--            </div>-->
-<!--          </div>-->
+        <section class="card-panel grey lighten-5">
+          <h5>Waiting for feedback</h5>
+          <div class="divider"></div>
+          <div class="row">
+            <div class="col l12 s12">
+              <table class="highlight responsive-table">
+                <thead>
+                <tr>
+                  <th>Coachee</th>
+                  <th>Subject</th>
+                  <th>Date</th>
+                  <th>Time</th>
+                  <th>Location</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody *ngIf="sessions">
+                <tr *ngFor="let session of sessions | FilterSessionsOnStatus:'finished'">
+                  <td>{{session.coachee.name}}</td>
+                  <td>{{session.subject}}</td>
+                  <td>{{session.date}}</td>
+                  <td>{{session.time}}</td>
+                  <td>{{session.location}}</td>
+                  <td>{{session.status | SessionStatusLabel}}</td>
+                  <td>
+                    <a style="margin-right: 30px" class="waves-effect waves-light green lighten-2 btn black-text" [routerLink]="'/session/' + session.id" >Provide feedback
+                      <i class="material-icons green right">assignment</i>
+                    </a>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
 
-<!--        </section>-->
+        </section>
 
         <section class="card-panel grey lighten-5">
           <h5>Archive</h5>
@@ -105,22 +109,16 @@
                   <th translate>request-session.label.time</th>
                   <th translate>request-session.label.location </th>
                   <th translate>coaching-sessions.label.status</th>
-                  <th translate>coaching-sessions.label.action </th>
                 </tr>
                 </thead>
-                <tbody>
-                <tr *ngFor="let session of sessionsarchived">
+                <tbody *ngIf="sessions">
+                <tr *ngFor="let session of sessions | FilterSessionsOnStatus:'done'">
                   <td>{{session.coachee.name}}</td>
                   <td>{{session.subject}}</td>
                   <td>{{session.date}}</td>
                   <td>{{session.time}}</td>
                   <td>{{session.location}}</td>
-                  <td>{{session.status}}<span *ngIf="session.cancelledByCoachee"><br>(by coachee)</span>
-                    <span *ngIf="session.cancelledByCoach"><br>(by coach)</span></td>
-                  <td><a *ngIf="session.status !== 'ACCEPTED' && session.status !== 'DECLINED' && !session.status.includes('CANCELLED') && session.status !== 'AUTOMATICALLY_CLOSED'" style="margin-right: 30px" class="waves-effect waves-light green lighten-2 btn black-text" (click)="acceptSession(session.id)">Accept<i
-                    class="material-icons right">assignment_turned_in</i></a><a *ngIf="session.status !== 'ACCEPTED' && session.status !== 'DECLINED' && session.status !== 'CANCELLED' && session.status !== 'AUTOMATICALLY_CLOSED'" class="waves-effect waves-light red lighten-2 btn black-text" (click)="declineSession(session.id)">Decline<i
-                    class="material-icons right">cancel</i></a><a *ngIf="session.status === 'ACCEPTED'" style="margin-right: 30px"  class="waves-effect waves-light red lighten-2 btn black-text" (click)="cancelSession(session.id)">Cancel<i
-                    class="material-icons right">cancel</i></a></td>
+                  <td>{{session.status | SessionStatusLabel}}</td>
                 </tr>
                 </tbody>
               </table>

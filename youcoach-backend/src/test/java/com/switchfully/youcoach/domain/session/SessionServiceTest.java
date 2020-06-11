@@ -26,19 +26,17 @@ import static org.mockito.Mockito.when;
 
 class SessionServiceTest {
 
-    Session session = new Session(1L, "Mathematics", LocalDateTime.now(), "school", "no remarks", new Profile(1L, null, null, null, null), null, Status.REQUESTED);
-    CreateSessionDto createSessionDto = new CreateSessionDto("Mathematics", "30/05/2020", "11:50", "school", "no remarks", 1L);
-    SessionDto sessionDto = new SessionDto(1L, "Mathematics", "30/05/2020", "11:50", "school", "no remarks", new SessionDto.Person(1L, "Name"), new SessionDto.Person(2L, "Name"), Status.REQUESTED);
-
-    SessionRepository sessionRepository = mock(SessionRepository.class);
-    SessionMapper sessionMapper = mock(SessionMapper.class);
-    CoachRepository coachRepository = mock(CoachRepository.class);
-    ProfileRepository profileRepository = mock(ProfileRepository.class);
-
-    SessionService sessionService = new SessionService(sessionRepository, sessionMapper, coachRepository, profileRepository);
+    private Session session = new Session("Mathematics", LocalDateTime.now(), "school", "no remarks", new Profile(1L, null, null, null, null), null);
+    private CreateSessionDto createSessionDto = new CreateSessionDto("Mathematics", "30/05/2020", "11:50", "school", "no remarks", 1L);
+    private SessionDto sessionDto = new SessionDto(1L, "Mathematics", "30/05/2020", "11:50", "school", "no remarks", new SessionDto.Person(1L, "Name"), new SessionDto.Person(2L, "Name"), Status.REQUESTED);
+    private SessionRepository sessionRepository = mock(SessionRepository.class);
+    private SessionMapper sessionMapper = mock(SessionMapper.class);
+    private CoachRepository coachRepository = mock(CoachRepository.class);
+    private ProfileRepository profileRepository = mock(ProfileRepository.class);
+    private SessionService sessionService = new SessionService(sessionRepository, sessionMapper, coachRepository, profileRepository);
 
     @Test
-    @Sql({"../../../datastore/repositories/oneDefaultUser.sql", "../../../datastore/repositories/makeUsersCoach.sql"})
+    @Sql({"classpath:/oneDefaultUser.sql", "classpath:/makeUsersCoach.sql"})
     void itShouldSave_andReturn_aDto() {
         when(sessionMapper.toModel(any(CreateSessionDto.class), any(Profile.class), any(Profile.class))).thenReturn(session);
         when(sessionMapper.toDto(any(Session.class))).thenReturn(sessionDto);
@@ -53,9 +51,8 @@ class SessionServiceTest {
 
     @Disabled
     @Test
-    @Sql({"../../../datastore/repositories/oneDefaultUser.sql", "../../../datastore/repositories/makeUsersCoach.sql"})
+    @Sql({"classpath:/oneDefaultUser.sql", "classpath:/makeUsersCoach.sql"})
     void itShouldget_list() {
-
         Optional<Profile> optionalUser = Optional.of(new Profile(2L, null, null, null, null));
 
         when(sessionMapper.toModel(any(CreateSessionDto.class), any(Profile.class), any(Profile.class))).thenReturn(session);
@@ -63,21 +60,11 @@ class SessionServiceTest {
         when(sessionRepository.save(any(Session.class))).thenReturn(session);
         when(profileRepository.findByEmail("example@example.com")).thenReturn(optionalUser);
         when(coachRepository.findById(1L)).thenReturn(Optional.of(new Coach(new Profile(1L, null, null, null, null))));
-//        when(coachingSessionService.getCoachingSessionsForUser("example@example.com")).thenReturn(List.of(coachingSessionDto));
         when(sessionRepository.findAllByCoachee(optionalUser)).thenReturn(List.of(session));
 
 
-        SessionDto actual = sessionService.save(createSessionDto, "example@example.com");
         List<SessionDto> coachingSessionsForUser = sessionService.getCoachingSessionsForUser("example@example.com");
 
         assertThat(coachingSessionsForUser).contains(sessionDto);
-    }
-
-    @Test
-    void updateStatus_shouldReturnDto_withUpdatedStatus() {
-//        UpdateStatusDto updateStatusDto = new UpdateStatusDto(1L)
-
-
-
     }
 }

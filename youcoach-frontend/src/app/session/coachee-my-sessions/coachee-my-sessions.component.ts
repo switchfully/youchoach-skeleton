@@ -1,7 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {SessionService} from '../services/session.service';
-import {ISessionComplete} from '../interfaces/ISessionComplete';
-import {Action, Status} from '../interfaces/Action';
+import {ISessionComplete, Status} from '../interfaces/ISessionComplete';
 import {TimeComparatorService} from '../services/time-comparator.service';
 
 @Component({
@@ -11,54 +10,32 @@ import {TimeComparatorService} from '../services/time-comparator.service';
 })
 export class CoacheeMySessionsComponent implements OnInit {
   sessions: ISessionComplete[] = null;
-  sessionswithoutarchived: ISessionComplete[];
-  sessionsarchived: ISessionComplete[];
-  sessionsfeedback: ISessionComplete[];
-  constructor(private sessionService: SessionService, private timeComparator: TimeComparatorService) { }
+
+  constructor(private sessionService: SessionService, private timeComparator: TimeComparatorService) {
+  }
 
   ngOnInit(): void {
     this.getSessions();
-    this.sessionsarchived = [];
-    this.sessionswithoutarchived = [];
   }
 
   getSessions(): void {
     this.sessionService.getSessions().subscribe(
       sessions => {
         this.sessions = sessions;
-        this.sessions.forEach(session => {
-          if (session.status.includes('CANCELLED')) {
-            if (session.status === 'CANCELLED_BY_COACH') { session.cancelledByCoach = true; }
-            if (session.status.includes('COACHEE')) { session.cancelledByCoachee = true; }
-            session.status = 'CANCELLED';
-          }
-          const dateTopass = this.timeComparator.constructSessionDate(session.date, session.time);
-          if (new Date() > dateTopass) {
-            this.sessionsarchived.push(session);
-          } else {
-            this.sessionswithoutarchived.push(session);
-          }
-        });
       }
     );
   }
 
-  cancelSession(sessionId: number): void {
-    const status = Status.CANCELLED_BY_COACHEE;
-    const action = new Action(sessionId, status);
-    this.sessionService.sendStatus(action).subscribe(
-      _ => this.updateSessionStatus(sessionId, status),
+  cancelSession(session: ISessionComplete): void {
+    this.sessionService.cancel(session.id).subscribe(
+      _ => session.status = Status.CANCELLED,
       _ => alert('Updating status failed!'));
   }
 
   private updateSessionStatus(sessionId: number, status: Status) {
     this.sessions.forEach(session => {
       if (session.id === sessionId) {
-        session.status = Status[status];
-        if (session.status.includes('CANCELLED')) {
-          // console.log('cancel');
-          session.status = 'CANCELLED';
-        }
+        session.status = status;
       }
     });
   }

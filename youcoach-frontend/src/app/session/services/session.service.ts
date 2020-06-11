@@ -4,7 +4,6 @@ import {ISession} from '../interfaces/ISession';
 import {Observable} from 'rxjs';
 import {environment} from '../../../environments/environment';
 import {ISessionComplete} from '../interfaces/ISessionComplete';
-import {Action} from '../interfaces/Action';
 
 
 @Injectable({
@@ -34,7 +33,19 @@ export class SessionService {
     return this.http.get<ISessionComplete[]>(this.url + '/coach', this.httpOptions);
   }
 
-  sendStatus(action: Action): Observable<Action> {
-    return this.http.patch<Action>(this.url, action, this.httpOptions);
+  cancel(sessionId: number): Observable<ISessionComplete> {
+    return this.http.post<ISessionComplete>(this.url + `/${sessionId}/cancel`, this.httpOptions);
+  }
+
+  decline(sessionId: number): Observable<ISessionComplete> {
+    return this.http.post<ISessionComplete>(this.url + `/${sessionId}/decline`, this.httpOptions);
+  }
+
+  accept(sessionId: number): Observable<ISessionComplete> {
+    return this.http.post<ISessionComplete>(this.url + `/${sessionId}/accept`, this.httpOptions);
+  }
+
+  getSession(sessionId: number): Observable<ISessionComplete> {
+    return this.http.get<ISessionComplete>(this.url + `/${sessionId}`, this.httpOptions);
   }
 }

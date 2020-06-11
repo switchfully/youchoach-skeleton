@@ -35,7 +35,9 @@ export class RequestSessionComponent extends InitMaterializeComponent implements
   }
 
   private validateDate(): ValidationErrors | null {
-    if (this.sessionForm === undefined) { return null; }
+    if (this.sessionForm === undefined) {
+      return null;
+    }
     const date = this.sessionForm.get('date').value;
     const time = this.sessionForm.get('time').value;
 
@@ -48,8 +50,8 @@ export class RequestSessionComponent extends InitMaterializeComponent implements
     }
 
     const dateTopass = this.timeComparator.constructSessionDate(date, time);
-    return dateTopass === null || new Date() > dateTopass ? {mustBeFuture: true} : null;
-
+    // return dateTopass === null || new Date() > dateTopass ? {mustBeFuture: true} : null;
+    return null;
   }
 
   private initializeDatePicker(): void {
@@ -121,6 +123,7 @@ export class RequestSessionComponent extends InitMaterializeComponent implements
   goProfile(): void {
     this.router.navigateByUrl('/profile');
   }
+
   goSessions(): void {
     this.router.navigateByUrl('/my-sessions');
   }

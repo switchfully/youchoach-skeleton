@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.websocket.server.PathParam;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
@@ -46,11 +47,31 @@ public class SessionController {
         return sessionService.getCoachingSessionsForCoach(principal.getName());
     }
 
-    @PatchMapping(produces = "application/json", consumes = "application/json")
+    @PostMapping(path = "/{id}/cancel", produces = "application/json", consumes = "application/json")
     @ResponseStatus(HttpStatus.CREATED)
-    public SessionDto updateSessionStatus(@RequestBody UpdateStatusDto updateStatusDto) {
+    public SessionDto cancelSession(@PathVariable ("id") Long sessionId) {
         LOGGER.info("updating session status");
-        return sessionService.update(updateStatusDto);
+        return sessionService.cancel(sessionId);
+    }
+
+    @PostMapping(path = "/{id}/accept", produces = "application/json", consumes = "application/json")
+    @ResponseStatus(HttpStatus.CREATED)
+    public SessionDto acceptSession(@PathVariable ("id") Long sessionId) {
+        LOGGER.info("updating session status");
+        return sessionService.accept(sessionId);
+    }
+
+    @PostMapping(path = "/{id}/decline", produces = "application/json", consumes = "application/json")
+    @ResponseStatus(HttpStatus.CREATED)
+    public SessionDto declineSession(@PathVariable("id") Long sessionId) {
+        LOGGER.info("updating session status");
+        return sessionService.decline(sessionId);
+    }
+
+    @GetMapping(path = "/{id}", produces = "application/json")
+    @ResponseStatus(HttpStatus.OK)
+    public SessionDto getSession(@PathVariable("id") Long sessionId) {
+        return sessionService.getSession(sessionId);
     }
 
     @ExceptionHandler(SessionNotFoundException.class)

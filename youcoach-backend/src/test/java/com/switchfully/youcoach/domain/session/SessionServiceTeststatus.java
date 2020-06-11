@@ -21,13 +21,9 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 class SessionServiceTeststatus {
-    Session session = new Session(1L, "Mathematics", LocalDateTime.now(), "school", "no remarks", new Profile(1L, null, null, null, null), null, Status.REQUESTED);
-    CreateSessionDto createSessionDto = new CreateSessionDto("Mathematics", "30/05/2020", "11:50", "school", "no remarks", 1L);
-    SessionDto sessionDto = new SessionDto(1L, "Mathematics", "30/05/2020", "11:50", "school", "no remarks", new SessionDto.Person(1L, "Name"), new SessionDto.Person(2L, "Name"), Status.REQUESTED);
-
-    SessionRepository sessionRepository = mock(SessionRepository.class);
-    CoachRepository coachRepository = mock(CoachRepository.class);
-    ProfileRepository profileRepository = mock(ProfileRepository.class);
+    private SessionRepository sessionRepository = mock(SessionRepository.class);
+    private CoachRepository coachRepository = mock(CoachRepository.class);
+    private ProfileRepository profileRepository = mock(ProfileRepository.class);
 
 
     @Test
@@ -35,13 +31,14 @@ class SessionServiceTeststatus {
 
         SessionService sessionService = new SessionService(sessionRepository, new SessionMapper(), coachRepository, profileRepository);
 
-        Session session1 = new Session(1L, "Mathematics", LocalDateTime.now().minusDays(1), "school", "no remarks", new Profile(1L, null, null, null, null), new Profile(2L, null, null, null, null), Status.REQUESTED);
+        Session session1 = new Session("Mathematics", LocalDateTime.now().minusDays(1), "school", "no remarks", new Profile(1L, null, null, null, null), new Profile(2L, null, null, null, null));
 
+        session1.accept();
         when(sessionRepository.findAllByCoachee(Mockito.any())).thenReturn(List.of(session1));
 
         List<SessionDto> actual = sessionService.getCoachingSessionsForUser("example@example.com");
 
-        assertThat(actual.get(0).getStatus()).isEqualTo(Status.AUTOMATICALLY_CLOSED);
+        assertThat(actual.get(0).getStatus()).isEqualTo(Status.FINISHED);
     }
 
 }

@@ -15,12 +15,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.*;
 import java.util.List;
 import java.util.Optional;
 
-@Transactional
 @Service
+@Transactional
 public class SessionService {
     private final SessionRepository sessionRepository;
     private final SessionMapper sessionMapper;
@@ -60,17 +59,33 @@ public class SessionService {
     }
 
     private void setStatusToAutomaticallyClosedWhenTimeIsPast(List<Session> sessionList) {
-        sessionList.forEach(coachingSession -> {
-            if (ZonedDateTime.of(coachingSession.getDateAndTime(), ZoneId.of("Europe/Brussels")).isBefore(ZonedDateTime.now(ZoneId.of("Europe/Brussels")))) {
-                coachingSession.setStatus(Status.AUTOMATICALLY_CLOSED);
-            }
-        });
+        sessionList.forEach(Session::updateIfExpired);
     }
 
-    public SessionDto update(UpdateStatusDto updateStatusDto) {
-        Session session = sessionRepository.findById(updateStatusDto.getSessionId())
-                .orElseThrow(() -> new SessionNotFoundException("Id: " + updateStatusDto.getSessionId()));
-        session.setStatus(updateStatusDto.getStatus());
+    public SessionDto cancel(Long sessionId) {
+        Session session = sessionRepository.findById(sessionId)
+                .orElseThrow(() -> new SessionNotFoundException("Id: " + sessionId));
+        session.cancel();
+        return sessionMapper.toDto(session);
+    }
+
+    public SessionDto accept(Long sessionId) {
+        Session session = sessionRepository.findById(sessionId)
+                .orElseThrow(() -> new SessionNotFoundException("Id: " + sessionId));
+        session.accept();
+        return sessionMapper.toDto(session);
+    }
+
+    public SessionDto decline(Long sessionId) {
+        Session session = sessionRepository.findById(sessionId)
+                .orElseThrow(() -> new SessionNotFoundException("Id: " + sessionId));
+        session.decline();
+        return sessionMapper.toDto(session);
+    }
+
+    public SessionDto getSession(Long sessionId) {
+        Session session = sessionRepository.findById(sessionId)
+                .orElseThrow(() -> new SessionNotFoundException("Id: " + sessionId));
         return sessionMapper.toDto(session);
     }
 }

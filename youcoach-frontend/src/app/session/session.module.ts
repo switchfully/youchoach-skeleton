@@ -7,6 +7,9 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {TranslateModule} from "@ngx-translate/core";
 import {FindACoachComponent} from "./find-a-coach/find-a-coach.component";
 import {RouterModule} from "@angular/router";
+import {FilterSessionsOnStatusPipe} from "./pipes/session-status-filter.pipe";
+import {SessionStatusLabelPipe} from "./pipes/session-status-label.pipe";
+import { SessionDetailComponent } from './session-detail/session-detail.component';
 
 
 @NgModule({
@@ -14,7 +17,10 @@ import {RouterModule} from "@angular/router";
     RequestSessionComponent,
     CoachMysessionsComponent,
     CoacheeMySessionsComponent,
-    FindACoachComponent
+    FindACoachComponent,
+    FilterSessionsOnStatusPipe,
+    SessionStatusLabelPipe,
+    SessionDetailComponent
   ],
   imports: [
     ReactiveFormsModule,

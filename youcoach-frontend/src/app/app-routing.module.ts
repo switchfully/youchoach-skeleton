@@ -22,6 +22,7 @@ import {RequestSessionComponent} from './session/request-session/request-session
 import {CoacheeMySessionsComponent} from './session/coachee-my-sessions/coachee-my-sessions.component';
 import {CoachMysessionsComponent} from './session/coach-my-sessions/coach-mysessions.component';
 import {NotFoundComponent} from './template/not-found/not-found.component';
+import {SessionDetailComponent} from "./session/session-detail/session-detail.component";
 
 const routes: Routes = [
   {path: 'home', component: HomeComponent},
@@ -48,6 +49,7 @@ const routes: Routes = [
   {path: 'coach-profile/:id/request-a-session', component: RequestSessionComponent },
   {path: 'coach-my-sessions', component: CoachMysessionsComponent },
   {path: 'my-sessions', component: CoacheeMySessionsComponent },
+  {path: 'session/:id', component: SessionDetailComponent},
   {path: 'forbidden', component: ForbiddenComponent},
   {path: '', redirectTo: 'home', pathMatch: 'full'},
   {path: '**', redirectTo: 'not-found', pathMatch: 'full'}

@@ -4,7 +4,11 @@ import com.switchfully.youcoach.domain.profile.Profile;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.Objects;
+
+import static com.switchfully.youcoach.domain.session.Status.*;
 
 @Entity
 @Table(name = "session")
@@ -30,28 +34,17 @@ public class Session {
     @Column(name = "status")
     private Status status;
 
-    public Session() {
+    private Session() {
     }
 
-    public Session(String subject, LocalDateTime dateAndTime, String location, String remarks, Profile coach, Profile coachee, Status status) {
+    public Session(String subject, LocalDateTime dateAndTime, String location, String remarks, Profile coach, Profile coachee) {
         this.subject = subject;
         this.dateAndTime = dateAndTime;
         this.location = location;
         this.remarks = remarks;
         this.coach = coach;
         this.coachee = coachee;
-        this.status = status;
-    }
-
-    public Session(long id, String subject, LocalDateTime dateAndTime, String location, String remarks, Profile coach, Profile coachee, Status status) {
-        this.id = id;
-        this.subject = subject;
-        this.dateAndTime = dateAndTime;
-        this.location = location;
-        this.remarks = remarks;
-        this.coach = coach;
-        this.coachee = coachee;
-        this.status = status;
+        this.status = Status.REQUESTED;
     }
 
     public long getId() {
@@ -89,6 +82,31 @@ public class Session {
     public void setStatus(Status status) {
         this.status = status;
     }
+
+    void updateIfExpired() {
+        if (this.status == ACCEPTED && hasExpired(dateAndTime)) {
+            status = FINISHED;
+        } else if (this.status == REQUESTED && hasExpired(dateAndTime)) {
+            status = DECLINED;
+        }
+    }
+
+    void cancel() {
+        this.status = CANCELLED;
+    }
+
+    void accept() {
+        this.status = ACCEPTED;
+    }
+
+    void decline() {
+        this.status = DECLINED;
+    }
+
+    private boolean hasExpired(LocalDateTime dateAndTime) {
+        return ZonedDateTime.of(dateAndTime, ZoneId.of("Europe/Brussels")).isBefore(ZonedDateTime.now(ZoneId.of("Europe/Brussels")));
+    }
+
 
     @Override
     public boolean equals(Object o) {

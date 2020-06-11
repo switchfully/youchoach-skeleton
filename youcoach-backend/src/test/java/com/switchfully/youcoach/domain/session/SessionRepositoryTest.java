@@ -34,7 +34,7 @@ class SessionRepositoryTest {
     void itShouldSaveCoachingSessions() {
         Profile coach = new Profile(1L, "firstName", "lastName", "firstName@mail.com", "password");
         Profile coachee = new Profile(2L, "firstName", "lastName", "firstName@mail.com", "password");
-        Session session = new Session(1L, "Mathematics", LocalDateTime.now().plusDays(1), "school", "no remarks", coach, coachee, Status.REQUESTED);
+        Session session = new Session("Mathematics", LocalDateTime.now().plusDays(1), "school", "no remarks", coach, coachee);
         sessionRepository.save(session);
 
         Session actual = sessionRepository.findById(1L).get();
@@ -47,7 +47,7 @@ class SessionRepositoryTest {
     void findAllByEmail() {
         Profile coach = new Profile(1L, "firstName", "lastName", "firstName@mail.com", "password");
         Profile coachee = new Profile(2L, "firstName", "lastName", "firstName@mail.com", "password");
-        Session session = new Session(1L, "Mathematics", LocalDateTime.now().plusDays(1), "school", "no remarks", coach, coachee, Status.REQUESTED);
+        Session session = new Session("Mathematics", LocalDateTime.now().plusDays(1), "school", "no remarks", coach, coachee);
         sessionRepository.save(session);
 
         Optional<Profile> optionalUser = Optional.ofNullable(coachee);

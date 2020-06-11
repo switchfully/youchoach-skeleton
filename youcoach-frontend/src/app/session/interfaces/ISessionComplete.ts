@@ -7,7 +7,7 @@ export interface ISessionComplete {
   time: string;
   location: string;
   remarks: string;
-  status: string;
+  status: Status;
   cancelledByCoach: boolean;
   cancelledByCoachee: boolean;
 }
@@ -15,4 +15,13 @@ export interface ISessionComplete {
 export interface IPerson {
   name: string;
   id: number;
+}
+
+export enum Status {
+  REQUESTED = 'REQUESTED',
+  ACCEPTED = 'ACCEPTED',
+  FINISHED = 'FINISHED',
+  CANCELLED = 'CANCELLED',
+  DECLINED = 'DECLINED',
+  FEEDBACK_PROVIDED = 'FEEDBACK_PROVIDED',
 }
