@@ -10,6 +10,7 @@ import {RouterModule} from "@angular/router";
 import {FilterSessionsOnStatusPipe} from "./pipes/session-status-filter.pipe";
 import {SessionStatusLabelPipe} from "./pipes/session-status-label.pipe";
 import { SessionDetailComponent } from './session-detail/session-detail.component';
+import { SessionTableComponent } from './session-table/session-table.component';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { SessionDetailComponent } from './session-detail/session-detail.componen
     FindACoachComponent,
     FilterSessionsOnStatusPipe,
     SessionStatusLabelPipe,
-    SessionDetailComponent
+    SessionDetailComponent,
+    SessionTableComponent
   ],
   imports: [
     ReactiveFormsModule,

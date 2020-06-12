@@ -11,7 +11,7 @@ import {TimeComparatorService} from '../services/time-comparator.service';
 export class CoacheeMySessionsComponent implements OnInit {
   sessions: ISessionComplete[] = null;
 
-  constructor(private sessionService: SessionService, private timeComparator: TimeComparatorService) {
+  constructor(private sessionService: SessionService) {
   }
 
   ngOnInit(): void {
@@ -19,24 +19,12 @@ export class CoacheeMySessionsComponent implements OnInit {
   }
 
   getSessions(): void {
-    this.sessionService.getSessions().subscribe(
-      sessions => {
-        this.sessions = sessions;
-      }
-    );
+    this.sessionService.getSessions().subscribe(sessions => this.sessions = sessions);
   }
 
   cancelSession(session: ISessionComplete): void {
     this.sessionService.cancel(session.id).subscribe(
       _ => session.status = Status.CANCELLED,
       _ => alert('Updating status failed!'));
-  }
-
-  private updateSessionStatus(sessionId: number, status: Status) {
-    this.sessions.forEach(session => {
-      if (session.id === sessionId) {
-        session.status = status;
-      }
-    });
   }
 }

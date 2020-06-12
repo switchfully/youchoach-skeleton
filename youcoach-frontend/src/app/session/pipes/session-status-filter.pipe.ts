@@ -9,12 +9,14 @@ export class FilterSessionsOnStatusPipe implements PipeTransform {
   transform(sessions: ISessionComplete[], type: String) {
     return sessions.filter(session => {
       switch (type) {
-        case 'initial':
-          return session.status === Status.REQUESTED || session.status === Status.ACCEPTED;
-        case 'finished':
-          return session.status === Status.FINISHED;
+        case 'requested':
+          return session.isRequested();
+        case 'accepted':
+          return session.isAccepted();
+        case 'waiting-for-feedback':
+          return session.isWaitingForFeedback();
         case 'done':
-          return session.status === Status.FEEDBACK_PROVIDED || session.status === Status.CANCELLED || session.status === Status.DECLINED;
+          return session.isDone();
         default:
           return false;
       }

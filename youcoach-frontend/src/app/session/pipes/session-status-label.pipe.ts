@@ -16,7 +16,7 @@ export class SessionStatusLabelPipe implements PipeTransform {
         return 'finished with feedback';
       case Status.ACCEPTED:
         return 'accepted session';
-      case Status.FINISHED:
+      case Status.WAITING_FOR_FEEDBACK:
         return 'waiting for feedback';
       default:
         return 'blabla'

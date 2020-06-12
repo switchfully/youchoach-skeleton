@@ -83,9 +83,17 @@ public class SessionService {
         return sessionMapper.toDto(session);
     }
 
+    public SessionDto finish(Long sessionId) {
+        Session session = sessionRepository.findById(sessionId)
+                .orElseThrow(() -> new SessionNotFoundException("Id: " + sessionId));
+        session.finish();
+        return sessionMapper.toDto(session);
+    }
+
     public SessionDto getSession(Long sessionId) {
         Session session = sessionRepository.findById(sessionId)
                 .orElseThrow(() -> new SessionNotFoundException("Id: " + sessionId));
         return sessionMapper.toDto(session);
     }
+
 }

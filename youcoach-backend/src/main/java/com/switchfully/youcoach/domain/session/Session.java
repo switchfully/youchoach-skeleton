@@ -85,7 +85,7 @@ public class Session {
 
     void updateIfExpired() {
         if (this.status == ACCEPTED && hasExpired(dateAndTime)) {
-            status = FINISHED;
+            status = WAITING_FOR_FEEDBACK;
         } else if (this.status == REQUESTED && hasExpired(dateAndTime)) {
             status = DECLINED;
         }
@@ -103,6 +103,9 @@ public class Session {
         this.status = DECLINED;
     }
 
+    void finish() {
+        this.status = WAITING_FOR_FEEDBACK;
+    }
     private boolean hasExpired(LocalDateTime dateAndTime) {
         return ZonedDateTime.of(dateAndTime, ZoneId.of("Europe/Brussels")).isBefore(ZonedDateTime.now(ZoneId.of("Europe/Brussels")));
     }
@@ -120,4 +123,5 @@ public class Session {
     public int hashCode() {
         return Objects.hash(id);
     }
+
 }

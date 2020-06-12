@@ -4,6 +4,7 @@ import {ISession} from '../interfaces/ISession';
 import {Observable} from 'rxjs';
 import {environment} from '../../../environments/environment';
 import {ISessionComplete} from '../interfaces/ISessionComplete';
+import {map} from "rxjs/operators";
 
 
 @Injectable({
@@ -26,11 +27,15 @@ export class SessionService {
   }
 
   getSessions(): Observable<ISessionComplete[]> {
-    return this.http.get<ISessionComplete[]>(this.url, this.httpOptions);
+    return this.http.get<ISessionComplete[]>(this.url, this.httpOptions).pipe(
+      map(response => response.map(session => Object.assign(new ISessionComplete(), session)))
+    );
   }
 
   getSessionsforCoach(): Observable<ISessionComplete[]> {
-    return this.http.get<ISessionComplete[]>(this.url + '/coach', this.httpOptions);
+    return this.http.get<ISessionComplete[]>(this.url + '/coach', this.httpOptions).pipe(
+      map(response => response.map(session => Object.assign(new ISessionComplete(), session)))
+    );
   }
 
   cancel(sessionId: number): Observable<ISessionComplete> {
@@ -45,7 +50,12 @@ export class SessionService {
     return this.http.post<ISessionComplete>(this.url + `/${sessionId}/accept`, this.httpOptions);
   }
 
+  finish(sessionId: number): Observable<ISessionComplete> {
+    return this.http.post<ISessionComplete>(this.url + `/${sessionId}/finish`, this.httpOptions);
+  }
+
   getSession(sessionId: number): Observable<ISessionComplete> {
     return this.http.get<ISessionComplete>(this.url + `/${sessionId}`, this.httpOptions);
   }
+
 }

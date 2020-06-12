@@ -1,15 +1,10 @@
 package com.switchfully.youcoach.domain.session;
 
 import com.switchfully.youcoach.domain.profile.Profile;
-import com.switchfully.youcoach.domain.session.Status;
-import com.switchfully.youcoach.domain.session.Session;
 import com.switchfully.youcoach.domain.coach.CoachRepository;
-import com.switchfully.youcoach.domain.session.SessionRepository;
 import com.switchfully.youcoach.domain.profile.ProfileRepository;
 import com.switchfully.youcoach.domain.session.api.SessionMapper;
-import com.switchfully.youcoach.domain.session.api.CreateSessionDto;
 import com.switchfully.youcoach.domain.session.api.SessionDto;
-import com.switchfully.youcoach.domain.session.SessionService;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
@@ -38,7 +33,7 @@ class SessionServiceTeststatus {
 
         List<SessionDto> actual = sessionService.getCoachingSessionsForUser("example@example.com");
 
-        assertThat(actual.get(0).getStatus()).isEqualTo(Status.FINISHED);
+        assertThat(actual.get(0).getStatus()).isEqualTo(Status.WAITING_FOR_FEEDBACK);
     }
 
 }

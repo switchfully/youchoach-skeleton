@@ -68,6 +68,13 @@ public class SessionController {
         return sessionService.decline(sessionId);
     }
 
+    @PostMapping(path = "/{id}/finish", produces = "application/json", consumes = "application/json")
+    @ResponseStatus(HttpStatus.CREATED)
+    public SessionDto finishSession(@PathVariable("id") Long sessionId) {
+        LOGGER.info("updating session status");
+        return sessionService.finish(sessionId);
+    }
+
     @GetMapping(path = "/{id}", produces = "application/json")
     @ResponseStatus(HttpStatus.OK)
     public SessionDto getSession(@PathVariable("id") Long sessionId) {

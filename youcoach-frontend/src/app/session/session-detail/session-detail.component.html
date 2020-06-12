@@ -22,7 +22,7 @@
               </tr>
               </thead>
               <tbody>
-              <tr>
+              <tr *ngIf="session">
                 <td>{{session.subject}}</td>
                 <td>{{session.remarks}}</td>
                 <td>{{session.date}}</td>

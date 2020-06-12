@@ -1,4 +1,4 @@
-export interface ISessionComplete {
+export class ISessionComplete {
   id: number;
   coach: IPerson;
   coachee: IPerson;
@@ -8,8 +8,22 @@ export interface ISessionComplete {
   location: string;
   remarks: string;
   status: Status;
-  cancelledByCoach: boolean;
-  cancelledByCoachee: boolean;
+
+  isDone(): boolean {
+    return this.status === Status.CANCELLED || this.status === Status.DECLINED || this.status === Status.FEEDBACK_PROVIDED;
+  }
+
+  isWaitingForFeedback() {
+    return this.status === Status.WAITING_FOR_FEEDBACK;
+  }
+
+  isRequested() {
+    return this.status === Status.REQUESTED;
+  }
+
+  isAccepted() {
+    return this.status === Status.ACCEPTED;
+  }
 }
 
 export interface IPerson {
@@ -20,7 +34,7 @@ export interface IPerson {
 export enum Status {
   REQUESTED = 'REQUESTED',
   ACCEPTED = 'ACCEPTED',
-  FINISHED = 'FINISHED',
+  WAITING_FOR_FEEDBACK = 'WAITING_FOR_FEEDBACK',
   CANCELLED = 'CANCELLED',
   DECLINED = 'DECLINED',
   FEEDBACK_PROVIDED = 'FEEDBACK_PROVIDED',

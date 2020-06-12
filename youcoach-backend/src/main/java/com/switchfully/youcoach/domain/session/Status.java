@@ -3,7 +3,7 @@ package com.switchfully.youcoach.domain.session;
 public enum Status {
     REQUESTED,
     ACCEPTED,
-    FINISHED,
+    WAITING_FOR_FEEDBACK,
     FEEDBACK_PROVIDED,
     CANCELLED,
     DECLINED;

@@ -10,22 +10,16 @@ import {ISessionComplete, Status} from '../interfaces/ISessionComplete';
 })
 export class CoachMysessionsComponent implements OnInit {
   sessions: ISessionComplete[];
-  sessionswithoutarchived: ISessionComplete[];
-  sessionsarchived: ISessionComplete[];
-  sessionsfeedback: ISessionComplete[];
 
-  constructor(private sessionService: SessionService, private timeComparator: TimeComparatorService) {
+  constructor(private sessionService: SessionService) {
   }
 
   ngOnInit(): void {
     this.getSessions();
-    this.sessionsarchived = [];
-    this.sessionswithoutarchived = [];
   }
 
   getSessions(): void {
-    this.sessionService.getSessionsforCoach().subscribe(
-      sessions => this.sessions = sessions);
+    this.sessionService.getSessionsforCoach().subscribe(sessions => this.sessions = sessions);
   }
 
   acceptSession(session: ISessionComplete): void {
