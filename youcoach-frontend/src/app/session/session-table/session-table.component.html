@@ -1,0 +1,38 @@
+<section class="card-panel grey lighten-5">
+  <h5 translate>{{title}}</h5>
+  <div class="divider"></div>
+  <div class="row">
+    <div class="col l12 s12">
+      <table class="highlight responsive-table">
+        <thead>
+        <tr>
+          <th translate>coaching-sessions.label.coach</th>
+          <th translate>coaching-sessions.label.topic</th>
+          <th translate>request-session.label.date</th>
+          <th translate>request-session.label.time</th>
+          <th translate>request-session.label.location</th>
+          <th translate>coaching-sessions.label.status</th>
+          <th translate>coaching-sessions.label.action</th>
+        </tr>
+        </thead>
+        <tbody *ngIf="sessions">
+        <tr *ngFor="let session of sessions | FilterSessionsOnStatus:statusType">
+          <td>{{session.coach.name}}</td>
+          <td>{{session.subject}}</td>
+          <td>{{session.date}}</td>
+          <td>{{session.time}}</td>
+          <td>{{session.location}}</td>
+          <td>{{session.status | SessionStatusLabel}}</td>
+          <td>
+            <a *ngIf="coach && session.isRequested()" style="margin-right: 30px" class="waves-effect waves-light lighten-2 btn black-text green" (click)="acceptSession(session)">Accept<i class="material-icons right">assignment_turned_in</i></a>
+            <a *ngIf="session.isAccepted()" style="margin-right: 30px" class="waves-effect waves-light lighten-2 btn black-text green" (click)="finishSession(session)">Session finished<i class="material-icons right">check</i></a>
+            <a *ngIf="session.isWaitingForFeedback()" style="margin-right: 30px" class="waves-effect waves-light lighten-2 btn black-text orange" [routerLink]="'/session/' + session.id" >Provide feedback<i class="material-icons right">assignment</i></a>
+            <a *ngIf="!coach && session.canCancel()" style="margin-right: 30px" class="waves-effect waves-light lighten-2 btn black-text red" (click)="cancelSession(session)">Cancel<i class="material-icons right">cancel</i></a>
+            <a *ngIf="coach && session.canCancel()" style="margin-right: 30px" class="waves-effect waves-light lighten-2 btn black-text red" (click)="declineSession(session)">Decline<i class="material-icons right">cancel</i></a>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>

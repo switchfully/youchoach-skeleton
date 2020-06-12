@@ -13,6 +13,10 @@ export class ISessionComplete {
     return this.status === Status.CANCELLED || this.status === Status.DECLINED || this.status === Status.FEEDBACK_PROVIDED;
   }
 
+  canCancel(): boolean {
+    return this.status === Status.REQUESTED || this.status === Status.ACCEPTED;
+  }
+
   isWaitingForFeedback() {
     return this.status === Status.WAITING_FOR_FEEDBACK;
   }
@@ -24,6 +28,7 @@ export class ISessionComplete {
   isAccepted() {
     return this.status === Status.ACCEPTED;
   }
+
 }
 
 export interface IPerson {

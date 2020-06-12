@@ -15,10 +15,10 @@
 
     <div class="col s12 m10">
       <div class="content-container">
-        <app-session-table title="Requested" [sessions]="sessions" [statusType]="'requested'" forCoach="true"></app-session-table>
-        <app-session-table title="coaching-sessions.title.upcoming" [sessions]="sessions" [statusType]="'accepted'" forCoach="true"></app-session-table>
-        <app-session-table title="Waiting for feedback" [sessions]="sessions" [statusType]="'waiting-for-feedback'" ></app-session-table>
-        <app-session-table title="Archive" [sessions]="sessions" [statusType]="'done'" forCoach="true"></app-session-table>
+        <app-session-table title="Requested" [sessions]="sessions" [statusType]="'requested'" coach="true"></app-session-table>
+        <app-session-table title="coaching-sessions.title.upcoming" [sessions]="sessions" [statusType]="'accepted'" coach="true"></app-session-table>
+        <app-session-table title="Waiting for feedback" [sessions]="sessions" [statusType]="'waiting-for-feedback'" coach="true"></app-session-table>
+        <app-session-table title="Archive" [sessions]="sessions" [statusType]="'done'" coach="true"></app-session-table>
       </div>
     </div>
   </div>
