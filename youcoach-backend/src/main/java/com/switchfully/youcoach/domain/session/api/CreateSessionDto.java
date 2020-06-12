@@ -9,6 +9,7 @@ public class CreateSessionDto {
     private String location;
     private String remarks;
     private Long coachId;
+    private String feedback;
 
     public CreateSessionDto() {
     }
@@ -44,6 +45,10 @@ public class CreateSessionDto {
 
     public Long getCoachId() {
         return coachId;
+    }
+
+    public String getFeedback() {
+        return feedback;
     }
 
     @Override
