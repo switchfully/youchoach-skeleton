@@ -8,7 +8,6 @@ import {TranslateModule} from "@ngx-translate/core";
 import {FindACoachComponent} from "./find-a-coach/find-a-coach.component";
 import {RouterModule} from "@angular/router";
 import {FilterSessionsOnStatusPipe} from "./pipes/session-status-filter.pipe";
-import {SessionStatusLabelPipe} from "./pipes/session-status-label.pipe";
 import { SessionDetailComponent } from './session-detail/session-detail.component';
 import { SessionTableComponent } from './session-table/session-table.component';
 
@@ -20,7 +19,6 @@ import { SessionTableComponent } from './session-table/session-table.component';
     CoacheeMySessionsComponent,
     FindACoachComponent,
     FilterSessionsOnStatusPipe,
-    SessionStatusLabelPipe,
     SessionDetailComponent,
     SessionTableComponent
   ],

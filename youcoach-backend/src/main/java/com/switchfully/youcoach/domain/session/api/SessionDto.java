@@ -14,12 +14,13 @@ public class SessionDto {
     private Person coach;
     private Person coachee;
     private Status status;
+    private String feedback;
 
 
     public SessionDto() {
     }
 
-    public SessionDto(long id, String subject, String date, String time, String location, String remarks, Person coach, Person coachee, Status status) {
+    public SessionDto(long id, String subject, String date, String time, String location, String remarks, Person coach, Person coachee, Status status, String feedback) {
         this.id = id;
         this.subject = subject;
         this.date = date;
@@ -29,6 +30,7 @@ public class SessionDto {
         this.coach = coach;
         this.coachee = coachee;
         this.status = status;
+        this.feedback = feedback;
     }
 
     public long getId() {
@@ -57,6 +59,10 @@ public class SessionDto {
 
     public Status getStatus() {
         return status;
+    }
+
+    public String getFeedback() {
+        return feedback;
     }
 
     @Override

@@ -33,6 +33,8 @@ public class Session {
     private Profile coachee;
     @Column(name = "status")
     private Status status;
+    @Column(name = "feedback")
+    private String feedback;
 
     private Session() {
     }
@@ -79,8 +81,8 @@ public class Session {
         return status;
     }
 
-    public void setStatus(Status status) {
-        this.status = status;
+    public String getFeedback() {
+        return feedback;
     }
 
     void updateIfExpired() {
@@ -124,4 +126,8 @@ public class Session {
         return Objects.hash(id);
     }
 
+    public void provideFeedback(Feedback feedback) {
+        this.feedback = feedback.getFeedback();
+        this.status = FEEDBACK_PROVIDED;
+    }
 }

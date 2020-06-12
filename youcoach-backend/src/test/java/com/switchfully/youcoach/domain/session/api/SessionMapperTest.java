@@ -43,7 +43,7 @@ public class SessionMapperTest {
         Session input = new Session("subject", dateTime,"Cafeteria","Bring food",coach, coachee);
         SessionDto expected = new SessionDto(0L,ccsd.getSubject(),ccsd.getDate(),ccsd.getTime(),ccsd.getLocation(),
                 ccsd.getRemarks(),new SessionDto.Person(1L, "First Last"),
-                new SessionDto.Person(1L,"First Last"),Status.REQUESTED);
+                new SessionDto.Person(1L,"First Last"),Status.REQUESTED, "");
 
         SessionDto actual = sessionMapper.toDto(input);
 
@@ -61,7 +61,7 @@ public class SessionMapperTest {
                 "Bring food",coach, coachee));
         List<SessionDto> expected = List.of(new SessionDto(0L,ccsd.getSubject(),ccsd.getDate(),ccsd.getTime(),ccsd.getLocation(),
                 ccsd.getRemarks(),new SessionDto.Person(1L, "First Last"),
-                new SessionDto.Person(1L,"First Last"),Status.REQUESTED));
+                new SessionDto.Person(1L,"First Last"),Status.REQUESTED, ""));
 
         List<SessionDto> actual = sessionMapper.toDto(input);
 

@@ -38,7 +38,9 @@ public class SessionMapper {
                 session.getRemarks(),
                 extractPerson(session.getCoach()),
                 extractPerson(session.getCoachee()),
-                session.getStatus());
+                session.getStatus(),
+                session.getFeedback()
+        );
     }
 
     public List<SessionDto> toDto(List<Session> sessionlist) {

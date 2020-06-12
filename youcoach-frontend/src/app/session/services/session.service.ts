@@ -54,8 +54,16 @@ export class SessionService {
     return this.http.post<ISessionComplete>(this.url + `/${sessionId}/finish`, this.httpOptions);
   }
 
+  sendFeedback(sessionId: number, feedback: string): Observable<ISessionComplete> {
+    return this.http.post<ISessionComplete>(this.url + `/${sessionId}/feedback`, feedback, this.httpOptions).pipe(
+      map(session => Object.assign(new ISessionComplete(), session))
+    );
+  }
+
   getSession(sessionId: number): Observable<ISessionComplete> {
-    return this.http.get<ISessionComplete>(this.url + `/${sessionId}`, this.httpOptions);
+    return this.http.get<ISessionComplete>(this.url + `/${sessionId}`, this.httpOptions).pipe(
+      map(session => Object.assign(new ISessionComplete(), session))
+    );
   }
 
 }

@@ -85,7 +85,7 @@ class SessionControllerTest {
         Principal mockPrincipal = mock(Principal.class);
         when(mockPrincipal.getName()).thenReturn("example2@example.com");
         CreateSessionDto createSessionDto = new CreateSessionDto("Mathematics", "30/05/2020", "11:50", "school", "no remarks", 1L);
-        SessionDto sessionDto = new SessionDto(1L, "Mathematics", "30/05/2020", "11:50", "school", "no remarks", new SessionDto.Person(1L, "First Last"), new SessionDto.Person(2L, "First Last"), Status.REQUESTED);
+        SessionDto sessionDto = new SessionDto(1L, "Mathematics", "30/05/2020", "11:50", "school", "no remarks", new SessionDto.Person(1L, "First Last"), new SessionDto.Person(2L, "First Last"), Status.REQUESTED, "");
         String actualResult =
                 mockMvc.perform(post("/coaching-sessions")
                         .principal(mockPrincipal)

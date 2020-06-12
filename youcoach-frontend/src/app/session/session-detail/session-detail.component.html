@@ -1,39 +1,87 @@
-<div class="row">
-
-  <div class="col s12 m10">
-    <div class="content-container">
-
-      <section class="card-panel grey lighten-5">
-        <h5 translate>Session detail</h5>
-        <div class="divider"></div>
-        <div class="row">
-          <div class="col l2 m2 s12">
-            <img src="/assets/img/image_preview.png" class="responsive-img" alt="Under Construction">
-          </div>
-          <div class="col l10 m10 s12">
-            <span class="black-text" translate>Information about the session and a way to provide feedback will be here soon.</span>
-            <table>
-              <thead>
-              <tr>
-                <th>subject</th>
-                <th>remarks</th>
-                <th>date</th>
-                <th>time</th>
-              </tr>
-              </thead>
-              <tbody>
-              <tr *ngIf="session">
-                <td>{{session.subject}}</td>
-                <td>{{session.remarks}}</td>
-                <td>{{session.date}}</td>
-                <td>{{session.time}}</td>
-              </tr>
-              </tbody>
-            </table>
-          </div>
+<main>
+  <div class="row">
+    <div class="col s12 m2">
+      <div class="content-container">
+        <h6 translate>my-profile-menu.title</h6>
+        <div class="collection">
+          <a class="collection-item grey-text text-darken-2" routerLink="/profile" translate>my-profile-menu.link.profile-information</a>
+          <a class="collection-item grey-text text-darken-2" routerLink="/my-sessions" translate>my-profile-menu.link.coaching-sessions</a>
+          <a class="collection-item grey-text text-darken-2" routerLink="/becomecoach" translate>my-profile-menu.link.apply-to-become-a-coach</a>
+          <a class="collection-item grey-text black-text active yellow darken-2" translate>Session Detail</a>
         </div>
-      </section>
+      </div>
+    </div>
+
+    <div class="col s12 m10">
+      <div class="content-container">
+        <section *ngIf="session" class="card-panel grey lighten-5">
+          <h5 translate>session-detail.title.info</h5>
+          <div class="divider"></div>
+          <div class="row">
+            <div class="col l12 m12 s12">
+              <table class="highlight">
+                <tbody>
+                <tr>
+                  <td><strong translate>session-detail.label.subject</strong></td>
+                  <td>{{session.subject}}</td>
+                </tr>
+                <tr>
+                  <td><strong translate>session-detail.label.date-and-time</strong></td>
+                  <td>{{session.date}} {{session.time}}</td>
+                </tr>
+                <tr>
+                  <td><strong translate>session-detail.label.location</strong></td>
+                  <td>{{session.location}}</td>
+                </tr>
+                <tr>
+                  <td><strong translate>session-detail.label.remarks</strong></td>
+                  <td>{{session.remarks}}</td>
+                </tr>
+                <tr>
+                  <td><strong translate>session-detail.label.status</strong></td>
+                  <td>{{session.status | translate}}</td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="row right-align">
+            <a *ngIf="session.isAccepted()" style="margin-right: 30px" class="waves-effect waves-light lighten-2 btn black-text green" (click)="finishSession(session)" translate>session-detail.button.finish-session<i class="material-icons right">check</i></a>
+            <a *ngIf="session.canCancel()" style="margin-right: 30px" class="waves-effect waves-light lighten-2 btn black-text red" (click)="cancelSession(session)" translate>session-detail.button.cancel<i class="material-icons right">cancel</i></a>
+          </div>
+        </section>
+        <section *ngIf="session" class="card-panel grey lighten-5">
+          <h5 translate>session-detail.title.feedback</h5>
+          <div class="divider"></div>
+          <div class="row">
+
+            <form *ngIf="session.isWaitingForFeedback()" class="col s12" [formGroup]="feedbackForm" (ngSubmit)="sendFeedback(feedbackForm.value)">
+              <div class="row">
+                <div class="input-field col s12">
+                  <textarea id="feedback" class="materialize-textarea validate" required formControlName="feedback"></textarea>
+                  <label for="feedback" translate>session-detail.label.feedback</label>
+                </div>
+              </div>
+              <div class="row right-align">
+                <button type="submit" class="waves-effect waves-light lighten-2 btn black-text orange" translate>session-detail.button.provide-feedback<i class="material-icons right">assignment</i></button>
+              </div>
+            </form>
+
+            <div *ngIf="session.hasProvidedFeedback()" class="col l12 m12 s12">
+              <table class="highlight">
+                <tbody>
+                <tr>
+                  <td><strong translate>session-detail.label.feedback</strong></td>
+                  <td>{{session.feedback}}</td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+      </div>
     </div>
   </div>
+</main>
 
-</div>

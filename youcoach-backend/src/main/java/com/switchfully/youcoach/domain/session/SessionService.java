@@ -63,37 +63,42 @@ public class SessionService {
     }
 
     public SessionDto cancel(Long sessionId) {
-        Session session = sessionRepository.findById(sessionId)
-                .orElseThrow(() -> new SessionNotFoundException("Id: " + sessionId));
+        Session session = getSessionFromDatabase(sessionId);
         session.cancel();
         return sessionMapper.toDto(session);
     }
 
     public SessionDto accept(Long sessionId) {
-        Session session = sessionRepository.findById(sessionId)
-                .orElseThrow(() -> new SessionNotFoundException("Id: " + sessionId));
+        Session session = getSessionFromDatabase(sessionId);
         session.accept();
         return sessionMapper.toDto(session);
     }
 
     public SessionDto decline(Long sessionId) {
-        Session session = sessionRepository.findById(sessionId)
-                .orElseThrow(() -> new SessionNotFoundException("Id: " + sessionId));
+        Session session = getSessionFromDatabase(sessionId);
         session.decline();
         return sessionMapper.toDto(session);
     }
 
     public SessionDto finish(Long sessionId) {
-        Session session = sessionRepository.findById(sessionId)
-                .orElseThrow(() -> new SessionNotFoundException("Id: " + sessionId));
+        Session session = getSessionFromDatabase(sessionId);
         session.finish();
         return sessionMapper.toDto(session);
     }
 
     public SessionDto getSession(Long sessionId) {
-        Session session = sessionRepository.findById(sessionId)
-                .orElseThrow(() -> new SessionNotFoundException("Id: " + sessionId));
+        Session session = getSessionFromDatabase(sessionId);
         return sessionMapper.toDto(session);
     }
 
+    public SessionDto provideSessionFeedback(Long sessionId, Feedback feedback) {
+        Session session = getSessionFromDatabase(sessionId);
+        session.provideFeedback(feedback);
+        return sessionMapper.toDto(session);
+    }
+
+    private Session getSessionFromDatabase(Long sessionId) {
+        return sessionRepository.findById(sessionId)
+                .orElseThrow(() -> new SessionNotFoundException("Id: " + sessionId));
+    }
 }

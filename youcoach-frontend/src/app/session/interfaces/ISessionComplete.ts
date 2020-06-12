@@ -7,6 +7,7 @@ export class ISessionComplete {
   time: string;
   location: string;
   remarks: string;
+  feedback: string;
   status: Status;
 
   isDone(): boolean {
@@ -29,6 +30,9 @@ export class ISessionComplete {
     return this.status === Status.ACCEPTED;
   }
 
+  hasProvidedFeedback() {
+    return this.status === Status.FEEDBACK_PROVIDED;
+  }
 }
 
 export interface IPerson {
