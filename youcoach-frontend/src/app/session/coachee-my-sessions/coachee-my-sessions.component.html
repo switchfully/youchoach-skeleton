@@ -1,27 +1,8 @@
-<main>
-
-  <div class="row">
-
-    <div class="col s12 m2">
-      <div class="content-container">
-        <h6 translate>my-profile-menu.title</h6>
-        <div class="collection">
-          <a class="collection-item black-text text-darken-2" routerLink="/profile" translate>my-profile-menu.link.profile-information</a>
-          <a class="collection-item grey-text text-darken-2 active yellow darken-2" routerLink="/my-sessions"
-             translate>my-profile-menu.link.coaching-sessions</a>
-          <a class="collection-item grey-text text-darken-2" routerLink="/becomecoach" translate>my-profile-menu.link.apply-to-become-a-coach</a>
-        </div>
-      </div>
-    </div>
-
-    <div class="col s12 m10">
-      <div class="content-container">
-        <app-session-table title="coaching-sessions.title.requested" [sessions]="sessions" [statusType]="'requested'"></app-session-table>
-        <app-session-table title="coaching-sessions.title.upcoming" [sessions]="sessions" [statusType]="'accepted'"></app-session-table>
-        <app-session-table title="coaching-sessions.title.feedback" [sessions]="sessions" [statusType]="'waiting-for-feedback'"></app-session-table>
-        <app-session-table title="coaching-sessions.title.archive" [sessions]="sessions" [statusType]="'done'"></app-session-table>
-      </div>
-    </div>
+<div class="col s12 m10">
+  <div class="content-container">
+    <app-session-table title="coaching-sessions.title.requested" [sessions]="sessions" [statusType]="'requested'"></app-session-table>
+    <app-session-table title="coaching-sessions.title.upcoming" [sessions]="sessions" [statusType]="'accepted'"></app-session-table>
+    <app-session-table title="coaching-sessions.title.feedback" [sessions]="sessions" [statusType]="'waiting-for-feedback'"></app-session-table>
+    <app-session-table title="coaching-sessions.title.archive" [sessions]="sessions" [statusType]="'done'"></app-session-table>
   </div>
-
-</main>
+</div>

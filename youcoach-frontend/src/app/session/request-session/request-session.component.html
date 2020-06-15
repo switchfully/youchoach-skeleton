@@ -1,61 +1,55 @@
-<main>
-  <div class="container">
+<div class="col s12 m10">
+
+  <h1 class="center teal-text lighten-3" translate>request-session.title</h1>
+  <div class="content-container-with-padding z-depth-4">
 
     <div class="row">
-      <div class="col s12 m12">
-
-        <h1 class="center teal-text lighten-3" translate>request-session.title</h1>
-        <div class="content-container-with-padding z-depth-4">
-
-          <div class="row">
-            <form class="col s12" [formGroup]="sessionForm" (ngSubmit)="onSubmit()">
-              <div class="row">
-                <div class="input-field col s12">
-                  <textarea id="topic" class="materialize-textarea validate" formControlName="subject" required></textarea>
-                  <label for="topic" translate style="font-size: 80%">request-session.label.subject</label>
-                  <span #required hidden translate>register.message.first-name-required</span>
-                  <span [attr.data-error]="required.innerText" class="helper-text red-text darken-2"></span>
-                </div>
-              </div>
-              <div class="row" >
-
-                <div class="input-field col s6">
-                  <input id="date" type="text" class="datepicker validate" formControlName="date" required>
-                  <span [attr.data-error]="required.innerText" class="helper-text red-text darken-2"></span>
-                  <label for="date" translate>request-session.label.date</label>
-<!--                  <span class="helper-text red-text darken-2" data-error="invalid date"></span>-->
-                </div>
-                <div class="input-field col s6">
-                  <input id="timepicker" type="text" class="timepicker validate" formControlName="time" required>
-                  <span [attr.data-error]="required.innerText" class="helper-text red-text darken-2"></span>
-                  <label for="timepicker" translate>request-session.label.time</label>
-                </div>
-                <span class="helper-text red-text darken-2" style="font-size: small" *ngIf="sessionForm.errors?.mustBeFuture" translate>request-session.message.date-past</span>
-              </div>
-              <div class="row">
-                <div class="input-field col s12">
-                  <input id="location" type="text" class="autocomplete validate" required formControlName="location">
-                  <label for="location" translate>request-session.label.location</label>
-                  <span [attr.data-error]="required.innerText" class="helper-text red-text darken-2"></span>
-                </div>
-              </div>
-              <div class="row">
-                <div class="input-field col s12">
-                  <textarea id="remarks" class="materialize-textarea validate" required formControlName="remarks"></textarea>
-                  <label for="remarks" translate>request-session.label.remarks</label>
-                  <span [attr.data-error]="required.innerText" class="helper-text red-text darken-2"></span>
-                </div>
-              </div>
-              <div class="row right-align">
-                <button class="waves-effect waves-light yellow darken-2 btn-large black-text" [disabled]="!enableSend()"  type="submit" translate>request-session.button.request-session<i
-                  class="material-icons right">send</i></button>
-              </div>
-            </form>
+      <form class="col s12" [formGroup]="sessionForm" (ngSubmit)="onSubmit()">
+        <div class="row">
+          <div class="input-field col s12">
+            <textarea id="topic" class="materialize-textarea validate" formControlName="subject" required></textarea>
+            <label for="topic" translate style="font-size: 80%">request-session.label.subject</label>
+            <span #required hidden translate>register.message.first-name-required</span>
+            <span [attr.data-error]="required.innerText" class="helper-text red-text darken-2"></span>
           </div>
-
         </div>
-      </div>
+        <div class="row">
+
+          <div class="input-field col s6">
+            <input id="date" type="text" class="datepicker validate" formControlName="date" required>
+            <span [attr.data-error]="required.innerText" class="helper-text red-text darken-2"></span>
+            <label for="date" translate>request-session.label.date</label>
+            <!--                  <span class="helper-text red-text darken-2" data-error="invalid date"></span>-->
+          </div>
+          <div class="input-field col s6">
+            <input id="timepicker" type="text" class="timepicker validate" formControlName="time" required>
+            <span [attr.data-error]="required.innerText" class="helper-text red-text darken-2"></span>
+            <label for="timepicker" translate>request-session.label.time</label>
+          </div>
+          <span class="helper-text red-text darken-2" style="font-size: small" *ngIf="sessionForm.errors?.mustBeFuture"
+                translate>request-session.message.date-past</span>
+        </div>
+        <div class="row">
+          <div class="input-field col s12">
+            <input id="location" type="text" class="autocomplete validate" required formControlName="location">
+            <label for="location" translate>request-session.label.location</label>
+            <span [attr.data-error]="required.innerText" class="helper-text red-text darken-2"></span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s12">
+            <textarea id="remarks" class="materialize-textarea validate" required formControlName="remarks"></textarea>
+            <label for="remarks" translate>request-session.label.remarks</label>
+            <span [attr.data-error]="required.innerText" class="helper-text red-text darken-2"></span>
+          </div>
+        </div>
+        <div class="row right-align">
+          <button class="waves-effect waves-light yellow darken-2 btn-large black-text" [disabled]="!enableSend()"
+                  type="submit" translate>request-session.button.request-session<i
+            class="material-icons right">send</i></button>
+        </div>
+      </form>
     </div>
 
   </div>
-</main>
+</div>

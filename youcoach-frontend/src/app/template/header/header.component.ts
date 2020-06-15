@@ -35,11 +35,8 @@ export class HeaderComponent implements OnInit {
     this.authenticationService.logout();
   }
 
-  calculateClass() {
+  isCoachMenu() {
     const url: string = this.route.snapshot['_routerState'].url;
-    if (url.endsWith('/coach-profile') || url.endsWith('/change-topics')) {
-      return 'nav-content teal lighten-3';
-    }
-    return 'nav-content yellow darken-2';
+    return url.indexOf('/coach/') !== -1;
   }
 }

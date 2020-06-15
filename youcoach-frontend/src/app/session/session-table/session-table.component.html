@@ -24,10 +24,10 @@
           <td>{{session.location}}</td>
           <td>{{session.status | translate}}</td>
           <td>
-            <a *ngIf="!coach && !session.isWaitingForFeedback()" style="margin-right: 30px" class="waves-effect waves-light lighten-2 btn black-text green" [routerLink]="'/session/' + session.id" translate>coaching-sessions.button.detail<i class="material-icons right">search</i></a>
+            <a *ngIf="!coach && !session.isWaitingForFeedback()" style="margin-right: 30px" class="waves-effect waves-light lighten-2 btn black-text green" [routerLink]="'/coachee/session/' + session.id" translate>coaching-sessions.button.detail<i class="material-icons right">search</i></a>
             <a *ngIf="coach && session.isRequested()" style="margin-right: 30px" class="waves-effect waves-light lighten-2 btn black-text green" (click)="acceptSession(session)" translate>coaching-sessions.button.accept<i class="material-icons right">assignment_turned_in</i></a>
             <a *ngIf="session.isAccepted()" style="margin-right: 30px" class="waves-effect waves-light lighten-2 btn black-text green" (click)="finishSession(session)" translate>coaching-sessions.button.finish-session<i class="material-icons right">check</i></a>
-            <a *ngIf="!coach && session.isWaitingForFeedback()" style="margin-right: 30px" class="waves-effect waves-light lighten-2 btn black-text orange" [routerLink]="'/session/' + session.id" translate>coaching-sessions.button.provide-feedback<i class="material-icons right">assignment</i></a>
+            <a *ngIf="!coach && session.isWaitingForFeedback()" style="margin-right: 30px" class="waves-effect waves-light lighten-2 btn black-text orange" [routerLink]="'/coachee/session/' + session.id" translate>coaching-sessions.button.provide-feedback<i class="material-icons right">assignment</i></a>
             <a *ngIf="!coach && session.canCancel()" style="margin-right: 30px" class="waves-effect waves-light lighten-2 btn black-text red" (click)="cancelSession(session)" translate>coaching-sessions.button.cancel<i class="material-icons right">cancel</i></a>
             <a *ngIf="coach && session.canCancel()" style="margin-right: 30px" class="waves-effect waves-light lighten-2 btn black-text red" (click)="declineSession(session)" translate>coaching-sessions.button.decline<i class="material-icons right">cancel</i></a>
           </td>

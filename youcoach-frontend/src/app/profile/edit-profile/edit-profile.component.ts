@@ -21,9 +21,11 @@ export class EditProfileComponent implements OnInit {
   isEmailChanged = false;
   oldEmail = '';
   emailExistsError = false;
+
   constructor(private fb: FormBuilder, private coacheeService: CoacheeService, private router: Router,
               private authenticationService: AuthenticationService, private route: ActivatedRoute) {
   }
+
   ngOnInit(): void {
     const url: string = this.route.snapshot['_routerState'].url;
     if (url.endsWith('/edit-profile')) {
@@ -46,33 +48,23 @@ export class EditProfileComponent implements OnInit {
   updateProfile(): void {
     this.coacheeService.updateProfile(this.member)
       .subscribe(memberUpdated => {
-        this.member = memberUpdated;
-        if (memberUpdated.token !== null) {
+          this.member = memberUpdated;
+          if (memberUpdated.token !== null) {
             this.authenticationService.setJwtToken(memberUpdated.token, this.member.email);
           }
+          this.onBack();
         },
-      err => {
-        if (err.error.message === ('Email already exists!')) {
-          this.emailExistsError = true;
-        }
-      });
-    setTimeout(() => {
-      if (!this.emailExistsError) {
-        this.onBack();
-    } }, 1500);
-    // TEST IT IN HEROKU if timeout is enough
+        err => {
+          if (err.error.message === ('Email already exists!')) {
+            this.emailExistsError = true;
+          }
+        });
     this.emailExistsError = false;
-    // this.isEmailChanged = false;
   }
 
   onBack(): void {
-    this.router.navigateByUrl('/profile');
+    this.router.navigateByUrl('/coachee/profile');
   }
-
-  onLogin(): void {
-    this.router.navigateByUrl('/login');
-  }
-
 
   onSubmit() {
     if (this.editForm.get('email').value !== this.oldEmail) {

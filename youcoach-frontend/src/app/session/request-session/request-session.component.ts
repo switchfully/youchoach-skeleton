@@ -122,7 +122,7 @@ export class RequestSessionComponent extends InitMaterializeComponent implements
   }
 
   goSessions(): void {
-    this.router.navigateByUrl('/my-sessions');
+    this.router.navigateByUrl('/coachee/my-sessions');
   }
 
 }

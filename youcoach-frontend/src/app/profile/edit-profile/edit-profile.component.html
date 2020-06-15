@@ -1,88 +1,82 @@
-<main>
+<div class="col s12 m10">
+  <div class="content-container">
 
-  <div class="row">
+    <section class="card-panel grey lighten-5">
 
-    <div class="col s12 m10">
-      <div class="content-container">
-
-        <section class="card-panel grey lighten-5">
-
-          <h5>Edit profile Information</h5>
-          <div class="divider"></div>
-          <div class="row" *ngIf="member">
-            <form class="col s12" [formGroup]="editForm" (ngSubmit)="onSubmit()">
-              <div class="col l2 m2 s12">
-                <img src="{{member.photoUrl}}" class="responsive-img circle"
-                     alt="Profile Picture">
-              </div>
-              <div class="col l10 m10 s12">
-                <table class="highlight">
-                  <tbody>
-                  <tr>
-                    <td><strong translate>profile-information.label.first-name</strong></td>
-                    <div class="input-field col s6">
-                      <input id="first_name" type="text" class="validate" required formControlName="firstName"
-                             name='member.firstName' name='member.firstName'
-                             [(ngModel)]="member.firstName" >
-                      <span #firstnamerequired hidden translate>register.message.first-name-required</span>
-                      <span [attr.data-error]="firstnamerequired.innerText" class="helper-text"></span>
-                    </div>
-                  </tr>
-                  <tr>
-                    <td><strong translate>profile-information.label.last-name</strong></td>
-                    <div class="input-field col s6">
-                      <input id="last_name" type="text" class="validate" required formControlName="lastName"
-                             name='member.lastName' name='member.lastName'
-                             [(ngModel)]="member.lastName">
-                      <span #lastnamerequired hidden translate>register.message.last-name-required</span>
-                      <span [attr.data-error]="lastnamerequired.innerText" class="helper-text"></span>
-                    </div>
-                  </tr>
-                  <tr>
-                    <td><strong translate>profile-information.label.email</strong></td>
-                    <div class="input-field col s12">
-                      <input id="email" type="email" class="validate" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" formControlName="email"
-                             name='member.email' name='member.email'
-                             [(ngModel)]="member.email"   >
-                      <span class="helper-text red-text darken-2"  *ngIf="emailExistsError" translate>register.message.email-in-use</span>
-                      <span #wrongemailformat hidden translate>register.message.email-wrong-format</span>
-                      <span [attr.data-error]="wrongemailformat.innerText" class="helper-text"></span>
-                    </div>
-                  </tr>
-                  <tr>
-                    <td><strong translate>profile-information.label.profile-picture</strong></td>
-                    <div class="input-field col s12">
-                      <input id="photoUrl" type="email" class="validate"
-                             name='member.photoUrl' formControlName="photoUrl" name='member.photoUrl'
-                             [(ngModel)]="member.photoUrl" >
-                    </div>
-                  </tr>
-                  <tr>
-                    <div class="row right-align">
-                      <button style="margin-right: 30px" class="waves-effect waves-light teal lighten-3 btn-large black-text" (click)="onBack()" translate>profile-information.button.cancel<i
-                        class="material-icons right">cancel</i></button>
-                      <button [disabled]="(!editForm.valid)" class="waves-effect waves-light yellow darken-2 btn-large black-text"  type="submit" translate>profile-information.button.save<i
-                        class="material-icons right">save</i></button>
-                    </div>
-
-                  </tr>
-
-                  </tbody>
-                </table>
-              </div>
-            </form>
+      <h5>Edit profile Information</h5>
+      <div class="divider"></div>
+      <div class="row" *ngIf="member">
+        <form class="col s12" [formGroup]="editForm" (ngSubmit)="onSubmit()">
+          <div class="col l2 m2 s12">
+            <img src="{{member.photoUrl}}" class="responsive-img circle"
+                 alt="Profile Picture">
           </div>
-        </section>
+          <div class="col l10 m10 s12">
+            <table class="highlight">
+              <tbody>
+              <tr>
+                <td><strong translate>profile-information.label.first-name</strong></td>
+                <div class="input-field col s6">
+                  <input id="first_name" type="text" class="validate" required formControlName="firstName"
+                         name='member.firstName' name='member.firstName'
+                         [(ngModel)]="member.firstName">
+                  <span #firstnamerequired hidden translate>register.message.first-name-required</span>
+                  <span [attr.data-error]="firstnamerequired.innerText" class="helper-text"></span>
+                </div>
+              </tr>
+              <tr>
+                <td><strong translate>profile-information.label.last-name</strong></td>
+                <div class="input-field col s6">
+                  <input id="last_name" type="text" class="validate" required formControlName="lastName"
+                         name='member.lastName' name='member.lastName'
+                         [(ngModel)]="member.lastName">
+                  <span #lastnamerequired hidden translate>register.message.last-name-required</span>
+                  <span [attr.data-error]="lastnamerequired.innerText" class="helper-text"></span>
+                </div>
+              </tr>
+              <tr>
+                <td><strong translate>profile-information.label.email</strong></td>
+                <div class="input-field col s12">
+                  <input id="email" type="email" class="validate" required
+                         pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" formControlName="email"
+                         name='member.email' name='member.email'
+                         [(ngModel)]="member.email">
+                  <span class="helper-text red-text darken-2" *ngIf="emailExistsError" translate>register.message.email-in-use</span>
+                  <span #wrongemailformat hidden translate>register.message.email-wrong-format</span>
+                  <span [attr.data-error]="wrongemailformat.innerText" class="helper-text"></span>
+                </div>
+              </tr>
+              <tr>
+                <td><strong translate>profile-information.label.profile-picture</strong></td>
+                <div class="input-field col s12">
+                  <input id="photoUrl" type="email" class="validate"
+                         name='member.photoUrl' formControlName="photoUrl" name='member.photoUrl'
+                         [(ngModel)]="member.photoUrl">
+                </div>
+              </tr>
+              <tr>
+                <div class="row right-align">
+                  <button style="margin-right: 30px"
+                          class="waves-effect waves-light teal lighten-3 btn-large black-text" (click)="onBack()"
+                          translate>profile-information.button.cancel<i
+                    class="material-icons right">cancel</i></button>
+                  <button [disabled]="(!editForm.valid)"
+                          class="waves-effect waves-light yellow darken-2 btn-large black-text" type="submit" translate>
+                    profile-information.button.save<i
+                    class="material-icons right">save</i></button>
+                </div>
 
+              </tr>
+
+              </tbody>
+            </table>
+          </div>
+        </form>
       </div>
-    </div>
+    </section>
+
   </div>
-</main>
+</div>
 
-
-<!--  Scripts-->
-<script src="js/jquery-3.5.0.min.js"></script>
-<script src="js/materialize.js"></script>
-<script src="js/init.js"></script>
 
 

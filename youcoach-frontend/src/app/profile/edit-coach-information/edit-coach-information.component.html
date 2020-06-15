@@ -1,66 +1,49 @@
-<main>
+<div class="col s12 m10">
+  <div class="content-container">
 
-  <div class="row">
+    <section class="card-panel grey lighten-5">
 
-    <div class="col s12 m10">
-      <div class="content-container">
-
-        <section class="card-panel grey lighten-5">
-
-          <h5>Edit profile Information</h5>
-          <div class="divider"></div>
-          <div class="row">
-            <form class="col s12" [formGroup]="editForm" (ngSubmit)="onSubmit()">
-              <div class="col l2 m2 s12">
-                <img src="{{coach.photoUrl}}" class="responsive-img circle"
-                     alt="Profile Picture">
-              </div>
-              <div class="col l10 m10 s12">
-                <table class="highlight">
-                  <tbody>
-
-                  <tr>
-                    <td><strong translate>coach-information.label.introduction</strong></td>
-                    <div class="input-field col s12">
-                      <input id="introduction" class="validate" required formControlName="introduction"
-                             name='coach.introduction'
-                             [(ngModel)]="coach.introduction" >
-                    </div>
-                  </tr>
-                  <tr>
-                    <td><strong translate>coach-information.label.availability</strong></td>
-                    <div class="input-field col s12">
-                      <input id="availability" class="validate"
-                             name='coach.availability' required formControlName="availability" name='coach.availability'
-                             [(ngModel)]="coach.availability" >
-                    </div>
-                  </tr>
-                  <tr>
-                    <div class="row right-align">
-                      <button style="margin-right: 30px" class="waves-effect waves-light teal lighten-3 btn-large black-text"translate>profile-information.button.cancel<i
-                        class="material-icons right">cancel</i></button>
-                      <button class="waves-effect waves-light yellow darken-2 btn-large black-text"  type="submit" translate>profile-information.button.save<i
-                        class="material-icons right">save</i></button>
-                    </div>
-
-                  </tr>
-
-                  </tbody>
-                </table>
-              </div>
-            </form>
+      <h5>Edit profile Information</h5>
+      <div class="divider"></div>
+      <div class="row">
+        <form class="col s12" [formGroup]="editForm" (ngSubmit)="onSubmit()">
+          <div class="col l2 m2 s12">
+            <img src="{{coach.photoUrl}}" class="responsive-img circle"
+                 alt="Profile Picture">
           </div>
-        </section>
+          <div class="col l10 m10 s12">
+            <table class="highlight">
+              <tbody>
 
+              <tr>
+                <td>
+                  <label for="introduction" translate>coach-information.label.introduction</label>
+                  <input id="introduction" class="input-field validate" required formControlName="introduction"
+                         name='coach.introduction' [(ngModel)]="coach.introduction"/>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <label for="availability" translate>coach-information.label.availability</label>
+                  <input id="availability" class="input-field validate" required formControlName="availability"
+                         name='coach.availability' [(ngModel)]="coach.availability">
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="right-align">
+                    <button style="margin-right: 30px" class="waves-effect waves-light teal lighten-3 btn-large black-text" translate>profile-information.button.cancel<i class="material-icons right">cancel</i></button>
+                    <button class="waves-effect waves-light yellow darken-2 btn-large black-text" type="submit" translate>profile-information.button.save<i class="material-icons right">save</i></button>
+                  </div>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </form>
       </div>
-    </div>
+    </section>
   </div>
-</main>
-
-
-<!--  Scripts-->
-<script src="js/jquery-3.5.0.min.js"></script>
-<script src="js/materialize.js"></script>
-<script src="js/init.js"></script>
+</div>
 
 

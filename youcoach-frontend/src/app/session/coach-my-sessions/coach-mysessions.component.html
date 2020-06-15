@@ -1,26 +1,12 @@
-<main>
-
-  <div class="row">
-
-    <div class="col s12 m2">
-      <div class="content-container">
-        <h6 translate>my-profile-menu.title</h6>
-        <div class="collection">
-          <a class="collection-item grey-text text-darken-2" routerLink="/coach-profile" translate>Profile Information</a>
-          <a class="collection-item black-text active teal lighten-3" routerLink="/coach-my-sessions" translate >my-profile-menu.link.coaching-sessions</a>
-          <a class="collection-item grey-text text-darken-2" routerLink="/change-topics" translate >my-coach-profile-menu.link.request-profile-change</a>
-        </div>
-      </div>
-    </div>
-
-    <div class="col s12 m10">
-      <div class="content-container">
-        <app-session-table title="coaching-sessions.title.requested" [sessions]="sessions" [statusType]="'requested'" coach="true"></app-session-table>
-        <app-session-table title="coaching-sessions.title.upcoming" [sessions]="sessions" [statusType]="'accepted'" coach="true"></app-session-table>
-        <app-session-table title="coaching-sessions.title.feedback" [sessions]="sessions" [statusType]="'waiting-for-feedback'" coach="true"></app-session-table>
-        <app-session-table title="coaching-sessions.title.archive" [sessions]="sessions" [statusType]="'done'" coach="true"></app-session-table>
-      </div>
-    </div>
+<div class="col s12 m10">
+  <div class="content-container">
+    <app-session-table title="coaching-sessions.title.requested" [sessions]="sessions" [statusType]="'requested'"
+                       coach="true"></app-session-table>
+    <app-session-table title="coaching-sessions.title.upcoming" [sessions]="sessions" [statusType]="'accepted'"
+                       coach="true"></app-session-table>
+    <app-session-table title="coaching-sessions.title.feedback" [sessions]="sessions"
+                       [statusType]="'waiting-for-feedback'" coach="true"></app-session-table>
+    <app-session-table title="coaching-sessions.title.archive" [sessions]="sessions" [statusType]="'done'"
+                       coach="true"></app-session-table>
   </div>
-
-</main>
+</div>

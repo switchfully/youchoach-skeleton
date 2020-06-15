@@ -19,6 +19,8 @@ import {HeaderComponent} from "./template/header/header.component";
 import {HomeComponent} from "./template/home/home.component";
 import {NotFoundComponent} from "./template/not-found/not-found.component";
 import {ProfileModule} from "./profile/profile.module";
+import { CoacheeComponent } from './template/coachee/coachee.component';
+import { CoachComponent } from './template/coach/coach.component';
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -31,7 +33,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     FooterComponent,
     HeaderComponent,
     HomeComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    CoacheeComponent,
+    CoachComponent,
   ],
 
   imports: [

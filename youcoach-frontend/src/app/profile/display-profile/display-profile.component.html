@@ -2,17 +2,6 @@
 
   <div class="row">
 
-    <div class="col s12 m2">
-      <div class="content-container">
-        <h6 translate>my-profile-menu.title</h6>
-        <div class="collection">
-          <a class="collection-item black-text active yellow darken-2" routerLink="/profile" translate>my-profile-menu.link.profile-information</a>
-          <a class="collection-item grey-text text-darken-2 " routerLink="/my-sessions" translate>my-profile-menu.link.coaching-sessions</a>
-          <a class="collection-item grey-text text-darken-2" routerLink="/becomecoach" translate>my-profile-menu.link.apply-to-become-a-coach</a>
-        </div>
-      </div>
-    </div>
-
     <div class="col s12 m10">
       <div class="content-container">
 
@@ -20,11 +9,11 @@
           <div class="right">
             <div *ngIf="adminEdit === false">
               <a class="waves-effect waves-light btn-large btn-floating yellow darken-2"><i
-                class="material-icons left" routerLink="/edit-profile">edit</i>Edit</a>
+                class="material-icons left" routerLink="../edit-profile">edit</i>Edit</a>
             </div>
             <div *ngIf="adminEdit === true">
               <a class="waves-effect waves-light btn-large btn-floating yellow darken-2"><i
-                class="material-icons left" routerLink="/edit-profile/{{member.id}}">edit</i>Edit</a>
+                class="material-icons left" routerLink="../edit-profile/{{member.id}}">edit</i>Edit</a>
             </div>
           </div>
           <h5 translate>profile-information.title</h5>

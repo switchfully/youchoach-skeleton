@@ -23,8 +23,37 @@ import {CoacheeMySessionsComponent} from './session/coachee-my-sessions/coachee-
 import {CoachMysessionsComponent} from './session/coach-my-sessions/coach-mysessions.component';
 import {NotFoundComponent} from './template/not-found/not-found.component';
 import {SessionDetailComponent} from "./session/session-detail/session-detail.component";
+import {CoacheeComponent} from "./template/coachee/coachee.component";
+import {CoachComponent} from "./template/coach/coach.component";
 
 const routes: Routes = [
+  {
+    path: 'coachee',
+    component: CoacheeComponent,
+    children: [
+      {path: 'becomecoach', component: BecomeCoachComponent},
+      {path: 'profile', component: DisplayProfileComponent},
+      {path: 'profile/:id', component: DisplayProfileComponent},
+      {path: 'edit-profile', component: EditProfileComponent},
+      {path: 'edit-profile/:id', component: EditProfileComponent},
+      {path: 'my-sessions', component: CoacheeMySessionsComponent},
+      {path: 'session/:id', component: SessionDetailComponent},
+      {path: 'find-coach', component: FindACoachComponent},
+      {path: 'coach-profile/:id', component: CoachProfileComponent},
+      {path: 'coach-profile/:id/request-a-session', component: RequestSessionComponent},
+    ]
+  },
+  {
+    path: 'coach',
+    component: CoachComponent,
+    children: [
+      {path: 'change-topics', component: ChangeTopicsComponent},
+      {path: 'coach-profile', component: CoachProfileComponent},
+      {path: 'edit-coach-information', component: EditCoachInformationComponent},
+      {path: 'coach-my-sessions', component: CoachMysessionsComponent},
+      {path: 'session/:id', component: SessionDetailComponent},
+    ]
+  },
   {path: 'home', component: HomeComponent},
   {path: 'login', component: LoginComponent},
   {path: 'not-found', component: NotFoundComponent},
@@ -34,22 +63,8 @@ const routes: Routes = [
   {path: 'password-change-failure', component: PasswordChangeFailureComponent},
   {path: 'register', component: RegisterComponent},
   {path: 'registration-success', component: RegistrationSuccessComponent},
-  {path: 'becomecoach', component: BecomeCoachComponent },
-  {path: 'change-topics', component: ChangeTopicsComponent },
-  {path: 'profile', component: DisplayProfileComponent },
-  {path: 'profile/:id', component: DisplayProfileComponent},
-  {path: 'edit-profile', component: EditProfileComponent },
-  {path: 'edit-profile/:id', component: EditProfileComponent },
-  {path: 'coach-profile', component: CoachProfileComponent },
-  {path: 'coach-profile/:id', component: CoachProfileComponent },
-  {path: 'edit-coach-information', component: EditCoachInformationComponent},
-  {path: 'find-coach', component: FindACoachComponent },
-  {path: 'validate-account', component: ValidateAccountComponent },
-  {path: 'email-validation-success', component: EmailValidationSuccessComponent },
-  {path: 'coach-profile/:id/request-a-session', component: RequestSessionComponent },
-  {path: 'coach-my-sessions', component: CoachMysessionsComponent },
-  {path: 'my-sessions', component: CoacheeMySessionsComponent },
-  {path: 'session/:id', component: SessionDetailComponent},
+  {path: 'validate-account', component: ValidateAccountComponent},
+  {path: 'email-validation-success', component: EmailValidationSuccessComponent},
   {path: 'forbidden', component: ForbiddenComponent},
   {path: '', redirectTo: 'home', pathMatch: 'full'},
   {path: '**', redirectTo: 'not-found', pathMatch: 'full'}

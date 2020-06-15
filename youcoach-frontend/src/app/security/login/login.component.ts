@@ -36,9 +36,9 @@ export class LoginComponent implements OnInit {
         (_ => {
           this.success = true;
           if (this.authenticationService.isCoach()) {
-            this.router.navigateByUrl('/coach-profile');
+            this.router.navigateByUrl('/coach/coach-profile');
           } else {
-            this.router.navigateByUrl('/profile');
+            this.router.navigateByUrl('/coachee/profile');
           }
         }),
         (_ => this.error = true)
