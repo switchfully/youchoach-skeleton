@@ -13,16 +13,20 @@ export class SessionDetailComponent implements OnInit {
 
   session: ISessionComplete;
   feedbackForm: FormGroup;
+  coach: boolean;
 
   constructor(private formBuilder: FormBuilder, private sessionService: SessionService, private route: ActivatedRoute) {
   }
 
   ngOnInit(): void {
+    this.coach = this.route.snapshot['_routerState'].url.indexOf('/coach/') !== -1;
     let sessionId = +this.route.snapshot.paramMap.get('id');
-    this.sessionService.getSession(sessionId).subscribe(session => this.session = session);
     this.feedbackForm = this.formBuilder.group({
-      feedback: []
-    })
+      feedback: ""
+    });
+    this.sessionService.getSession(sessionId).subscribe(session => {
+      this.session = session;
+    });
   }
 
   cancelSession(session: ISessionComplete): void {
@@ -51,10 +55,18 @@ export class SessionDetailComponent implements OnInit {
 
   sendFeedback(feedback) {
     this.sessionService.sendFeedback(this.session.id, feedback).subscribe(
-      _ => {
+      session => {
         this.feedbackForm.reset();
-        this.session.status = Status.FEEDBACK_PROVIDED;
-        this.session.feedback = feedback.feedback;
+        this.session = session;
+      },
+      _ => alert('Updating status failed!'));
+  }
+
+  sendFeedbackAsCoach(feedback) {
+    this.sessionService.sendFeedbackAsCoach(this.session.id, feedback).subscribe(
+      session => {
+        this.feedbackForm.reset();
+        this.session = session;
       },
       _ => alert('Updating status failed!'));
   }

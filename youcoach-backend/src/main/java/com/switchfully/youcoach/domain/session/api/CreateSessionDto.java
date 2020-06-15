@@ -10,6 +10,7 @@ public class CreateSessionDto {
     private String remarks;
     private Long coachId;
     private String feedback;
+    private String coachFeedback;
 
     public CreateSessionDto() {
     }
@@ -49,6 +50,10 @@ public class CreateSessionDto {
 
     public String getFeedback() {
         return feedback;
+    }
+
+    public String getCoachFeedback() {
+        return coachFeedback;
     }
 
     @Override

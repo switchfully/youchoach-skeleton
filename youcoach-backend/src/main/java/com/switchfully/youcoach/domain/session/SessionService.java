@@ -101,4 +101,10 @@ public class SessionService {
         return sessionRepository.findById(sessionId)
                 .orElseThrow(() -> new SessionNotFoundException("Id: " + sessionId));
     }
+
+    public SessionDto provideSessionFeedbackAsCoach(Long sessionId, Feedback feedback) {
+        Session session = getSessionFromDatabase(sessionId);
+        session.provideFeedbackAsCoach(feedback);
+        return sessionMapper.toDto(session);
+    }
 }

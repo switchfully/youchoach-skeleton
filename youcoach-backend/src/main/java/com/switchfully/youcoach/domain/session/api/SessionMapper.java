@@ -39,7 +39,8 @@ public class SessionMapper {
                 extractPerson(session.getCoach()),
                 extractPerson(session.getCoachee()),
                 session.getStatus(),
-                session.getFeedback()
+                session.getFeedback(),
+                session.getCoachFeedback()
         );
     }
 

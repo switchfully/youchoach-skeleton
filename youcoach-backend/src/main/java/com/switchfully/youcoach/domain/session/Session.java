@@ -35,6 +35,8 @@ public class Session {
     private Status status;
     @Column(name = "feedback")
     private String feedback;
+    @Column(name = "coach_feedback")
+    private String coachFeedback;
 
     private Session() {
     }
@@ -85,6 +87,10 @@ public class Session {
         return feedback;
     }
 
+    public String getCoachFeedback() {
+        return coachFeedback;
+    }
+
     void updateIfExpired() {
         if (this.status == ACCEPTED && hasExpired(dateAndTime)) {
             status = WAITING_FOR_FEEDBACK;
@@ -108,11 +114,26 @@ public class Session {
     void finish() {
         this.status = WAITING_FOR_FEEDBACK;
     }
+
     private boolean hasExpired(LocalDateTime dateAndTime) {
         return ZonedDateTime.of(dateAndTime, ZoneId.of("Europe/Brussels")).isBefore(ZonedDateTime.now(ZoneId.of("Europe/Brussels")));
     }
 
+    public void provideFeedback(Feedback feedback) {
+        this.feedback = feedback.getFeedback();
+        updateIfBothHaveFilledInFeedback();
+    }
 
+    public void provideFeedbackAsCoach(Feedback feedback) {
+        this.coachFeedback = feedback.getFeedback();
+        updateIfBothHaveFilledInFeedback();
+    }
+
+    private void updateIfBothHaveFilledInFeedback() {
+        if(feedback != null && coachFeedback != null) {
+            this.status = FEEDBACK_PROVIDED;
+        }
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -126,8 +147,4 @@ public class Session {
         return Objects.hash(id);
     }
 
-    public void provideFeedback(Feedback feedback) {
-        this.feedback = feedback.getFeedback();
-        this.status = FEEDBACK_PROVIDED;
-    }
 }

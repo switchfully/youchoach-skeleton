@@ -60,6 +60,12 @@ export class SessionService {
     );
   }
 
+  sendFeedbackAsCoach(sessionId: number, feedback: any): Observable<ISessionComplete> {
+    return this.http.post<ISessionComplete>(this.url + `/${sessionId}/feedbackAsCoach`, feedback, this.httpOptions).pipe(
+      map(session => Object.assign(new ISessionComplete(), session))
+    );
+  }
+
   getSession(sessionId: number): Observable<ISessionComplete> {
     return this.http.get<ISessionComplete>(this.url + `/${sessionId}`, this.httpOptions).pipe(
       map(session => Object.assign(new ISessionComplete(), session))

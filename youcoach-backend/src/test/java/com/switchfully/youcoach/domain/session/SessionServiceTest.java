@@ -24,7 +24,7 @@ class SessionServiceTest {
 
     private Session session = new Session("Mathematics", LocalDateTime.now(), "school", "no remarks", new Profile(1L, null, null, null, null), null);
     private CreateSessionDto createSessionDto = new CreateSessionDto("Mathematics", "30/05/2020", "11:50", "school", "no remarks", 1L);
-    private SessionDto sessionDto = new SessionDto(1L, "Mathematics", "30/05/2020", "11:50", "school", "no remarks", new SessionDto.Person(1L, "Name"), new SessionDto.Person(2L, "Name"), Status.REQUESTED, session.getFeedback());
+    private SessionDto sessionDto = new SessionDto(1L, "Mathematics", "30/05/2020", "11:50", "school", "no remarks", new SessionDto.Person(1L, "Name"), new SessionDto.Person(2L, "Name"), Status.REQUESTED, session.getFeedback(), session.getCoachFeedback());
     private SessionRepository sessionRepository = mock(SessionRepository.class);
     private SessionMapper sessionMapper = mock(SessionMapper.class);
     private CoachRepository coachRepository = mock(CoachRepository.class);

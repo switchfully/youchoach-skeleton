@@ -82,6 +82,13 @@ public class SessionController {
         return sessionService.provideSessionFeedback(sessionId, feedback);
     }
 
+    @PostMapping(path = "/{id}/feedbackAsCoach", produces = "application/json", consumes = "application/json")
+    @ResponseStatus(HttpStatus.CREATED)
+    public SessionDto giveSessionFeedbackAsCoach(@PathVariable("id") Long sessionId, @RequestBody Feedback feedback) {
+        LOGGER.info("updating session status");
+        return sessionService.provideSessionFeedbackAsCoach(sessionId, feedback);
+    }
+
     @GetMapping(path = "/{id}", produces = "application/json")
     @ResponseStatus(HttpStatus.OK)
     public SessionDto getSession(@PathVariable("id") Long sessionId) {
