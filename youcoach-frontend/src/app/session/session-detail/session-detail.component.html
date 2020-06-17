@@ -229,7 +229,7 @@
       <h5 translate>session-detail.title.feedback-overview</h5>
       <div class="divider"></div>
       <div class="row">
-        <div *ngIf="session && session.coachFeedback" class="col s6">
+        <div *ngIf="session && session.coachFeedback" class="col s12 m6">
           <h6 translate>session-detail.title.feedback-coach</h6>
           <div class="divider"></div>
           <table class="highlight">
@@ -269,10 +269,10 @@
             </tbody>
           </table>
         </div>
-        <div *ngIf="!session.coachFeedback" class="col s6 center-align">
+        <div *ngIf="!session.coachFeedback" class="col s12 m6 center-align">
           <p class="grey-text text-darken-1"><strong>No feedback from coach yet!</strong></p>
         </div>
-        <div *ngIf="session && session.coacheeFeedback" class="col s6">
+        <div *ngIf="session && session.coacheeFeedback" class="col s12 m6">
           <h6 translate>session-detail.title.feedback-coachee</h6>
           <div class="divider"></div>
           <table class="highlight">
@@ -312,7 +312,7 @@
             </tbody>
           </table>
         </div>
-        <div *ngIf="!session.coacheeFeedback" class="col s6 center-align">
+        <div *ngIf="!session.coacheeFeedback" class="col s12 m6 center-align">
           <p class="grey-text text-darken-1"><strong>No feedback from coachee yet!</strong></p>
         </div>
       </div>
