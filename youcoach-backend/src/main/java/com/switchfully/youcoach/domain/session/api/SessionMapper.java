@@ -1,6 +1,5 @@
 package com.switchfully.youcoach.domain.session.api;
 
-import com.switchfully.youcoach.domain.session.Status;
 import com.switchfully.youcoach.domain.session.Session;
 import com.switchfully.youcoach.domain.profile.Profile;
 import org.springframework.stereotype.Component;
@@ -35,7 +34,7 @@ public class SessionMapper {
 
         String date = session.getDateAndTime().toLocalDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
         String time = session.getDateAndTime().toLocalTime().format(DateTimeFormatter.ofPattern("H:mm"));
-        return new SessionDto(
+        return new SessionDto (
                 session.getId(),
                 session.getSubject(),
                 date,
@@ -45,7 +44,7 @@ public class SessionMapper {
                 extractPerson(session.getCoach()),
                 extractPerson(session.getCoachee()),
                 session.getStatus(),
-                session.getFeedback(),
+                feedbackMapper.toDto(session.getCoacheeFeedback()),
                 feedbackMapper.toDto(session.getCoachFeedback())
         );
     }

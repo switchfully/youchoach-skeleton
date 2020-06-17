@@ -89,9 +89,9 @@ public class SessionService {
         return sessionMapper.toDto(session);
     }
 
-    public SessionDto provideSessionFeedback(Long sessionId, Feedback feedback) {
+    public SessionDto provideSessionFeedback(Long sessionId, CoacheeFeedbackDto coacheeFeedback) {
         Session session = getSessionFromDatabase(sessionId);
-        session.provideFeedback(feedback);
+        session.provideCoacheeFeedback(feedbackMapper.toModel(coacheeFeedback));
         return sessionMapper.toDto(session);
     }
 
@@ -100,9 +100,9 @@ public class SessionService {
                 .orElseThrow(() -> new SessionNotFoundException("Id: " + sessionId));
     }
 
-    public SessionDto provideSessionFeedbackAsCoach(Long sessionId, FeedbackDto feedback) {
+    public SessionDto provideSessionFeedbackAsCoach(Long sessionId, CoachFeedbackDto coachFeedbackDto) {
         Session session = getSessionFromDatabase(sessionId);
-        session.provideFeedbackAsCoach(feedbackMapper.toModel(feedback));
+        session.provideFeedbackAsCoach(feedbackMapper.toModel(coachFeedbackDto));
         return sessionMapper.toDto(session);
     }
 }

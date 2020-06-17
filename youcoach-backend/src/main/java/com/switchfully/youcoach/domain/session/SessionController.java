@@ -1,8 +1,8 @@
 package com.switchfully.youcoach.domain.session;
 
+import com.switchfully.youcoach.domain.session.api.CoacheeFeedbackDto;
 import com.switchfully.youcoach.domain.session.api.CreateSessionDto;
-import com.switchfully.youcoach.domain.session.api.FeedbackDto;
-import com.switchfully.youcoach.domain.session.api.UpdateStatusDto;
+import com.switchfully.youcoach.domain.session.api.CoachFeedbackDto;
 import com.switchfully.youcoach.domain.session.api.SessionDto;
 import com.switchfully.youcoach.domain.session.exception.SessionNotFoundException;
 import org.slf4j.Logger;
@@ -12,7 +12,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
-import javax.websocket.server.PathParam;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
@@ -78,14 +77,14 @@ public class SessionController {
 
     @PostMapping(path = "/{id}/feedback", produces = "application/json", consumes = "application/json")
     @ResponseStatus(HttpStatus.CREATED)
-    public SessionDto giveSessionFeedback(@PathVariable("id") Long sessionId, @RequestBody Feedback feedback) {
+    public SessionDto giveSessionFeedback(@PathVariable("id") Long sessionId, @RequestBody CoacheeFeedbackDto coacheeFeedbackDto) {
         LOGGER.info("updating session status");
-        return sessionService.provideSessionFeedback(sessionId, feedback);
+        return sessionService.provideSessionFeedback(sessionId, coacheeFeedbackDto);
     }
 
     @PostMapping(path = "/{id}/feedbackAsCoach", produces = "application/json", consumes = "application/json")
     @ResponseStatus(HttpStatus.CREATED)
-    public SessionDto giveSessionFeedbackAsCoach(@PathVariable("id") Long sessionId, @RequestBody FeedbackDto feedback) {
+    public SessionDto giveSessionFeedbackAsCoach(@PathVariable("id") Long sessionId, @RequestBody CoachFeedbackDto feedback) {
         LOGGER.info("updating session status");
         return sessionService.provideSessionFeedbackAsCoach(sessionId, feedback);
     }

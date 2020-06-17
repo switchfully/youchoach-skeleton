@@ -2,15 +2,15 @@ package com.switchfully.youcoach.domain.session.api;
 
 import com.switchfully.youcoach.domain.session.Score;
 
-public class FeedbackDto {
+public class CoachFeedbackDto {
     private Score onTime;
     private String freeText;
 
-    public FeedbackDto(){
+    public CoachFeedbackDto(){
 
     }
 
-    public FeedbackDto(Score onTime, String freeText) {
+    public CoachFeedbackDto(Score onTime, String freeText) {
         this.onTime = onTime;
         this.freeText = freeText;
     }

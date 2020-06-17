@@ -7,7 +7,10 @@ export class ISessionComplete {
   time: string;
   location: string;
   remarks: string;
-  feedback: string;
+  coacheeFeedback: {
+    freeText: string,
+    onTime: string
+  };
   coachFeedback: {
     freeText: string,
     onTime: string

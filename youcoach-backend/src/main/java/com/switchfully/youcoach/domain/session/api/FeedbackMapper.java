@@ -1,19 +1,31 @@
 package com.switchfully.youcoach.domain.session.api;
 
-import com.switchfully.youcoach.domain.session.Feedback;
+import com.switchfully.youcoach.domain.session.CoachFeedback;
+import com.switchfully.youcoach.domain.session.CoacheeFeedback;
 import org.springframework.stereotype.Component;
 
 @Component
 public class FeedbackMapper {
 
-    public FeedbackDto toDto(Feedback feedback) {
-        if(feedback == null) {
+    public CoachFeedbackDto toDto(CoachFeedback coachFeedback) {
+        if(coachFeedback == null) {
             return null;
         }
-        return new FeedbackDto(feedback.getOnTime(), feedback.getFreeText());
+        return new CoachFeedbackDto(coachFeedback.getOnTime(), coachFeedback.getFreeText());
     }
 
-    public Feedback toModel(FeedbackDto feedback) {
-        return new Feedback(feedback.getOnTime(), feedback.getFreeText());
+    public CoacheeFeedbackDto toDto(CoacheeFeedback coacheeFeedback) {
+        if(coacheeFeedback == null) {
+            return null;
+        }
+        return new CoacheeFeedbackDto(coacheeFeedback.getOnTime(), coacheeFeedback.getFreeText());
+    }
+
+    public CoachFeedback toModel(CoachFeedbackDto feedback) {
+        return new CoachFeedback(feedback.getOnTime(), feedback.getFreeText());
+    }
+
+    public CoacheeFeedback toModel(CoacheeFeedbackDto feedback) {
+        return new CoacheeFeedback(feedback.getOnTime(), feedback.getFreeText());
     }
 }

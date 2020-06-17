@@ -1,5 +1,6 @@
 package com.switchfully.youcoach.domain.session;
 
+import com.switchfully.youcoach.domain.coach.Coach;
 import com.switchfully.youcoach.domain.profile.Profile;
 
 import javax.persistence.*;
@@ -33,14 +34,19 @@ public class Session {
     private Profile coachee;
     @Column(name = "status")
     private Status status;
-    @Column(name = "feedback")
-    private String feedback;
+
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name="freeText", column = @Column(name = "coachee_feedback_free_text")),
+            @AttributeOverride(name="onTime", column = @Column(name = "coachee_feedback_on_time"))
+    })
+    private CoacheeFeedback coacheeFeedback;
     @Embedded
     @AttributeOverrides({
             @AttributeOverride(name="freeText", column = @Column(name = "coach_feedback_free_text")),
             @AttributeOverride(name="onTime", column = @Column(name = "coach_feedback_on_time"))
     })
-    private Feedback coachFeedback;
+    private CoachFeedback coachFeedback;
 
     private Session() {
     }
@@ -87,11 +93,11 @@ public class Session {
         return status;
     }
 
-    public String getFeedback() {
-        return feedback;
+    public CoacheeFeedback getCoacheeFeedback() {
+        return coacheeFeedback;
     }
 
-    public Feedback getCoachFeedback() {
+    public CoachFeedback getCoachFeedback() {
         return coachFeedback;
     }
 
@@ -123,18 +129,18 @@ public class Session {
         return ZonedDateTime.of(dateAndTime, ZoneId.of("Europe/Brussels")).isBefore(ZonedDateTime.now(ZoneId.of("Europe/Brussels")));
     }
 
-    public void provideFeedback(Feedback feedback) {
-        this.feedback = feedback.getFreeText();
+    public void provideCoacheeFeedback(CoacheeFeedback coacheeFeedback) {
+        this.coacheeFeedback = coacheeFeedback;
         updateIfBothHaveFilledInFeedback();
     }
 
-    public void provideFeedbackAsCoach(Feedback feedback) {
-        this.coachFeedback = feedback;
+    public void provideFeedbackAsCoach(CoachFeedback coachFeedback) {
+        this.coachFeedback = coachFeedback;
         updateIfBothHaveFilledInFeedback();
     }
 
     private void updateIfBothHaveFilledInFeedback() {
-        if(feedback != null && coachFeedback != null) {
+        if(coacheeFeedback != null && coachFeedback != null) {
             this.status = FEEDBACK_PROVIDED;
         }
     }

@@ -12,7 +12,8 @@ import {FormBuilder, FormGroup} from "@angular/forms";
 export class SessionDetailComponent implements OnInit {
 
   session: ISessionComplete;
-  feedbackForm: FormGroup;
+  coachFeedbackForm: FormGroup;
+  coacheeFeedbackForm: FormGroup;
   coach: boolean;
 
   constructor(private formBuilder: FormBuilder, private sessionService: SessionService, private route: ActivatedRoute) {
@@ -21,14 +22,23 @@ export class SessionDetailComponent implements OnInit {
   ngOnInit(): void {
     this.coach = this.route.snapshot['_routerState'].url.indexOf('/coach/') !== -1;
     let sessionId = +this.route.snapshot.paramMap.get('id');
-    this.feedbackForm = this.formBuilder.group({
+    this.coachFeedbackForm = this.formBuilder.group({
+      freeText: "",
+      onTime: ""
+    });
+    this.coacheeFeedbackForm = this.formBuilder.group({
       freeText: "",
       onTime: ""
     });
 
     this.sessionService.getSession(sessionId).subscribe(session => {
       this.session = session;
-      this.feedbackForm.patchValue(session.coachFeedback);
+      if(session.coachFeedback) {
+        this.coachFeedbackForm.patchValue(session.coachFeedback);
+      }
+      if(session.coacheeFeedback) {
+        this.coacheeFeedbackForm.patchValue(session.coacheeFeedback);
+      }
     });
   }
 
@@ -56,11 +66,11 @@ export class SessionDetailComponent implements OnInit {
       _ => alert('Updating status failed!'));
   }
 
-  sendFeedback(feedback) {
+  sendFeedbackAsCoachee(feedback) {
     this.sessionService.sendFeedback(this.session.id, feedback).subscribe(
       session => {
-        this.feedbackForm.reset();
         this.session = session;
+        this.coacheeFeedbackForm.patchValue(session.coacheeFeedback);
       },
       _ => alert('Updating status failed!'));
   }
@@ -69,6 +79,7 @@ export class SessionDetailComponent implements OnInit {
     this.sessionService.sendFeedbackAsCoach(this.session.id, feedback).subscribe(
       session => {
         this.session = session;
+        this.coachFeedbackForm.patchValue(session.coachFeedback);
       },
       _ => alert('Updating status failed!'));
   }
