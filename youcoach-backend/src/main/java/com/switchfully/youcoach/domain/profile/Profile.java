@@ -7,8 +7,8 @@ import java.util.Objects;
 @Table(name = "profile")
 public class Profile {
     @Id
-    @SequenceGenerator(name = "profile_seq", sequenceName = "profile_seq", initialValue = 20, allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "profile_seq")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Column(name = "id")
     private long id;
     @Column(name = "first_name")
     private String firstName;

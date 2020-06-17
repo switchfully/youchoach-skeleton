@@ -9,11 +9,7 @@ import java.util.Objects;
 @Entity
 public class AccountVerification {
     @Id
-    private Long id;
-
-    @OneToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name="id")
-    private Profile profile;
+    private long user_id;
 
     @Column(name = "verification_code", nullable = false)
     private String verificationCode;
@@ -23,8 +19,12 @@ public class AccountVerification {
 
     public AccountVerification(){}
     public AccountVerification(Profile profile){
-        this.id = profile == null ? null : profile.getId();
         this.profile = profile;
+        this.user_id = profile.getId();
+    }
+
+    public long getUser_id() {
+        return user_id;
     }
 
     public String getVerificationCode() {
@@ -35,20 +35,29 @@ public class AccountVerification {
         this.verificationCode = verificationCode;
     }
 
+    public LocalDateTime getCreatedOn() {
+        return createdOn;
+    }
+
     public Profile getProfile() {
         return profile;
     }
+
+    @OneToOne
+    @MapsId
+    private Profile profile;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AccountVerification that = (AccountVerification) o;
-        return Objects.equals(id, that.id);
+        return user_id == that.user_id &&
+                Objects.equals(profile, that.profile);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(user_id, profile);
     }
 }
