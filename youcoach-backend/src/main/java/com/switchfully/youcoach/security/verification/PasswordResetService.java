@@ -7,6 +7,7 @@ import com.switchfully.youcoach.security.verification.api.PasswordChangeResultDt
 import com.switchfully.youcoach.security.verification.api.PasswordResetRequestDto;
 import com.switchfully.youcoach.email.EmailSenderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -26,11 +27,13 @@ public class PasswordResetService {
     private final Environment environment;
     private final VerificationService verificationService;
     private final TemplateEngine templateEngine;
+    private String activeProfiles;
 
     @Autowired
     public PasswordResetService(PasswordEncoder passwordEncoder, ProfileRepository profileRepository,
                                 EmailSenderService emailSenderService, Environment environment,
-                                VerificationService verificationService, TemplateEngine templateEngine){
+                                VerificationService verificationService, TemplateEngine templateEngine,
+                                @Value("${spring.profiles.active}") String activeProfiles){
 
         this.passwordEncoder = passwordEncoder;
         this.profileRepository = profileRepository;
@@ -38,10 +41,11 @@ public class PasswordResetService {
         this.environment = environment;
         this.verificationService = verificationService;
         this.templateEngine = templateEngine;
+        this.activeProfiles = activeProfiles;
     }
 
     public void requestPasswordReset(PasswordResetRequestDto request) {
-        if(!verificationService.isSigningAndVerifyingAvailable()) return;
+        if(!verificationService.isSigningAndVerifyingAvailable() || activeProfiles.contains("development")) return;
 
         Optional<Profile> userOpt = profileRepository.findByEmail(request.getEmail());
         userOpt.ifPresent(user -> {
@@ -70,7 +74,7 @@ public class PasswordResetService {
     }
 
 
-    public void sendResetEmail(Profile profile) throws MessagingException {
+    private void sendResetEmail(Profile profile) throws MessagingException {
         String subject = environment.getProperty("app.passwordreset.subject");
         String from = environment.getProperty("app.passwordreset.sender");
 
