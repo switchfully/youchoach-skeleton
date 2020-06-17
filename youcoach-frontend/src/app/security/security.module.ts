@@ -14,6 +14,7 @@ import {AuthenticationInterceptor} from "./services/authentication/authenticatio
 import {ValidateAccountComponent} from "./validate-account/validate-account.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {TranslateModule} from "@ngx-translate/core";
+import {RouterModule} from "@angular/router";
 
 
 @NgModule({
@@ -30,6 +31,7 @@ import {TranslateModule} from "@ngx-translate/core";
     RegistrationSuccessComponent
   ],
   imports: [
+    RouterModule,
     ReactiveFormsModule,
     TranslateModule,
     CommonModule,

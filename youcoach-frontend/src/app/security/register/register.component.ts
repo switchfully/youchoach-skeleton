@@ -63,7 +63,7 @@ export class RegisterComponent implements OnInit {
           this.emailErrorMessage = err.error.message;
         }
         if (!this.emailExistsError) {
-          this.router.navigateByUrl('/profile');
+          this.router.navigateByUrl('/coachee/profile');
         }
       });
   }
