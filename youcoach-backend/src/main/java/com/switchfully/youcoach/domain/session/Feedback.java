@@ -1,22 +1,29 @@
 package com.switchfully.youcoach.domain.session;
 
+import javax.persistence.Embeddable;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+
+@Embeddable
 public class Feedback {
-    private String feedback;
+    @Enumerated(EnumType.STRING)
+    private Score onTime;
+    private String freeText;
 
-    public Feedback(String feedback) {
-        this.feedback = feedback;
+    public Feedback(Score onTime, String freeText) {
+        this.onTime = onTime;
+        this.freeText = freeText;
     }
 
-    public Feedback(){
+    private Feedback(){
 
     }
 
-    public String getFeedback() {
-        return feedback;
+    public String getFreeText() {
+        return freeText;
     }
 
-    public Feedback setFeedback(String feedback) {
-        this.feedback = feedback;
-        return this;
+    public Score getOnTime() {
+        return onTime;
     }
 }

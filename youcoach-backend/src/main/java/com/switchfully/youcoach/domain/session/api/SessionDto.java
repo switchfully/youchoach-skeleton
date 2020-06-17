@@ -1,5 +1,6 @@
 package com.switchfully.youcoach.domain.session.api;
 
+import com.switchfully.youcoach.domain.session.Feedback;
 import com.switchfully.youcoach.domain.session.Status;
 
 import java.util.Objects;
@@ -15,13 +16,13 @@ public class SessionDto {
     private Person coachee;
     private Status status;
     private String feedback;
-    private String coachFeedback;
+    private FeedbackDto coachFeedback;
 
 
     public SessionDto() {
     }
 
-    public SessionDto(long id, String subject, String date, String time, String location, String remarks, Person coach, Person coachee, Status status, String feedback, String coachFeedback) {
+    public SessionDto(long id, String subject, String date, String time, String location, String remarks, Person coach, Person coachee, Status status, String feedback, FeedbackDto coachFeedback) {
         this.id = id;
         this.subject = subject;
         this.date = date;
@@ -67,7 +68,7 @@ public class SessionDto {
         return feedback;
     }
 
-    public String getCoachFeedback() {
+    public FeedbackDto getCoachFeedback() {
         return coachFeedback;
     }
 

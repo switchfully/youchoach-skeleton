@@ -8,6 +8,14 @@
           <table class="highlight">
             <tbody>
             <tr>
+              <td><strong translate>session-detail.label.coach</strong></td>
+              <td>{{session.coach.name}}</td>
+            </tr>
+            <tr>
+              <td><strong translate>session-detail.label.coachee</strong></td>
+              <td>{{session.coachee.name}}</td>
+            </tr>
+            <tr>
               <td><strong translate>session-detail.label.subject</strong></td>
               <td>{{session.subject}}</td>
             </tr>
@@ -33,51 +41,112 @@
       </div>
 
       <div class="row right-align">
-        <a *ngIf="coach && session.isRequested()" style="margin-right: 30px" class="waves-effect waves-light lighten-2 btn black-text green" (click)="acceptSession(session)" translate>coaching-sessions.button.accept<i class="material-icons right">assignment_turned_in</i></a>
-        <a *ngIf="session.isAccepted()" style="margin-right: 30px" class="waves-effect waves-light lighten-2 btn black-text green" (click)="finishSession(session)" translate>coaching-sessions.button.finish-session<i class="material-icons right">check</i></a>
-        <a *ngIf="!coach && session.canCancel()" style="margin-right: 30px" class="waves-effect waves-light lighten-2 btn black-text red" (click)="cancelSession(session)" translate>coaching-sessions.button.cancel<i class="material-icons right">cancel</i></a>
-        <a *ngIf="coach && session.canCancel()" style="margin-right: 30px" class="waves-effect waves-light lighten-2 btn black-text red" (click)="declineSession(session)" translate>coaching-sessions.button.decline<i class="material-icons right">cancel</i></a>
+        <a *ngIf="coach && session.isRequested()" style="margin-right: 30px"
+           class="waves-effect waves-light lighten-2 btn black-text green" (click)="acceptSession(session)" translate>coaching-sessions.button.accept<i
+          class="material-icons right">assignment_turned_in</i></a>
+        <a *ngIf="session.isAccepted()" style="margin-right: 30px"
+           class="waves-effect waves-light lighten-2 btn black-text green" (click)="finishSession(session)" translate>coaching-sessions.button.finish-session<i
+          class="material-icons right">check</i></a>
+        <a *ngIf="!coach && session.canCancel()" style="margin-right: 30px"
+           class="waves-effect waves-light lighten-2 btn black-text red" (click)="cancelSession(session)" translate>coaching-sessions.button.cancel<i
+          class="material-icons right">cancel</i></a>
+        <a *ngIf="coach && session.canCancel()" style="margin-right: 30px"
+           class="waves-effect waves-light lighten-2 btn black-text red" (click)="declineSession(session)" translate>coaching-sessions.button.decline<i
+          class="material-icons right">cancel</i></a>
       </div>
     </section>
-    <section *ngIf="session" class="card-panel grey lighten-5">
+    <section *ngIf="session && session.isWaitingForFeedback()" class="card-panel grey lighten-5">
       <h5 translate>session-detail.title.feedback</h5>
       <div class="divider"></div>
-      <div class="row" *ngIf="session.isWaitingForFeedback()">
+      <div class="row">
 
         <form *ngIf="!coach" class="col s12" [formGroup]="feedbackForm" (ngSubmit)="sendFeedback(feedbackForm.value)">
           <div class="row">
             <div class="input-field col s12">
-              <textarea id="feedback" class="materialize-textarea validate" required formControlName="feedback"></textarea>
+              <textarea id="feedback" class="materialize-textarea validate" required
+                        formControlName="freeText"></textarea>
               <label for="feedback" translate>session-detail.label.feedback</label>
             </div>
           </div>
-          <div class="row right-align"><button type="submit" class="waves-effect waves-light lighten-2 btn black-text orange" translate>session-detail.button.provide-feedback<i class="material-icons right">assignment</i></button>
+
+          <div class="row right-align">
+            <button type="submit" class="waves-effect waves-light lighten-2 btn black-text orange" translate>
+              session-detail.button.provide-feedback<i class="material-icons right">assignment</i></button>
           </div>
         </form>
 
         <form *ngIf="coach" class="col s12" [formGroup]="feedbackForm" (ngSubmit)="sendFeedbackAsCoach(feedbackForm.value)">
           <div class="row">
-            <div class="input-field col s12">
-              <textarea id="feedbackCoach" class="materialize-textarea validate" required formControlName="feedback"></textarea>
-              <label for="feedbackCoach" translate>session-detail.label.coach-feedback</label>
-            </div>
+            <table class="striped">
+              <tbody>
+              <tr>
+                <td><strong translate>Was the coachee on time at the coaching session?</strong></td>
+                <td>
+                  <label for="on-time-ok">
+                    <input id="on-time-ok" formControlName="onTime" name="onTime" type="radio" value="OK" required/>
+                    <span><i class="material-icons right yellow-text text-darken-1 medium">sentiment_neutral</i></span>
+                  </label>
+                  <label for="on-time-better">
+                    <input id="on-time-better" formControlName="onTime" name="onTime" type="radio" value="GOOD" required/>
+                    <span><i class="material-icons right orange-text text-darken-1 medium">sentiment_satisfied</i></span>
+                  </label>
+                  <label for="on-time-perfect">
+                    <input id="on-time-perfect" formControlName="onTime" name="onTime" type="radio" value="SUPER" required/>
+                    <span><i class="material-icons right green-text medium">sentiment_very_satisfied</i></span>
+                  </label>
+                </td>
+              </tr>
+              <tr>
+                <td colspan="2">
+                  <label for="coachfeedback" translate>session-detail.label.coach-free-text</label>
+                  <textarea id="coachfeedback" class="materialize-textarea validate" formControlName="freeText"></textarea>
+                </td>
+              </tr>
+              </tbody>
+            </table>
           </div>
-          <div class="row right-align"><button type="submit" class="waves-effect waves-light lighten-2 btn black-text orange" translate>session-detail.button.provide-feedback<i class="material-icons right">assignment</i></button>
+          <div class="row right-align">
+            <button [disabled]="!feedbackForm.valid" type="submit" class="waves-effect waves-light lighten-2 btn black-text orange" translate>session-detail.button.provide-feedback<i class="material-icons right">assignment</i></button>
           </div>
         </form>
       </div>
 
+    </section>
+    <section *ngIf="session && session.coachFeedback" class="card-panel grey lighten-5">
+      <h5 translate>session-detail.title.feedback-coach</h5>
+      <div class="divider"></div>
       <div class="row">
         <div class="col l12 m12 s12">
           <table class="highlight">
             <tbody>
-            <tr *ngIf="session.feedback">
-              <td><strong translate>session-detail.label.feedback</strong></td>
-              <td>{{session.feedback}}</td>
+            <tr>
+              <td><strong translate>session-detail.label.coachee-on-time</strong></td>
+              <td>
+                <i *ngIf="session.coachFeedback.onTime === 'OK'" class="material-icons orange-text text-darken-1 medium" title="semi ok">sentiment_neutral</i>
+                <i *ngIf="session.coachFeedback.onTime === 'GOOD'" class="material-icons orange-text text-darken-1 medium" title="semi ok">sentiment_satisfied</i>
+                <i *ngIf="session.coachFeedback.onTime === 'SUPER'" class="material-icons orange-text text-darken-1 medium" title="semi ok">sentiment_very_satisfied</i>
+              </td>
             </tr>
             <tr *ngIf="session.coachFeedback">
-              <td><strong translate>session-detail.label.coach-feedback</strong></td>
-              <td>{{session.coachFeedback}}</td>
+              <td><strong translate>session-detail.label.coach-free-text</strong></td>
+              <td>{{session.coachFeedback.freeText}}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section *ngIf="session && session.feedback" class="card-panel grey lighten-5">
+      <h5 translate>session-detail.title.feedback-coachee</h5>
+      <div class="divider"></div>
+      <div class="row">
+        <div class="col l12 m12 s12">
+          <table class="highlight">
+            <tbody>
+            <tr>
+              <td><strong translate>session-detail.label.coachee-free-text</strong></td>
+              <td>{{session.feedback}}</td>
             </tr>
             </tbody>
           </table>

@@ -1,6 +1,7 @@
 package com.switchfully.youcoach.domain.session;
 
 import com.switchfully.youcoach.domain.session.api.CreateSessionDto;
+import com.switchfully.youcoach.domain.session.api.FeedbackDto;
 import com.switchfully.youcoach.domain.session.api.UpdateStatusDto;
 import com.switchfully.youcoach.domain.session.api.SessionDto;
 import com.switchfully.youcoach.domain.session.exception.SessionNotFoundException;
@@ -84,7 +85,7 @@ public class SessionController {
 
     @PostMapping(path = "/{id}/feedbackAsCoach", produces = "application/json", consumes = "application/json")
     @ResponseStatus(HttpStatus.CREATED)
-    public SessionDto giveSessionFeedbackAsCoach(@PathVariable("id") Long sessionId, @RequestBody Feedback feedback) {
+    public SessionDto giveSessionFeedbackAsCoach(@PathVariable("id") Long sessionId, @RequestBody FeedbackDto feedback) {
         LOGGER.info("updating session status");
         return sessionService.provideSessionFeedbackAsCoach(sessionId, feedback);
     }

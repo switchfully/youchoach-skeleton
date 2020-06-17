@@ -22,10 +22,13 @@ export class SessionDetailComponent implements OnInit {
     this.coach = this.route.snapshot['_routerState'].url.indexOf('/coach/') !== -1;
     let sessionId = +this.route.snapshot.paramMap.get('id');
     this.feedbackForm = this.formBuilder.group({
-      feedback: ""
+      freeText: "",
+      onTime: ""
     });
+
     this.sessionService.getSession(sessionId).subscribe(session => {
       this.session = session;
+      this.feedbackForm.patchValue(session.coachFeedback);
     });
   }
 
@@ -65,7 +68,6 @@ export class SessionDetailComponent implements OnInit {
   sendFeedbackAsCoach(feedback) {
     this.sessionService.sendFeedbackAsCoach(this.session.id, feedback).subscribe(
       session => {
-        this.feedbackForm.reset();
         this.session = session;
       },
       _ => alert('Updating status failed!'));

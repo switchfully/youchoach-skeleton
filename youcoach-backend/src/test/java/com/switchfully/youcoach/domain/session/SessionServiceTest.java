@@ -4,6 +4,7 @@ import com.switchfully.youcoach.domain.profile.Profile;
 import com.switchfully.youcoach.domain.coach.Coach;
 import com.switchfully.youcoach.domain.coach.CoachRepository;
 import com.switchfully.youcoach.domain.profile.ProfileRepository;
+import com.switchfully.youcoach.domain.session.api.FeedbackMapper;
 import com.switchfully.youcoach.domain.session.api.SessionMapper;
 import com.switchfully.youcoach.domain.session.api.CreateSessionDto;
 import com.switchfully.youcoach.domain.session.api.SessionDto;
@@ -24,12 +25,13 @@ class SessionServiceTest {
 
     private Session session = new Session("Mathematics", LocalDateTime.now(), "school", "no remarks", new Profile(1L, null, null, null, null), null);
     private CreateSessionDto createSessionDto = new CreateSessionDto("Mathematics", "30/05/2020", "11:50", "school", "no remarks", 1L);
-    private SessionDto sessionDto = new SessionDto(1L, "Mathematics", "30/05/2020", "11:50", "school", "no remarks", new SessionDto.Person(1L, "Name"), new SessionDto.Person(2L, "Name"), Status.REQUESTED, session.getFeedback(), session.getCoachFeedback());
+    private SessionDto sessionDto = new SessionDto(1L, "Mathematics", "30/05/2020", "11:50", "school", "no remarks", new SessionDto.Person(1L, "Name"), new SessionDto.Person(2L, "Name"), Status.REQUESTED, session.getFeedback(), null);
     private SessionRepository sessionRepository = mock(SessionRepository.class);
     private SessionMapper sessionMapper = mock(SessionMapper.class);
     private CoachRepository coachRepository = mock(CoachRepository.class);
     private ProfileRepository profileRepository = mock(ProfileRepository.class);
-    private SessionService sessionService = new SessionService(sessionRepository, sessionMapper, coachRepository, profileRepository);
+    private FeedbackMapper feedbackMapper = mock(FeedbackMapper.class);
+    private SessionService sessionService = new SessionService(sessionRepository, sessionMapper, coachRepository, profileRepository, feedbackMapper);
 
     @Test
     @Sql({"classpath:/oneDefaultUser.sql", "classpath:/makeUsersCoach.sql"})

@@ -6,7 +6,8 @@
       <table class="highlight responsive-table">
         <thead>
         <tr>
-          <th translate>coaching-sessions.label.coach</th>
+          <th *ngIf="!coach" translate>coaching-sessions.label.coach</th>
+          <th *ngIf="coach" translate>coaching-sessions.label.coachee</th>
           <th translate>coaching-sessions.label.topic</th>
           <th translate>request-session.label.date</th>
           <th translate>request-session.label.time</th>
@@ -17,7 +18,8 @@
         </thead>
         <tbody *ngIf="sessions">
         <tr *ngFor="let session of sessions | FilterSessionsOnStatus:statusType">
-          <td>{{session.coach.name}}</td>
+          <td *ngIf="!coach">{{session.coach.name}}</td>
+          <td *ngIf="coach">{{session.coachee.name}}</td>
           <td>{{session.subject}}</td>
           <td>{{session.date}}</td>
           <td>{{session.time}}</td>

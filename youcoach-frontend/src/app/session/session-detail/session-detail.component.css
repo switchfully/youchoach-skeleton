@@ -1,0 +1,25 @@
+[type="radio"] + span:after,
+[type="radio"] + span:before {
+  display: none;
+}
+
+[type="radio"] + span {
+  height: 100%;
+  padding: 0;
+}
+
+[type="radio"]:not(:checked) + span i {
+  opacity: 0.5;
+  border-radius: 100%;
+  border: 5px solid rgba(255,255,255,.5);
+  transition-duration: 0s;
+}
+
+[type="radio"]:checked + span i,
+[type="radio"]:hover + span i
+{
+  border: 5px solid red;
+  border-radius: 100%;
+  opacity: 1;
+  transition-duration: 0.5s;
+}

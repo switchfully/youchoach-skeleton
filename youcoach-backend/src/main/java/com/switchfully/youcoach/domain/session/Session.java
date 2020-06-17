@@ -35,8 +35,12 @@ public class Session {
     private Status status;
     @Column(name = "feedback")
     private String feedback;
-    @Column(name = "coach_feedback")
-    private String coachFeedback;
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name="freeText", column = @Column(name = "coach_feedback_free_text")),
+            @AttributeOverride(name="onTime", column = @Column(name = "coach_feedback_on_time"))
+    })
+    private Feedback coachFeedback;
 
     private Session() {
     }
@@ -87,7 +91,7 @@ public class Session {
         return feedback;
     }
 
-    public String getCoachFeedback() {
+    public Feedback getCoachFeedback() {
         return coachFeedback;
     }
 
@@ -120,12 +124,12 @@ public class Session {
     }
 
     public void provideFeedback(Feedback feedback) {
-        this.feedback = feedback.getFeedback();
+        this.feedback = feedback.getFreeText();
         updateIfBothHaveFilledInFeedback();
     }
 
     public void provideFeedbackAsCoach(Feedback feedback) {
-        this.coachFeedback = feedback.getFeedback();
+        this.coachFeedback = feedback;
         updateIfBothHaveFilledInFeedback();
     }
 

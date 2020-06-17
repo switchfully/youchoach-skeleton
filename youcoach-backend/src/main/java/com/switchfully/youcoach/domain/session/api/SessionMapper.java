@@ -14,6 +14,12 @@ import java.util.stream.Collectors;
 @Component
 public class SessionMapper {
 
+    private FeedbackMapper feedbackMapper;
+
+    public SessionMapper(FeedbackMapper feedbackMapper) {
+        this.feedbackMapper = feedbackMapper;
+    }
+
     public Session toModel(CreateSessionDto createSessionDto, Profile coach, Profile coachee) {
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy H:mm");
         LocalDateTime dateTime = LocalDateTime.parse(createSessionDto.getDate() + " " + createSessionDto.getTime(), dateTimeFormatter);
@@ -40,7 +46,7 @@ public class SessionMapper {
                 extractPerson(session.getCoachee()),
                 session.getStatus(),
                 session.getFeedback(),
-                session.getCoachFeedback()
+                feedbackMapper.toDto(session.getCoachFeedback())
         );
     }
 

@@ -4,12 +4,9 @@ import com.switchfully.youcoach.domain.coach.Coach;
 import com.switchfully.youcoach.domain.profile.Profile;
 import com.switchfully.youcoach.domain.coach.CoachRepository;
 import com.switchfully.youcoach.domain.profile.ProfileRepository;
-import com.switchfully.youcoach.domain.session.api.CreateSessionDto;
-import com.switchfully.youcoach.domain.session.api.UpdateStatusDto;
+import com.switchfully.youcoach.domain.session.api.*;
 import com.switchfully.youcoach.domain.coach.exception.CoachNotFoundException;
 import com.switchfully.youcoach.domain.profile.exception.ProfileNotFoundException;
-import com.switchfully.youcoach.domain.session.api.SessionDto;
-import com.switchfully.youcoach.domain.session.api.SessionMapper;
 import com.switchfully.youcoach.domain.session.exception.SessionNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,14 +22,15 @@ public class SessionService {
     private final SessionMapper sessionMapper;
     private final CoachRepository coachRepository;
     private final ProfileRepository profileRepository;
-
+    private FeedbackMapper feedbackMapper;
 
     @Autowired
-    public SessionService(SessionRepository sessionRepository, SessionMapper sessionMapper, CoachRepository coachRepository, ProfileRepository profileRepository) {
+    public SessionService(SessionRepository sessionRepository, SessionMapper sessionMapper, CoachRepository coachRepository, ProfileRepository profileRepository, FeedbackMapper feedbackMapper) {
         this.sessionRepository = sessionRepository;
         this.sessionMapper = sessionMapper;
         this.coachRepository = coachRepository;
         this.profileRepository = profileRepository;
+        this.feedbackMapper = feedbackMapper;
     }
 
 
@@ -102,9 +100,9 @@ public class SessionService {
                 .orElseThrow(() -> new SessionNotFoundException("Id: " + sessionId));
     }
 
-    public SessionDto provideSessionFeedbackAsCoach(Long sessionId, Feedback feedback) {
+    public SessionDto provideSessionFeedbackAsCoach(Long sessionId, FeedbackDto feedback) {
         Session session = getSessionFromDatabase(sessionId);
-        session.provideFeedbackAsCoach(feedback);
+        session.provideFeedbackAsCoach(feedbackMapper.toModel(feedback));
         return sessionMapper.toDto(session);
     }
 }

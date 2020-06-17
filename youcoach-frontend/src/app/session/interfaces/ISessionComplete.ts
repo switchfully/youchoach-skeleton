@@ -8,7 +8,10 @@ export class ISessionComplete {
   location: string;
   remarks: string;
   feedback: string;
-  coachFeedback: string;
+  coachFeedback: {
+    freeText: string,
+    onTime: string
+  };
   status: Status;
 
   isDone(): boolean {

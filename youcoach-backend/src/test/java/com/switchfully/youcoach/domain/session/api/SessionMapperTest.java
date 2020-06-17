@@ -11,7 +11,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class SessionMapperTest {
-    private final SessionMapper sessionMapper = new SessionMapper();
+    private final SessionMapper sessionMapper = new SessionMapper(new FeedbackMapper());
 
     private Profile getDefaultUser() {
         return new Profile(1,"First","Last",
@@ -43,7 +43,7 @@ public class SessionMapperTest {
         Session input = new Session("subject", dateTime,"Cafeteria","Bring food",coach, coachee);
         SessionDto expected = new SessionDto(0L,ccsd.getSubject(),ccsd.getDate(),ccsd.getTime(),ccsd.getLocation(),
                 ccsd.getRemarks(),new SessionDto.Person(1L, "First Last"),
-                new SessionDto.Person(1L,"First Last"),Status.REQUESTED, "", "");
+                new SessionDto.Person(1L,"First Last"),Status.REQUESTED, "", null);
 
         SessionDto actual = sessionMapper.toDto(input);
 
@@ -61,7 +61,7 @@ public class SessionMapperTest {
                 "Bring food",coach, coachee));
         List<SessionDto> expected = List.of(new SessionDto(0L,ccsd.getSubject(),ccsd.getDate(),ccsd.getTime(),ccsd.getLocation(),
                 ccsd.getRemarks(),new SessionDto.Person(1L, "First Last"),
-                new SessionDto.Person(1L,"First Last"),Status.REQUESTED, "", ""));
+                new SessionDto.Person(1L,"First Last"),Status.REQUESTED, "", null));
 
         List<SessionDto> actual = sessionMapper.toDto(input);
 
