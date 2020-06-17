@@ -7,11 +7,19 @@ public class CoacheeFeedback {
 
     @Enumerated(EnumType.STRING)
     private Score onTime;
-    private String freeText;
+    @Enumerated(EnumType.STRING)
+    private Score clearExplanation;
+    @Enumerated(EnumType.STRING)
+    private Score usefulSession;
+    private String whatDidYouLike;
+    private String howCanCoachGetBetter;
 
-    public CoacheeFeedback(Score onTime, String freeText) {
+    public CoacheeFeedback(Score onTime, Score clearExplanation, Score usefulSession, String whatDidYouLike, String howCanCoachGetBetter) {
         this.onTime = onTime;
-        this.freeText = freeText;
+        this.clearExplanation = clearExplanation;
+        this.usefulSession = usefulSession;
+        this.whatDidYouLike = whatDidYouLike;
+        this.howCanCoachGetBetter = howCanCoachGetBetter;
     }
 
     private CoacheeFeedback() {
@@ -21,7 +29,19 @@ public class CoacheeFeedback {
         return onTime;
     }
 
-    public String getFreeText() {
-        return freeText;
+    public Score getClearExplanation() {
+        return clearExplanation;
+    }
+
+    public Score getUsefulSession() {
+        return usefulSession;
+    }
+
+    public String getWhatDidYouLike() {
+        return whatDidYouLike;
+    }
+
+    public String getHowCanCoachGetBetter() {
+        return howCanCoachGetBetter;
     }
 }

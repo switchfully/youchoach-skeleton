@@ -8,19 +8,39 @@ import javax.persistence.Enumerated;
 public class CoachFeedback {
     @Enumerated(EnumType.STRING)
     private Score onTime;
-    private String freeText;
+    @Enumerated(EnumType.STRING)
+    private Score wellPrepared;
+    @Enumerated(EnumType.STRING)
+    private Score willingToLearn;
+    private String whatDidYouLike;
+    private String howCanCoacheeGetBetter;
 
-    public CoachFeedback(Score onTime, String freeText) {
+    public CoachFeedback(Score onTime, Score wellPrepared, Score willingToLearn, String whatDidYouLike, String howCanCoacheeGetBetter) {
         this.onTime = onTime;
-        this.freeText = freeText;
+        this.wellPrepared = wellPrepared;
+        this.willingToLearn = willingToLearn;
+        this.whatDidYouLike = whatDidYouLike;
+        this.howCanCoacheeGetBetter = howCanCoacheeGetBetter;
     }
 
     private CoachFeedback(){
 
     }
 
-    public String getFreeText() {
-        return freeText;
+    public Score getWellPrepared() {
+        return wellPrepared;
+    }
+
+    public Score getWillingToLearn() {
+        return willingToLearn;
+    }
+
+    public String getWhatDidYouLike() {
+        return whatDidYouLike;
+    }
+
+    public String getHowCanCoacheeGetBetter() {
+        return howCanCoacheeGetBetter;
     }
 
     public Score getOnTime() {

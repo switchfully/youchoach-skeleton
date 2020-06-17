@@ -83,9 +83,49 @@
                   </td>
                 </tr>
                 <tr>
+                  <td><strong translate>session-detail.question.coach-clear-explanation</strong></td>
+                  <td>
+                    <label for="coach-clear-explanation-ok">
+                      <input id="coach-clear-explanation-ok" formControlName="clearExplanation" name="clearExplanation" type="radio" value="OK" required/>
+                      <span><i class="material-icons right yellow-text text-darken-1 medium">sentiment_neutral</i></span>
+                    </label>
+                    <label for="coach-clear-explanation-better">
+                      <input id="coach-clear-explanation-better" formControlName="clearExplanation" name="clearExplanation" type="radio" value="GOOD" required/>
+                      <span><i class="material-icons right orange-text text-darken-1 medium">sentiment_satisfied</i></span>
+                    </label>
+                    <label for="coach-clear-explanation-perfect">
+                      <input id="coach-clear-explanation-perfect" formControlName="clearExplanation" name="clearExplanation" type="radio" value="SUPER" required/>
+                      <span><i class="material-icons right green-text medium">sentiment_very_satisfied</i></span>
+                    </label>
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong translate>session-detail.question.coach-useful-session</strong></td>
+                  <td>
+                    <label for="coach-useful-session-ok">
+                      <input id="coach-useful-session-ok" formControlName="usefulSession" name="usefulSession" type="radio" value="OK" required/>
+                      <span><i class="material-icons right yellow-text text-darken-1 medium">sentiment_neutral</i></span>
+                    </label>
+                    <label for="coach-useful-session-better">
+                      <input id="coach-useful-session-better" formControlName="usefulSession" name="usefulSession" type="radio" value="GOOD" required/>
+                      <span><i class="material-icons right orange-text text-darken-1 medium">sentiment_satisfied</i></span>
+                    </label>
+                    <label for="coach-useful-session-perfect">
+                      <input id="coach-useful-session-perfect" formControlName="usefulSession" name="usefulSession" type="radio" value="SUPER" required/>
+                      <span><i class="material-icons right green-text medium">sentiment_very_satisfied</i></span>
+                    </label>
+                  </td>
+                </tr>
+                <tr>
                   <td colspan="2">
-                    <label for="coacheefeedback" translate>session-detail.label.coachee-free-text</label>
-                    <textarea id="coacheefeedback" class="materialize-textarea validate" formControlName="freeText"></textarea>
+                    <label for="whatDidYouLike" translate>session-detail.question.what-did-you-like</label>
+                    <textarea id="whatDidYouLike" class="materialize-textarea validate" formControlName="whatDidYouLike"></textarea>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="2">
+                    <label for="howCanCoachGetBetter" translate>session-detail.question.how-can-coach-get-better</label>
+                    <textarea id="howCanCoachGetBetter" class="materialize-textarea validate" formControlName="howCanCoachGetBetter"></textarea>
                   </td>
                 </tr>
                 </tbody>
@@ -93,8 +133,13 @@
             </div>
           </div>
 
-          <div class="row right-align">
-            <button type="submit" class="waves-effect waves-light lighten-2 btn black-text orange" translate>session-detail.button.provide-feedback<i class="material-icons right">assignment</i></button>
+          <div class="row">
+            <div class="col s5 offset-l5 right-align">
+              <span *ngIf="session.coacheeFeedback" class="green-text text-darken-2" translate>session-detail.message.coachee-feedback-provided</span>
+            </div>
+            <div class="col s2">
+              <button [disabled]="!coacheeFeedbackForm.valid" type="submit" class="waves-effect waves-light lighten-2 btn black-text orange" translate>session-detail.button.provide-feedback<i class="material-icons right">assignment</i></button>
+            </div>
           </div>
         </form>
 
@@ -120,9 +165,49 @@
                 </td>
               </tr>
               <tr>
+                <td><strong translate>session-detail.question.coach-well-prepared</strong></td>
+                <td>
+                  <label for="well-prepared-ok">
+                    <input id="well-prepared-ok" formControlName="wellPrepared" name="wellPrepared" type="radio" value="OK" required/>
+                    <span><i class="material-icons right yellow-text text-darken-1 medium">sentiment_neutral</i></span>
+                  </label>
+                  <label for="well-prepared-better">
+                    <input id="well-prepared-better" formControlName="wellPrepared" name="wellPrepared" type="radio" value="GOOD" required/>
+                    <span><i class="material-icons right orange-text text-darken-1 medium">sentiment_satisfied</i></span>
+                  </label>
+                  <label for="well-prepared-perfect">
+                    <input id="well-prepared-perfect" formControlName="wellPrepared" name="wellPrepared" type="radio" value="SUPER" required/>
+                    <span><i class="material-icons right green-text medium">sentiment_very_satisfied</i></span>
+                  </label>
+                </td>
+              </tr>
+              <tr>
+                <td><strong translate>session-detail.question.coach-willing-to-learn</strong></td>
+                <td>
+                  <label for="willing-to-learn-ok">
+                    <input id="willing-to-learn-ok" formControlName="willingToLearn" name="willingToLearn" type="radio" value="OK" required/>
+                    <span><i class="material-icons right yellow-text text-darken-1 medium">sentiment_neutral</i></span>
+                  </label>
+                  <label for="willing-to-learn-better">
+                    <input id="willing-to-learn-better" formControlName="willingToLearn" name="willingToLearn" type="radio" value="GOOD" required/>
+                    <span><i class="material-icons right orange-text text-darken-1 medium">sentiment_satisfied</i></span>
+                  </label>
+                  <label for="willing-to-learn-perfect">
+                    <input id="willing-to-learn-perfect" formControlName="willingToLearn" name="willingToLearn" type="radio" value="SUPER" required/>
+                    <span><i class="material-icons right green-text medium">sentiment_very_satisfied</i></span>
+                  </label>
+                </td>
+              </tr>
+              <tr>
                 <td colspan="2">
-                  <label for="coachfeedback" translate>session-detail.label.coach-free-text</label>
-                  <textarea id="coachfeedback" class="materialize-textarea validate" formControlName="freeText"></textarea>
+                  <label for="whatDidYouLikeCoach" translate>session-detail.question.what-did-you-like</label>
+                  <textarea id="whatDidYouLikeCoach" class="materialize-textarea validate" formControlName="whatDidYouLike"></textarea>
+                </td>
+              </tr>
+              <tr>
+                <td colspan="2">
+                  <label for="howCanCoacheeGetBetter" translate>session-detail.question.how-can-coachee-get-better</label>
+                  <textarea id="howCanCoacheeGetBetter" class="materialize-textarea validate" formControlName="howCanCoacheeGetBetter"></textarea>
                 </td>
               </tr>
               </tbody>
@@ -133,59 +218,102 @@
               <span *ngIf="session.coachFeedback" class="green-text text-darken-2" translate>session-detail.message.coach-feedback-provided</span>
             </div>
             <div class="col s2">
-            <button [disabled]="!coachFeedbackForm.valid" type="submit" class="waves-effect waves-light lighten-2 btn black-text orange" translate>session-detail.button.provide-feedback<i class="material-icons right">assignment</i></button>
+              <button [disabled]="!coachFeedbackForm.valid" type="submit" class="waves-effect waves-light lighten-2 btn black-text orange" translate>session-detail.button.provide-feedback<i class="material-icons right">assignment</i></button>
             </div>
           </div>
         </form>
       </div>
     </section>
 
-    <section *ngIf="session && session.coachFeedback" class="card-panel grey lighten-5">
-      <h5 translate>session-detail.title.feedback-coach</h5>
+    <section *ngIf="session && (session.coacheeFeedback || session.coachFeedback)" class="card-panel grey lighten-5">
+      <h5 translate>session-detail.title.feedback-overview</h5>
       <div class="divider"></div>
       <div class="row">
-        <div class="col l12 m12 s12">
+        <div *ngIf="session && session.coachFeedback" class="col s6">
+          <h6 translate>session-detail.title.feedback-coach</h6>
+          <div class="divider"></div>
           <table class="highlight">
             <tbody>
             <tr>
               <td><strong translate>session-detail.question.coachee-on-time</strong></td>
               <td>
-                <i *ngIf="session.coachFeedback.onTime === 'OK'" class="material-icons orange-text text-darken-1 medium">sentiment_neutral</i>
+                <i *ngIf="session.coachFeedback.onTime === 'OK'" class="material-icons yellow-text text-darken-1 medium">sentiment_neutral</i>
                 <i *ngIf="session.coachFeedback.onTime === 'GOOD'" class="material-icons orange-text text-darken-1 medium">sentiment_satisfied</i>
-                <i *ngIf="session.coachFeedback.onTime === 'SUPER'" class="material-icons orange-text text-darken-1 medium">sentiment_very_satisfied</i>
+                <i *ngIf="session.coachFeedback.onTime === 'SUPER'" class="material-icons green-text medium">sentiment_very_satisfied</i>
               </td>
             </tr>
-            <tr *ngIf="session.coachFeedback">
-              <td><strong translate>session-detail.label.coach-free-text</strong></td>
-              <td>{{session.coachFeedback.freeText}}</td>
+            <tr>
+              <td><strong translate>session-detail.question.coach-well-prepared</strong></td>
+              <td>
+                <i *ngIf="session.coachFeedback.wellPrepared === 'OK'" class="material-icons yellow-text text-darken-1 medium">sentiment_neutral</i>
+                <i *ngIf="session.coachFeedback.wellPrepared === 'GOOD'" class="material-icons orange-text text-darken-1 medium">sentiment_satisfied</i>
+                <i *ngIf="session.coachFeedback.wellPrepared === 'SUPER'" class="material-icons green-text medium">sentiment_very_satisfied</i>
+              </td>
+            </tr>
+            <tr>
+              <td><strong translate>session-detail.question.coach-willing-to-learn</strong></td>
+              <td>
+                <i *ngIf="session.coachFeedback.willingToLearn === 'OK'" class="material-icons yellow-text text-darken-1 medium">sentiment_neutral</i>
+                <i *ngIf="session.coachFeedback.willingToLearn === 'GOOD'" class="material-icons orange-text text-darken-1 medium">sentiment_satisfied</i>
+                <i *ngIf="session.coachFeedback.willingToLearn === 'SUPER'" class="material-icons green-text medium">sentiment_very_satisfied</i>
+              </td>
+            </tr>
+            <tr>
+              <td><strong translate>session-detail.question.what-did-you-like</strong></td>
+              <td>{{session.coachFeedback.whatDidYouLike}}</td>
+            </tr>
+            <tr>
+              <td><strong translate>session-detail.question.how-can-coachee-get-better</strong></td>
+              <td>{{session.coachFeedback.howCanCoacheeGetBetter}}</td>
             </tr>
             </tbody>
           </table>
         </div>
-      </div>
-    </section>
-
-    <section *ngIf="session && session.coacheeFeedback" class="card-panel grey lighten-5">
-      <h5 translate>session-detail.title.feedback-coachee</h5>
-      <div class="divider"></div>
-      <div class="row">
-        <div class="col l12 m12 s12">
+        <div *ngIf="!session.coachFeedback" class="col s6 center-align">
+          <p class="grey-text text-darken-1"><strong>No feedback from coach yet!</strong></p>
+        </div>
+        <div *ngIf="session && session.coacheeFeedback" class="col s6">
+          <h6 translate>session-detail.title.feedback-coachee</h6>
+          <div class="divider"></div>
           <table class="highlight">
             <tbody>
             <tr>
               <td><strong translate>session-detail.question.coach-on-time</strong></td>
               <td>
-                <i *ngIf="session.coacheeFeedback.onTime === 'OK'" class="material-icons orange-text text-darken-1 medium">sentiment_neutral</i>
+                <i *ngIf="session.coacheeFeedback.onTime === 'OK'" class="material-icons yellow-text text-darken-1 medium">sentiment_neutral</i>
                 <i *ngIf="session.coacheeFeedback.onTime === 'GOOD'" class="material-icons orange-text text-darken-1 medium">sentiment_satisfied</i>
-                <i *ngIf="session.coacheeFeedback.onTime === 'SUPER'" class="material-icons orange-text text-darken-1 medium">sentiment_very_satisfied</i>
+                <i *ngIf="session.coacheeFeedback.onTime === 'SUPER'" class="material-icons green-text medium">sentiment_very_satisfied</i>
               </td>
             </tr>
             <tr>
-              <td><strong translate>session-detail.label.coachee-free-text</strong></td>
-              <td>{{session.coacheeFeedback.freeText}}</td>
+              <td><strong translate>session-detail.question.coach-clear-explanation</strong></td>
+              <td>
+                <i *ngIf="session.coacheeFeedback.clearExplanation === 'OK'" class="material-icons yellow-text text-darken-1 medium">sentiment_neutral</i>
+                <i *ngIf="session.coacheeFeedback.clearExplanation === 'GOOD'" class="material-icons orange-text text-darken-1 medium">sentiment_satisfied</i>
+                <i *ngIf="session.coacheeFeedback.clearExplanation === 'SUPER'" class="material-icons green-text medium">sentiment_very_satisfied</i>
+              </td>
+            </tr>
+            <tr>
+              <td><strong translate>session-detail.question.coach-useful-session</strong></td>
+              <td>
+                <i *ngIf="session.coacheeFeedback.usefulSession === 'OK'" class="material-icons yellow-text text-darken-1 medium">sentiment_neutral</i>
+                <i *ngIf="session.coacheeFeedback.usefulSession === 'GOOD'" class="material-icons orange-text text-darken-1 medium">sentiment_satisfied</i>
+                <i *ngIf="session.coacheeFeedback.usefulSession === 'SUPER'" class="material-icons green-text medium">sentiment_very_satisfied</i>
+              </td>
+            </tr>
+            <tr>
+              <td><strong translate>session-detail.question.what-did-you-like</strong></td>
+              <td>{{session.coacheeFeedback.whatDidYouLike}}</td>
+            </tr>
+            <tr>
+              <td><strong translate>session-detail.question.how-can-coach-get-better</strong></td>
+              <td>{{session.coacheeFeedback.howCanCoachGetBetter}}</td>
             </tr>
             </tbody>
           </table>
+        </div>
+        <div *ngIf="!session.coacheeFeedback" class="col s6 center-align">
+          <p class="grey-text text-darken-1"><strong>No feedback from coachee yet!</strong></p>
         </div>
       </div>
     </section>

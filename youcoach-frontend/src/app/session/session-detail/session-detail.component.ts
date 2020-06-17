@@ -23,12 +23,18 @@ export class SessionDetailComponent implements OnInit {
     this.coach = this.route.snapshot['_routerState'].url.indexOf('/coach/') !== -1;
     let sessionId = +this.route.snapshot.paramMap.get('id');
     this.coachFeedbackForm = this.formBuilder.group({
-      freeText: "",
-      onTime: ""
+      whatDidYouLike: "",
+      onTime: "",
+      wellPrepared: "",
+      willingToLearn: "",
+      howCanCoacheeGetBetter: ""
     });
     this.coacheeFeedbackForm = this.formBuilder.group({
-      freeText: "",
-      onTime: ""
+      whatDidYouLike: "",
+      howCanCoachGetBetter: "",
+      onTime: "",
+      usefulSession: "",
+      clearExplanation: ""
     });
 
     this.sessionService.getSession(sessionId).subscribe(session => {

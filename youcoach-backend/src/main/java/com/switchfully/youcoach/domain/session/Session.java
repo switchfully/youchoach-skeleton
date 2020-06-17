@@ -37,14 +37,20 @@ public class Session {
 
     @Embedded
     @AttributeOverrides({
-            @AttributeOverride(name="freeText", column = @Column(name = "coachee_feedback_free_text")),
-            @AttributeOverride(name="onTime", column = @Column(name = "coachee_feedback_on_time"))
+            @AttributeOverride(name="onTime", column = @Column(name = "coach_on_time")),
+            @AttributeOverride(name="clearExplanation", column = @Column(name = "coach_clear_explanation")),
+            @AttributeOverride(name="usefulSession", column = @Column(name = "coach_useful_session")),
+            @AttributeOverride(name="whatDidYouLike", column = @Column(name = "coachee_like_what")),
+            @AttributeOverride(name="howCanCoachGetBetter", column = @Column(name = "coach_get_better")),
     })
     private CoacheeFeedback coacheeFeedback;
     @Embedded
     @AttributeOverrides({
-            @AttributeOverride(name="freeText", column = @Column(name = "coach_feedback_free_text")),
-            @AttributeOverride(name="onTime", column = @Column(name = "coach_feedback_on_time"))
+            @AttributeOverride(name="onTime", column = @Column(name = "coachee_on_time")),
+            @AttributeOverride(name="wellPrepared", column = @Column(name = "coachee_well_prepared")),
+            @AttributeOverride(name="willingToLearn", column = @Column(name = "coachee_willing_to_learn")),
+            @AttributeOverride(name="whatDidYouLike", column = @Column(name = "coach_like_what")),
+            @AttributeOverride(name="howCanCoacheeGetBetter", column = @Column(name = "coachee_get_better")),
     })
     private CoachFeedback coachFeedback;
 

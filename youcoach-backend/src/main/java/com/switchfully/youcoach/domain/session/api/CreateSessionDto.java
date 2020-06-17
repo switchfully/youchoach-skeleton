@@ -9,7 +9,7 @@ public class CreateSessionDto {
     private String location;
     private String remarks;
     private Long coachId;
-    private String feedback;
+    private String coacheeFeedback;
     private String coachFeedback;
 
     public CreateSessionDto() {
@@ -48,8 +48,8 @@ public class CreateSessionDto {
         return coachId;
     }
 
-    public String getFeedback() {
-        return feedback;
+    public String getCoacheeFeedback() {
+        return coacheeFeedback;
     }
 
     public String getCoachFeedback() {

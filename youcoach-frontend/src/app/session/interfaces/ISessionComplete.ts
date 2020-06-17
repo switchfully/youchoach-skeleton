@@ -8,11 +8,17 @@ export class ISessionComplete {
   location: string;
   remarks: string;
   coacheeFeedback: {
-    freeText: string,
+    usefulSession: string,
+    clearExplanation: string,
+    whatDidYouLike: string;
+    howCanCoachGetBetter: string,
     onTime: string
   };
   coachFeedback: {
-    freeText: string,
+    wellPrepared: string,
+    willingToLearn: string
+    whatDidYouLike: string,
+    howCanCoacheeGetBetter: string,
     onTime: string
   };
   status: Status;
