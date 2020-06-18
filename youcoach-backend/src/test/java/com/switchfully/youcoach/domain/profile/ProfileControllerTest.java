@@ -100,7 +100,7 @@ class ProfileControllerTest {
                 .andReturn()
                 .getResponse()
                 .getContentAsString();
-        String expected = "{\"id\":1,\"firstName\":\"First\",\"lastName\":\"Last\",\"email\":\"example@example.com\",\"classYear\":\"1 - latin\",\"photoUrl\":\"/my/photo.png\"}";
+        String expected = "{\"id\":20,\"firstName\":\"First\",\"lastName\":\"Last\",\"email\":\"example@example.com\",\"classYear\":\"1 - latin\",\"photoUrl\":\"/my/photo.png\"}";
         JSONAssert.assertEquals(expected, actualResult, true);
     }
 
@@ -110,7 +110,7 @@ class ProfileControllerTest {
         UsernamePasswordAuthenticationToken user = new UsernamePasswordAuthenticationToken("example@example.com", null, List.of(UserRoles.ROLE_ADMIN));
         String token = securedUserService.generateJwtToken(user);
 
-        String actualResult = mockMvc.perform(get("/users/profile/1")
+        String actualResult = mockMvc.perform(get("/users/profile/20")
                 .header("Authorization", "Bearer " + token)
                 .with(csrf())
                 .accept("application/json;charset=UTF-8")
@@ -119,7 +119,7 @@ class ProfileControllerTest {
                 .andReturn()
                 .getResponse()
                 .getContentAsString();
-        String expected = "{\"id\":1,\"firstName\":\"First\",\"lastName\":\"Last\",\"email\":\"example@example.com\",\"classYear\":\"1 - latin\",\"photoUrl\":\"/my/photo.png\"}";
+        String expected = "{\"id\":20,\"firstName\":\"First\",\"lastName\":\"Last\",\"email\":\"example@example.com\",\"classYear\":\"1 - latin\",\"photoUrl\":\"/my/photo.png\"}";
         JSONAssert.assertEquals(expected, actualResult, true);
     }
 
@@ -138,7 +138,7 @@ class ProfileControllerTest {
                 .withPhotoUrl("/my/photo.png")
                 .withFirstName("First")
                 .withLastName("Last")
-                .withId(1L)
+                .withId(20L)
                 .withClassYear("1 - latin");
         String expected = new ObjectMapper().writeValueAsString(expectedDto);
 

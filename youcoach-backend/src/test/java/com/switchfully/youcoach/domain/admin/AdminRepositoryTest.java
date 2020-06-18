@@ -22,7 +22,7 @@ public class AdminRepositoryTest {
     }
 
     private Profile getDefaultUser() {
-        return new Profile(1L, "First", "Last", "example@example.com",
+        return new Profile(20L, "First", "Last", "example@example.com",
                 "1Lpassword", "1 - latin","/my/photo.png");
     }
 
@@ -47,7 +47,7 @@ public class AdminRepositoryTest {
         Profile profile = getDefaultUser();
         Admin expected = new Admin(profile);
 
-        Optional<Admin> admin = adminRepository.findById(1L);
+        Optional<Admin> admin = adminRepository.findById(20L);
 
         Assertions.assertThat(admin).isInstanceOf(Optional.class).containsInstanceOf(Admin.class)
                 .contains(expected);
@@ -71,9 +71,9 @@ public class AdminRepositoryTest {
     @Sql("classpath:oneDefaultUser.sql")
     @Sql("classpath:makeUsersAdmin.sql")
     public void deleteAdminRights(){
-        adminRepository.deleteById(1L);
+        adminRepository.deleteById(20L);
 
-        Assertions.assertThat(adminRepository.findById(1L)).isEmpty();
+        Assertions.assertThat(adminRepository.findById(20L)).isEmpty();
     }
 
 

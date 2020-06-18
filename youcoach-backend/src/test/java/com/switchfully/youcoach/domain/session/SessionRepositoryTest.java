@@ -45,8 +45,8 @@ class SessionRepositoryTest {
     @Test
     @Sql({"classpath:oneDefaultUser.sql", "classpath:anotherDefaultUser.sql"})
     void findAllByEmail() {
-        Profile coach = new Profile(1L, "firstName", "lastName", "firstName@mail.com", "password");
-        Profile coachee = new Profile(2L, "firstName", "lastName", "firstName@mail.com", "password");
+        Profile coach = new Profile(20L, "firstName", "lastName", "firstName@mail.com", "password");
+        Profile coachee = new Profile(21L, "firstName", "lastName", "firstName@mail.com", "password");
         Session session = new Session("Mathematics", LocalDateTime.now().plusDays(1), "school", "no remarks", coach, coachee);
         sessionRepository.save(session);
 

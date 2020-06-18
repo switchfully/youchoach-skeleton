@@ -84,8 +84,7 @@ class SessionControllerTest {
     void createCoachingSession() throws Exception {
         Principal mockPrincipal = mock(Principal.class);
         when(mockPrincipal.getName()).thenReturn("example2@example.com");
-        CreateSessionDto createSessionDto = new CreateSessionDto("Mathematics", "30/05/2020", "11:50", "school", "no remarks", 1L);
-        SessionDto sessionDto = new SessionDto(1L, "Mathematics", "30/05/2020", "11:50", "school", "no remarks", new SessionDto.Person(1L, "First Last"), new SessionDto.Person(2L, "First Last"), Status.REQUESTED, null, null);
+        CreateSessionDto createSessionDto = new CreateSessionDto("Mathematics", "30/05/2020", "11:50", "school", "no remarks", 20L);
         String actualResult =
                 mockMvc.perform(post("/coaching-sessions")
                         .principal(mockPrincipal)
@@ -96,6 +95,7 @@ class SessionControllerTest {
                         .andReturn()
                         .getResponse()
                         .getContentAsString();
+        SessionDto sessionDto = new SessionDto(1L, "Mathematics", "30/05/2020", "11:50", "school", "no remarks", new SessionDto.Person(20L, "First Last"), new SessionDto.Person(21L, "First Last"), Status.REQUESTED, null, null);
         String expected = new ObjectMapper().writeValueAsString(sessionDto);
         JSONAssert.assertEquals(expected, actualResult, true);
     }

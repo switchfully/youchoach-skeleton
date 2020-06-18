@@ -29,7 +29,7 @@ class ProfileRepositoryTest {
 
     @Test
     void saveAUser() {
-        Profile profile = new Profile(1L, "Test", "Service", "test@ehb.be", "test123");
+        Profile profile = new Profile(20L, "Test", "Service", "test@ehb.be", "test123");
         profileRepository.save(profile);
         Profile actualProfile = profileRepository.findById(profile.getId()).get();
         assertThat(actualProfile.getId()).isEqualTo(profile.getId());
@@ -38,9 +38,9 @@ class ProfileRepositoryTest {
     @Test
     @Sql("classpath:oneDefaultUser.sql")
     void retrieveProfile(){
-        Profile expected = new Profile(1L, "First", "Last","example@example.com",
+        Profile expected = new Profile(20L, "First", "Last","example@example.com",
                 "1Lpassword","1 - Latin","/my/photo.png");
-        Profile actual = profileRepository.findById(1L).get();
+        Profile actual = profileRepository.findById(20L).get();
         Assertions.assertThat(actual).isEqualTo(expected);
     }
 
@@ -69,7 +69,7 @@ class ProfileRepositoryTest {
     void findByEmail(){
         assertThat(profileRepository.findByEmail("example@example.com")).isInstanceOf(Optional.class);
         assertThat(profileRepository.findByEmail("example@example.com")).containsInstanceOf(Profile.class);
-        assertThat(profileRepository.findByEmail("example@example.com").get().getId()).isEqualTo(1);
+        assertThat(profileRepository.findByEmail("example@example.com").get().getId()).isEqualTo(20L);
     }
 
     @Test

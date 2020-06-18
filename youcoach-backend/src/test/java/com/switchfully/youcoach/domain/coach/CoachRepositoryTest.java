@@ -25,7 +25,7 @@ public class CoachRepositoryTest {
     }
 
     private Profile getDefaultUser() {
-        return new Profile(1L, "First", "Last", "example@example.com",
+        return new Profile(20L, "First", "Last", "example@example.com",
                 "1Lpassword", "1 - latin","/my/photo.png");
     }
 
@@ -85,7 +85,7 @@ public class CoachRepositoryTest {
         Profile profile = getDefaultUser();
         Coach expected = new Coach(profile);
 
-        Optional<Coach> actual = coachRepository.findById(1L);
+        Optional<Coach> actual = coachRepository.findById(20L);
 
         Assertions.assertThat(actual).isInstanceOf(Optional.class)
                 .isNotEmpty()
@@ -132,7 +132,7 @@ public class CoachRepositoryTest {
         Coach expected = new Coach(profile);
 
         coachRepository.save(expected);
-        Optional<Coach> actual = coachRepository.findById(1L);
+        Optional<Coach> actual = coachRepository.findById(20L);
 
         Assertions.assertThat(actual).isInstanceOf(Optional.class).isNotEmpty()
                 .containsInstanceOf(Coach.class)
@@ -144,9 +144,9 @@ public class CoachRepositoryTest {
     @Sql("classpath:oneDefaultUser.sql")
     @Sql("classpath:makeUsersCoach.sql")
     public void removeCoachRights(){
-        coachRepository.deleteById(1L);
+        coachRepository.deleteById(20L);
 
-        Assertions.assertThat(coachRepository.findById(1L)).isEmpty();
+        Assertions.assertThat(coachRepository.findById(20L)).isEmpty();
     }
 
     @Test
