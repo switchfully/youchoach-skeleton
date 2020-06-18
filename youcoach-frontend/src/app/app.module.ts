@@ -21,6 +21,8 @@ import {NotFoundComponent} from "./template/not-found/not-found.component";
 import {ProfileModule} from "./profile/profile.module";
 import { CoacheeComponent } from './template/coachee/coachee.component';
 import { CoachComponent } from './template/coach/coach.component';
+import { EnHomeComponent } from './template/home/en-home/en-home.component';
+import { FrHomeComponent } from './template/home/fr-home/fr-home.component';
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -36,6 +38,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     NotFoundComponent,
     CoacheeComponent,
     CoachComponent,
+    EnHomeComponent,
+    FrHomeComponent,
   ],
 
   imports: [

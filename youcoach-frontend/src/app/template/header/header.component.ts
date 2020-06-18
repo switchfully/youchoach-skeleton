@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {AuthenticationService} from '../../security/services/authentication/authentication.service';
 import {TranslateService} from '@ngx-translate/core';
 import {ActivatedRoute} from '@angular/router';
+import * as M from 'materialize-css';
 
 @Component({
   selector: 'app-header',
@@ -25,6 +26,7 @@ export class HeaderComponent implements OnInit {
   switchLanguage(language: string) {
     this.translate.use(language);
     this.language = language;
+    setTimeout(() => M.AutoInit(), 1);
   }
 
   currentLanguage() {
