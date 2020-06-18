@@ -14,7 +14,7 @@ public class Profile {
     private String firstName;
     @Column(name = "last_name")
     private String lastName;
-    @Column(name = "email", unique = true,nullable = false)
+    @Column(name = "email", unique = true, nullable = false)
     private String email;
     @Column(name = "password")
     private String password;
@@ -34,16 +34,17 @@ public class Profile {
         this.classYear = classYear;
         this.photoUrl = photoUrl;
     }
-    public Profile(String firstName, String lastName, String email, String password) {
-        this(0,firstName,lastName,email,password);
+
+    public Profile(String firstName, String lastName, String classYear, String email, String password) {
+        this(0, firstName, lastName, email, password, classYear, "");
     }
-    public Profile(long id, String firstName, String lastName, String email, String password){
-        this(id,firstName,lastName,email,password,"","");
+
+    public Profile(long id, String firstName, String lastName, String email, String password) {
+        this(id, firstName, lastName, email, password, "", "");
     }
 
     public Profile() {
     }
-
 
 
     public long getId() {
@@ -65,7 +66,8 @@ public class Profile {
     public String getPassword() {
         return password;
     }
-    public void setPassword(String password){
+
+    public void setPassword(String password) {
         this.password = password;
     }
 
@@ -93,12 +95,16 @@ public class Profile {
         this.photoUrl = photoUrl;
     }
 
-    public boolean isAccountEnabled(){
+    public boolean isAccountEnabled() {
         return accountEnabled;
     }
 
-    public void setAccountEnabled(boolean isEnabled){
+    public void setAccountEnabled(boolean isEnabled) {
         accountEnabled = isEnabled;
+    }
+
+    public void setClassYear(String classYear) {
+        this.classYear = classYear;
     }
 
     @Override
@@ -113,4 +119,5 @@ public class Profile {
     public int hashCode() {
         return Objects.hash(id);
     }
+
 }

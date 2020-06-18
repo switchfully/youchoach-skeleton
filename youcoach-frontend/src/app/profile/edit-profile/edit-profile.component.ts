@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {IMember} from '../interfaces/IMember';
 import {FormBuilder, Validators} from '@angular/forms';
 import {CoacheeService} from '../services/coachee.service';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -11,10 +10,10 @@ import {AuthenticationService} from '../../security/services/authentication/auth
   styleUrls: ['./edit-profile.component.css']
 })
 export class EditProfileComponent implements OnInit {
-  member: IMember;
   editForm = this.fb.group({
     firstName: ['', [Validators.required]],
     lastName: ['', [Validators.required]],
+    classYear: ['', [Validators.required]],
     email: ['', [Validators.required]],
     photoUrl: [''],
   });
@@ -37,20 +36,25 @@ export class EditProfileComponent implements OnInit {
 
   getCoachee(): void {
     this.coacheeService.getCoachee().subscribe(
-      member => this.member = member);
+      member => {
+        this.editForm.patchValue(member);
+      }
+    );
   }
 
   getCoacheeByID(id: number): void {
     this.coacheeService.getCoacheeById(id).subscribe(
-      member => this.member = member);
+      member => {
+        this.editForm.patchValue(member);
+      }
+    );
   }
 
-  updateProfile(): void {
-    this.coacheeService.updateProfile(this.member)
+  updateProfile(member): void {
+    this.coacheeService.updateProfile(member)
       .subscribe(memberUpdated => {
-          this.member = memberUpdated;
           if (memberUpdated.token !== null) {
-            this.authenticationService.setJwtToken(memberUpdated.token, this.member.email);
+            this.authenticationService.setJwtToken(memberUpdated.token, memberUpdated.email);
           }
           this.onBack();
         },
@@ -66,20 +70,11 @@ export class EditProfileComponent implements OnInit {
     this.router.navigateByUrl('/coachee/profile');
   }
 
-  onSubmit() {
+  onSubmit(member) {
     if (this.editForm.get('email').value !== this.oldEmail) {
       this.isEmailChanged = true;
     }
-    this.member = {
-      id: this.member.id,
-      firstName: this.editForm.get('firstName').value,
-      lastName: this.editForm.get('lastName').value,
-      email: this.editForm.get('email').value,
-      photoUrl: this.editForm.get('photoUrl').value,
-      classYear: this.member.classYear,
-      youcoachRole: 'coachee',
-    };
-    this.updateProfile();
+    this.updateProfile(member);
   }
 
 }

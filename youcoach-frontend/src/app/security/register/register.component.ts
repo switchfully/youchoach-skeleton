@@ -14,6 +14,7 @@ export class RegisterComponent implements OnInit {
   registerForm = this.fb.group({
     firstname: ['', [Validators.required]],
     lastname: ['', [Validators.required]],
+    classYear: ['', [Validators.required]],
     email: ['', [Validators.required]],
     password: ['', [Validators.required]],
     passwordVerification: ['', ]
@@ -40,6 +41,7 @@ export class RegisterComponent implements OnInit {
       id: null,
       firstName: this.registerForm.get('firstname').value,
       lastName: this.registerForm.get('lastname').value,
+      classYear: this.registerForm.get('classYear').value,
       email: this.registerForm.get('email').value,
       password: this.registerForm.get('password').value
     };
@@ -47,7 +49,7 @@ export class RegisterComponent implements OnInit {
   }
 
   private transformResult(input: ICoacheeRegisterResult): ICoachee {
-    return { id: input.id, firstName: input.firstName, lastName: input.lastName, email: input.email, password: '' };
+    return { id: input.id, firstName: input.firstName, lastName: input.lastName, classYear: input.classYear, email: input.email, password: '' };
   }
 
   private register(coachee: ICoachee) {

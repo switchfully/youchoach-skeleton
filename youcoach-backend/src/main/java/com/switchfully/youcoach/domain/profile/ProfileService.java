@@ -74,6 +74,7 @@ public class ProfileService {
         profile.setEmail(updateProfileDto.getEmail());
         profile.setFirstName(updateProfileDto.getFirstName());
         profile.setLastName(updateProfileDto.getLastName());
+        profile.setClassYear(updateProfileDto.getClassYear());
         profile.setPhotoUrl(updateProfileDto.getPhotoUrl());
 
         ProfileUpdatedDto cpu = (ProfileUpdatedDto) new ProfileUpdatedDto()

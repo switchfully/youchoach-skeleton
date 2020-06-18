@@ -22,7 +22,7 @@ public class ProfileMapper {
     }
 
     public Profile toUser(CreateSecuredUserDto createSecuredUserDto) {
-        return new Profile(createSecuredUserDto.getFirstName(), createSecuredUserDto.getLastName(), createSecuredUserDto.getEmail(), createSecuredUserDto.getPassword());
+        return new Profile(createSecuredUserDto.getFirstName(), createSecuredUserDto.getLastName(), createSecuredUserDto.getClassYear(), createSecuredUserDto.getEmail(), createSecuredUserDto.getPassword());
     }
 
     public List<SecuredUserDto> toUserDto(List<Profile> profiles) {

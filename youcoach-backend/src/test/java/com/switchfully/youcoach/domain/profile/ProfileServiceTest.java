@@ -42,7 +42,7 @@ class ProfileServiceTest {
         Mockito.when(profileRepository.findById(Mockito.anyLong())).thenReturn(Optional.of(profile));
         Mockito.when(profileRepository.save(Mockito.any(Profile.class))).thenReturn(profile);
 
-        CreateSecuredUserDto createSecuredUserDto = new CreateSecuredUserDto("Test", "Service", "test@hb.be",
+        CreateSecuredUserDto createSecuredUserDto = new CreateSecuredUserDto("Test", "Service", "classYear", "test@hb.be",
                 "Test123456");
         profileService.createUser(createSecuredUserDto);
         SecuredUserDto actualUser = profileService.getUserById(1);
@@ -51,13 +51,13 @@ class ProfileServiceTest {
 
     @Test
     void emailValidator() {
-        CreateSecuredUserDto createSecuredUserDto = new CreateSecuredUserDto("Test", "Service", "dummyMail", "Test12346");
+        CreateSecuredUserDto createSecuredUserDto = new CreateSecuredUserDto("Test", "Service", "classYear", "dummyMail", "Test12346");
         assertThatExceptionOfType(IllegalStateException.class).isThrownBy(() -> profileService.createUser(createSecuredUserDto) );
     }
 
     @Test
     void emailDuplication() {
-        CreateSecuredUserDto userWithDuplicateEmail = new CreateSecuredUserDto("Test", "Service", "dummy@Mail.com", "Test123456");
+        CreateSecuredUserDto userWithDuplicateEmail = new CreateSecuredUserDto("Test", "Service", "classYear", "dummy@Mail.com", "Test123456");
         Mockito.when(profileRepository.existsByEmail(Mockito.anyString())).thenReturn(true);
 
         assertThatExceptionOfType(IllegalStateException.class).isThrownBy(() -> profileService.createUser(userWithDuplicateEmail) );
@@ -65,7 +65,7 @@ class ProfileServiceTest {
 
     @Test
     void passwordValidator() {
-        CreateSecuredUserDto createSecuredUserDto1 = new CreateSecuredUserDto("Test", "Service", "dummy@Mail.com", "test1234564");
+        CreateSecuredUserDto createSecuredUserDto1 = new CreateSecuredUserDto("Test", "Service", "classYear", "dummy@Mail.com", "test1234564");
         assertThatExceptionOfType(IllegalStateException.class).isThrownBy(() -> profileService.createUser(createSecuredUserDto1) );
     }
 

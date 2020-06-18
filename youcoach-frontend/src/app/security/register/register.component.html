@@ -24,6 +24,14 @@
                 </div>
               </div>
               <div class="row">
+                <div class="input-field col s6">
+                  <input id="class_year" type="text" class="validate" required formControlName="classYear">
+                  <label for="class_year" translate>register.label.class-year</label>
+                  <span #classyearrequired hidden translate>register.message.class-year-required</span>
+                  <span [attr.data-error]="classyearrequired.innerText" class="helper-text"></span>
+                </div>
+              </div>
+              <div class="row">
                 <div class="input-field col s12">
                   <input id="email" type="email" class="validate" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" formControlName="email">
                   <label for="email" translate>register.label.email</label>

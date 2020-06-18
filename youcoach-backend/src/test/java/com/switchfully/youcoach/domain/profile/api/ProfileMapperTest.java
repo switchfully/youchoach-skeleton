@@ -110,12 +110,13 @@ public class ProfileMapperTest {
     @Test
     void createUserDtoToUser(){
         Profile expected = getDefaultUser();
-        CreateSecuredUserDto cud = new CreateSecuredUserDto(expected.getFirstName(),expected.getLastName(),expected.getEmail(),expected.getPassword());
+        CreateSecuredUserDto cud = new CreateSecuredUserDto(expected.getFirstName(),expected.getLastName(), expected.getClassYear(), expected.getEmail(),expected.getPassword());
 
         Profile actual = profileMapper.toUser(cud);
 
         Assertions.assertThat(actual.getFirstName()).isEqualTo(expected.getFirstName());
         Assertions.assertThat(actual.getLastName()).isEqualTo(expected.getLastName());
+        Assertions.assertThat(actual.getClassYear()).isEqualTo(expected.getClassYear());
         Assertions.assertThat(actual.getEmail()).isEqualTo(expected.getEmail());
         Assertions.assertThat(actual.getPassword()).isEqualTo(expected.getPassword());
     }

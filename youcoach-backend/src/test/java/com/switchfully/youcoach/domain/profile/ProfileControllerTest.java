@@ -73,7 +73,7 @@ class ProfileControllerTest {
     @WithMockUser
     @Test
     void createUser() throws Exception {
-        CreateSecuredUserDto createSecuredUserDto = new CreateSecuredUserDto("Integration", "Test", "test@integraition.be", "test123TT");
+        CreateSecuredUserDto createSecuredUserDto = new CreateSecuredUserDto("Integration", "Test", "classYear", "test@integraition.be", "test123TT");
         String actualResult =
                 mockMvc.perform(post("/users")
                         .with(csrf())
