@@ -83,7 +83,7 @@ class ProfileControllerTest {
                         .andReturn()
                         .getResponse()
                         .getContentAsString();
-        String expected = "{\"id\":1,\"firstName\":\"Integration\",\"lastName\":\"Test\",\"email\":\"test@integraition.be\"}";
+        String expected = "{\"id\":20,\"firstName\":\"Integration\",\"lastName\":\"Test\",\"email\":\"test@integraition.be\"}";
         JSONAssert.assertEquals(expected, actualResult, false);
     }
 
