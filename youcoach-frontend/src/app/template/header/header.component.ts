@@ -17,6 +17,7 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.translate.use(this.translate.getBrowserLang());
     this.username = this.authenticationService.getUsername();
     this.authenticationService.userLoggedIn$.subscribe(_ => {
       this.username = this.authenticationService.getUsername();
