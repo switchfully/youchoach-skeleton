@@ -2,11 +2,13 @@
   <div class="content-container">
 
     <section class="card-panel grey lighten-5">
-      <div class="right" *ngIf="idToGet !== 0 && coach.email === null ">
+      <div class="right">
         <button class="waves-effect waves-light yellow darken-2 btn-large black-text"
                 routerLink="/coachee/coach-profile/{{coach.id}}/request-a-session" translate>
           request-session.button.request-session<i
           class="material-icons right">event</i></button>
+        <a class="waves-effect waves-light btn-large btn-floating yellow darken-2"><i
+          class="material-icons left" [routerLink]="'/coachee/edit-profile/' + coach.id">edit</i>Edit</a>
       </div>
       <h5 translate>my-profile-menu.link.profile-information</h5>
 
@@ -45,7 +47,7 @@
       <section class="card-panel grey lighten-5 ">
         <div class="right" *ngIf="coach.email !== null">
           <a class="waves-effect waves-light btn-large btn-floating teal lighten-3"
-             routerLink="/coach/edit-coach-information"><i
+             [routerLink]="'/coach/edit-coach-information/' + idToGet"><i
             class="material-icons left">edit</i>Edit</a>
         </div>
         <h5 translate>coach-information.title</h5>

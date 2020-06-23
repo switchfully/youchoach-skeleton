@@ -1,12 +1,12 @@
 package com.switchfully.youcoach.domain.profile.api;
 
 
-import com.switchfully.youcoach.domain.coach.Coach;
+import com.switchfully.youcoach.domain.profile.role.coach.CoachInformation;
 import com.switchfully.youcoach.domain.profile.Profile;
-import com.switchfully.youcoach.domain.coach.api.CoachListingDto;
-import com.switchfully.youcoach.domain.coach.api.CoachListingEntryDto;
+import com.switchfully.youcoach.domain.profile.role.coach.api.CoachListingDto;
+import com.switchfully.youcoach.domain.profile.role.coach.api.CoachListingEntryDto;
 import com.switchfully.youcoach.security.authentication.user.api.SecuredUserDto;
-import com.switchfully.youcoach.domain.coach.api.CoachProfileDto;
+import com.switchfully.youcoach.domain.profile.role.coach.api.CoachProfileDto;
 import com.switchfully.youcoach.security.authentication.user.api.CreateSecuredUserDto;
 import org.springframework.stereotype.Component;
 
@@ -39,32 +39,32 @@ public class ProfileMapper {
                 .withPhotoUrl(model.getPhotoUrl());
     }
 
-    public CoachProfileDto toCoachProfileDto(Coach model) {
+    public CoachProfileDto toCoachProfileDto(Profile profile) {
         return (CoachProfileDto) new CoachProfileDto()
-                .withAvailability(model.getAvailability())
-                .withIntroduction(model.getIntroduction())
-                .withXp(model.getXp())
-                .withCoachingTopics(model.getTopics())
-                .withId(model.getProfile().getId())
-                .withEmail(model.getProfile().getEmail())
-                .withFirstName(model.getProfile().getFirstName())
-                .withLastName(model.getProfile().getLastName())
-                .withClassYear(model.getProfile().getClassYear())
-                .withPhotoUrl(model.getProfile().getPhotoUrl());
+                .withAvailability(profile.getAvailability())
+                .withIntroduction(profile.getIntroduction())
+                .withXp(profile.getXp())
+                .withCoachingTopics(profile.getTopics())
+                .withId(profile.getId())
+                .withEmail(profile.getEmail())
+                .withFirstName(profile.getFirstName())
+                .withLastName(profile.getLastName())
+                .withClassYear(profile.getClassYear())
+                .withPhotoUrl(profile.getPhotoUrl());
 
     }
 
-    public CoachListingDto toCoachListingDto(List<Coach> coachList) {
+    public CoachListingDto toCoachListingDto(List<Profile> coachList) {
         final List<CoachListingEntryDto> coachListingEntryDtoList = new ArrayList<>();
 
         coachList.forEach(coach -> {
             CoachListingEntryDto cli = new CoachListingEntryDto()
-                    .withId(coach.getUserId())
-                    .withFirstName(coach.getProfile().getFirstName())
-                    .withLastName(coach.getProfile().getLastName())
+                    .withId(coach.getId())
+                    .withFirstName(coach.getFirstName())
+                    .withLastName(coach.getLastName())
                     .withCoachingTopics(coach.getTopics())
-                    .withUrl(coach.getProfile().getPhotoUrl())
-                    .withEmail(coach.getProfile().getEmail());
+                    .withUrl(coach.getPhotoUrl())
+                    .withEmail(coach.getEmail());
             coachListingEntryDtoList.add(cli);
         });
 

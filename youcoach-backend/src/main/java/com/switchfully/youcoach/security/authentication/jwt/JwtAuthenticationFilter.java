@@ -21,13 +21,11 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
 
     private final AuthenticationManager authenticationManager;
-    private final String jwtSecret;
     private final SecuredUserService securedUserService;
 
-    public JwtAuthenticationFilter(AuthenticationManager authenticationManager, String jwtSecret,
+    public JwtAuthenticationFilter(AuthenticationManager authenticationManager,
                                    SecuredUserService securedUserService, OnAuthenticationFailureHandler failureHandler) {
         this.authenticationManager = authenticationManager;
-        this.jwtSecret = jwtSecret;
         this.securedUserService = securedUserService;
 
         setFilterProcessesUrl("/login");

@@ -20,30 +20,15 @@ export class DisplayProfileComponent implements OnInit {
     youcoachRole: null
   };
 
-  adminEdit = false;
-
-
   constructor(private coacheeService: CoacheeService, private route: ActivatedRoute) {
   }
 
   ngOnInit(): void {
     const url: string = this.route.snapshot['_routerState'].url;
-    if (url.endsWith('/profile')) {
-      this.getCoachee();
-    } else {
-      this.adminEdit = true;
-      this.getCoacheeByID(+this.route.snapshot.paramMap.get('id'));
-    }
-  }
-
-
-  getCoachee(): void {
-    this.coacheeService.getCoachee().subscribe(
-      member => this.member = member);
+    this.getCoacheeByID(+this.route.snapshot.paramMap.get('id'));
   }
 
   getCoacheeByID(id: number): void {
-    this.coacheeService.getCoacheeById(id).subscribe(
-      member => this.member = member);
+    this.coacheeService.getCoacheeById(id).subscribe(member => this.member = member);
   }
 }

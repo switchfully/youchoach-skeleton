@@ -2,8 +2,6 @@ package com.switchfully.youcoach.security.authentication.user;
 
 
 import com.switchfully.youcoach.domain.profile.Profile;
-import com.switchfully.youcoach.domain.admin.AdminRepository;
-import com.switchfully.youcoach.domain.coach.CoachRepository;
 import com.switchfully.youcoach.domain.profile.ProfileRepository;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -17,7 +15,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -29,14 +26,10 @@ public class SecuredUserService implements UserDetailsService {
     private static final int TOKEN_TIME_TO_LIVE  = 3600000;
 
     private final ProfileRepository profileRepository;
-    private final AdminRepository adminRepository;
-    private final CoachRepository coachRepository;
     private String jwtSecret;
 
-    public SecuredUserService(ProfileRepository profileRepository, CoachRepository coachRepository, AdminRepository adminRepository, @Value("${jwt.secret}") String jwtSecret) {
+    public SecuredUserService(ProfileRepository profileRepository, @Value("${jwt.secret}") String jwtSecret) {
         this.profileRepository = profileRepository;
-        this.coachRepository = coachRepository;
-        this.adminRepository = adminRepository;
         this.jwtSecret = jwtSecret;
     }
 
@@ -51,26 +44,12 @@ public class SecuredUserService implements UserDetailsService {
     }
 
     public Collection<GrantedAuthority> determineGrantedAuthorities(Profile profile) {
-        Collection<GrantedAuthority> authorities = new ArrayList<>();
-
-        authorities.add(UserRoles.ROLE_COACHEE);
-        if(isAdmin(profile)) authorities.add(UserRoles.ROLE_ADMIN);
-        if(isCoach(profile)) authorities.add(UserRoles.ROLE_COACH);
-        return authorities;
-    }
-
-    private boolean isAdmin(Profile profile){
-        return adminRepository.findAdminByProfile(profile).isPresent();
+        return new ArrayList<>(profile.getRoles());
     }
 
     public boolean isAdmin(String email){
         UserDetails ud = loadUserByUsername(email);
         return ud.getAuthorities().contains(UserRoles.ROLE_ADMIN);
-    }
-
-    private boolean isCoach(Profile profile){
-        return coachRepository.findCoachByProfile(profile).isPresent();
-
     }
 
     public String generateAuthorizationBearerTokenForUser(String email) {
@@ -89,6 +68,7 @@ public class SecuredUserService implements UserDetailsService {
                 .setSubject(authentication.getName())
                 .setExpiration(new Date(new Date().getTime() + TOKEN_TIME_TO_LIVE))
                 .claim("rol", authentication.getAuthorities())
+                .claim("id", profileRepository.findByEmail(authentication.getName()).map(Profile::getId).map(Object::toString).orElse(null))
                 .compact();
     }
 

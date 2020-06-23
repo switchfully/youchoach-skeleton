@@ -7,14 +7,8 @@
 
         <section class="card-panel grey lighten-5">
           <div class="right">
-            <div *ngIf="adminEdit === false">
-              <a class="waves-effect waves-light btn-large btn-floating yellow darken-2"><i
-                class="material-icons left" routerLink="../edit-profile">edit</i>Edit</a>
-            </div>
-            <div *ngIf="adminEdit === true">
-              <a class="waves-effect waves-light btn-large btn-floating yellow darken-2"><i
-                class="material-icons left" routerLink="../edit-profile/{{member.id}}">edit</i>Edit</a>
-            </div>
+            <a class="waves-effect waves-light btn-large btn-floating yellow darken-2"><i
+              class="material-icons left" [routerLink]="'/coachee/edit-profile/' + member.id">edit</i>Edit</a>
           </div>
           <h5 translate>profile-information.title</h5>
           <div class="divider"></div>
@@ -44,10 +38,6 @@
                   <td><strong translate>profile-information.label.class</strong></td>
                   <td>{{member.classYear}}</td>
                 </tr>
-<!--                <tr>-->
-<!--                  <td><strong translate>profile-information.label.role</strong></td>-->
-<!--                  <td>{{member.youcoachRole}}</td>-->
-<!--                </tr>-->
                 </tbody>
               </table>
             </div>

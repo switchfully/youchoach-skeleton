@@ -1,11 +1,10 @@
 package com.switchfully.youcoach.domain.session;
 
 import com.switchfully.youcoach.domain.profile.Profile;
-import com.switchfully.youcoach.domain.coach.CoachRepository;
 import com.switchfully.youcoach.domain.profile.ProfileRepository;
 import com.switchfully.youcoach.domain.session.api.FeedbackMapper;
-import com.switchfully.youcoach.domain.session.api.SessionMapper;
 import com.switchfully.youcoach.domain.session.api.SessionDto;
+import com.switchfully.youcoach.domain.session.api.SessionMapper;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
@@ -18,7 +17,6 @@ import static org.mockito.Mockito.when;
 
 class SessionServiceTeststatus {
     private SessionRepository sessionRepository = mock(SessionRepository.class);
-    private CoachRepository coachRepository = mock(CoachRepository.class);
     private ProfileRepository profileRepository = mock(ProfileRepository.class);
     private FeedbackMapper feedbackMapper = mock(FeedbackMapper .class);
 
@@ -26,7 +24,7 @@ class SessionServiceTeststatus {
     @Test
     void If_Inthepast_StatusAutomaticallyClosed() {
 
-        SessionService sessionService = new SessionService(sessionRepository, new SessionMapper(feedbackMapper), coachRepository, profileRepository, feedbackMapper);
+        SessionService sessionService = new SessionService(sessionRepository, new SessionMapper(feedbackMapper), profileRepository, feedbackMapper);
 
         Session session1 = new Session("Mathematics", LocalDateTime.now().minusDays(1), "school", "no remarks", new Profile(1L, null, null, null, null), new Profile(2L, null, null, null, null));
 

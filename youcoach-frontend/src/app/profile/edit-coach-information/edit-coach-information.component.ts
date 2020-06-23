@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder} from '@angular/forms';
 import {CoachService} from '../services/coach.service';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Location} from '@angular/common';
 import {ICoach} from '../interfaces/ICoach';
 
@@ -17,7 +17,7 @@ export class EditCoachInformationComponent implements OnInit {
     availability: [''],
   });
 
-  constructor(private fb: FormBuilder, private coachService: CoachService, private router: Router, private location: Location) {
+  constructor(private fb: FormBuilder, private coachService: CoachService, private router: Router, private route: ActivatedRoute, private location: Location) {
   }
 
   ngOnInit(): void {
@@ -25,8 +25,12 @@ export class EditCoachInformationComponent implements OnInit {
   }
 
   getCoach(): void {
-    this.coachService.getCoach().subscribe(
-      coach => this.coach = coach
+    const id = +this.route.snapshot.paramMap.get('id');
+    this.coachService.getSpecificCoach(id).subscribe(
+      coach => {
+        this.coach = coach;
+        this.editForm.patchValue(coach);
+      }
     );
   }
 

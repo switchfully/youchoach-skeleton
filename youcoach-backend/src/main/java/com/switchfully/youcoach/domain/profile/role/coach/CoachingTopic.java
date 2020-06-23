@@ -1,4 +1,4 @@
-package com.switchfully.youcoach.domain.coach;
+package com.switchfully.youcoach.domain.profile.role.coach;
 
 import javax.persistence.*;
 import java.util.List;
@@ -12,6 +12,7 @@ public class CoachingTopic {
     private long id;
 
     @OneToOne
+    @JoinColumn(name = "topic_topic_id")
     private Topic topic;
 
     @ElementCollection

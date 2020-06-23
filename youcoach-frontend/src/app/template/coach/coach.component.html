@@ -4,7 +4,7 @@
       <div class="content-container">
         <h6 translate>my-profile-menu.title</h6>
         <div class="collection">
-          <a class="collection-item black-text" [ngClass]="{'active teal lighten-3': isActive('coach-profile'), 'grey-text text-darken-2': !isActive('coach-profile')}" routerLink="coach-profile" translate>Profile Information</a>
+          <a class="collection-item black-text" [ngClass]="{'active teal lighten-3': isActive('coach-profile'), 'grey-text text-darken-2': !isActive('coach-profile')}" [routerLink]="'coach-profile/' + authenticationService.getUserId()" translate>Profile Information</a>
           <a class="collection-item black-text" [ngClass]="{'active teal lighten-3': isActive('coach-my-sessions'), 'grey-text text-darken-2': !isActive('coach-my-sessions')}" routerLink="coach-my-sessions" translate >my-profile-menu.link.coaching-sessions</a>
           <a class="collection-item black-text" [ngClass]="{'active teal lighten-3': isActive('change-topics'), 'grey-text text-darken-2': !isActive('change-topics')}" routerLink="change-topics" translate >my-coach-profile-menu.link.request-profile-change</a>
         </div>

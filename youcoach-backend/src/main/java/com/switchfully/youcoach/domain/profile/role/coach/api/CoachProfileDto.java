@@ -1,7 +1,7 @@
-package com.switchfully.youcoach.domain.coach.api;
+package com.switchfully.youcoach.domain.profile.role.coach.api;
 
-import com.switchfully.youcoach.domain.coach.CoachingTopic;
-import com.switchfully.youcoach.domain.coach.Grade;
+import com.switchfully.youcoach.domain.profile.role.coach.CoachingTopic;
+import com.switchfully.youcoach.domain.profile.role.coach.Grade;
 import com.switchfully.youcoach.domain.profile.api.ProfileDto;
 
 import java.util.*;
@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 
 public class CoachProfileDto extends ProfileDto {
     private String availability;
-    private int xp;
+    private Integer xp;
     private String introduction;
     private List<CoachingTopicDto> topics = new ArrayList<>();
 
@@ -17,7 +17,7 @@ public class CoachProfileDto extends ProfileDto {
         return availability;
     }
 
-    public int getXp() {
+    public Integer getXp() {
         return xp;
     }
 
@@ -37,7 +37,7 @@ public class CoachProfileDto extends ProfileDto {
         this.introduction = introduction;
         return this;
     }
-    public CoachProfileDto withXp(int xp){
+    public CoachProfileDto withXp(Integer xp){
         this.xp = xp;
         return this;
 
@@ -83,7 +83,7 @@ public class CoachProfileDto extends ProfileDto {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         CoachProfileDto that = (CoachProfileDto) o;
-        return xp == that.xp &&
+        return Objects.equals(xp, that.xp) &&
                 Objects.equals(availability, that.availability) &&
                 Objects.equals(introduction, that.introduction) &&
                 Objects.equals(topics, that.topics);

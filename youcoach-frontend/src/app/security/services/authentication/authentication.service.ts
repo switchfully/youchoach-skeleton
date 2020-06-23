@@ -11,9 +11,11 @@ export class AuthenticationService {
 
   private tokenKey = 'jwt_token';
   private usernameKey = 'username';
+  private userIdKey = 'user_id';
   private userLoggedInSource = new Subject<boolean>();
   private tokenValue = null;
   private usernameValue = null;
+  private userId = null;
 
   userLoggedIn$ = this.userLoggedInSource.asObservable();
 
@@ -25,8 +27,10 @@ export class AuthenticationService {
   public setJwtToken(token: string, username: string): void {
     this.tokenValue = token;
     this.usernameValue = username;
+    this.userId = JWT(this.getToken()).id;
     sessionStorage.setItem(this.tokenKey, this.tokenValue);
-    sessionStorage.setItem(this.usernameKey, username);
+    sessionStorage.setItem(this.usernameKey, this.usernameValue);
+    sessionStorage.setItem(this.userIdKey, this.userId);
   }
 
   login(loginData: any) {
@@ -51,6 +55,13 @@ export class AuthenticationService {
     return this.usernameValue;
   }
 
+  getUserId() {
+    if (this.userId === null) {
+      this.userId = sessionStorage.getItem(this.userIdKey);
+    }
+    return this.userId;
+  }
+
   isLoggedIn() {
     return sessionStorage.getItem(this.tokenKey) !== null;
   }
@@ -58,8 +69,10 @@ export class AuthenticationService {
   logout() {
     sessionStorage.removeItem(this.tokenKey);
     sessionStorage.removeItem(this.usernameKey);
+    sessionStorage.removeItem(this.userIdKey);
     this.tokenValue = null;
     this.usernameValue = null;
+    this.userId = null;
     this.userLoggedInSource.next(false);
   }
 

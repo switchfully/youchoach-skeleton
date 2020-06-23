@@ -1,12 +1,10 @@
 package com.switchfully.youcoach.domain.session;
 
-import com.switchfully.youcoach.domain.coach.Coach;
 import com.switchfully.youcoach.domain.profile.Profile;
-import com.switchfully.youcoach.domain.coach.CoachRepository;
 import com.switchfully.youcoach.domain.profile.ProfileRepository;
-import com.switchfully.youcoach.domain.session.api.*;
-import com.switchfully.youcoach.domain.coach.exception.CoachNotFoundException;
 import com.switchfully.youcoach.domain.profile.exception.ProfileNotFoundException;
+import com.switchfully.youcoach.domain.profile.role.coach.exception.CoachNotFoundException;
+import com.switchfully.youcoach.domain.session.api.*;
 import com.switchfully.youcoach.domain.session.exception.SessionNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,26 +18,22 @@ import java.util.Optional;
 public class SessionService {
     private final SessionRepository sessionRepository;
     private final SessionMapper sessionMapper;
-    private final CoachRepository coachRepository;
     private final ProfileRepository profileRepository;
     private FeedbackMapper feedbackMapper;
 
     @Autowired
-    public SessionService(SessionRepository sessionRepository, SessionMapper sessionMapper, CoachRepository coachRepository, ProfileRepository profileRepository, FeedbackMapper feedbackMapper) {
+    public SessionService(SessionRepository sessionRepository, SessionMapper sessionMapper, ProfileRepository profileRepository, FeedbackMapper feedbackMapper) {
         this.sessionRepository = sessionRepository;
         this.sessionMapper = sessionMapper;
-        this.coachRepository = coachRepository;
         this.profileRepository = profileRepository;
         this.feedbackMapper = feedbackMapper;
     }
 
 
     public SessionDto save(CreateSessionDto createSessionDto, String username) {
-        Coach coach = coachRepository.findById(createSessionDto.getCoachId())
-                .orElseThrow(CoachNotFoundException::new);
-        Profile coachee = profileRepository.findByEmail(username)
-                .orElseThrow(() -> new ProfileNotFoundException("Username: " + username));
-        return sessionMapper.toDto(sessionRepository.save(sessionMapper.toModel(createSessionDto, coach.getProfile(), coachee)));
+        Profile coach = profileRepository.findById(createSessionDto.getCoachId()).orElseThrow(CoachNotFoundException::new);
+        Profile coachee = profileRepository.findByEmail(username).orElseThrow(() -> new ProfileNotFoundException("Username: " + username));
+        return sessionMapper.toDto(sessionRepository.save(sessionMapper.toModel(createSessionDto, coach, coachee)));
     }
 
     public List<SessionDto> getCoachingSessionsForUser(String email) {

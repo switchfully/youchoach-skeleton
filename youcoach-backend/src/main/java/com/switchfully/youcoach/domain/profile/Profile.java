@@ -1,10 +1,19 @@
 package com.switchfully.youcoach.domain.profile;
 
+import com.switchfully.youcoach.domain.profile.role.Role;
+import com.switchfully.youcoach.domain.profile.role.coach.CoachInformation;
+import com.switchfully.youcoach.domain.profile.role.coach.CoachingTopic;
+import com.switchfully.youcoach.security.authentication.user.UserRoles;
+
 import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
+
+import static javax.persistence.EnumType.STRING;
 
 @Entity
 @Table(name = "profile")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Profile {
     @Id
     @SequenceGenerator(name = "profile_seq", sequenceName = "profile_seq", initialValue = 1, allocationSize = 1)
@@ -24,6 +33,10 @@ public class Profile {
     private String photoUrl;
     @Column(name = "account_enabled", nullable = false)
     private boolean accountEnabled = false;
+    @Enumerated(STRING)
+    private Role role;
+    @Embedded
+    private CoachInformation coachInformation;
 
     public Profile(long id, String firstName, String lastName, String email, String password, String classYear, String photoUrl) {
         this.id = id;
@@ -33,6 +46,8 @@ public class Profile {
         this.password = password;
         this.classYear = classYear;
         this.photoUrl = photoUrl;
+        this.role = Role.COACHEE;
+        this.coachInformation = new CoachInformation();
     }
 
     public Profile(String firstName, String lastName, String classYear, String email, String password) {
@@ -46,6 +61,9 @@ public class Profile {
     public Profile() {
     }
 
+    public List<UserRoles> getRoles() {
+        return role.getUserRoles();
+    }
 
     public long getId() {
         return id;
@@ -107,6 +125,42 @@ public class Profile {
         this.classYear = classYear;
     }
 
+    public void setIntroduction(String introduction) {
+        coachInformation.setIntroduction(introduction);
+    }
+
+    public void setAvailability(String availability) {
+        coachInformation.setAvailability(availability);
+    }
+
+    public String getAvailability() {
+        return coachInformation.getAvailability();
+    }
+
+    public String getIntroduction() {
+        return coachInformation.getIntroduction();
+    }
+
+    public Integer getXp() {
+        return coachInformation.getXp();
+    }
+
+    public List<CoachingTopic> getTopics() {
+        return coachInformation.getTopics();
+    }
+
+    public boolean canHostSession() {
+        return role.canHostSession();
+    }
+
+    public void setXp(int xp) {
+        coachInformation.setXp(xp);
+    }
+
+    public void setTopics(List<CoachingTopic> topics) {
+        coachInformation.setTopics(topics);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -120,4 +174,7 @@ public class Profile {
         return Objects.hash(id);
     }
 
+    public void setRole(Role role) {
+        this.role = role;
+    }
 }

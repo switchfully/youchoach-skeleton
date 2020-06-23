@@ -48,8 +48,10 @@ const routes: Routes = [
     component: CoachComponent,
     children: [
       {path: 'change-topics', component: ChangeTopicsComponent},
+      {path: 'coach-profile/:id', component: CoachProfileComponent},
       {path: 'coach-profile', component: CoachProfileComponent},
       {path: 'edit-coach-information', component: EditCoachInformationComponent},
+      {path: 'edit-coach-information/:id', component: EditCoachInformationComponent},
       {path: 'coach-my-sessions', component: CoachMysessionsComponent},
       {path: 'session/:id', component: SessionDetailComponent},
     ]

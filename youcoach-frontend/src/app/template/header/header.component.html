@@ -61,9 +61,9 @@
     <div class="nav-content" [ngClass]="{'teal lighten-3': isCoachMenu(), 'yellow darken-2': !isCoachMenu()}">
       <div class="container">
         <ul class="tabs tabs-transparent">
-          <li class="tab"><a class="grey-text text-darken-2" routerLink="/coachee/profile" translate>menu.link.my-profile</a></li>
+          <li class="tab"><a class="grey-text text-darken-2" [routerLink]="'/coachee/profile/' + authenticationService.getUserId()" translate>menu.link.my-profile</a></li>
           <li class="tab"><a class="grey-text text-darken-2" routerLink="/coachee/find-coach" translate>menu.link.find-a-coach</a></li>
-          <li class="tab" *ngIf="authenticationService.isCoach()"><a class="grey-text text-darken-2" routerLink="/coach/coach-profile" translate>menu.link.my-coach-profile</a></li>
+          <li class="tab" *ngIf="authenticationService.isCoach()"><a class="grey-text text-darken-2" [routerLink]="'/coach/coach-profile/' + authenticationService.getUserId()" translate>menu.link.my-coach-profile</a></li>
         </ul>
       </div>
     </div>

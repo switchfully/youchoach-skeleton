@@ -1,6 +1,5 @@
 package com.switchfully.youcoach.domain.session;
 
-import com.switchfully.youcoach.domain.coach.Coach;
 import com.switchfully.youcoach.domain.profile.Profile;
 
 import javax.persistence.*;

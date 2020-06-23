@@ -5,11 +5,10 @@
 
       <h5>Edit profile Information</h5>
       <div class="divider"></div>
-      <div class="row">
+      <div class="row" *ngIf="coach">
         <form class="col s12" [formGroup]="editForm" (ngSubmit)="onSubmit()">
           <div class="col l2 m2 s12">
-            <img src="{{coach.photoUrl}}" class="responsive-img circle"
-                 alt="Profile Picture">
+            <img src="{{coach.photoUrl}}" class="responsive-img circle" alt="Profile Picture">
           </div>
           <div class="col l10 m10 s12">
             <table class="highlight">
@@ -18,15 +17,13 @@
               <tr>
                 <td>
                   <label for="introduction" translate>coach-information.label.introduction</label>
-                  <input id="introduction" class="input-field validate" required formControlName="introduction"
-                         name='coach.introduction' [(ngModel)]="coach.introduction"/>
+                  <input id="introduction" class="input-field validate" required formControlName="introduction" name='coach.introduction'/>
                 </td>
               </tr>
               <tr>
                 <td>
                   <label for="availability" translate>coach-information.label.availability</label>
-                  <input id="availability" class="input-field validate" required formControlName="availability"
-                         name='coach.availability' [(ngModel)]="coach.availability">
+                  <input id="availability" class="input-field validate" required formControlName="availability" name='coach.availability'>
                 </td>
               </tr>
               <tr>

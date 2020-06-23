@@ -17,19 +17,14 @@ export class CoachService {
   constructor(private http: HttpClient) {
   }
 
-  getCoach(): Observable<ICoach> {
-    return this.http.get<ICoach>(this.url + '/coach/profile');
-  }
-
   getSpecificCoach(id: number): Observable<ICoach> {
     return this.http.get<ICoach>(this.url + `/coach/profile/${id}`);
   }
 
-  getSpecificCoachByEmail(id: any): Observable<ICoach> { return null; }
-
   updateCoachInformation(coach: ICoach): Observable<ICoach> {
-    return this.http.put<ICoach>(this.url + '/coach/profile', coach, this.httpOptions);
+    return this.http.put<ICoach>(this.url + '/coach/profile/' + coach.id, coach, this.httpOptions);
   }
+
   getAllCoaches(): Observable<ICoachList> {
     return this.http.get<ICoachList>(this.url + '/find-coach');
   }

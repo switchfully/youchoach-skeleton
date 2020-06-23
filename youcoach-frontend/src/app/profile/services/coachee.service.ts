@@ -18,9 +18,9 @@ import {AuthenticationService} from "../../security/services/authentication/auth
 export class CoacheeService {
   readonly url = `${environment.backendUrl}/users`;
   httpOptions = {
-    headers: new HttpHeaders({'Content-Type': 'application/json',
-      // 'Access-Control-Allow-Origin' : 'http://localhost:4200'
-      'Access-Control-Allow-Origin' : 'https://youcoach-test.herokuapp.com/'
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': 'https://youcoach-test.herokuapp.com/'
     }),
 
   };
@@ -31,29 +31,23 @@ export class CoacheeService {
   register(coachee: ICoachee): Observable<ICoacheeRegisterResult> {
     return this.http.post<ICoacheeRegisterResult>(this.url, coachee, this.httpOptions);
   }
+
   requestPasswordResetToken(tokenRequest: IRequestPasswordResetToken): Observable<any> {
     return this.http.post<any>(this.url + '/password/reset', tokenRequest, this.httpOptions);
   }
+
   performPasswordReset(passwordChange: IPasswordChange): Observable<IPasswordChangeResult> {
     return this.http.patch<any>(this.url + '/password/reset', passwordChange, this.httpOptions);
   }
 
-  getCoachee(): Observable<IMember> {
-    return this.http.get<IMember>(this.url + '/profile');
-  }
-
-    getCoacheeById(id: number): Observable<IMember> {
+  getCoacheeById(id: number): Observable<IMember> {
     return this.http.get<IMember>(this.url + '/profile' + `/${id}`).pipe(
       catchError(this.handleError<IMember>(`getCoachee with id: ${id}`))
     );
   }
 
   updateProfile(member: IMember): Observable<IMemberProfileUpdated> {
-    if (this.authenticationService.isAdmin()) {
-      return this.http.put<IMemberProfileUpdated>(this.url + '/profile/' + member.id, member, this.httpOptions);
-    } else {
-      return this.http.put<IMemberProfileUpdated>(this.url + '/profile', member, this.httpOptions);
-    }
+    return this.http.put<IMemberProfileUpdated>(this.url + '/profile/' + member.id, member, this.httpOptions);
   }
 
   private handleError<T>(operation = 'operation', result?: T) {

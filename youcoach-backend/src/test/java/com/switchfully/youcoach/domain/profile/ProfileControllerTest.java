@@ -2,10 +2,10 @@ package com.switchfully.youcoach.domain.profile;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.switchfully.youcoach.ApplicationTest;
-import com.switchfully.youcoach.domain.coach.CoachingTopic;
-import com.switchfully.youcoach.domain.coach.Grade;
-import com.switchfully.youcoach.domain.coach.Topic;
-import com.switchfully.youcoach.domain.coach.api.CoachProfileDto;
+import com.switchfully.youcoach.domain.profile.role.coach.CoachingTopic;
+import com.switchfully.youcoach.domain.profile.role.coach.Grade;
+import com.switchfully.youcoach.domain.profile.role.coach.Topic;
+import com.switchfully.youcoach.domain.profile.role.coach.api.CoachProfileDto;
 import com.switchfully.youcoach.security.authentication.user.api.CreateSecuredUserDto;
 import com.switchfully.youcoach.security.authentication.user.SecuredUserService;
 import com.switchfully.youcoach.security.authentication.user.UserRoles;
@@ -130,17 +130,6 @@ class ProfileControllerTest {
         UsernamePasswordAuthenticationToken user = new UsernamePasswordAuthenticationToken("example@example.com", null, List.of(UserRoles.ROLE_COACH));
         String token = securedUserService.generateJwtToken(user);
 
-        CoachProfileDto expectedDto = (CoachProfileDto) new CoachProfileDto().withXp(100)
-                .withIntroduction("Endorsed by your mom.")
-                .withAvailability("Whenever you want.")
-                .withCoachingTopics(List.of(new CoachingTopic(new Topic("Algebra"), List.of(Grade.FOUR, Grade.THREE))))
-                .withEmail("example@example.com")
-                .withPhotoUrl("/my/photo.png")
-                .withFirstName("First")
-                .withLastName("Last")
-                .withId(20L)
-                .withClassYear("1 - latin");
-        String expected = new ObjectMapper().writeValueAsString(expectedDto);
 
         String actualResult = mockMvc.perform(get("/users/coach/profile")
                 .header("Authorization", "Bearer " + token)
@@ -152,6 +141,16 @@ class ProfileControllerTest {
                 .getResponse()
                 .getContentAsString();
 
+        String expected = new ObjectMapper().writeValueAsString(new CoachProfileDto().withXp(100)
+                .withIntroduction("Endorsed by your mom.")
+                .withAvailability("Whenever you want.")
+                .withCoachingTopics(List.of(new CoachingTopic(new Topic("Algebra"), List.of(Grade.FOUR, Grade.THREE))))
+                .withEmail("example@example.com")
+                .withPhotoUrl("/my/photo.png")
+                .withFirstName("First")
+                .withLastName("Last")
+                .withId(20L)
+                .withClassYear("1 - latin"));
         JSONAssert.assertEquals(expected, actualResult, true);
     }
 

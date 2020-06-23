@@ -3,6 +3,7 @@ import {FormBuilder, Validators} from '@angular/forms';
 import {CoacheeService} from '../services/coachee.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AuthenticationService} from '../../security/services/authentication/authentication.service';
+import {Location} from "@angular/common";
 
 @Component({
   selector: 'app-edit-profile',
@@ -11,6 +12,7 @@ import {AuthenticationService} from '../../security/services/authentication/auth
 })
 export class EditProfileComponent implements OnInit {
   editForm = this.fb.group({
+    id: '',
     firstName: ['', [Validators.required]],
     lastName: ['', [Validators.required]],
     classYear: ['', [Validators.required]],
@@ -22,24 +24,12 @@ export class EditProfileComponent implements OnInit {
   emailExistsError = false;
 
   constructor(private fb: FormBuilder, private coacheeService: CoacheeService, private router: Router,
-              private authenticationService: AuthenticationService, private route: ActivatedRoute) {
+              private authenticationService: AuthenticationService, private route: ActivatedRoute, private location: Location) {
   }
 
   ngOnInit(): void {
     const url: string = this.route.snapshot['_routerState'].url;
-    if (url.endsWith('/edit-profile')) {
-      this.getCoachee();
-    } else {
-      this.getCoacheeByID(+this.route.snapshot.paramMap.get('id'));
-    }
-  }
-
-  getCoachee(): void {
-    this.coacheeService.getCoachee().subscribe(
-      member => {
-        this.editForm.patchValue(member);
-      }
-    );
+    this.getCoacheeByID(+this.route.snapshot.paramMap.get('id'));
   }
 
   getCoacheeByID(id: number): void {
@@ -67,7 +57,7 @@ export class EditProfileComponent implements OnInit {
   }
 
   onBack(): void {
-    this.router.navigateByUrl('/coachee/profile');
+    this.location.back();
   }
 
   onSubmit(member) {

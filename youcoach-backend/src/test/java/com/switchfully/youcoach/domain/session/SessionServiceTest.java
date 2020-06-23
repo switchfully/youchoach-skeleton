@@ -1,13 +1,11 @@
 package com.switchfully.youcoach.domain.session;
 
 import com.switchfully.youcoach.domain.profile.Profile;
-import com.switchfully.youcoach.domain.coach.Coach;
-import com.switchfully.youcoach.domain.coach.CoachRepository;
 import com.switchfully.youcoach.domain.profile.ProfileRepository;
-import com.switchfully.youcoach.domain.session.api.FeedbackMapper;
-import com.switchfully.youcoach.domain.session.api.SessionMapper;
 import com.switchfully.youcoach.domain.session.api.CreateSessionDto;
+import com.switchfully.youcoach.domain.session.api.FeedbackMapper;
 import com.switchfully.youcoach.domain.session.api.SessionDto;
+import com.switchfully.youcoach.domain.session.api.SessionMapper;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.context.jdbc.Sql;
@@ -28,10 +26,9 @@ class SessionServiceTest {
     private SessionDto sessionDto = new SessionDto(1L, "Mathematics", "30/05/2020", "11:50", "school", "no remarks", new SessionDto.Person(1L, "Name"), new SessionDto.Person(2L, "Name"), Status.REQUESTED, null, null);
     private SessionRepository sessionRepository = mock(SessionRepository.class);
     private SessionMapper sessionMapper = mock(SessionMapper.class);
-    private CoachRepository coachRepository = mock(CoachRepository.class);
     private ProfileRepository profileRepository = mock(ProfileRepository.class);
     private FeedbackMapper feedbackMapper = mock(FeedbackMapper.class);
-    private SessionService sessionService = new SessionService(sessionRepository, sessionMapper, coachRepository, profileRepository, feedbackMapper);
+    private SessionService sessionService = new SessionService(sessionRepository, sessionMapper, profileRepository, feedbackMapper);
 
     @Test
     @Sql({"classpath:/oneDefaultUser.sql", "classpath:/makeUsersCoach.sql"})
@@ -40,7 +37,7 @@ class SessionServiceTest {
         when(sessionMapper.toDto(any(Session.class))).thenReturn(sessionDto);
         when(sessionRepository.save(any(Session.class))).thenReturn(session);
         when(profileRepository.findByEmail("example@example.com")).thenReturn(Optional.of(new Profile(2L, null, null, null, null)));
-        when(coachRepository.findById(1L)).thenReturn(Optional.of(new Coach(new Profile(1L, null, null, null, null))));
+        when(profileRepository.findById(1L)).thenReturn(Optional.of(new Profile(1L, null, null, null, null)));
 
         SessionDto actual = sessionService.save(createSessionDto, "example@example.com");
 
@@ -57,7 +54,6 @@ class SessionServiceTest {
         when(sessionMapper.toDto(any(Session.class))).thenReturn(sessionDto);
         when(sessionRepository.save(any(Session.class))).thenReturn(session);
         when(profileRepository.findByEmail("example@example.com")).thenReturn(optionalUser);
-        when(coachRepository.findById(1L)).thenReturn(Optional.of(new Coach(new Profile(1L, null, null, null, null))));
         when(sessionRepository.findAllByCoachee(optionalUser)).thenReturn(List.of(session));
 
 

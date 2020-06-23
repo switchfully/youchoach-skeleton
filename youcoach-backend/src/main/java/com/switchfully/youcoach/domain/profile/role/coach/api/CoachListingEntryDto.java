@@ -1,7 +1,7 @@
-package com.switchfully.youcoach.domain.coach.api;
+package com.switchfully.youcoach.domain.profile.role.coach.api;
 
-import com.switchfully.youcoach.domain.coach.CoachingTopic;
-import com.switchfully.youcoach.domain.coach.Grade;
+import com.switchfully.youcoach.domain.profile.role.coach.CoachingTopic;
+import com.switchfully.youcoach.domain.profile.role.coach.Grade;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,14 +1,14 @@
 package com.switchfully.youcoach.domain.profile.api;
 
-import com.switchfully.youcoach.domain.coach.Coach;
-import com.switchfully.youcoach.domain.coach.CoachingTopic;
-import com.switchfully.youcoach.domain.coach.Grade;
-import com.switchfully.youcoach.domain.coach.Topic;
+import com.switchfully.youcoach.domain.profile.role.coach.CoachInformation;
+import com.switchfully.youcoach.domain.profile.role.coach.CoachingTopic;
+import com.switchfully.youcoach.domain.profile.role.coach.Grade;
+import com.switchfully.youcoach.domain.profile.role.coach.Topic;
 import com.switchfully.youcoach.domain.profile.Profile;
 import com.switchfully.youcoach.security.authentication.user.api.SecuredUserDto;
-import com.switchfully.youcoach.domain.coach.api.CoachListingDto;
-import com.switchfully.youcoach.domain.coach.api.CoachListingEntryDto;
-import com.switchfully.youcoach.domain.coach.api.CoachProfileDto;
+import com.switchfully.youcoach.domain.profile.role.coach.api.CoachListingDto;
+import com.switchfully.youcoach.domain.profile.role.coach.api.CoachListingEntryDto;
+import com.switchfully.youcoach.domain.profile.role.coach.api.CoachProfileDto;
 import com.switchfully.youcoach.security.authentication.user.api.CreateSecuredUserDto;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -43,28 +43,28 @@ public class ProfileMapperTest {
     @Test
     public void fromCoachToCoachProfileDto(){
         Profile profile = getDefaultUser();
-        Coach coach = new Coach(profile);
-        coach.setXp(100);
-        coach.setAvailability("Whenever you want.");
-        coach.setIntroduction("Endorsed by your mom.");
+        profile.setXp(100);
+        profile.setAvailability("Whenever you want.");
+        profile.setIntroduction("Endorsed by your mom.");
         List<CoachingTopic> topics = new ArrayList<>();
         topics.add(new CoachingTopic(new Topic("Algebra"),List.of(Grade.FOUR, Grade.FIVE)));
         topics.add(new CoachingTopic(new Topic("French"),List.of(Grade.FIVE, Grade.SIX)));
-        coach.setTopics(topics);
+        profile.setTopics(topics);
 
         CoachProfileDto expected = (CoachProfileDto) new CoachProfileDto()
-                .withXp(coach.getXp())
-                .withIntroduction(coach.getIntroduction())
-                .withAvailability(coach.getAvailability())
-                .withCoachingTopics(coach.getTopics())
+                .withXp(profile.getXp())
+                .withIntroduction(profile.getIntroduction())
+                .withAvailability(profile.getAvailability())
+                .withCoachingTopics(profile.getTopics())
                 .withClassYear(profile.getClassYear())
                 .withId(profile.getId())
                 .withEmail(profile.getEmail())
                 .withFirstName(profile.getFirstName())
                 .withLastName(profile.getLastName())
-                .withPhotoUrl(profile.getPhotoUrl());
+                .withPhotoUrl(profile.getPhotoUrl())
+                .withId(1L);
 
-        CoachProfileDto actual = profileMapper.toCoachProfileDto(coach);
+        CoachProfileDto actual = profileMapper.toCoachProfileDto(profile);
 
         Assertions.assertThat(actual).isEqualTo(expected);
     }
@@ -72,25 +72,24 @@ public class ProfileMapperTest {
     @Test
     public void fromCoachList_to_CoachlistingDto() {
         Profile profile = getDefaultUser();
-        Coach coach = new Coach(profile);
-        coach.setXp(100);
-        coach.setAvailability("Whenever you want.");
-        coach.setIntroduction("Endorsed by your mom.");
+        profile.setXp(100);
+        profile.setAvailability("Whenever you want.");
+        profile.setIntroduction("Endorsed by your mom.");
         List<CoachingTopic> topics = new ArrayList<>();
         topics.add(new CoachingTopic(new Topic("Algebra"),List.of(Grade.FOUR, Grade.FIVE)));
         topics.add(new CoachingTopic(new Topic("French"),List.of(Grade.FIVE, Grade.SIX)));
-        coach.setTopics(topics);
+        profile.setTopics(topics);
 
         CoachListingEntryDto cpd = new CoachListingEntryDto()
-                .withFirstName(coach.getProfile().getFirstName())
-                .withLastName(coach.getProfile().getLastName())
-                .withCoachingTopics(coach.getTopics())
-                .withUrl(coach.getProfile().getPhotoUrl())
-                .withEmail(coach.getProfile().getEmail());
+                .withFirstName(profile.getFirstName())
+                .withLastName(profile.getLastName())
+                .withCoachingTopics(profile.getTopics())
+                .withUrl(profile.getPhotoUrl())
+                .withEmail(profile.getEmail());
 
         CoachListingDto expected = new CoachListingDto(List.of(cpd));
 
-        CoachListingDto actual = profileMapper.toCoachListingDto(List.of(coach));
+        CoachListingDto actual = profileMapper.toCoachListingDto(List.of(profile));
 
         Assertions.assertThat(actual).isEqualTo(expected);
 

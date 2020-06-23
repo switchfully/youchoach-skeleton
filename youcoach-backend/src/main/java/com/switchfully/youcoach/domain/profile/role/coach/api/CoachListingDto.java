@@ -1,4 +1,4 @@
-package com.switchfully.youcoach.domain.coach.api;
+package com.switchfully.youcoach.domain.profile.role.coach.api;
 
 
 import java.util.List;

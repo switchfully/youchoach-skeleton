@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {CoachService} from '../services/coach.service';
 import {ICoach} from '../interfaces/ICoach';
 import {ActivatedRoute} from '@angular/router';
+import {AuthenticationService} from "../../security/services/authentication/authentication.service";
 
 @Component({
   selector: 'app-coach-profile',
@@ -28,25 +29,16 @@ export class CoachProfileComponent implements OnInit {
 
   coachView = false;
 
-  constructor(private coachService: CoachService, private route: ActivatedRoute) {
+  constructor(private coachService: CoachService, private route: ActivatedRoute, public authenticationService: AuthenticationService) {
     this.idToGet = +this.route.snapshot.paramMap.get('id');
   }
 
   ngOnInit(): void {
-
     document.title = this.title;
-    if (this.idToGet !== 0) {
-      this.getSpecificCoach();
-    } else {
-      this.getCoach();
-    }
+    this.getSpecificCoach();
   }
 
   getSpecificCoach(): void {
     this.coachService.getSpecificCoach(this.idToGet).subscribe(coach => this.coach = coach);
-  }
-  getCoach(): void {
-    this.coachService.getCoach().subscribe(
-      coach => this.coach = coach);
   }
 }
