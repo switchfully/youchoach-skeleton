@@ -1,10 +1,11 @@
+alter table profile add role varchar default 'COACHEE' not null;
 alter table profile
-    add (
-        role varchar(255) default 'COACHEE' not null,
-        availability varchar(255),
-        introduction varchar(255),
-        xp integer
-        );
+    add availability varchar(255);
+alter table profile
+    add introduction varchar(255);
+alter table profile
+    add xp integer;
+
 
 update profile
     set role = 'COACH',
