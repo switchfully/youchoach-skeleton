@@ -1,5 +1,6 @@
 package com.switchfully.youcoach.security.authentication.jwt;
 
+import com.switchfully.youcoach.security.authentication.user.UserRoles;
 import com.switchfully.youcoach.security.authorization.Feature;
 import com.switchfully.youcoach.security.authorization.Role;
 import com.switchfully.youcoach.security.authorization.RoleToFeatureMapper;
@@ -69,7 +70,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
                 ArrayList<String> authoritiesInToken
                         = parsedToken.getBody().get("rol", ArrayList.class);
                 var authorities = authoritiesInToken.stream()
-                        .map(SimpleGrantedAuthority::new)
+                        .map(UserRoles::valueOf)
                         .collect(Collectors.toList());
 
                 if (!isEmpty(username)) {

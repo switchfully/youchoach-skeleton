@@ -9,6 +9,7 @@ import com.switchfully.youcoach.domain.profile.role.coach.api.CoachProfileDto;
 import com.switchfully.youcoach.security.authentication.user.api.CreateSecuredUserDto;
 import com.switchfully.youcoach.security.authentication.user.SecuredUserService;
 import com.switchfully.youcoach.security.authentication.user.UserRoles;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
@@ -93,7 +94,7 @@ class ProfileControllerTest {
         UsernamePasswordAuthenticationToken user = new UsernamePasswordAuthenticationToken("example@example.com", null, List.of(UserRoles.ROLE_COACHEE));
         String token = securedUserService.generateJwtToken(user);
 
-        String actualResult = mockMvc.perform(get("/users/profile").header("Authorization", "Bearer " + token)
+        String actualResult = mockMvc.perform(get("/users/profile/20").header("Authorization", "Bearer " + token)
                 //.with(csrf())
         )
                 .andExpect(status().isOk())
@@ -107,7 +108,42 @@ class ProfileControllerTest {
     @Test
     @Sql("classpath:oneDefaultUser.sql")
     void getSpecificCoacheeProfile() throws Exception {
-        UsernamePasswordAuthenticationToken user = new UsernamePasswordAuthenticationToken("example@example.com", null, List.of(UserRoles.ROLE_ADMIN));
+        UsernamePasswordAuthenticationToken user = new UsernamePasswordAuthenticationToken("example@example.com", null, List.of(UserRoles.ROLE_COACHEE));
+        String token = securedUserService.generateJwtToken(user);
+
+        String actualResult = mockMvc.perform(get("/users/profile/20")
+                .header("Authorization", "Bearer " + token)
+                .with(csrf())
+                .accept("application/json;charset=UTF-8")
+        )
+                .andExpect(status().isOk())
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
+        String expected = "{\"id\":20,\"firstName\":\"First\",\"lastName\":\"Last\",\"email\":\"example@example.com\",\"classYear\":\"1 - latin\",\"photoUrl\":\"/my/photo.png\"}";
+        JSONAssert.assertEquals(expected, actualResult, true);
+    }
+
+    @Test
+    @Sql("classpath:oneDefaultUser.sql")
+    @Sql("classpath:anotherDefaultUser.sql")
+    void getCoacheeWithOtherUser_forbidden_if_not_own_profile() throws Exception {
+        UsernamePasswordAuthenticationToken user = new UsernamePasswordAuthenticationToken("example2@example.com", null, List.of(UserRoles.ROLE_COACHEE));
+        String token = securedUserService.generateJwtToken(user);
+
+        mockMvc.perform(get("/users/profile/20")
+                .header("Authorization", "Bearer " + token)
+                .with(csrf())
+                .accept("application/json;charset=UTF-8")
+        )
+                .andExpect(status().isForbidden());
+    }
+
+    @Test
+    @Sql("classpath:oneDefaultUser.sql")
+    @Sql("classpath:anotherDefaultUser.sql")
+    void getCoacheeWithAdmin() throws Exception {
+        UsernamePasswordAuthenticationToken user = new UsernamePasswordAuthenticationToken("example2@example.com", null, List.of(UserRoles.ROLE_ADMIN));
         String token = securedUserService.generateJwtToken(user);
 
         String actualResult = mockMvc.perform(get("/users/profile/20")
@@ -131,7 +167,7 @@ class ProfileControllerTest {
         String token = securedUserService.generateJwtToken(user);
 
 
-        String actualResult = mockMvc.perform(get("/users/coach/profile")
+        String actualResult = mockMvc.perform(get("/users/coach/profile/20")
                 .header("Authorization", "Bearer " + token)
                 .with(csrf())
                 .accept("application/json;charset=UTF-8")

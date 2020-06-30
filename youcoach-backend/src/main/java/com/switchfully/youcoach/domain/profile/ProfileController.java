@@ -1,20 +1,22 @@
 package com.switchfully.youcoach.domain.profile;
 
+import com.switchfully.youcoach.domain.profile.api.ProfileDto;
+import com.switchfully.youcoach.domain.profile.api.ProfileUpdatedDto;
+import com.switchfully.youcoach.domain.profile.api.UpdateProfileDto;
 import com.switchfully.youcoach.domain.profile.role.coach.api.CoachListingDto;
 import com.switchfully.youcoach.domain.profile.role.coach.api.CoachProfileDto;
-import com.switchfully.youcoach.security.verification.api.ResendVerificationDto;
-import com.switchfully.youcoach.security.verification.PasswordResetService;
-import com.switchfully.youcoach.domain.profile.api.ProfileUpdatedDto;
-import com.switchfully.youcoach.domain.profile.api.ProfileDto;
 import com.switchfully.youcoach.security.authentication.user.api.CreateSecuredUserDto;
-import com.switchfully.youcoach.domain.profile.api.UpdateProfileDto;
 import com.switchfully.youcoach.security.authentication.user.api.SecuredUserDto;
+import com.switchfully.youcoach.security.authorization.AuthorizationService;
+import com.switchfully.youcoach.security.verification.PasswordResetService;
 import com.switchfully.youcoach.security.verification.api.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authentication.InsufficientAuthenticationException;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
@@ -25,14 +27,17 @@ import java.security.Principal;
 @RequestMapping(path = "/users")
 @CrossOrigin
 public class ProfileController {
-    private final ProfileService profileService;
     private final static Logger LOGGER = LoggerFactory.getLogger(ProfileController.class);
+
+    private final ProfileService profileService;
     private final PasswordResetService passwordResetService;
+    private final AuthorizationService authorizationService;
 
     @Autowired
-    public ProfileController(ProfileService profileService, PasswordResetService passwordResetService) {
+    public ProfileController(ProfileService profileService, PasswordResetService passwordResetService, AuthorizationService authorizationService) {
         this.profileService = profileService;
         this.passwordResetService = passwordResetService;
+        this.authorizationService = authorizationService;
     }
 
     @PostMapping(produces = "application/json", consumes = "application/json")
@@ -51,7 +56,10 @@ public class ProfileController {
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_COACHEE')")
     @GetMapping(produces = "application/json;charset=UTF-8", path = "/profile/{id}")
-    public ProfileDto getSpecificCoacheeProfile(@PathVariable("id") long id) {
+    public ProfileDto getSpecificCoacheeProfile(@PathVariable("id") long id, Authentication principal) {
+        if(!authorizationService.canAccessProfile(principal, id)) {
+            throw new InsufficientAuthenticationException("You don't have access to this profile");
+        }
         return profileService.getCoacheeProfile(id);
     }
 
@@ -61,16 +69,22 @@ public class ProfileController {
         return profileService.getCoachProfile(principal, id);
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_COACHEE', 'ROLE_ADMIN')")
     @PutMapping(produces = "application/json;charset=UTF-8", path = "/profile/{id}")
-    public ProfileUpdatedDto updateCoacheeProfile(@RequestBody UpdateProfileDto updateProfileDto, @PathVariable("id") long id) {
+    public ProfileUpdatedDto updateCoacheeProfile(@RequestBody UpdateProfileDto updateProfileDto, @PathVariable("id") long id, Authentication principal) {
+        if(!authorizationService.canAccessProfile(principal, id)) {
+            throw new InsufficientAuthenticationException("You don't have access to this profile");
+        }
         String email = profileService.getUserById(id).getEmail();
         return profileService.updateProfile(email, updateProfileDto);
     }
 
     @PreAuthorize("hasAnyRole('ROLE_COACH','ROLE_ADMIN')")
     @PutMapping(produces = "application/json;charset=UTF-8", path = "/coach/profile/{id}")
-    public CoachProfileDto updateCoachInformation(@RequestBody CoachProfileDto coachProfileDto, @PathVariable("id") long id) {
+    public CoachProfileDto updateCoachInformation(@RequestBody CoachProfileDto coachProfileDto, @PathVariable("id") long id, Authentication principal) {
+        if(!authorizationService.canAccessProfile(principal, id)) {
+            throw new InsufficientAuthenticationException("You don't have access to this profile");
+        }
         String email = profileService.getUserById(id).getEmail();
         return profileService.updateCoachInformation(email, coachProfileDto);
     }

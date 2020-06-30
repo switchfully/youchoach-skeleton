@@ -125,11 +125,6 @@ public class ProfileService {
         return profileMapper.toCoacheeProfileDto(profile);
     }
 
-    public ProfileDto getCoacheeProfile(String email){
-        Profile profile = assertUserExistsAndRetrieve(email);
-        return profileMapper.toCoacheeProfileDto(profile);
-    }
-
     public CoachProfileDto getCoachProfileForUser(Profile profile){
         return profileMapper.toCoachProfileDto(profile);
     }
