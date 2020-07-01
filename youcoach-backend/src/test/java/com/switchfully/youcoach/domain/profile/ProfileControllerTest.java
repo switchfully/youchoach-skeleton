@@ -2,14 +2,14 @@ package com.switchfully.youcoach.domain.profile;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.switchfully.youcoach.ApplicationTest;
+import com.switchfully.youcoach.domain.profile.api.RoleDto;
 import com.switchfully.youcoach.domain.profile.role.coach.CoachingTopic;
 import com.switchfully.youcoach.domain.profile.role.coach.Grade;
 import com.switchfully.youcoach.domain.profile.role.coach.Topic;
 import com.switchfully.youcoach.domain.profile.role.coach.api.CoachProfileDto;
 import com.switchfully.youcoach.security.authentication.user.api.CreateSecuredUserDto;
 import com.switchfully.youcoach.security.authentication.user.SecuredUserService;
-import com.switchfully.youcoach.security.authentication.user.UserRoles;
-import org.assertj.core.api.Assertions;
+import com.switchfully.youcoach.security.authentication.user.UserRole;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
@@ -91,7 +91,7 @@ class ProfileControllerTest {
     @Test
     @Sql("classpath:oneDefaultUser.sql")
     void getCoacheeProfile() throws Exception {
-        UsernamePasswordAuthenticationToken user = new UsernamePasswordAuthenticationToken("example@example.com", null, List.of(UserRoles.ROLE_COACHEE));
+        UsernamePasswordAuthenticationToken user = new UsernamePasswordAuthenticationToken("example@example.com", null, List.of(UserRole.ROLE_COACHEE));
         String token = securedUserService.generateJwtToken(user);
 
         String actualResult = mockMvc.perform(get("/users/profile/20").header("Authorization", "Bearer " + token)
@@ -101,14 +101,14 @@ class ProfileControllerTest {
                 .andReturn()
                 .getResponse()
                 .getContentAsString();
-        String expected = "{\"id\":20,\"firstName\":\"First\",\"lastName\":\"Last\",\"email\":\"example@example.com\",\"classYear\":\"1 - latin\",\"photoUrl\":\"/my/photo.png\"}";
+        String expected = "{\"id\":20,\"firstName\":\"First\",\"lastName\":\"Last\",\"email\":\"example@example.com\",\"classYear\":\"1 - latin\",\"photoUrl\":\"/my/photo.png\",\"youcoachRole\":{\"name\":\"COACHEE\",\"label\":\"enum.role.coachee\"}}";
         JSONAssert.assertEquals(expected, actualResult, true);
     }
 
     @Test
     @Sql("classpath:oneDefaultUser.sql")
     void getSpecificCoacheeProfile() throws Exception {
-        UsernamePasswordAuthenticationToken user = new UsernamePasswordAuthenticationToken("example@example.com", null, List.of(UserRoles.ROLE_COACHEE));
+        UsernamePasswordAuthenticationToken user = new UsernamePasswordAuthenticationToken("example@example.com", null, List.of(UserRole.ROLE_COACHEE));
         String token = securedUserService.generateJwtToken(user);
 
         String actualResult = mockMvc.perform(get("/users/profile/20")
@@ -120,7 +120,7 @@ class ProfileControllerTest {
                 .andReturn()
                 .getResponse()
                 .getContentAsString();
-        String expected = "{\"id\":20,\"firstName\":\"First\",\"lastName\":\"Last\",\"email\":\"example@example.com\",\"classYear\":\"1 - latin\",\"photoUrl\":\"/my/photo.png\"}";
+        String expected = "{\"id\":20,\"firstName\":\"First\",\"lastName\":\"Last\",\"email\":\"example@example.com\",\"classYear\":\"1 - latin\",\"photoUrl\":\"/my/photo.png\", \"youcoachRole\":{\"name\":\"COACHEE\",\"label\":\"enum.role.coachee\"}}";
         JSONAssert.assertEquals(expected, actualResult, true);
     }
 
@@ -128,7 +128,7 @@ class ProfileControllerTest {
     @Sql("classpath:oneDefaultUser.sql")
     @Sql("classpath:anotherDefaultUser.sql")
     void getCoacheeWithOtherUser_forbidden_if_not_own_profile() throws Exception {
-        UsernamePasswordAuthenticationToken user = new UsernamePasswordAuthenticationToken("example2@example.com", null, List.of(UserRoles.ROLE_COACHEE));
+        UsernamePasswordAuthenticationToken user = new UsernamePasswordAuthenticationToken("example2@example.com", null, List.of(UserRole.ROLE_COACHEE));
         String token = securedUserService.generateJwtToken(user);
 
         mockMvc.perform(get("/users/profile/20")
@@ -143,7 +143,7 @@ class ProfileControllerTest {
     @Sql("classpath:oneDefaultUser.sql")
     @Sql("classpath:anotherDefaultUser.sql")
     void getCoacheeWithAdmin() throws Exception {
-        UsernamePasswordAuthenticationToken user = new UsernamePasswordAuthenticationToken("example2@example.com", null, List.of(UserRoles.ROLE_ADMIN));
+        UsernamePasswordAuthenticationToken user = new UsernamePasswordAuthenticationToken("example2@example.com", null, List.of(UserRole.ROLE_ADMIN));
         String token = securedUserService.generateJwtToken(user);
 
         String actualResult = mockMvc.perform(get("/users/profile/20")
@@ -155,7 +155,7 @@ class ProfileControllerTest {
                 .andReturn()
                 .getResponse()
                 .getContentAsString();
-        String expected = "{\"id\":20,\"firstName\":\"First\",\"lastName\":\"Last\",\"email\":\"example@example.com\",\"classYear\":\"1 - latin\",\"photoUrl\":\"/my/photo.png\"}";
+        String expected = "{\"id\":20,\"firstName\":\"First\",\"lastName\":\"Last\",\"email\":\"example@example.com\",\"classYear\":\"1 - latin\",\"photoUrl\":\"/my/photo.png\",\"youcoachRole\":{\"name\":\"COACHEE\",\"label\":\"enum.role.coachee\"}}";
         JSONAssert.assertEquals(expected, actualResult, true);
     }
 
@@ -163,7 +163,7 @@ class ProfileControllerTest {
     @Sql("classpath:oneDefaultUser.sql")
     @Sql("classpath:makeUsersCoach.sql")
     void getCoachProfile() throws Exception {
-        UsernamePasswordAuthenticationToken user = new UsernamePasswordAuthenticationToken("example@example.com", null, List.of(UserRoles.ROLE_COACH));
+        UsernamePasswordAuthenticationToken user = new UsernamePasswordAuthenticationToken("example@example.com", null, List.of(UserRole.ROLE_COACH));
         String token = securedUserService.generateJwtToken(user);
 
 
@@ -186,7 +186,8 @@ class ProfileControllerTest {
                 .withFirstName("First")
                 .withLastName("Last")
                 .withId(20L)
-                .withClassYear("1 - latin"));
+                .withClassYear("1 - latin")
+                .withYoucoachRole(new RoleDto("COACH", "enum.role.coach")));
         JSONAssert.assertEquals(expected, actualResult, true);
     }
 

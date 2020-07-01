@@ -23,6 +23,8 @@ import { CoacheeComponent } from './template/coachee/coachee.component';
 import { CoachComponent } from './template/coach/coach.component';
 import { EnHomeComponent } from './template/home/en-home/en-home.component';
 import { FrHomeComponent } from './template/home/fr-home/fr-home.component';
+import {AdminModule} from "./admin/admin.module";
+import { AdminComponent } from './template/admin/admin.component';
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -40,6 +42,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     CoachComponent,
     EnHomeComponent,
     FrHomeComponent,
+    AdminComponent
   ],
 
   imports: [
@@ -64,7 +67,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     CustomFormsModule,
     SessionModule,
     SecurityModule,
-    ProfileModule
+    ProfileModule,
+    AdminModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: RedirectOnErrorInterceptor, multi: true}

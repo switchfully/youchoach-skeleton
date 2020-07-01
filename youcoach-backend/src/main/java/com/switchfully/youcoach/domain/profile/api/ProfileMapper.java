@@ -1,6 +1,7 @@
 package com.switchfully.youcoach.domain.profile.api;
 
 
+import com.switchfully.youcoach.domain.profile.role.Role;
 import com.switchfully.youcoach.domain.profile.role.coach.CoachInformation;
 import com.switchfully.youcoach.domain.profile.Profile;
 import com.switchfully.youcoach.domain.profile.role.coach.api.CoachListingDto;
@@ -36,6 +37,7 @@ public class ProfileMapper {
                 .withFirstName(model.getFirstName())
                 .withLastName(model.getLastName())
                 .withClassYear(model.getClassYear())
+                .withYoucoachRole(new RoleDto(model.getRole().name(), model.getRole().getLabel()))
                 .withPhotoUrl(model.getPhotoUrl());
     }
 
@@ -50,6 +52,7 @@ public class ProfileMapper {
                 .withFirstName(profile.getFirstName())
                 .withLastName(profile.getLastName())
                 .withClassYear(profile.getClassYear())
+                .withYoucoachRole(new RoleDto(profile.getRole().name(), profile.getRole().getLabel()))
                 .withPhotoUrl(profile.getPhotoUrl());
 
     }

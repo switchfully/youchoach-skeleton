@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.security.Principal;
+import java.util.List;
 
 @RestController
 @RequestMapping(path = "/users")
@@ -45,6 +46,12 @@ public class ProfileController {
     public SecuredUserDto createUser(@RequestBody CreateSecuredUserDto createValidatedUserDto) {
         LOGGER.info("user was added");
         return profileService.createUser(createValidatedUserDto);
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping(produces = "application/json;charset=UTF-8")
+    public List<ProfileDto> geProfiles() {
+        return profileService.getProfiles();
     }
 
     @PreAuthorize("hasRole('ROLE_COACHEE')")

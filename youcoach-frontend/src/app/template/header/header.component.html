@@ -58,12 +58,13 @@
 </header>
 <header *ngIf="authenticationService.isLoggedIn()">
   <nav class="white nav-extended" role="navigation">
-    <div class="nav-content" [ngClass]="{'teal lighten-3': isCoachMenu(), 'yellow darken-2': !isCoachMenu()}">
+    <div class="nav-content" [ngClass]="themeService.getTheme()">
       <div class="container">
         <ul class="tabs tabs-transparent">
           <li class="tab"><a class="grey-text text-darken-2" [routerLink]="'/coachee/profile/' + authenticationService.getUserId()" translate>menu.link.my-profile</a></li>
           <li class="tab"><a class="grey-text text-darken-2" routerLink="/coachee/find-coach" translate>menu.link.find-a-coach</a></li>
           <li class="tab" *ngIf="authenticationService.isCoach()"><a class="grey-text text-darken-2" [routerLink]="'/coach/coach-profile/' + authenticationService.getUserId()" translate>menu.link.my-coach-profile</a></li>
+          <li class="tab" *ngIf="authenticationService.isAdmin()"><a class="grey-text text-darken-2" [routerLink]="'/admin/overview'" translate>menu.link.admin-overview</a></li>
         </ul>
       </div>
     </div>

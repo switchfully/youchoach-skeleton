@@ -2,13 +2,10 @@ package com.switchfully.youcoach.security.authorization;
 
 import com.switchfully.youcoach.domain.profile.Profile;
 import com.switchfully.youcoach.domain.profile.ProfileRepository;
-import com.switchfully.youcoach.security.authentication.user.UserRoles;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
-import java.security.Principal;
-
-import static com.switchfully.youcoach.security.authentication.user.UserRoles.ROLE_ADMIN;
+import static com.switchfully.youcoach.security.authentication.user.UserRole.ROLE_ADMIN;
 
 @Service
 public class AuthorizationService {

@@ -23,32 +23,32 @@ public class SecuredUserServiceDatabaseBasedAuthoritiesTest {
     @Test
     public void defaultRegisteredUserIsCoacheeOnly(){
         Assertions.assertThat(securedUserService.determineGrantedAuthorities(getDefaultUser(Role.COACHEE)))
-                .containsExactly(UserRoles.ROLE_COACHEE);
+                .containsExactly(UserRole.ROLE_COACHEE);
     }
 
     @Test
     public void userIsAlsoCoachee(){
         Assertions.assertThat(securedUserService.determineGrantedAuthorities(getDefaultUser(Role.COACHEE)))
-                .contains(UserRoles.ROLE_COACHEE);
+                .contains(UserRole.ROLE_COACHEE);
 
     }
 
     @Test
     public void userIsAdminAndCoachee(){
         Assertions.assertThat(securedUserService.determineGrantedAuthorities(getDefaultUser(Role.ADMIN)))
-                .containsExactlyInAnyOrder(UserRoles.ROLE_COACHEE, UserRoles.ROLE_COACH, UserRoles.ROLE_ADMIN);
+                .containsExactlyInAnyOrder(UserRole.ROLE_COACHEE, UserRole.ROLE_COACH, UserRole.ROLE_ADMIN);
     }
 
     @Test
     public void userIsCoachAndCoachee(){
         Assertions.assertThat(securedUserService.determineGrantedAuthorities(getDefaultUser(Role.COACH)))
-                .containsExactlyInAnyOrder(UserRoles.ROLE_COACHEE, UserRoles.ROLE_COACH);
+                .containsExactlyInAnyOrder(UserRole.ROLE_COACHEE, UserRole.ROLE_COACH);
     }
 
     @Test
     public void userIsCoachAndCoacheeAndAdmin(){
         Assertions.assertThat(securedUserService.determineGrantedAuthorities(getDefaultUser(Role.ADMIN)))
-                .containsExactlyInAnyOrder(UserRoles.ROLE_COACHEE, UserRoles.ROLE_ADMIN, UserRoles.ROLE_COACH);
+                .containsExactlyInAnyOrder(UserRole.ROLE_COACHEE, UserRole.ROLE_ADMIN, UserRole.ROLE_COACH);
     }
 
 }

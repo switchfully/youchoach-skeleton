@@ -35,15 +35,21 @@ export class LoginComponent implements OnInit {
       .subscribe(
         (_ => {
           this.success = true;
-          if (this.authenticationService.isCoach()) {
-            this.router.navigateByUrl(`/coach/coach-profile/${this.authenticationService.getUserId()}`);
-          } else {
-            this.router.navigateByUrl(`/coachee/profile/${this.authenticationService.getUserId()}`);
-          }
+          this.router.navigateByUrl(this.getHomeUrl());
         }),
         (_ => this.error = true)
       );
     this.loginForm.reset();
+  }
+
+  private getHomeUrl() {
+    if(this.authenticationService.isAdmin()) {
+      return `/admin/overview`;
+    }
+    if (this.authenticationService.isCoach()) {
+      return `/coach/coach-profile/${this.authenticationService.getUserId()}`;
+    }
+    return `/coachee/profile/${this.authenticationService.getUserId()}`;
   }
 
   resetPassword() {

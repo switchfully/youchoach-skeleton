@@ -26,6 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.mail.MessagingException;
 import java.security.Principal;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
 
@@ -194,5 +195,9 @@ public class ProfileService {
         CoachListingDto cl = profileMapper.toCoachListingDto(coachList);
         cl.getCoaches().forEach(coach -> coach.setEmail(null));
         return cl;
+    }
+
+    public List<ProfileDto> getProfiles() {
+        return profileRepository.findAll().stream().map(profileMapper::toCoacheeProfileDto).collect(Collectors.toList());
     }
 }

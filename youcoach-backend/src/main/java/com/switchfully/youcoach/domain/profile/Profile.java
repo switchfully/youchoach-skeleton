@@ -3,12 +3,13 @@ package com.switchfully.youcoach.domain.profile;
 import com.switchfully.youcoach.domain.profile.role.Role;
 import com.switchfully.youcoach.domain.profile.role.coach.CoachInformation;
 import com.switchfully.youcoach.domain.profile.role.coach.CoachingTopic;
-import com.switchfully.youcoach.security.authentication.user.UserRoles;
+import com.switchfully.youcoach.security.authentication.user.UserRole;
 
 import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
 
+import static com.switchfully.youcoach.security.authentication.user.UserRole.*;
 import static javax.persistence.EnumType.STRING;
 
 @Entity
@@ -61,8 +62,12 @@ public class Profile {
     public Profile() {
     }
 
-    public List<UserRoles> getRoles() {
+    public List<UserRole> getRoles() {
         return role.getUserRoles();
+    }
+
+    public Role getRole(){
+        return role;
     }
 
     public long getId() {

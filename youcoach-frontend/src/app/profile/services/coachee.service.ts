@@ -25,7 +25,7 @@ export class CoacheeService {
 
   };
 
-  constructor(private http: HttpClient, private authenticationService: AuthenticationService) {
+  constructor(private http: HttpClient) {
   }
 
   register(coachee: ICoachee): Observable<ICoacheeRegisterResult> {

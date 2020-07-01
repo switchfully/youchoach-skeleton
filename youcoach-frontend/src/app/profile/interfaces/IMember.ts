@@ -4,6 +4,9 @@ export interface IMember {
   lastName: string;
   email: string;
   classYear: string;
-  youcoachRole: string;
+  youcoachRole: {
+    name: string,
+    label: string
+  };
   photoUrl: string;
 }

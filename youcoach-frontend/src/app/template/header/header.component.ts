@@ -3,6 +3,7 @@ import {AuthenticationService} from '../../security/services/authentication/auth
 import {TranslateService} from '@ngx-translate/core';
 import {ActivatedRoute} from '@angular/router';
 import * as M from 'materialize-css';
+import {ThemeService} from "../theme.service";
 
 @Component({
   selector: 'app-header',
@@ -13,7 +14,7 @@ export class HeaderComponent implements OnInit {
   username;
   language = 'en';
 
-  constructor(public authenticationService: AuthenticationService, private translate: TranslateService, private route: ActivatedRoute) {
+  constructor(public authenticationService: AuthenticationService, private translate: TranslateService, public themeService: ThemeService) {
   }
 
   ngOnInit(): void {
@@ -38,8 +39,4 @@ export class HeaderComponent implements OnInit {
     this.authenticationService.logout();
   }
 
-  isCoachMenu() {
-    const url: string = this.route.snapshot['_routerState'].url;
-    return url.indexOf('/coach/') !== -1;
-  }
 }

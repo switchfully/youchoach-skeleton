@@ -1,0 +1,11 @@
+tr.clickable-row {
+  cursor: pointer;
+}
+
+tr.clickable-row:hover {
+  -webkit-transition: background-color .25s ease;
+  transition: background-color .25s ease;
+}
+tr.clickable-row:focus {
+  outline: none;
+}

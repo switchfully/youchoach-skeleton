@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
+import {ThemeService} from "../theme.service";
 
 
 @Component({
@@ -9,17 +10,9 @@ import {ActivatedRoute} from "@angular/router";
 })
 export class FooterComponent implements OnInit {
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(public themeService: ThemeService) { }
 
 
   ngOnInit(): void {
-  }
-
-  calculateClass() {
-    const url: string = this.route.snapshot['_routerState'].url;
-    if (url.indexOf('/coach/') !== -1) {
-      return 'page-footer teal lighten-3';
-    }
-    return 'page-footer yellow darken-2';
   }
 }

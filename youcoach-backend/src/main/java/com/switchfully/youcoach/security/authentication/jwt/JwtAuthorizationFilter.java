@@ -1,9 +1,6 @@
 package com.switchfully.youcoach.security.authentication.jwt;
 
-import com.switchfully.youcoach.security.authentication.user.UserRoles;
-import com.switchfully.youcoach.security.authorization.Feature;
-import com.switchfully.youcoach.security.authorization.Role;
-import com.switchfully.youcoach.security.authorization.RoleToFeatureMapper;
+import com.switchfully.youcoach.security.authentication.user.UserRole;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.MalformedJwtException;
@@ -12,9 +9,7 @@ import io.jsonwebtoken.security.SignatureException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
@@ -70,7 +65,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
                 ArrayList<String> authoritiesInToken
                         = parsedToken.getBody().get("rol", ArrayList.class);
                 var authorities = authoritiesInToken.stream()
-                        .map(UserRoles::valueOf)
+                        .map(UserRole::valueOf)
                         .collect(Collectors.toList());
 
                 if (!isEmpty(username)) {

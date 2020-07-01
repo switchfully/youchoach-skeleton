@@ -1,0 +1,43 @@
+<main>
+  <section class="card-panel grey lighten-5">
+    <h5 translate>admin-overview.title</h5>
+    <div class="divider"></div>
+    <header>
+      <div class="input-field col l6 m12 s12">
+        <i class="material-icons prefix">search</i>
+        <input id="icon_prefix" type="text" class="validate" autocomplete="off" [(ngModel)]="searchText" (change)="performFiltering()">
+        <label for="icon_prefix" translate>admin-overview.label.search-profile</label>
+      </div>
+    </header>
+    <div class="row">
+      <div class="col l12 s12">
+        <table class="highlight responsive-table">
+          <thead>
+          <tr>
+            <th translate>admin-overview.label.first-name</th>
+            <th translate>admin-overview.label.last-name</th>
+            <th translate>admin-overview.label.role</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let profile of filteredProfiles" [routerLink]="getProfileUrl(profile)" class="clickable-row">
+            <td>{{profile.firstName}}</td>
+            <td>{{profile.lastName}}</td>
+            <td>
+              <a *ngIf="profile.youcoachRole.name === 'COACHEE'"
+                 class="waves-effect waves-light btn black-text yellow darken-2" translate>admin-overview.button.coachee<i
+                class="material-icons right">face</i></a>
+              <a *ngIf="profile.youcoachRole.name === 'COACH'"
+                 class="waves-effect waves-light btn black-text teal lighten-3" translate>admin-overview.button.coach<i
+                class="material-icons right">free_breakfast</i></a>
+              <a *ngIf="profile.youcoachRole.name === 'ADMIN'"
+                 class="waves-effect waves-light btn black-text brown lighten-2" translate>admin-overview.button.admin<i
+                class="material-icons right">event_seat</i></a>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+</main>

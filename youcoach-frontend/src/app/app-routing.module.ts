@@ -25,6 +25,8 @@ import {NotFoundComponent} from './template/not-found/not-found.component';
 import {SessionDetailComponent} from "./session/session-detail/session-detail.component";
 import {CoacheeComponent} from "./template/coachee/coachee.component";
 import {CoachComponent} from "./template/coach/coach.component";
+import {OverviewComponent} from "./admin/overview/overview.component";
+import {AdminComponent} from "./template/admin/admin.component";
 
 const routes: Routes = [
   {
@@ -54,6 +56,13 @@ const routes: Routes = [
       {path: 'edit-coach-information/:id', component: EditCoachInformationComponent},
       {path: 'coach-my-sessions', component: CoachMysessionsComponent},
       {path: 'session/:id', component: SessionDetailComponent},
+    ]
+  },
+  {
+    path: 'admin',
+    component: AdminComponent,
+    children: [
+      {path: 'overview', component: OverviewComponent}
     ]
   },
   {path: 'home', component: HomeComponent},

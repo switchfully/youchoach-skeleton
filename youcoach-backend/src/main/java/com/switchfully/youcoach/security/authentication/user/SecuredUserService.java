@@ -49,7 +49,7 @@ public class SecuredUserService implements UserDetailsService {
 
     public boolean isAdmin(String email){
         UserDetails ud = loadUserByUsername(email);
-        return ud.getAuthorities().contains(UserRoles.ROLE_ADMIN);
+        return ud.getAuthorities().contains(UserRole.ROLE_ADMIN);
     }
 
     public String generateAuthorizationBearerTokenForUser(String email) {

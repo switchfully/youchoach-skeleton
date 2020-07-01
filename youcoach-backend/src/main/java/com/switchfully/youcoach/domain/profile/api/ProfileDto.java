@@ -1,5 +1,7 @@
 package com.switchfully.youcoach.domain.profile.api;
 
+import com.switchfully.youcoach.security.authentication.user.UserRole;
+
 import java.util.Objects;
 
 public class ProfileDto {
@@ -9,30 +11,45 @@ public class ProfileDto {
     private String lastName;
     private String email;
     private String photoUrl;
+    private RoleDto youcoachRole;
 
     public ProfileDto withClassYear(String classYear) {
         this.classYear = classYear;
         return this;
     }
-    public ProfileDto withId(long id){
+
+    public ProfileDto withId(long id) {
         this.id = id;
         return this;
     }
-    public ProfileDto withFirstName(String firstName){
+
+    public ProfileDto withFirstName(String firstName) {
         this.firstName = firstName;
         return this;
     }
-    public ProfileDto withLastName(String lastName){
+
+    public ProfileDto withLastName(String lastName) {
         this.lastName = lastName;
         return this;
     }
-    public ProfileDto withEmail(String email){
+
+    public ProfileDto withEmail(String email) {
         this.email = email;
         return this;
     }
-    public ProfileDto withPhotoUrl(String photoUrl){
+
+    public ProfileDto withPhotoUrl(String photoUrl) {
         this.photoUrl = photoUrl;
         return this;
+    }
+
+    public ProfileDto withYoucoachRole(RoleDto youcoachRole) {
+        this.youcoachRole = youcoachRole;
+        return this;
+    }
+
+    public RoleDto getYoucoachRole() {
+        return youcoachRole;
     }
 
     public String getClassYear() {
@@ -54,14 +71,14 @@ public class ProfileDto {
     public String getEmail() {
         return email;
     }
-    public void setEmail(String email){
+
+    public void setEmail(String email) {
         this.email = email;
     }
 
-    public String getPhotoUrl(){
+    public String getPhotoUrl() {
         return photoUrl;
     }
-
 
 
     @Override
