@@ -6,7 +6,7 @@ public class UpdateProfileDto {
     private String lastName;
     private String email;
     private String photoUrl;
-    private String youcoachRole;
+    private RoleDto youcoachRole;
 
     public UpdateProfileDto() {
     }
@@ -31,7 +31,11 @@ public class UpdateProfileDto {
         return photoUrl;
     }
 
+    public RoleDto getYoucoachRole() {
+        return youcoachRole;
+    }
 
-
-
+    public void clearRole() {
+        youcoachRole = null;
+    }
 }

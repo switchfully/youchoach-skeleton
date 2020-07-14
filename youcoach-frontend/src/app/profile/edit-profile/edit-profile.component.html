@@ -48,6 +48,17 @@
                   <span [attr.data-error]="wrongemailformat.innerText" class="helper-text"></span>
                 </td>
               </tr>
+              <tr *ngIf="authenticationService.isAdmin()">
+                <td><strong translate>profile-information.label.role</strong></td>
+                <td formGroupName="youcoachRole">
+                  <select id="rol" formControlName="name">
+                    <option value="COACHEE" translate>profile-information.label.coachee</option>
+                    <option value="COACH" translate>profile-information.label.coach</option>
+                    <option value="ADMIN" translate>profile-information.label.admin</option>
+                  </select>
+                  <label for="rol">Select a role</label>
+                </td>
+              </tr>
               <tr>
                 <td><strong translate>profile-information.label.profile-picture</strong></td>
                 <td class="input-field">

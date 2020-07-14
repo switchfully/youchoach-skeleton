@@ -4,6 +4,7 @@ import {CoacheeService} from '../services/coachee.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AuthenticationService} from '../../security/services/authentication/authentication.service';
 import {Location} from "@angular/common";
+import * as M from 'materialize-css';
 
 @Component({
   selector: 'app-edit-profile',
@@ -18,13 +19,17 @@ export class EditProfileComponent implements OnInit {
     classYear: ['', [Validators.required]],
     email: ['', [Validators.required]],
     photoUrl: [''],
+    youcoachRole: this.fb.group({
+      name:[''],
+      label:['']
+    })
   });
   isEmailChanged = false;
   oldEmail = '';
   emailExistsError = false;
 
   constructor(private fb: FormBuilder, private coacheeService: CoacheeService, private router: Router,
-              private authenticationService: AuthenticationService, private route: ActivatedRoute, private location: Location) {
+              public authenticationService: AuthenticationService, private route: ActivatedRoute, private location: Location) {
   }
 
   ngOnInit(): void {
@@ -36,6 +41,7 @@ export class EditProfileComponent implements OnInit {
     this.coacheeService.getCoacheeById(id).subscribe(
       member => {
         this.editForm.patchValue(member);
+        M.AutoInit();
       }
     );
   }

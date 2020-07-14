@@ -19,4 +19,8 @@ public class AuthorizationService {
     public boolean canAccessProfile(Authentication authentication, long profileIdentifier) {
         return authentication.getAuthorities().contains(ROLE_ADMIN) || profileRepository.findByEmail(authentication.getName()).map(Profile::getId).map(id -> id.equals(profileIdentifier)).orElse(false);
     }
+
+    public boolean canChangeRole(Authentication authentication) {
+        return authentication.getAuthorities().contains(ROLE_ADMIN);
+    }
 }

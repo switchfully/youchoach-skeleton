@@ -1,11 +1,9 @@
 package com.switchfully.youcoach.domain.profile;
 
 
-import com.switchfully.youcoach.domain.profile.api.ProfileDto;
-import com.switchfully.youcoach.domain.profile.api.ProfileMapper;
-import com.switchfully.youcoach.domain.profile.api.ProfileUpdatedDto;
-import com.switchfully.youcoach.domain.profile.api.UpdateProfileDto;
+import com.switchfully.youcoach.domain.profile.api.*;
 import com.switchfully.youcoach.domain.profile.exception.ProfileIdNotFoundException;
+import com.switchfully.youcoach.domain.profile.role.Role;
 import com.switchfully.youcoach.domain.profile.role.coach.api.CoachListingDto;
 import com.switchfully.youcoach.domain.profile.role.coach.api.CoachProfileDto;
 import com.switchfully.youcoach.domain.profile.role.coach.exception.CoachNotFoundException;
@@ -64,14 +62,14 @@ public class ProfileService {
         accountVerificator.createAccountVerification(newProfile);
         try {
             accountVerificator.sendVerificationEmail(newProfile);
-        } catch (MessagingException ex){
+        } catch (MessagingException ex) {
             newProfile.setAccountEnabled(true);
             accountVerificator.removeAccountVerification(newProfile);
         }
         return profileMapper.toUserDto(newProfile);
     }
 
-    public ProfileUpdatedDto updateProfile(String email, UpdateProfileDto updateProfileDto){
+    public ProfileUpdatedDto updateProfile(String email, UpdateProfileDto updateProfileDto) {
         performUpdateValidation(email, updateProfileDto);
         Profile profile = assertUserExistsAndRetrieve(email);
         profile.setEmail(updateProfileDto.getEmail());
@@ -79,15 +77,19 @@ public class ProfileService {
         profile.setLastName(updateProfileDto.getLastName());
         profile.setClassYear(updateProfileDto.getClassYear());
         profile.setPhotoUrl(updateProfileDto.getPhotoUrl());
+        if (updateProfileDto.getYoucoachRole() != null) {
+            profile.setRole(Role.valueOf(updateProfileDto.getYoucoachRole().getName()));
+        }
 
         ProfileUpdatedDto cpu = (ProfileUpdatedDto) new ProfileUpdatedDto()
                 .withEmail(updateProfileDto.getEmail())
                 .withFirstName(updateProfileDto.getFirstName())
                 .withLastName(updateProfileDto.getLastName())
                 .withPhotoUrl(updateProfileDto.getPhotoUrl())
-                .withClassYear(updateProfileDto.getClassYear());
+                .withClassYear(updateProfileDto.getClassYear())
+                .withYoucoachRole(new RoleDto(profile.getRole().name(), profile.getRole().getLabel()));
 
-        if(!email.equals(updateProfileDto.getEmail())) {
+        if (!email.equals(updateProfileDto.getEmail())) {
             cpu.setToken(securedUserService.generateAuthorizationBearerTokenForUser(updateProfileDto.getEmail()));
         }
         return cpu;
@@ -102,7 +104,7 @@ public class ProfileService {
         return profileMapper.toUserDto(profileRepository.findAll());
     }
 
-    public boolean emailExists(String email){
+    public boolean emailExists(String email) {
         return profileRepository.existsByEmail(email);
     }
 
@@ -115,37 +117,39 @@ public class ProfileService {
             throw new IllegalStateException("Password needs te be 8 characters : --> 1 capital, 1 lowercase and 1 one number ");
         }
     }
+
     public void performUpdateValidation(String email, UpdateProfileDto updateProfileDto) {
         if (!email.equalsIgnoreCase(updateProfileDto.getEmail()) && emailExists(updateProfileDto.getEmail())) {
-        throw new IllegalStateException("Email already exists!");
+            throw new IllegalStateException("Email already exists!");
+        }
     }
-}
 
-    public ProfileDto getCoacheeProfile(long id){
+    public ProfileDto getCoacheeProfile(long id) {
         Profile profile = assertUserExistsAndRetrieve(id);
         return profileMapper.toCoacheeProfileDto(profile);
     }
 
-    public CoachProfileDto getCoachProfileForUser(Profile profile){
+    public CoachProfileDto getCoachProfileForUser(Profile profile) {
         return profileMapper.toCoachProfileDto(profile);
     }
-    public CoachProfileDto getCoachProfileForUserWithEmail(String email){
+
+    public CoachProfileDto getCoachProfileForUserWithEmail(String email) {
         Profile coach = assertCoachExistsAndRetrieve(email);
         return profileMapper.toCoachProfileDto(coach);
     }
 
-    public CoachProfileDto updateCoachInformation(String email, CoachProfileDto coachProfileDto){
+    public CoachProfileDto updateCoachInformation(String email, CoachProfileDto coachProfileDto) {
         Profile profile = assertCoachExistsAndRetrieve(email);
         profile.setIntroduction(coachProfileDto.getIntroduction());
         profile.setAvailability(coachProfileDto.getAvailability());
         return coachProfileDto;
     }
 
-    public Profile assertCoachExistsAndRetrieve(String email){
+    public Profile assertCoachExistsAndRetrieve(String email) {
         return profileRepository.findByEmail(email).orElseThrow(CoachNotFoundException::new);
     }
 
-    public CoachProfileDto getCoachProfile(Principal principal, long id){
+    public CoachProfileDto getCoachProfile(Principal principal, long id) {
         Profile coach = assertCoachExistsAndRetrieve(id);
         CoachProfileDto coachDto = profileMapper.toCoachProfileDto(coach);
 
@@ -155,22 +159,24 @@ public class ProfileService {
     }
 
     private void obliterateEmailForNonAdminsAndStrangers(Principal principal, CoachProfileDto coach) {
-        if(!securedUserService.isAdmin(principal.getName()) && !coach.getEmail().equals(principal.getName())) coach.setEmail(null);
+        if (!securedUserService.isAdmin(principal.getName()) && !coach.getEmail().equals(principal.getName()))
+            coach.setEmail(null);
     }
 
-    public Profile assertCoachExistsAndRetrieve(long id){
+    public Profile assertCoachExistsAndRetrieve(long id) {
         return profileRepository.findById(id).orElseThrow(CoachNotFoundException::new);
     }
 
     private Profile assertUserExistsAndRetrieve(long id) {
         return profileRepository.findById(id).orElseThrow(ProfileIdNotFoundException::new);
     }
-    private Profile assertUserExistsAndRetrieve(final String email){
+
+    private Profile assertUserExistsAndRetrieve(final String email) {
         return profileRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException(email));
     }
 
     public VerificationResultDto validateAccount(ValidateAccountDto validationData) {
-        if(validationDataDoesNotMatch(validationData)) return new VerificationResultDto(false);
+        if (validationDataDoesNotMatch(validationData)) return new VerificationResultDto(false);
 
         accountVerificator.enableAccount(validationData.getEmail());
         return new VerificationResultDto(true);
@@ -180,7 +186,7 @@ public class ProfileService {
         return !accountVerificator.doesVerificationCodeMatch(validationData.getVerificationCode(), validationData.getEmail());
     }
 
-    public ResendVerificationDto resendValidation(ResendVerificationDto validationData){
+    public ResendVerificationDto resendValidation(ResendVerificationDto validationData) {
         boolean result = accountVerificator.resendVerificationEmailFor(validationData.getEmail());
         validationData.setValidationBeenResend(result);
         return validationData;

@@ -7,7 +7,7 @@
                 routerLink="/coachee/coach-profile/{{coach.id}}/request-a-session" translate>
           request-session.button.request-session<i
           class="material-icons right">event</i></button>
-        <a class="waves-effect waves-light btn-large btn-floating yellow darken-2"><i
+        <a *ngIf="authenticationService.isAdmin()" class="waves-effect waves-light btn-large btn-floating yellow darken-2"><i
           class="material-icons left" [routerLink]="'/coachee/edit-profile/' + coach.id">edit</i>Edit</a>
       </div>
       <h5 translate>my-profile-menu.link.profile-information</h5>

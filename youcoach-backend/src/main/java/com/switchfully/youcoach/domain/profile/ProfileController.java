@@ -77,10 +77,13 @@ public class ProfileController {
     }
 
     @PreAuthorize("hasAnyRole('ROLE_COACHEE', 'ROLE_ADMIN')")
-    @PutMapping(produces = "application/json;charset=UTF-8", path = "/profile/{id}")
+    @PutMapping(produces = "application/json;charset=UTF-8", consumes = "application/json", path = "/profile/{id}")
     public ProfileUpdatedDto updateCoacheeProfile(@RequestBody UpdateProfileDto updateProfileDto, @PathVariable("id") long id, Authentication principal) {
         if(!authorizationService.canAccessProfile(principal, id)) {
             throw new InsufficientAuthenticationException("You don't have access to this profile");
+        }
+        if(!authorizationService.canChangeRole(principal)) {
+            updateProfileDto.clearRole();
         }
         String email = profileService.getUserById(id).getEmail();
         return profileService.updateProfile(email, updateProfileDto);
