@@ -2,14 +2,13 @@ package com.switchfully.youcoach.domain.profile;
 
 import com.switchfully.youcoach.domain.profile.role.Role;
 import com.switchfully.youcoach.domain.profile.role.coach.CoachInformation;
-import com.switchfully.youcoach.domain.profile.role.coach.CoachingTopic;
+import com.switchfully.youcoach.domain.profile.role.coach.Topic;
 import com.switchfully.youcoach.security.authentication.user.UserRole;
 
 import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
 
-import static com.switchfully.youcoach.security.authentication.user.UserRole.*;
 import static javax.persistence.EnumType.STRING;
 
 @Entity
@@ -150,7 +149,7 @@ public class Profile {
         return coachInformation.getXp();
     }
 
-    public List<CoachingTopic> getTopics() {
+    public List<Topic> getTopics() {
         return coachInformation.getTopics();
     }
 
@@ -162,7 +161,7 @@ public class Profile {
         coachInformation.setXp(xp);
     }
 
-    public void setTopics(List<CoachingTopic> topics) {
+    public void setTopics(List<Topic> topics) {
         coachInformation.setTopics(topics);
     }
 

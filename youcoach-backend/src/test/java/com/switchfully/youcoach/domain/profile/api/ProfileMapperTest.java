@@ -1,9 +1,7 @@
 package com.switchfully.youcoach.domain.profile.api;
 
-import com.switchfully.youcoach.domain.profile.role.coach.CoachInformation;
-import com.switchfully.youcoach.domain.profile.role.coach.CoachingTopic;
-import com.switchfully.youcoach.domain.profile.role.coach.Grade;
 import com.switchfully.youcoach.domain.profile.role.coach.Topic;
+import com.switchfully.youcoach.domain.profile.role.coach.Grade;
 import com.switchfully.youcoach.domain.profile.Profile;
 import com.switchfully.youcoach.security.authentication.user.api.SecuredUserDto;
 import com.switchfully.youcoach.domain.profile.role.coach.api.CoachListingDto;
@@ -46,9 +44,9 @@ public class ProfileMapperTest {
         profile.setXp(100);
         profile.setAvailability("Whenever you want.");
         profile.setIntroduction("Endorsed by your mom.");
-        List<CoachingTopic> topics = new ArrayList<>();
-        topics.add(new CoachingTopic(new Topic("Algebra"),List.of(Grade.FOUR, Grade.FIVE)));
-        topics.add(new CoachingTopic(new Topic("French"),List.of(Grade.FIVE, Grade.SIX)));
+        List<Topic> topics = new ArrayList<>();
+        topics.add(new Topic("Algebra", List.of(Grade.FOUR, Grade.FIVE)));
+        topics.add(new Topic("French", List.of(Grade.FIVE, Grade.SIX)));
         profile.setTopics(topics);
 
         CoachProfileDto expected = (CoachProfileDto) new CoachProfileDto()
@@ -75,9 +73,9 @@ public class ProfileMapperTest {
         profile.setXp(100);
         profile.setAvailability("Whenever you want.");
         profile.setIntroduction("Endorsed by your mom.");
-        List<CoachingTopic> topics = new ArrayList<>();
-        topics.add(new CoachingTopic(new Topic("Algebra"),List.of(Grade.FOUR, Grade.FIVE)));
-        topics.add(new CoachingTopic(new Topic("French"),List.of(Grade.FIVE, Grade.SIX)));
+        List<Topic> topics = new ArrayList<>();
+        topics.add(new Topic("Algebra", List.of(Grade.FOUR, Grade.FIVE)));
+        topics.add(new Topic("French", List.of(Grade.FIVE, Grade.SIX)));
         profile.setTopics(topics);
 
         CoachListingEntryDto cpd = new CoachListingEntryDto()

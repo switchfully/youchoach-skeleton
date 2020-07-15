@@ -100,10 +100,6 @@ public class ProfileService {
         return profileMapper.toUserDto(profileRepository.findById(id).get());
     }
 
-    public List<SecuredUserDto> getAllusers() {
-        return profileMapper.toUserDto(profileRepository.findAll());
-    }
-
     public boolean emailExists(String email) {
         return profileRepository.existsByEmail(email);
     }

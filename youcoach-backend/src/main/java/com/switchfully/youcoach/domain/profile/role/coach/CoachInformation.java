@@ -15,13 +15,9 @@ public class CoachInformation {
     @Column(name = "xp")
     private Integer xp = 0;
 
-    @ManyToMany
-    @JoinTable(
-            name = "COACHES_TOPICS",
-            joinColumns = { @JoinColumn(name = "coach_id") },
-            inverseJoinColumns = { @JoinColumn(name = "topics_id") }
-    )
-    private List<CoachingTopic> topics = new ArrayList<>();
+    @OneToMany
+    @JoinColumn(name = "profile_id")
+    private List<Topic> topics = new ArrayList<>();
 
     public CoachInformation() {
     }
@@ -50,11 +46,11 @@ public class CoachInformation {
         this.availability = availability;
     }
 
-    public List<CoachingTopic> getTopics() {
+    public List<Topic> getTopics() {
         return topics;
     }
 
-    public void setTopics(List<CoachingTopic> topics) {
+    public void setTopics(List<Topic> topics) {
         this.topics = topics;
     }
 

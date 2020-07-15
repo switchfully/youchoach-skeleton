@@ -1,6 +1,6 @@
 package com.switchfully.youcoach.domain.profile.role.coach.api;
 
-import com.switchfully.youcoach.domain.profile.role.coach.CoachingTopic;
+import com.switchfully.youcoach.domain.profile.role.coach.Topic;
 import com.switchfully.youcoach.domain.profile.role.coach.Grade;
 
 import java.util.ArrayList;
@@ -42,13 +42,13 @@ public class CoachListingEntryDto {
         return this;
     }
 
-    public CoachListingEntryDto withCoachingTopics(List<CoachingTopic> topics){
+    public CoachListingEntryDto withCoachingTopics(List<Topic> topics){
         this.topics.clear();
-        for(CoachingTopic topic: topics){
-            this.topics.add(new CoachingTopicDto(topic.getTopic().getName(),
+        for(Topic topic: topics){
+            this.topics.add(new CoachingTopicDto(topic.getName(),
                     topic.getGrades()
                             .stream()
-                            .map(Grade::ordinal)
+                            .map(Grade::getGrade)
                             .collect(Collectors.toList())
             ));
         }

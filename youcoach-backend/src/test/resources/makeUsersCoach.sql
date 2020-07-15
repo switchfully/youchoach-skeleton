@@ -6,13 +6,6 @@ set role = 'COACH',
     introduction = 'Endorsed by your mom.'
 where id = 20;
 
-INSERT INTO topics (topic_id, name)
-VALUES (1, 'Algebra');
-INSERT INTO coaching_topic (id, topic_topic_id)
-VALUES (1, 1);
-INSERT INTO coaches_topics (coach_id, topics_id)
-VALUES (20, 1); -- Algebra
-INSERT INTO coaching_topic_grades (coaching_topic_id, grades)
-VALUES (1, 4);
-INSERT INTO coaching_topic_grades (coaching_topic_id, grades)
-VALUES (1, 3);
+INSERT INTO topic (id, name, profile_id) VALUES (topic_seq.nextval, 'Algebra', 20);
+INSERT INTO grade (grade, topic_id) values (3, (select id from topic where name = 'Algebra' and profile_id = '20'));
+INSERT INTO grade (grade, topic_id) values (4, (select id from topic where name = 'Algebra' and profile_id = '20'));
