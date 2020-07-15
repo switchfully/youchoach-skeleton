@@ -1,0 +1,32 @@
+<div class="col s12 m10">
+  <div class="content-container">
+
+    <section class="card-panel grey lighten-5">
+      <h5>Edit profile Information</h5>
+      <div class="divider"></div>
+      <div class="row">
+        <form [formGroup]="notUsedForm" (ngSubmit)="onSubmit()">
+          <table class="highlight" *ngIf="topics">
+            <tbody>
+            <tr *ngFor="let topic of topics">
+              <td><strong>{{topic.name}}</strong></td>
+              <td>
+                <div>
+                  <a *ngFor="let index of [1,2,3,4,5,6,7]" class="btn-floating " (click)="toggle(topic, index)" [class.disabled]="!topic.grades.includes(index)"><i class="material-icons">{{'filter_' + index}}</i></a>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="right-align" colspan="2">
+                <button style="margin-right: 30px" class="waves-effect waves-light teal lighten-3 btn-large black-text" (click)="onBack()" translate>profile-information.button.cancel<i class="material-icons right">cancel</i>
+                </button>
+                <button class="waves-effect waves-light yellow darken-2 btn-large black-text" type="submit" translate>profile-information.button.save<i class="material-icons right">save</i></button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </form>
+      </div>
+    </section>
+  </div>
+</div>

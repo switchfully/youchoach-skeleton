@@ -1,0 +1,5 @@
+.btn-floating.disabled,
+.btn-floating[disabled] {
+  pointer-events: inherit;
+  cursor: pointer;
+}
