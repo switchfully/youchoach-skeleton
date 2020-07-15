@@ -11,7 +11,6 @@ create table topic (
     primary key (id)
 );
 
-create sequence grade_seq increment by 1 start with 1;
 create table grade(
     grade varchar(255) not null,
     topic_id integer not null,
