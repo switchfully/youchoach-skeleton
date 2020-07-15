@@ -7,7 +7,7 @@ create sequence topic_seq increment by 1 start with 1;
 create table topic (
     id integer not null,
     name varchar(255) not null,
-    profile_id integer not null,
+    profile_id integer,
     primary key (id)
 );
 

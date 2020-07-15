@@ -3,6 +3,7 @@ package com.switchfully.youcoach.domain.profile.role.coach;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Embeddable
 public class CoachInformation {
@@ -15,7 +16,7 @@ public class CoachInformation {
     @Column(name = "xp")
     private Integer xp = 0;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "profile_id")
     private List<Topic> topics = new ArrayList<>();
 
@@ -54,21 +55,18 @@ public class CoachInformation {
         this.topics = topics;
     }
 
-    public void update(String introduction, String availability) {
-        this.introduction = introduction;
-        this.availability = availability;
-    }
-
     public void updateTopics(List<Topic> newTopics) {
         for (Topic newTopic : newTopics) {
-            if (topicDoesNotExistYet(newTopic)){
+            if (!listContainsTopic(newTopic, topics)){
                 topics.add(new Topic(newTopic.getName(), new ArrayList<>()));
             }
             topics.stream().filter(topic -> topic.getName().equals(newTopic.getName())).findFirst().ifPresent(topic -> topic.setGrades(newTopic.getGrades()));
         }
+
+        this.topics = topics.stream().filter(topic -> listContainsTopic(topic, newTopics)).collect(Collectors.toList());
     }
 
-    private boolean topicDoesNotExistYet(Topic newTopic) {
-        return topics.stream().noneMatch(topic -> topic.getName().equals(newTopic.getName()));
+    private boolean listContainsTopic(Topic newTopic, List<Topic> list) {
+        return list.stream().anyMatch(topic -> topic.getName().equals(newTopic.getName()));
     }
 }

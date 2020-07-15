@@ -165,6 +165,14 @@ public class Profile {
         coachInformation.setTopics(topics);
     }
 
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public void updateTopics(List<Topic> topics) {
+        coachInformation.updateTopics(topics);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -176,13 +184,5 @@ public class Profile {
     @Override
     public int hashCode() {
         return Objects.hash(id);
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
-    }
-
-    public void updateTopics(List<Topic> topics) {
-        coachInformation.updateTopics(topics);
     }
 }

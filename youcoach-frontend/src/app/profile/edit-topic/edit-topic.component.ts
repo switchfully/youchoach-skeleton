@@ -14,7 +14,8 @@ import {ProfileService} from "../../admin/services/profile.service";
 export class EditTopicComponent implements OnInit {
   private idToGet: number;
   topics: ITopic[];
-  notUsedForm = this.formBuilder.group({}); //I would like to use a form here but the complexity with nested formArrays is just too big. So this is here to stop angular from complaining.
+  newTopicForm = this.formBuilder.group({name: ['']}); //I would like to use a form here but the complexity with nested formArrays is just too big. So this is here to stop angular from complaining.
+  newTopicName: string;
 
   constructor(private activatedRoute: ActivatedRoute,
               private coachService: CoachService,
@@ -36,7 +37,7 @@ export class EditTopicComponent implements OnInit {
     }
   }
 
-  onSubmit() {
+  onSave() {
     this.coachService.updateTopics(this.idToGet, this.topics).subscribe(
       _ => this.onBack()
     )
@@ -45,4 +46,14 @@ export class EditTopicComponent implements OnInit {
   onBack() {
       this.location.back();
   }
+
+  addRow() {
+    this.topics.push({name:this.newTopicForm.get('name').value, grades: []});
+    this.newTopicForm.reset();
+  }
+
+  removeRow(index: number) {
+    this.topics.splice(index, 1);
+  }
+
 }

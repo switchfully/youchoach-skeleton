@@ -5,22 +5,40 @@
       <h5>Edit profile Information</h5>
       <div class="divider"></div>
       <div class="row">
-        <form [formGroup]="notUsedForm" (ngSubmit)="onSubmit()">
+        <form [formGroup]="newTopicForm" (ngSubmit)="addRow()">
           <table class="highlight" *ngIf="topics">
             <tbody>
-            <tr *ngFor="let topic of topics">
+            <tr *ngFor="let topic of topics; index as topicIndex">
               <td><strong>{{topic.name}}</strong></td>
               <td>
                 <div>
-                  <a *ngFor="let index of [1,2,3,4,5,6,7]" class="btn-floating " (click)="toggle(topic, index)" [class.disabled]="!topic.grades.includes(index)"><i class="material-icons">{{'filter_' + index}}</i></a>
+                  <a *ngFor="let index of [1,2,3,4,5,6,7]" class="btn-floating " (click)="toggle(topic, index)"
+                     [class.disabled]="!topic.grades.includes(index)"><i
+                    class="material-icons">{{'filter_' + index}}</i></a>
                 </div>
+              </td>
+              <td>
+                <button (click)="removeRow(topicIndex)" type="button" class="waves-effect btn-floating"><i
+                  class="material-icons">remove_circle</i></button>
               </td>
             </tr>
             <tr>
-              <td class="right-align" colspan="2">
-                <button style="margin-right: 30px" class="waves-effect waves-light teal lighten-3 btn-large black-text" (click)="onBack()" translate>profile-information.button.cancel<i class="material-icons right">cancel</i>
+              <td>
+                <label for="name">new topic name</label>
+                <input id="name" type="text" formControlName="name"/>
+              </td>
+              <td>
+                <button type="submit" class="waves-effect btn-floating"><i class="material-icons">add_circle</i>
                 </button>
-                <button class="waves-effect waves-light yellow darken-2 btn-large black-text" type="submit" translate>profile-information.button.save<i class="material-icons right">save</i></button>
+              </td>
+            </tr>
+            <tr>
+              <td class="right-align" colspan="3">
+                <button style="margin-right: 30px" class="waves-effect waves-light teal lighten-3 btn-large black-text"
+                        (click)="onBack()" translate>profile-information.button.cancel<i class="material-icons right">cancel</i>
+                </button>
+                <button class="waves-effect waves-light yellow darken-2 btn-large black-text" (click)="onSave()"
+                        translate>profile-information.button.save<i class="material-icons right">save</i></button>
               </td>
             </tr>
             </tbody>
