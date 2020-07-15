@@ -1,7 +1,7 @@
-drop table topics;
-drop table coaches_topics;
-drop table coaching_topic;
-drop table coaching_topic_grades;
+drop table if exists topics;
+drop table if exists coaches_topics;
+drop table if exists coaching_topic;
+drop table if exists coaching_topic_grades;
 
 create sequence topic_seq increment by 1 start with 1;
 create table topic (
