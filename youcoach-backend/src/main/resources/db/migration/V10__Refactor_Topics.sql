@@ -18,9 +18,9 @@ create table grade(
     primary key (grade, topic_id)
 );
 
-INSERT INTO topic (id, name, profile_id) VALUES (topic_seq.nextval, 'Algebra', 113);
-INSERT INTO topic (id, name, profile_id) VALUES (topic_seq.nextval, 'French', 113);
-INSERT INTO topic (id, name, profile_id) VALUES (topic_seq.nextval, 'Biology', 114);
+INSERT INTO topic (id, name, profile_id) VALUES (nextval('topic_seq'), 'Algebra', 113);
+INSERT INTO topic (id, name, profile_id) VALUES (nextval('topic_seq'), 'French', 113);
+INSERT INTO topic (id, name, profile_id) VALUES (nextval('topic_seq'), 'Biology', 114);
 
 INSERT INTO grade (grade, topic_id) values (3, (select id from topic where name = 'Algebra' and profile_id = '113'));
 INSERT INTO grade (grade, topic_id) values (4, (select id from topic where name = 'Algebra' and profile_id = '113'));
