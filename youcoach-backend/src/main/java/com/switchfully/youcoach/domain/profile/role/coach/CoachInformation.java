@@ -58,4 +58,17 @@ public class CoachInformation {
         this.introduction = introduction;
         this.availability = availability;
     }
+
+    public void updateTopics(List<Topic> newTopics) {
+        for (Topic newTopic : newTopics) {
+            if (topicDoesNotExistYet(newTopic)){
+                topics.add(new Topic(newTopic.getName(), new ArrayList<>()));
+            }
+            topics.stream().filter(topic -> topic.getName().equals(newTopic.getName())).findFirst().ifPresent(topic -> topic.setGrades(newTopic.getGrades()));
+        }
+    }
+
+    private boolean topicDoesNotExistYet(Topic newTopic) {
+        return topics.stream().noneMatch(topic -> topic.getName().equals(newTopic.getName()));
+    }
 }

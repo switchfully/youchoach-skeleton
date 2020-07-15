@@ -1,5 +1,7 @@
 package com.switchfully.youcoach.domain.profile.role.coach;
 
+import java.util.Arrays;
+
 public enum Grade {
     ZERO(0),
     ONE(1),
@@ -14,6 +16,10 @@ public enum Grade {
 
     Grade(int grade) {
         this.grade = grade;
+    }
+
+    public static Grade toGrade(Integer gradeNumber) {
+        return Arrays.stream(values()).filter(grade -> grade.getGrade() == gradeNumber).findFirst().orElseThrow(RuntimeException::new);
     }
 
     public int getGrade() {

@@ -35,6 +35,10 @@ public class Topic {
         return grades;
     }
 
+    public void setGrades(List<Grade> grades) {
+        this.grades = grades;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

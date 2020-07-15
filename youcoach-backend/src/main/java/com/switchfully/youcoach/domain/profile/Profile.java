@@ -65,7 +65,7 @@ public class Profile {
         return role.getUserRoles();
     }
 
-    public Role getRole(){
+    public Role getRole() {
         return role;
     }
 
@@ -180,5 +180,9 @@ public class Profile {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public void updateTopics(List<Topic> topics) {
+        coachInformation.updateTopics(topics);
     }
 }

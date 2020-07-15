@@ -10,6 +10,7 @@ import {SecurityModule} from "../security/security.module";
 import {ReactiveFormsModule} from "@angular/forms";
 import {RouterModule} from "@angular/router";
 import {TranslateModule} from "@ngx-translate/core";
+import { EditTopicComponent } from './edit-topic/edit-topic.component';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import {TranslateModule} from "@ngx-translate/core";
     CoachProfileComponent,
     EditProfileComponent,
     EditCoachInformationComponent,
-    ChangeTopicsComponent
+    ChangeTopicsComponent,
+    EditTopicComponent
   ],
   imports: [
     SecurityModule,

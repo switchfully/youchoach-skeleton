@@ -6,6 +6,7 @@ import com.switchfully.youcoach.domain.profile.exception.ProfileIdNotFoundExcept
 import com.switchfully.youcoach.domain.profile.role.Role;
 import com.switchfully.youcoach.domain.profile.role.coach.api.CoachListingDto;
 import com.switchfully.youcoach.domain.profile.role.coach.api.CoachProfileDto;
+import com.switchfully.youcoach.domain.profile.role.coach.api.CoachingTopicDto;
 import com.switchfully.youcoach.domain.profile.role.coach.exception.CoachNotFoundException;
 import com.switchfully.youcoach.security.authentication.user.SecuredUserService;
 import com.switchfully.youcoach.security.authentication.user.api.CreateSecuredUserDto;
@@ -201,5 +202,9 @@ public class ProfileService {
 
     public List<ProfileDto> getProfiles() {
         return profileRepository.findAll().stream().map(profileMapper::toCoacheeProfileDto).collect(Collectors.toList());
+    }
+
+    public void updateTopics(long id, List<CoachingTopicDto> topicDtos) {
+        profileRepository.findById(id).ifPresent(profile -> profile.updateTopics(profileMapper.toTopic(topicDtos)));
     }
 }

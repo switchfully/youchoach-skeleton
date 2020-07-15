@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {ICoach} from '../interfaces/ICoach';
+import {ICoach, ITopic} from '../interfaces/ICoach';
 import {ICoachList} from '../interfaces/ICoachList';
 import {environment} from "../../../environments/environment";
 
@@ -27,5 +27,9 @@ export class CoachService {
 
   getAllCoaches(): Observable<ICoachList> {
     return this.http.get<ICoachList>(this.url + '/find-coach');
+  }
+
+  updateTopics(idToGet: number, topics: ITopic[]): Observable<ICoachList> {
+    return this.http.put<ICoachList>(this.url + '/coach/profile/' + idToGet + '/topics', topics, this.httpOptions);
   }
 }

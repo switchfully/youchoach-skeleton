@@ -5,6 +5,7 @@ import com.switchfully.youcoach.domain.profile.api.ProfileUpdatedDto;
 import com.switchfully.youcoach.domain.profile.api.UpdateProfileDto;
 import com.switchfully.youcoach.domain.profile.role.coach.api.CoachListingDto;
 import com.switchfully.youcoach.domain.profile.role.coach.api.CoachProfileDto;
+import com.switchfully.youcoach.domain.profile.role.coach.api.CoachingTopicDto;
 import com.switchfully.youcoach.security.authentication.user.api.CreateSecuredUserDto;
 import com.switchfully.youcoach.security.authentication.user.api.SecuredUserDto;
 import com.switchfully.youcoach.security.authorization.AuthorizationService;
@@ -97,6 +98,12 @@ public class ProfileController {
         }
         String email = profileService.getUserById(id).getEmail();
         return profileService.updateCoachInformation(email, coachProfileDto);
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PutMapping(path = "/coach/profile/{id}/topics")
+    public void updateTopics(@RequestBody List<CoachingTopicDto> topicDtos, @PathVariable("id") long id) {
+        profileService.updateTopics(id, topicDtos);
     }
 
     @PreAuthorize("isAnonymous()")
