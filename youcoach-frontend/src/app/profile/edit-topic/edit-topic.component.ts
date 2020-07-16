@@ -1,8 +1,8 @@
-import {Component, OnInit} from '@angular/core';
-import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {ActivatedRoute, Router} from "@angular/router";
+import {AfterViewInit, Component, OnInit} from '@angular/core';
+import {FormBuilder} from "@angular/forms";
+import {ActivatedRoute} from "@angular/router";
 import {CoachService} from "../services/coach.service";
-import {ICoach, ITopic} from "../interfaces/ICoach";
+import {ITopic} from "../interfaces/ICoach";
 import {Location} from "@angular/common";
 import {ProfileService} from "../../admin/services/profile.service";
 
@@ -11,23 +11,36 @@ import {ProfileService} from "../../admin/services/profile.service";
   templateUrl: './edit-topic.component.html',
   styleUrls: ['./edit-topic.component.css']
 })
-export class EditTopicComponent implements OnInit {
+export class EditTopicComponent implements OnInit, AfterViewInit {
   private idToGet: number;
   topics: ITopic[];
-  newTopicForm = this.formBuilder.group({name: ['']}); //I would like to use a form here but the complexity with nested formArrays is just too big. So this is here to stop angular from complaining.
-  newTopicName: string;
+  newTopicForm = this.formBuilder.group({name: ['']});
 
   constructor(private activatedRoute: ActivatedRoute,
               private coachService: CoachService,
               private location: Location,
               private formBuilder: FormBuilder,
-  ) {}
+              private profileService: ProfileService
+  ) {
+  }
 
   ngOnInit(): void {
     this.idToGet = +this.activatedRoute.snapshot.paramMap.get('id');
     this.coachService.getSpecificCoach(this.idToGet).subscribe(coach => this.topics = coach.topics);
   }
 
+  ngAfterViewInit(): void {
+    this.profileService.getAllTopics().subscribe(
+      topics => {
+        const data = {};
+        for (let topic of topics) {
+          data['' + topic] = null;
+        }
+        setTimeout(() => {
+          $('input.autocomplete').autocomplete({data});
+        }, 1000);
+      });
+  }
 
   toggle(topic: ITopic, number: number) {
     if (topic.grades.includes(number)) {
@@ -44,11 +57,11 @@ export class EditTopicComponent implements OnInit {
   }
 
   onBack() {
-      this.location.back();
+    this.location.back();
   }
 
   addRow() {
-    this.topics.push({name:this.newTopicForm.get('name').value, grades: []});
+    this.topics.push({name: this.newTopicForm.get('name').value, grades: []});
     this.newTopicForm.reset();
   }
 
@@ -56,4 +69,7 @@ export class EditTopicComponent implements OnInit {
     this.topics.splice(index, 1);
   }
 
+  updateValue(name: string) {
+   this.newTopicForm.patchValue({name});
+  }
 }

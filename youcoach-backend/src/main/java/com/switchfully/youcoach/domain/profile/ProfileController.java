@@ -106,6 +106,11 @@ public class ProfileController {
         profileService.updateTopics(id, topicDtos);
     }
 
+    @GetMapping(path = "/topics")
+    public List<String> topicList() {
+        return profileService.getAllTopics();
+    }
+
     @PreAuthorize("isAnonymous()")
     @PostMapping(consumes = "application/json;charset=UTF-8", produces = "application/json;charset=UTF-8", path = "/validate")
     public VerificationResultDto validateAccount(@RequestBody ValidateAccountDto validationData) {

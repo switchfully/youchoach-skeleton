@@ -2,10 +2,10 @@
   <div class="content-container">
 
     <section class="card-panel grey lighten-5">
-      <h5>Edit profile Information</h5>
+      <h5>edit-topic.title</h5>
       <div class="divider"></div>
       <div class="row">
-        <form [formGroup]="newTopicForm" (ngSubmit)="addRow()">
+        <form [formGroup]="newTopicForm" (ngSubmit)="addRow()" autocomplete="off">
           <table class="highlight" *ngIf="topics">
             <tbody>
             <tr *ngFor="let topic of topics; index as topicIndex">
@@ -24,8 +24,10 @@
             </tr>
             <tr>
               <td>
-                <label for="name">new topic name</label>
-                <input id="name" type="text" formControlName="name"/>
+                <div class="input-field">
+                  <label for="name">edit-topic.label.new-topic</label>
+                  <input id="name" type="text" formControlName="name" class="autocomplete" (change)="updateValue(inputRef.value)" #inputRef/>
+                </div>
               </td>
               <td>
                 <button type="submit" class="waves-effect btn-floating"><i class="material-icons">add_circle</i>
@@ -35,10 +37,10 @@
             <tr>
               <td class="right-align" colspan="3">
                 <button style="margin-right: 30px" class="waves-effect waves-light teal lighten-3 btn-large black-text"
-                        (click)="onBack()" translate>profile-information.button.cancel<i class="material-icons right">cancel</i>
+                        (click)="onBack()" translate>edit-topic.button.cancel<i class="material-icons right">cancel</i>
                 </button>
                 <button class="waves-effect waves-light yellow darken-2 btn-large black-text" (click)="onSave()"
-                        translate>profile-information.button.save<i class="material-icons right">save</i></button>
+                        translate>edit-topic.button.save<i class="material-icons right">save</i></button>
               </td>
             </tr>
             </tbody>

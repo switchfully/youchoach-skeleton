@@ -4,6 +4,7 @@ package com.switchfully.youcoach.domain.profile;
 import com.switchfully.youcoach.domain.profile.api.*;
 import com.switchfully.youcoach.domain.profile.exception.ProfileIdNotFoundException;
 import com.switchfully.youcoach.domain.profile.role.Role;
+import com.switchfully.youcoach.domain.profile.role.coach.TopicRepository;
 import com.switchfully.youcoach.domain.profile.role.coach.api.CoachListingDto;
 import com.switchfully.youcoach.domain.profile.role.coach.api.CoachProfileDto;
 import com.switchfully.youcoach.domain.profile.role.coach.api.CoachingTopicDto;
@@ -38,6 +39,7 @@ public class ProfileService {
     private final PasswordEncoder passwordEncoder;
     private final AccountVerificator accountVerificator;
     private final SecuredUserService securedUserService;
+    private final TopicRepository topicRepository;
 
     @Autowired
     public ProfileService(ProfileRepository profileRepository,
@@ -45,14 +47,15 @@ public class ProfileService {
                           VerificationService verificationService,
                           PasswordEncoder passwordEncoder,
                           AccountVerificator accountVerificator,
-                          SecuredUserService securedUserService
-    ) {
+                          SecuredUserService securedUserService,
+                          TopicRepository topicRepository) {
         this.profileRepository = profileRepository;
         this.profileMapper = profileMapper;
         this.verificationService = verificationService;
         this.passwordEncoder = passwordEncoder;
         this.accountVerificator = accountVerificator;
         this.securedUserService = securedUserService;
+        this.topicRepository = topicRepository;
     }
 
     public SecuredUserDto createUser(CreateSecuredUserDto createSecuredUserDto) {
@@ -206,5 +209,9 @@ public class ProfileService {
 
     public void updateTopics(long id, List<CoachingTopicDto> topicDtos) {
         profileRepository.findById(id).ifPresent(profile -> profile.updateTopics(profileMapper.toTopic(topicDtos)));
+    }
+
+    public List<String> getAllTopics() {
+        return topicRepository.getAllTopics();
     }
 }

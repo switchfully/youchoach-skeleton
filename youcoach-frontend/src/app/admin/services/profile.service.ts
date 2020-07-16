@@ -26,4 +26,8 @@ export class ProfileService {
   getAllProfiles(): Observable<IMember[]> {
     return this.http.get<IMember[]>(this.url, this.httpOptions);
   }
+
+  getAllTopics(): Observable<String[]> {
+    return this.http.get<String[]>(this.url + '/topics', this.httpOptions);
+  }
 }
