@@ -2,7 +2,7 @@
   <div class="content-container">
 
     <section class="card-panel grey lighten-5">
-      <h5>edit-topic.title</h5>
+      <h5 translate>edit-topic.title</h5>
       <div class="divider"></div>
       <div class="row">
         <form [formGroup]="newTopicForm" autocomplete="off">
@@ -25,7 +25,7 @@
             <tr>
               <td>
                 <div class="input-field">
-                  <label for="name">edit-topic.label.new-topic</label>
+                  <label for="name" translate>edit-topic.label.new-topic</label>
                   <input id="name" type="text" formControlName="name" class="autocomplete" (keyup.enter)="addRow()" (change)="updateValue(inputRef.value)" #inputRef/>
                 </div>
               </td>
