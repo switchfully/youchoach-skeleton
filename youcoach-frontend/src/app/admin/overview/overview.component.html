@@ -17,6 +17,7 @@
             <tr>
               <th translate>admin-overview.label.first-name</th>
               <th translate>admin-overview.label.last-name</th>
+              <th translate>admin-overview.label.class</th>
               <th translate>admin-overview.label.role</th>
             </tr>
             </thead>
@@ -24,6 +25,7 @@
             <tr *ngFor="let profile of filteredProfiles" [routerLink]="getProfileUrl(profile)" class="clickable-row">
               <td>{{profile.firstName}}</td>
               <td>{{profile.lastName}}</td>
+              <td>{{profile.classYear}}</td>
               <td>
                 <a *ngIf="profile.youcoachRole.name === 'COACHEE'"
                    class="waves-effect waves-light btn black-text yellow darken-2" translate>admin-overview.button.coachee<i

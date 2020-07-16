@@ -33,10 +33,12 @@ export class OverviewComponent implements OnInit {
 
   performFiltering() {
     this.filteredProfiles = this.profiles;
-    if (this.searchText !== undefined && this.searchText.length > 2) {
+    if (this.searchText !== undefined) {
       this.filteredProfiles = this._filteredProfiles
-        .filter(profile => profile.firstName.toLowerCase().startsWith(this.searchText.toLowerCase()) ||
-          profile.lastName.toLowerCase().startsWith(this.searchText.toLowerCase())
+        .filter(profile =>
+          profile.firstName.toLowerCase().indexOf(this.searchText.toLowerCase()) !== -1||
+          profile.lastName.toLowerCase().indexOf(this.searchText.toLowerCase()) !== -1 ||
+          profile.classYear.toLowerCase().indexOf(this.searchText.toLowerCase()) !== -1
         );
     }
   }
