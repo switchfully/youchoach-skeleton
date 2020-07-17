@@ -3,9 +3,11 @@ package com.switchfully.youcoach.domain.profile;
 import com.switchfully.youcoach.domain.profile.api.ProfileDto;
 import com.switchfully.youcoach.domain.profile.api.ProfileUpdatedDto;
 import com.switchfully.youcoach.domain.profile.api.UpdateProfileDto;
+import com.switchfully.youcoach.domain.profile.image.ImageService;
 import com.switchfully.youcoach.domain.profile.role.coach.api.CoachListingDto;
 import com.switchfully.youcoach.domain.profile.role.coach.api.CoachProfileDto;
 import com.switchfully.youcoach.domain.profile.role.coach.api.CoachingTopicDto;
+import com.switchfully.youcoach.file.DBFile;
 import com.switchfully.youcoach.security.authentication.user.api.CreateSecuredUserDto;
 import com.switchfully.youcoach.security.authentication.user.api.SecuredUserDto;
 import com.switchfully.youcoach.security.authorization.AuthorizationService;
@@ -14,16 +16,28 @@ import com.switchfully.youcoach.security.verification.api.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.security.Principal;
 import java.util.List;
+
+import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
 @RestController
 @RequestMapping(path = "/users")
@@ -34,12 +48,14 @@ public class ProfileController {
     private final ProfileService profileService;
     private final PasswordResetService passwordResetService;
     private final AuthorizationService authorizationService;
+    private final ImageService imageService;
 
     @Autowired
-    public ProfileController(ProfileService profileService, PasswordResetService passwordResetService, AuthorizationService authorizationService) {
+    public ProfileController(ProfileService profileService, PasswordResetService passwordResetService, AuthorizationService authorizationService, ImageService imageService) {
         this.profileService = profileService;
         this.passwordResetService = passwordResetService;
         this.authorizationService = authorizationService;
+        this.imageService = imageService;
     }
 
     @PostMapping(produces = "application/json", consumes = "application/json")
@@ -65,7 +81,7 @@ public class ProfileController {
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_COACHEE')")
     @GetMapping(produces = "application/json;charset=UTF-8", path = "/profile/{id}")
     public ProfileDto getSpecificCoacheeProfile(@PathVariable("id") long id, Authentication principal) {
-        if(!authorizationService.canAccessProfile(principal, id)) {
+        if (!authorizationService.canAccessProfile(principal, id)) {
             throw new InsufficientAuthenticationException("You don't have access to this profile");
         }
         return profileService.getCoacheeProfile(id);
@@ -80,10 +96,10 @@ public class ProfileController {
     @PreAuthorize("hasAnyRole('ROLE_COACHEE', 'ROLE_ADMIN')")
     @PutMapping(produces = "application/json;charset=UTF-8", consumes = "application/json", path = "/profile/{id}")
     public ProfileUpdatedDto updateCoacheeProfile(@RequestBody UpdateProfileDto updateProfileDto, @PathVariable("id") long id, Authentication principal) {
-        if(!authorizationService.canAccessProfile(principal, id)) {
+        if (!authorizationService.canAccessProfile(principal, id)) {
             throw new InsufficientAuthenticationException("You don't have access to this profile");
         }
-        if(!authorizationService.canChangeRole(principal)) {
+        if (!authorizationService.canChangeRole(principal)) {
             updateProfileDto.clearRole();
         }
         String email = profileService.getUserById(id).getEmail();
@@ -93,7 +109,7 @@ public class ProfileController {
     @PreAuthorize("hasAnyRole('ROLE_COACH','ROLE_ADMIN')")
     @PutMapping(produces = "application/json;charset=UTF-8", path = "/coach/profile/{id}")
     public CoachProfileDto updateCoachInformation(@RequestBody CoachProfileDto coachProfileDto, @PathVariable("id") long id, Authentication principal) {
-        if(!authorizationService.canAccessProfile(principal, id)) {
+        if (!authorizationService.canAccessProfile(principal, id)) {
             throw new InsufficientAuthenticationException("You don't have access to this profile");
         }
         String email = profileService.getUserById(id).getEmail();
@@ -109,6 +125,22 @@ public class ProfileController {
     @GetMapping(path = "/topics")
     public List<String> topicList() {
         return profileService.getAllTopics();
+    }
+
+    @PostMapping(path = "/profile/{id}/image")
+    public void uploadImage(@RequestParam("profilePicture") MultipartFile file, @PathVariable("id") long id) {
+        imageService.uploadFile(id, file);
+    }
+
+    @GetMapping(path = "/profile/{id}/image")
+    public ResponseEntity<Resource> downloadImage(@PathVariable("id") long id) {
+            DBFile dbFile = imageService.downLoadFile(id);
+            Resource resource = new ByteArrayResource(dbFile.getData());
+
+            return ResponseEntity.ok().
+                    header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + dbFile.getOriginalFileName() + "\"")
+                    .header(HttpHeaders.CONTENT_TYPE, "image/png")
+                    .body(resource);
     }
 
     @PreAuthorize("isAnonymous()")

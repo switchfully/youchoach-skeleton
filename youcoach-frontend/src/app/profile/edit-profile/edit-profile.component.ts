@@ -27,6 +27,7 @@ export class EditProfileComponent implements OnInit {
   isEmailChanged = false;
   oldEmail = '';
   emailExistsError = false;
+  profileId = +this.route.snapshot.paramMap.get('id');
 
   constructor(private fb: FormBuilder, private coacheeService: CoacheeService, private router: Router,
               public authenticationService: AuthenticationService, private route: ActivatedRoute, private location: Location) {
@@ -34,7 +35,7 @@ export class EditProfileComponent implements OnInit {
 
   ngOnInit(): void {
     const url: string = this.route.snapshot['_routerState'].url;
-    this.getCoacheeByID(+this.route.snapshot.paramMap.get('id'));
+    this.getCoacheeByID(this.profileId);
   }
 
   getCoacheeByID(id: number): void {
@@ -73,4 +74,9 @@ export class EditProfileComponent implements OnInit {
     this.updateProfile(member);
   }
 
+  onFileChanged(file: File) {
+    this.coacheeService.uploadImage(this.profileId, file).subscribe(
+      event => console.log(event)
+    )
+  }
 }

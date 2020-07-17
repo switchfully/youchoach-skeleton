@@ -11,6 +11,7 @@ import {SecurityModule} from "../security/security.module";
 import {ReactiveFormsModule} from "@angular/forms";
 import {RouterModule} from "@angular/router";
 import {TranslateModule} from "@ngx-translate/core";
+import { AuthImagePipe } from './pipes/auth-image.pipe';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import {TranslateModule} from "@ngx-translate/core";
     EditProfileComponent,
     EditCoachInformationComponent,
     ChangeTopicsComponent,
-    EditTopicComponent
+    EditTopicComponent,
+    AuthImagePipe
   ],
   imports: [
     SecurityModule,

@@ -50,10 +50,17 @@ export class CoacheeService {
     return this.http.put<IMemberProfileUpdated>(this.url + '/profile/' + member.id, member, this.httpOptions);
   }
 
+  uploadImage(profileId: number, file: File) {
+    const formData = new FormData();
+    formData.append('profilePicture', file, file.name);
+    return this.http.post(this.url + '/profile/' + profileId + '/image', formData);
+  }
+
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
       console.error(error); // log to console instead
       return of(result as T);
     };
   }
+
 }
