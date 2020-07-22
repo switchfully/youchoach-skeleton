@@ -4,8 +4,11 @@ package com.switchfully.youcoach.domain.profile.api;
 import com.switchfully.youcoach.domain.profile.role.Role;
 import com.switchfully.youcoach.domain.profile.role.coach.CoachInformation;
 import com.switchfully.youcoach.domain.profile.Profile;
+import com.switchfully.youcoach.domain.profile.role.coach.Grade;
+import com.switchfully.youcoach.domain.profile.role.coach.Topic;
 import com.switchfully.youcoach.domain.profile.role.coach.api.CoachListingDto;
 import com.switchfully.youcoach.domain.profile.role.coach.api.CoachListingEntryDto;
+import com.switchfully.youcoach.domain.profile.role.coach.api.CoachingTopicDto;
 import com.switchfully.youcoach.security.authentication.user.api.SecuredUserDto;
 import com.switchfully.youcoach.domain.profile.role.coach.api.CoachProfileDto;
 import com.switchfully.youcoach.security.authentication.user.api.CreateSecuredUserDto;
@@ -72,5 +75,13 @@ public class ProfileMapper {
         });
 
         return new CoachListingDto(coachListingEntryDtoList);
+    }
+
+    public List<Topic> toTopic(List<CoachingTopicDto> topicDtos) {
+        return topicDtos.stream().map(this::toTopic).collect(Collectors.toList());
+    }
+
+    private Topic toTopic(CoachingTopicDto topicDto) {
+        return new Topic(topicDto.getName(), topicDto.getGrades().stream().map(Grade::toGrade).collect(Collectors.toList()));
     }
 }

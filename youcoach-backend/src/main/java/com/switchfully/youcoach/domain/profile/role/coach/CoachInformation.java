@@ -3,6 +3,7 @@ package com.switchfully.youcoach.domain.profile.role.coach;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Embeddable
 public class CoachInformation {
@@ -15,13 +16,9 @@ public class CoachInformation {
     @Column(name = "xp")
     private Integer xp = 0;
 
-    @ManyToMany
-    @JoinTable(
-            name = "COACHES_TOPICS",
-            joinColumns = { @JoinColumn(name = "coach_id") },
-            inverseJoinColumns = { @JoinColumn(name = "topics_id") }
-    )
-    private List<CoachingTopic> topics = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "profile_id")
+    private List<Topic> topics = new ArrayList<>();
 
     public CoachInformation() {
     }
@@ -50,16 +47,26 @@ public class CoachInformation {
         this.availability = availability;
     }
 
-    public List<CoachingTopic> getTopics() {
+    public List<Topic> getTopics() {
         return topics;
     }
 
-    public void setTopics(List<CoachingTopic> topics) {
+    public void setTopics(List<Topic> topics) {
         this.topics = topics;
     }
 
-    public void update(String introduction, String availability) {
-        this.introduction = introduction;
-        this.availability = availability;
+    public void updateTopics(List<Topic> newTopics) {
+        for (Topic newTopic : newTopics) {
+            if (!listContainsTopic(newTopic, topics)){
+                topics.add(new Topic(newTopic.getName(), new ArrayList<>()));
+            }
+            topics.stream().filter(topic -> topic.getName().equals(newTopic.getName())).findFirst().ifPresent(topic -> topic.setGrades(newTopic.getGrades()));
+        }
+
+        this.topics = topics.stream().filter(topic -> listContainsTopic(topic, newTopics)).collect(Collectors.toList());
+    }
+
+    private boolean listContainsTopic(Topic newTopic, List<Topic> list) {
+        return list.stream().anyMatch(topic -> topic.getName().equals(newTopic.getName()));
     }
 }

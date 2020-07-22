@@ -64,22 +64,18 @@ export class FindACoachComponent implements OnInit {
     if (this.selectedTopics && this.selectedTopics.length > 0) {
       this.filteredCoaches = this._filteredCoaches
         .filter(coach => {
-          const c = coach.topics.some(topic => this.selectedTopics.some(sTopic => {
-            const a = sTopic === topic.name;
-            return a;
-          }
+          return coach.topics.some(topic => this.selectedTopics.some(sTopic => {
+              return sTopic === topic.name;
+            }
           ));
-          return c;
         });
     }
     if (this.grades && this.grades.length > 0) {
       this.filteredCoaches = this._filteredCoaches
         .filter(coach => {
-          const c = coach.topics.some(topic => topic.grades.some(grade => this.grades.some(grd => {
-            const a = (grd.toString() === grade.toString());
-            return a;
+          return coach.topics.some(topic => topic.grades.some(grade => this.grades.some(grd => {
+            return (grd.toString() === grade.toString());
           })));
-          return c;
         });
     }
     if (this.searchText !== undefined && this.searchText.length > 2) {

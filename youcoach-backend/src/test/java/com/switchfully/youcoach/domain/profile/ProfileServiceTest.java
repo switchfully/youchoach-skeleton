@@ -6,11 +6,16 @@ import com.switchfully.youcoach.domain.profile.role.coach.api.CoachProfileDto;
 import com.switchfully.youcoach.security.authentication.user.SecuredUserService;
 import com.switchfully.youcoach.security.authentication.user.api.CreateSecuredUserDto;
 import com.switchfully.youcoach.security.authentication.user.api.SecuredUserDto;
-import com.switchfully.youcoach.security.verification.MailAccountVerificator;
+import com.switchfully.youcoach.security.verification.AccountVerificator;
 import com.switchfully.youcoach.security.verification.VerificationService;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.Spy;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.security.Principal;
@@ -19,18 +24,27 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
+@ExtendWith(MockitoExtension.class)
 class ProfileServiceTest {
-    private final ProfileRepository profileRepository = Mockito.mock(ProfileRepository.class);
-    private final PasswordEncoder passwordEncoder = Mockito.mock(PasswordEncoder.class);
-    private final MailAccountVerificator mailAccountVerificator = Mockito.mock(MailAccountVerificator.class);
-    private final SecuredUserService securedUserService = Mockito.mock(SecuredUserService.class);
+    @Mock
+    private ProfileRepository profileRepository;
+    @Mock
+    private SecuredUserService securedUserService;
+    @Spy
+    private VerificationService verificationService = new VerificationService();
+    @Spy
+    private ProfileMapper profileMapper = new ProfileMapper();
+    @Mock
+    private PasswordEncoder passwordEncoder;
+    @Mock
+    private AccountVerificator accountVerificator;
 
-    private final ProfileService profileService = new ProfileService(profileRepository, new ProfileMapper(), new VerificationService(),
-            passwordEncoder, mailAccountVerificator, securedUserService);
+    @InjectMocks
+    private ProfileService profileService;
 
     private Profile getDefaultUser() {
-        return new Profile(1,"First", "Last","example@example.com","1lpassword",
-                "1 - latin","/my/photo.png");
+        return new Profile(1, "First", "Last", "example@example.com", "1lpassword",
+                "1 - latin", "/my/photo.png");
     }
 
     @Test
@@ -49,7 +63,7 @@ class ProfileServiceTest {
     @Test
     void emailValidator() {
         CreateSecuredUserDto createSecuredUserDto = new CreateSecuredUserDto("Test", "Service", "classYear", "dummyMail", "Test12346");
-        assertThatExceptionOfType(IllegalStateException.class).isThrownBy(() -> profileService.createUser(createSecuredUserDto) );
+        assertThatExceptionOfType(IllegalStateException.class).isThrownBy(() -> profileService.createUser(createSecuredUserDto));
     }
 
     @Test
@@ -57,13 +71,13 @@ class ProfileServiceTest {
         CreateSecuredUserDto userWithDuplicateEmail = new CreateSecuredUserDto("Test", "Service", "classYear", "dummy@Mail.com", "Test123456");
         Mockito.when(profileRepository.existsByEmail(Mockito.anyString())).thenReturn(true);
 
-        assertThatExceptionOfType(IllegalStateException.class).isThrownBy(() -> profileService.createUser(userWithDuplicateEmail) );
+        assertThatExceptionOfType(IllegalStateException.class).isThrownBy(() -> profileService.createUser(userWithDuplicateEmail));
     }
 
     @Test
     void passwordValidator() {
         CreateSecuredUserDto createSecuredUserDto1 = new CreateSecuredUserDto("Test", "Service", "classYear", "dummy@Mail.com", "test1234564");
-        assertThatExceptionOfType(IllegalStateException.class).isThrownBy(() -> profileService.createUser(createSecuredUserDto1) );
+        assertThatExceptionOfType(IllegalStateException.class).isThrownBy(() -> profileService.createUser(createSecuredUserDto1));
     }
 
     @Test
@@ -86,7 +100,7 @@ class ProfileServiceTest {
 
 
     @Test
-    public void getCoachProfile(){
+    public void getCoachProfile() {
         Profile profile = getDefaultUser();
         profile.setXp(100);
         profile.setAvailability("Whenever you want.");
@@ -99,29 +113,27 @@ class ProfileServiceTest {
         Mockito.when(securedUserService.isAdmin(Mockito.anyString())).thenReturn(true);
         Mockito.when(principal.getName()).thenReturn("");
 
-       CoachProfileDto expected = (CoachProfileDto) new CoachProfileDto()
-               .withXp(profile.getXp())
-               .withIntroduction(profile.getIntroduction())
-               .withAvailability(profile.getAvailability())
-               .withClassYear(profile.getClassYear())
-               .withId(profile.getId())
-               .withEmail(profile.getEmail())
-               .withFirstName(profile.getFirstName())
-               .withLastName(profile.getLastName())
-               .withPhotoUrl(profile.getPhotoUrl());
+        CoachProfileDto expected = (CoachProfileDto) new CoachProfileDto()
+                .withXp(profile.getXp())
+                .withIntroduction(profile.getIntroduction())
+                .withAvailability(profile.getAvailability())
+                .withClassYear(profile.getClassYear())
+                .withId(profile.getId())
+                .withEmail(profile.getEmail())
+                .withFirstName(profile.getFirstName())
+                .withLastName(profile.getLastName())
+                .withPhotoUrl(profile.getPhotoUrl());
 
-        CoachProfileDto actual = profileService.getCoachProfile(principal,1);
+        CoachProfileDto actual = profileService.getCoachProfile(principal, 1);
         assertThat(actual).isEqualTo(expected);
     }
 
     @Test
-    public void getCoachProfileForUser(){
+    public void getCoachProfileForUser() {
         Profile profile = getDefaultUser();
         profile.setXp(100);
         profile.setAvailability("Whenever you want.");
         profile.setIntroduction("Endorsed by your mom.");
-
-        Mockito.when(profileRepository.findById(Mockito.anyLong())).thenReturn(Optional.of(profile));
 
         CoachProfileDto expected = (CoachProfileDto) new CoachProfileDto()
                 .withXp(profile.getXp())
@@ -139,8 +151,8 @@ class ProfileServiceTest {
     }
 
     @Test
-    public void getCoachProfileForUserWithEmail(){
-        Profile profile = getDefaultUser();;
+    public void getCoachProfileForUserWithEmail() {
+        Profile profile = getDefaultUser();
         profile.setXp(100);
         profile.setAvailability("Whenever you want.");
         profile.setIntroduction("Endorsed by your mom.");
@@ -161,18 +173,18 @@ class ProfileServiceTest {
         CoachProfileDto actual = profileService.getCoachProfileForUserWithEmail(profile.getEmail());
         assertThat(actual).isEqualTo(expected);
     }
+
     @Test
-    public void emailExists(){
+    public void emailExists() {
         Mockito.when(profileRepository.existsByEmail(Mockito.anyString())).thenReturn(true);
         Assertions.assertThat(profileService.emailExists("example@example.com")).isTrue();
     }
 
     @Test
-    public void emailDoesNotExistYet(){
+    public void emailDoesNotExistYet() {
         Mockito.when(profileRepository.existsByEmail(Mockito.anyString())).thenReturn(false);
         Assertions.assertThat(profileService.emailExists("example@example.com")).isFalse();
     }
-
 
 
 }

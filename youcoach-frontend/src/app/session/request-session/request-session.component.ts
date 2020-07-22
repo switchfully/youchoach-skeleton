@@ -6,6 +6,7 @@ import {FormBuilder, ValidationErrors, Validators} from '@angular/forms';
 import {SessionService} from '../services/session.service';
 import {InitMaterializeComponent} from '../../init-materialize.component';
 import * as M from 'materialize-css';
+import {DatepickerOptions} from 'materialize-css';
 import {TimeComparatorService} from '../services/time-comparator.service';
 
 @Component({
@@ -57,12 +58,13 @@ export class RequestSessionComponent extends InitMaterializeComponent implements
   private initializeDatePicker(): void {
     const elems = document.querySelectorAll('.datepicker');
     const instances = M.Datepicker.init(elems, {
-      'format': 'dd/mm/yyyy',
-      'onClose': _ => {
+      format: 'dd/mm/yyyy',
+      onClose: _ => {
         this.sessionForm.get('date').value = this.datePickerElem.toString();
         this.sessionForm.updateValueAndValidity({onlySelf: false, emitEvent: true});
       }
-    });
+    } as DatepickerOptions);
+
     for (const instance of instances) {
       if (instance !== undefined) {
         this.datePickerElem = instance;

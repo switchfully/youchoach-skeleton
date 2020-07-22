@@ -1,0 +1,51 @@
+<div class="col s12 m10">
+  <div class="content-container">
+
+    <section class="card-panel grey lighten-5">
+      <h5 translate>edit-topic.title</h5>
+      <div class="divider"></div>
+      <div class="row">
+        <form [formGroup]="newTopicForm" autocomplete="off">
+          <table class="highlight" *ngIf="topics">
+            <tbody>
+            <tr *ngFor="let topic of topics; index as topicIndex">
+              <td><strong>{{topic.name}}</strong></td>
+              <td>
+                <div>
+                  <a *ngFor="let index of [1,2,3,4,5,6,7]" class="btn-floating " (click)="toggle(topic, index)"
+                     [class.disabled]="!topic.grades.includes(index)"><i
+                    class="material-icons">{{'filter_' + index}}</i></a>
+                </div>
+              </td>
+              <td>
+                <button (click)="removeRow(topicIndex)" type="button" class="waves-effect btn-floating"><i
+                  class="material-icons">remove_circle</i></button>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="input-field">
+                  <label for="name" translate>edit-topic.label.new-topic</label>
+                  <input id="name" type="text" formControlName="name" class="autocomplete" (keyup.enter)="addRow()" (change)="updateValue(inputRef.value)" #inputRef/>
+                </div>
+              </td>
+              <td>
+                <button type="submit" class="waves-effect btn-floating"><i class="material-icons">add_circle</i>
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td class="right-align" colspan="3">
+                <button style="margin-right: 30px" class="waves-effect waves-light teal lighten-3 btn-large black-text"
+                        (click)="onBack()" translate>edit-topic.button.cancel<i class="material-icons right">cancel</i>
+                </button>
+                <button class="waves-effect waves-light yellow darken-2 btn-large black-text" (click)="onSave()" translate>edit-topic.button.save<i class="material-icons right">save</i></button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </form>
+      </div>
+    </section>
+  </div>
+</div>

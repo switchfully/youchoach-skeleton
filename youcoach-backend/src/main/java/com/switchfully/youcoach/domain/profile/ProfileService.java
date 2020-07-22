@@ -4,8 +4,10 @@ package com.switchfully.youcoach.domain.profile;
 import com.switchfully.youcoach.domain.profile.api.*;
 import com.switchfully.youcoach.domain.profile.exception.ProfileIdNotFoundException;
 import com.switchfully.youcoach.domain.profile.role.Role;
+import com.switchfully.youcoach.domain.profile.role.coach.TopicRepository;
 import com.switchfully.youcoach.domain.profile.role.coach.api.CoachListingDto;
 import com.switchfully.youcoach.domain.profile.role.coach.api.CoachProfileDto;
+import com.switchfully.youcoach.domain.profile.role.coach.api.CoachingTopicDto;
 import com.switchfully.youcoach.domain.profile.role.coach.exception.CoachNotFoundException;
 import com.switchfully.youcoach.security.authentication.user.SecuredUserService;
 import com.switchfully.youcoach.security.authentication.user.api.CreateSecuredUserDto;
@@ -37,6 +39,7 @@ public class ProfileService {
     private final PasswordEncoder passwordEncoder;
     private final AccountVerificator accountVerificator;
     private final SecuredUserService securedUserService;
+    private final TopicRepository topicRepository;
 
     @Autowired
     public ProfileService(ProfileRepository profileRepository,
@@ -44,14 +47,15 @@ public class ProfileService {
                           VerificationService verificationService,
                           PasswordEncoder passwordEncoder,
                           AccountVerificator accountVerificator,
-                          SecuredUserService securedUserService
-    ) {
+                          SecuredUserService securedUserService,
+                          TopicRepository topicRepository) {
         this.profileRepository = profileRepository;
         this.profileMapper = profileMapper;
         this.verificationService = verificationService;
         this.passwordEncoder = passwordEncoder;
         this.accountVerificator = accountVerificator;
         this.securedUserService = securedUserService;
+        this.topicRepository = topicRepository;
     }
 
     public SecuredUserDto createUser(CreateSecuredUserDto createSecuredUserDto) {
@@ -98,10 +102,6 @@ public class ProfileService {
 
     public SecuredUserDto getUserById(long id) {
         return profileMapper.toUserDto(profileRepository.findById(id).get());
-    }
-
-    public List<SecuredUserDto> getAllusers() {
-        return profileMapper.toUserDto(profileRepository.findAll());
     }
 
     public boolean emailExists(String email) {
@@ -205,5 +205,13 @@ public class ProfileService {
 
     public List<ProfileDto> getProfiles() {
         return profileRepository.findAll().stream().map(profileMapper::toCoacheeProfileDto).collect(Collectors.toList());
+    }
+
+    public void updateTopics(long id, List<CoachingTopicDto> topicDtos) {
+        profileRepository.findById(id).ifPresent(profile -> profile.updateTopics(profileMapper.toTopic(topicDtos)));
+    }
+
+    public List<String> getAllTopics() {
+        return topicRepository.getAllTopics();
     }
 }

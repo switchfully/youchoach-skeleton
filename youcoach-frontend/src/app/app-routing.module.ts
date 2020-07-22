@@ -27,6 +27,7 @@ import {CoacheeComponent} from "./template/coachee/coachee.component";
 import {CoachComponent} from "./template/coach/coach.component";
 import {OverviewComponent} from "./admin/overview/overview.component";
 import {AdminComponent} from "./template/admin/admin.component";
+import {EditTopicComponent} from "./profile/edit-topic/edit-topic.component";
 
 const routes: Routes = [
   {
@@ -42,7 +43,7 @@ const routes: Routes = [
       {path: 'session/:id', component: SessionDetailComponent},
       {path: 'find-coach', component: FindACoachComponent},
       {path: 'coach-profile/:id', component: CoachProfileComponent},
-      {path: 'coach-profile/:id/request-a-session', component: RequestSessionComponent},
+      {path: 'coach-profile/:id/request-a-session', component: RequestSessionComponent}
     ]
   },
   {
@@ -52,6 +53,7 @@ const routes: Routes = [
       {path: 'change-topics', component: ChangeTopicsComponent},
       {path: 'coach-profile/:id', component: CoachProfileComponent},
       {path: 'coach-profile', component: CoachProfileComponent},
+      {path: 'coach-profile/:id/edit-topic', component: EditTopicComponent},
       {path: 'edit-coach-information', component: EditCoachInformationComponent},
       {path: 'edit-coach-information/:id', component: EditCoachInformationComponent},
       {path: 'coach-my-sessions', component: CoachMysessionsComponent},
