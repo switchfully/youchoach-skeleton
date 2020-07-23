@@ -16,9 +16,7 @@ import com.switchfully.youcoach.security.verification.api.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
-import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,17 +25,14 @@ import org.springframework.security.authentication.InsufficientAuthenticationExc
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.security.Principal;
 import java.util.List;
 
-import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @RestController
 @RequestMapping(path = "/users")
@@ -129,18 +124,17 @@ public class ProfileController {
 
     @PostMapping(path = "/profile/{id}/image")
     public void uploadImage(@RequestParam("profilePicture") MultipartFile file, @PathVariable("id") long id) {
-        imageService.uploadFile(id, file);
+        imageService.saveProfileImage(id, file);
     }
 
     @GetMapping(path = "/profile/{id}/image")
     public ResponseEntity<Resource> downloadImage(@PathVariable("id") long id) {
-            DBFile dbFile = imageService.downLoadFile(id);
-            Resource resource = new ByteArrayResource(dbFile.getData());
+            DBFile profileImage = imageService.getProfileImage(id).orElseThrow(() -> new ResponseStatusException(NOT_FOUND));
 
-            return ResponseEntity.ok().
-                    header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + dbFile.getOriginalFileName() + "\"")
-                    .header(HttpHeaders.CONTENT_TYPE, "image/png")
-                    .body(resource);
+            return ResponseEntity.ok()
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + profileImage.getOriginalFileName() + "\"")
+                    .header(HttpHeaders.CONTENT_TYPE, "image/jpg")
+                    .body(profileImage.getResource());
     }
 
     @PreAuthorize("isAnonymous()")

@@ -16,7 +16,7 @@ class DBFileServiceTest {
     void upAndDownloadFile() {
         dbFileService.uploadFile("tim", new MockMultipartFile("someFileName", "hello world".getBytes()));
 
-        DBFile dbFile = dbFileService.downloadFile("tim");
+        DBFile dbFile = dbFileService.downloadFile("tim").orElse(null);
 
         Assertions.assertThat(new String(dbFile.getData())).isEqualTo("hello world");
     }

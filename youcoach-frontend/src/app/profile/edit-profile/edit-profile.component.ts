@@ -5,6 +5,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {AuthenticationService} from '../../security/services/authentication/authentication.service';
 import {Location} from "@angular/common";
 import * as M from 'materialize-css';
+import {flatMap, map, tap} from "rxjs/operators";
 
 @Component({
   selector: 'app-edit-profile',
@@ -20,14 +21,16 @@ export class EditProfileComponent implements OnInit {
     email: ['', [Validators.required]],
     photoUrl: [''],
     youcoachRole: this.fb.group({
-      name:[''],
-      label:['']
-    })
+      name: [''],
+      label: ['']
+    }),
+    profilePicture: ['']
   });
   isEmailChanged = false;
   oldEmail = '';
   emailExistsError = false;
   profileId = +this.route.snapshot.paramMap.get('id');
+  private tempProfilePicture: File;
 
   constructor(private fb: FormBuilder, private coacheeService: CoacheeService, private router: Router,
               public authenticationService: AuthenticationService, private route: ActivatedRoute, private location: Location) {
@@ -48,7 +51,8 @@ export class EditProfileComponent implements OnInit {
   }
 
   updateProfile(member): void {
-    this.coacheeService.updateProfile(member)
+    this.coacheeService.uploadImage(member.id, this.tempProfilePicture)
+      .pipe(flatMap(_ => this.coacheeService.updateProfile(member)))
       .subscribe(memberUpdated => {
           if (memberUpdated.token !== null) {
             this.authenticationService.setJwtToken(memberUpdated.token, memberUpdated.email);
@@ -74,9 +78,14 @@ export class EditProfileComponent implements OnInit {
     this.updateProfile(member);
   }
 
-  onFileChanged(file: File) {
-    this.coacheeService.uploadImage(this.profileId, file).subscribe(
-      event => console.log(event)
-    )
+  onFileChanged(file: File, profilePicture: HTMLImageElement) {
+    profilePicture.src = URL.createObjectURL(file);
+    this.tempProfilePicture = file;
+
+    if (file.size / (1024 * 1024) > 3) {
+      this.editForm.controls['profilePicture'].setErrors({'tooBig': true});
+    } else {
+      this.editForm.controls['profilePicture'].reset();
+    }
   }
 }

@@ -14,7 +14,7 @@
           <div class="divider"></div>
           <div class="row">
             <div class="col l2 m2 s12">
-              <img src="{{member.photoUrl}}" class="responsive-img circle"
+              <img [src]="'http://localhost:8080/users/profile/' + member.id + '/image' | authImage | async" class="responsive-img circle"
                    alt="Profile Picture">
             </div>
             <div class="col l10 m10 s12">

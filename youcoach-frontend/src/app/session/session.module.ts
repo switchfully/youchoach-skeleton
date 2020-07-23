@@ -10,6 +10,7 @@ import {RouterModule} from "@angular/router";
 import {FilterSessionsOnStatusPipe} from "./pipes/session-status-filter.pipe";
 import { SessionDetailComponent } from './session-detail/session-detail.component';
 import { SessionTableComponent } from './session-table/session-table.component';
+import {SecurityModule} from "../security/security.module";
 
 
 @NgModule({
@@ -23,6 +24,7 @@ import { SessionTableComponent } from './session-table/session-table.component';
     SessionTableComponent
   ],
   imports: [
+    SecurityModule,
     ReactiveFormsModule,
     CommonModule,
     TranslateModule,

@@ -1,5 +1,7 @@
 package com.switchfully.youcoach.file;
 
+import org.springframework.core.io.ByteArrayResource;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Lob;
@@ -33,5 +35,9 @@ public class DBFile {
 
     public String getOriginalFileName() {
         return originalFileName;
+    }
+
+    public ByteArrayResource getResource() {
+        return new ByteArrayResource(fileContent);
     }
 }

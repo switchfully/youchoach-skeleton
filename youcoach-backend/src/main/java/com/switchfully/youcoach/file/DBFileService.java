@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.Optional;
 
 @Service
 public class DBFileService {
@@ -22,7 +23,7 @@ public class DBFileService {
         }
     }
 
-    public DBFile downloadFile(String name) {
-        return dbFileRepository.findById(name).orElseThrow(RuntimeException::new);
+    public Optional<DBFile> downloadFile(String name) {
+        return dbFileRepository.findById(name);
     }
 }

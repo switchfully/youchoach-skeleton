@@ -1,7 +1,7 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {AppComponent} from './app.component';
-import {FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from '@angular/common/http';
 import {AppRoutingModule} from './app-routing.module';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
@@ -19,12 +19,12 @@ import {HeaderComponent} from "./template/header/header.component";
 import {HomeComponent} from "./template/home/home.component";
 import {NotFoundComponent} from "./template/not-found/not-found.component";
 import {ProfileModule} from "./profile/profile.module";
-import { CoacheeComponent } from './template/coachee/coachee.component';
-import { CoachComponent } from './template/coach/coach.component';
-import { EnHomeComponent } from './template/home/en-home/en-home.component';
-import { FrHomeComponent } from './template/home/fr-home/fr-home.component';
+import {CoacheeComponent} from './template/coachee/coachee.component';
+import {CoachComponent} from './template/coach/coach.component';
+import {EnHomeComponent} from './template/home/en-home/en-home.component';
+import {FrHomeComponent} from './template/home/fr-home/fr-home.component';
 import {AdminModule} from "./admin/admin.module";
-import { AdminComponent } from './template/admin/admin.component';
+import {AdminComponent} from './template/admin/admin.component';
 
 
 export function HttpLoaderFactory(http: HttpClient) {

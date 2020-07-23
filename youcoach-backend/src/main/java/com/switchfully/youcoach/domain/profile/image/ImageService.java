@@ -5,6 +5,8 @@ import com.switchfully.youcoach.file.DBFileService;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Optional;
+
 @Service
 public class ImageService {
 
@@ -14,7 +16,7 @@ public class ImageService {
         this.dbFileService = dbFileService;
     }
 
-    public void uploadFile(Long profileId, MultipartFile multipartFile) {
+    public void saveProfileImage(Long profileId, MultipartFile multipartFile) {
         dbFileService.uploadFile(toProfileImageFileName(profileId), multipartFile);
     }
 
@@ -22,7 +24,7 @@ public class ImageService {
         return String.format("profile_image%s.image", profileId);
     }
 
-    public DBFile downLoadFile(Long profileId) {
+    public Optional<DBFile> getProfileImage(Long profileId) {
         return dbFileService.downloadFile(toProfileImageFileName(profileId));
     }
 }
