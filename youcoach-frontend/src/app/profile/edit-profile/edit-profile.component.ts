@@ -30,7 +30,6 @@ export class EditProfileComponent implements OnInit {
   oldEmail = '';
   emailExistsError = false;
   profileId = +this.route.snapshot.paramMap.get('id');
-  private tempProfilePicture: File;
 
   constructor(private fb: FormBuilder, private coacheeService: CoacheeService, private router: Router,
               public authenticationService: AuthenticationService, private route: ActivatedRoute, private location: Location) {
@@ -51,8 +50,7 @@ export class EditProfileComponent implements OnInit {
   }
 
   updateProfile(member): void {
-    this.coacheeService.uploadImage(member.id, this.tempProfilePicture)
-      .pipe(flatMap(_ => this.coacheeService.updateProfile(member)))
+    this.coacheeService.updateProfile(member)
       .subscribe(memberUpdated => {
           if (memberUpdated.token !== null) {
             this.authenticationService.setJwtToken(memberUpdated.token, memberUpdated.email);
@@ -78,14 +76,4 @@ export class EditProfileComponent implements OnInit {
     this.updateProfile(member);
   }
 
-  onFileChanged(file: File, profilePicture: HTMLImageElement) {
-    profilePicture.src = URL.createObjectURL(file);
-    this.tempProfilePicture = file;
-
-    if (file.size / (1024 * 1024) > 3) {
-      this.editForm.controls['profilePicture'].setErrors({'tooBig': true});
-    } else {
-      this.editForm.controls['profilePicture'].reset();
-    }
-  }
 }

@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {CoacheeService} from '../../profile/services/coachee.service';
-import {ICoachee} from './icoachee';
+import {ICoachee} from '../interfaces/ICoachee';
 import {ICoacheeRegisterResult} from '../interfaces/ICoacheeRegisterResult';
 
 @Component({

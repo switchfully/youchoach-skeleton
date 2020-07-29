@@ -122,8 +122,12 @@ public class ProfileController {
         return profileService.getAllTopics();
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_COACHEE','ROLE_ADMIN')")
     @PostMapping(path = "/profile/{id}/image")
-    public void uploadImage(@RequestParam("profilePicture") MultipartFile file, @PathVariable("id") long id) {
+    public void uploadImage(@RequestParam("profilePicture") MultipartFile file, @PathVariable("id") long id, Authentication principal) {
+        if (!authorizationService.canAccessProfile(principal, id)) {
+            throw new InsufficientAuthenticationException("You don't have access to this profile");
+        }
         imageService.saveProfileImage(id, file);
     }
 

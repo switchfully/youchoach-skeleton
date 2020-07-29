@@ -2,27 +2,11 @@
   <div class="content-container">
 
     <section class="card-panel grey lighten-5">
-
       <h5>Edit profile Information</h5>
       <div class="divider"></div>
       <div class="row">
         <form class="col s12" [formGroup]="editForm" (ngSubmit)="onSubmit(editForm.value)">
-          <div class="col l2 m2 s12">
-            <div class="row">
-              <img [src]="'http://localhost:8080/users/profile/' + profileId + '/image' | authImage | async"
-                   class="responsive-img circle" alt="Profile Picture" #profilePictureElem>
-            </div>
-            <div class="row">
-              <div class="file-field input-field btn-large btn-floating center-align">
-                <span><i class="material-icons">cloud_upload</i></span>
-                <input type="file" formControlName="profilePicture"
-                       (change)="onFileChanged($event.target.files[0], profilePictureElem)"/>
-              </div>
-            </div>
-            <div class="row">
-              <span *ngIf="editForm.get('profilePicture').hasError('tooBig')" class="red-text text-lighten-1" translate>edit-profile.message.file-too-big</span>
-            </div>
-          </div>
+          <app-update-image></app-update-image>
           <div class="col l10 m10 s12">
             <table class="highlight">
               <tbody>

@@ -16,6 +16,7 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {TranslateModule} from "@ngx-translate/core";
 import {RouterModule} from "@angular/router";
 import {AuthImagePipe} from "./pipes/auth-image.pipe";
+import { UpdateImageComponent } from './update-image/update-image.component';
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import {AuthImagePipe} from "./pipes/auth-image.pipe";
     PasswordResetRequestedComponent,
     RegisterComponent,
     RegistrationSuccessComponent,
-    AuthImagePipe
+    AuthImagePipe,
+    UpdateImageComponent
   ],
   imports: [
     RouterModule,
@@ -40,7 +42,8 @@ import {AuthImagePipe} from "./pipes/auth-image.pipe";
     FormsModule
   ],
   exports: [
-    AuthImagePipe
+    AuthImagePipe,
+    UpdateImageComponent
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true},
