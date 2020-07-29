@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {
   HttpRequest,
   HttpHandler,
@@ -15,44 +15,45 @@ import {ForbiddenService} from './security/services/forbidden.service';
 export class RedirectOnErrorInterceptor implements HttpInterceptor {
 
   constructor(private authenticationService: AuthenticationService, private router: Router,
-              private forbiddenService: ForbiddenService) {}
+              private forbiddenService: ForbiddenService) {
+  }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     return next.handle(request).pipe(
-      tap(_ => {}),
-    catchError((err: any) => {
-      const router = this.router;
-      function isAuthorisationError() {
-        return err.status === 403;
-      }
+      tap(_ => {
+      }),
+      catchError((err: any) => {
+        const router = this.router;
 
-      function isAuthenticationError() {
-        return err.status === 401;
-      }
-
-      function ignoreUserUnknownOnLogin() {
-        return router === undefined || router === null ||
-          (router.url === '/login' && err.error.name === 'USER_UNKNOWN');
-      }
-
-      function weReceivedAndHandleCustomAuthenticationError() {
-        return isAuthenticationError() && 'name' in err.error &&
-          !ignoreUserUnknownOnLogin();
-      }
-
-      if (err instanceof HttpErrorResponse) {
-        if (isAuthenticationError() || isAuthorisationError()) {
-          if (weReceivedAndHandleCustomAuthenticationError()) {
-            this.handleAuthenticationErrors(err);
-          } else if (isAuthorisationError()) {
-              this.handleErrorResponse('/forbidden');
-          } else {
-            return throwError(err);
-          }
-          return of(undefined);
+        function isAuthorisationError() {
+          return err.status === 403;
         }
-      }
-    })
+
+        function isAuthenticationError() {
+          return err.status === 401;
+        }
+
+        function ignoreUserUnknownOnLogin() {
+          return router === undefined || router === null ||
+            (router.url === '/login' && err.error.name === 'USER_UNKNOWN');
+        }
+
+        function weReceivedAndHandleCustomAuthenticationError() {
+          return isAuthenticationError() && 'name' in err.error &&
+            !ignoreUserUnknownOnLogin();
+        }
+
+        if (err instanceof HttpErrorResponse) {
+          if (isAuthenticationError() || isAuthorisationError()) {
+            if (weReceivedAndHandleCustomAuthenticationError()) {
+              this.handleAuthenticationErrors(err);
+            } else if (isAuthorisationError()) {
+              this.handleErrorResponse('/forbidden');
+            }
+          }
+        }
+        return throwError(err);
+      })
     );
   }
 
@@ -73,13 +74,16 @@ export class RedirectOnErrorInterceptor implements HttpInterceptor {
         this.handleErrorResponseAndLogUserOut('/login');
     }
   }
+
   private handleErrorResponse(url: string, forceLogOut: boolean = false) {
     if (this.authenticationService.isLoggedIn() && forceLogOut !== undefined && forceLogOut === true) {
       this.authenticationService.logout();
     }
-    this.router.navigateByUrl(url).then(_ => {});
+    this.router.navigateByUrl(url).then(_ => {
+    });
     this.forbiddenService.url = this.router.url;
   }
+
   private handleErrorResponseAndLogUserOut(url: string) {
     this.handleErrorResponse(url, true);
   }

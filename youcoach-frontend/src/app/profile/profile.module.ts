@@ -11,6 +11,7 @@ import {SecurityModule} from "../security/security.module";
 import {ReactiveFormsModule} from "@angular/forms";
 import {RouterModule} from "@angular/router";
 import {TranslateModule} from "@ngx-translate/core";
+import {AuthImagePipe} from "../security/pipes/auth-image.pipe";
 
 
 @NgModule({
@@ -28,7 +29,7 @@ import {TranslateModule} from "@ngx-translate/core";
     TranslateModule,
     CommonModule,
     ReactiveFormsModule,
-    RouterModule
+    RouterModule,
   ]
 })
 export class ProfileModule {

@@ -41,7 +41,7 @@
             <h6 class="card-title">{{coach.firstName}}&nbsp;{{coach.lastName}}</h6>
             <div class="card small">
               <div class="card-image">
-                <img class="responsive-img" src="{{coach.photoUrl}}">
+                <img class="responsive-img" [src]="coach.id.toString() | authImage | async">
               </div>
               <div class="card-stacked">
                 <div class="card-content">

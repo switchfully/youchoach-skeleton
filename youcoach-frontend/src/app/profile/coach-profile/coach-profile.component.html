@@ -1,7 +1,7 @@
 <div class="col s12 m10">
   <div class="content-container">
 
-    <section class="card-panel grey lighten-5">
+    <section class="card-panel grey lighten-5" *ngIf="coach">
       <div class="right">
         <button class="waves-effect waves-light yellow darken-2 btn-large black-text"
                 routerLink="/coachee/coach-profile/{{coach.id}}/request-a-session" translate>
@@ -15,7 +15,7 @@
       <div class="divider"></div>
       <div class="row">
         <div class="col l2 m2 s12">
-          <img src="{{coach.photoUrl}}" class="responsive-img circle"
+          <img [src]="coach.id.toString() | authImage | async" class="responsive-img circle"
                alt="Profile Picture">
         </div>
         <div class="col l10 m10 s12">

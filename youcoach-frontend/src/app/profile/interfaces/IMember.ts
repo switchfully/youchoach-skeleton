@@ -8,5 +8,4 @@ export interface IMember {
     name: string,
     label: string
   };
-  photoUrl: string;
 }

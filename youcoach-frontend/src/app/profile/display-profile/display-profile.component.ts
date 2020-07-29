@@ -15,7 +15,6 @@ export class DisplayProfileComponent implements OnInit {
     email: null,
     firstName: null,
     lastName: null,
-    photoUrl: null,
     classYear: null,
     youcoachRole: null
   };

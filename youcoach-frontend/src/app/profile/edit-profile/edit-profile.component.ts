@@ -5,6 +5,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {AuthenticationService} from '../../security/services/authentication/authentication.service';
 import {Location} from "@angular/common";
 import * as M from 'materialize-css';
+import {flatMap, map, tap} from "rxjs/operators";
 
 @Component({
   selector: 'app-edit-profile',
@@ -20,13 +21,15 @@ export class EditProfileComponent implements OnInit {
     email: ['', [Validators.required]],
     photoUrl: [''],
     youcoachRole: this.fb.group({
-      name:[''],
-      label:['']
-    })
+      name: [''],
+      label: ['']
+    }),
+    profilePicture: ['']
   });
   isEmailChanged = false;
   oldEmail = '';
   emailExistsError = false;
+  profileId = +this.route.snapshot.paramMap.get('id');
 
   constructor(private fb: FormBuilder, private coacheeService: CoacheeService, private router: Router,
               public authenticationService: AuthenticationService, private route: ActivatedRoute, private location: Location) {
@@ -34,7 +37,7 @@ export class EditProfileComponent implements OnInit {
 
   ngOnInit(): void {
     const url: string = this.route.snapshot['_routerState'].url;
-    this.getCoacheeByID(+this.route.snapshot.paramMap.get('id'));
+    this.getCoacheeByID(this.profileId);
   }
 
   getCoacheeByID(id: number): void {
