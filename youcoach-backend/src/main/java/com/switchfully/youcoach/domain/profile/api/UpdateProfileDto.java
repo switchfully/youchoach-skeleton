@@ -5,7 +5,6 @@ public class UpdateProfileDto {
     private String firstName;
     private String lastName;
     private String email;
-    private String photoUrl;
     private RoleDto youcoachRole;
 
     public UpdateProfileDto() {
@@ -25,10 +24,6 @@ public class UpdateProfileDto {
 
     public String getEmail() {
         return email;
-    }
-
-    public String getPhotoUrl(){
-        return photoUrl;
     }
 
     public RoleDto getYoucoachRole() {

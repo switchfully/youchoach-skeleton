@@ -14,7 +14,7 @@ public class SecuredUserServiceDatabaseBasedAuthoritiesTest {
 
     private Profile getDefaultUser(Role role) {
         Profile profile = new Profile(1L, "First", "Last", "example@example.com",
-                "1Lpassword", "1 - latin", "/my/photo.png");
+                "1Lpassword", "1 - latin");
         profile.setRole(role);
         return profile;
     }

@@ -19,7 +19,7 @@ public class ProfileMapperTest {
 
     private Profile getDefaultUser() {
         return new Profile(1,"First","Last",
-                "example@example.com","1Lpassword","1 - latin","/my/photo.png");
+                "example@example.com","1Lpassword","1 - latin");
     }
 
     @Test
@@ -29,8 +29,7 @@ public class ProfileMapperTest {
                 .withEmail(input.getEmail())
                 .withFirstName(input.getFirstName())
                 .withLastName(input.getLastName())
-                .withClassYear(input.getClassYear())
-                .withPhotoUrl(input.getPhotoUrl());
+                .withClassYear(input.getClassYear());
 
         ProfileDto actual = profileMapper.toCoacheeProfileDto(input);
 
@@ -59,7 +58,6 @@ public class ProfileMapperTest {
                 .withEmail(profile.getEmail())
                 .withFirstName(profile.getFirstName())
                 .withLastName(profile.getLastName())
-                .withPhotoUrl(profile.getPhotoUrl())
                 .withId(1L);
 
         CoachProfileDto actual = profileMapper.toCoachProfileDto(profile);
@@ -82,7 +80,6 @@ public class ProfileMapperTest {
                 .withFirstName(profile.getFirstName())
                 .withLastName(profile.getLastName())
                 .withCoachingTopics(profile.getTopics())
-                .withUrl(profile.getPhotoUrl())
                 .withEmail(profile.getEmail());
 
         CoachListingDto expected = new CoachListingDto(List.of(cpd));
@@ -122,7 +119,7 @@ public class ProfileMapperTest {
     void listUserToListUserDto(){
         Profile profile = getDefaultUser();
         Profile profile2 = new Profile(2,"First","Last",
-                "example2@example.com","1Lpassword","1 - latin","/my/photo.png");
+                "example2@example.com","1Lpassword","1 - latin");
         List<Profile> profiles = List.of(profile, profile2);
         List<SecuredUserDto> expected = List.of(new SecuredUserDto(profile.getId(), profile.getFirstName(), profile.getLastName(), profile.getEmail(), profile.isAccountEnabled()),
                 new SecuredUserDto(profile2.getId(), profile2.getFirstName(), profile2.getLastName(), profile2.getEmail(), profile2.isAccountEnabled()));

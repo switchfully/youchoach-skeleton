@@ -40,8 +40,7 @@ public class ProfileMapper {
                 .withFirstName(model.getFirstName())
                 .withLastName(model.getLastName())
                 .withClassYear(model.getClassYear())
-                .withYoucoachRole(new RoleDto(model.getRole().name(), model.getRole().getLabel()))
-                .withPhotoUrl(model.getPhotoUrl());
+                .withYoucoachRole(new RoleDto(model.getRole().name(), model.getRole().getLabel()));
     }
 
     public CoachProfileDto toCoachProfileDto(Profile profile) {
@@ -55,8 +54,7 @@ public class ProfileMapper {
                 .withFirstName(profile.getFirstName())
                 .withLastName(profile.getLastName())
                 .withClassYear(profile.getClassYear())
-                .withYoucoachRole(new RoleDto(profile.getRole().name(), profile.getRole().getLabel()))
-                .withPhotoUrl(profile.getPhotoUrl());
+                .withYoucoachRole(new RoleDto(profile.getRole().name(), profile.getRole().getLabel()));
 
     }
 
@@ -69,7 +67,6 @@ public class ProfileMapper {
                     .withFirstName(coach.getFirstName())
                     .withLastName(coach.getLastName())
                     .withCoachingTopics(coach.getTopics())
-                    .withUrl(coach.getPhotoUrl())
                     .withEmail(coach.getEmail());
             coachListingEntryDtoList.add(cli);
         });

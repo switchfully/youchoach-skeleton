@@ -44,12 +44,12 @@ class ProfileServiceTest {
 
     private Profile getDefaultUser() {
         return new Profile(1, "First", "Last", "example@example.com", "1lpassword",
-                "1 - latin", "/my/photo.png");
+                "1 - latin");
     }
 
     @Test
     void saveAUser() {
-        Profile profile = new Profile(1,"Test","Service","test@hb.be","Test123456","","");
+        Profile profile = new Profile(1,"Test","Service","test@hb.be","Test123456","");
         Mockito.when(profileRepository.findById(Mockito.anyLong())).thenReturn(Optional.of(profile));
         Mockito.when(profileRepository.save(Mockito.any(Profile.class))).thenReturn(profile);
 
@@ -90,9 +90,7 @@ class ProfileServiceTest {
                 .withId(profile.getId())
                 .withEmail(profile.getEmail())
                 .withFirstName(profile.getFirstName())
-                .withLastName(profile.getLastName())
-                .withPhotoUrl(profile.getPhotoUrl());
-
+                .withLastName(profile.getLastName());
 
         ProfileDto actual = profileService.getCoacheeProfile(1);
         assertThat(actual).isEqualTo(expected);
@@ -121,8 +119,7 @@ class ProfileServiceTest {
                 .withId(profile.getId())
                 .withEmail(profile.getEmail())
                 .withFirstName(profile.getFirstName())
-                .withLastName(profile.getLastName())
-                .withPhotoUrl(profile.getPhotoUrl());
+                .withLastName(profile.getLastName());
 
         CoachProfileDto actual = profileService.getCoachProfile(principal, 1);
         assertThat(actual).isEqualTo(expected);
@@ -143,9 +140,7 @@ class ProfileServiceTest {
                 .withId(profile.getId())
                 .withEmail(profile.getEmail())
                 .withFirstName(profile.getFirstName())
-                .withLastName(profile.getLastName())
-                .withPhotoUrl(profile.getPhotoUrl());
-
+                .withLastName(profile.getLastName());
         CoachProfileDto actual = profileService.getCoachProfileForUser(profile);
         assertThat(actual).isEqualTo(expected);
     }
@@ -167,8 +162,7 @@ class ProfileServiceTest {
                 .withId(profile.getId())
                 .withEmail(profile.getEmail())
                 .withFirstName(profile.getFirstName())
-                .withLastName(profile.getLastName())
-                .withPhotoUrl(profile.getPhotoUrl());
+                .withLastName(profile.getLastName());
 
         CoachProfileDto actual = profileService.getCoachProfileForUserWithEmail(profile.getEmail());
         assertThat(actual).isEqualTo(expected);

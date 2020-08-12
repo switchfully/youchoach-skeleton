@@ -15,7 +15,7 @@ public class SessionMapperTest {
 
     private Profile getDefaultUser() {
         return new Profile(1,"First","Last",
-                "example@example.com","1Lpassword","1 - latin","/my/photo.png");
+                "example@example.com","1Lpassword","1 - latin");
     }
 
     @Test

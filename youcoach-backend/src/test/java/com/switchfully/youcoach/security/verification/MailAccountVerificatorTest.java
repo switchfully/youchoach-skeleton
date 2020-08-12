@@ -21,7 +21,7 @@ public class MailAccountVerificatorTest {
 
     private Profile getDefaultUser() {
         return new Profile(1L, "First", "Last", "example@example.com",
-                "1Lpassword", "1 - latin","/my/photo.png");
+                "1Lpassword", "1 - latin");
     }
 
     @Test

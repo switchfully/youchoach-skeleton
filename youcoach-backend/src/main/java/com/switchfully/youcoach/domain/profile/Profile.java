@@ -29,8 +29,6 @@ public class Profile {
     private String password;
     @Column(name = "class_year")
     private String classYear;
-    @Column(name = "photo_url")
-    private String photoUrl;
     @Column(name = "account_enabled", nullable = false)
     private boolean accountEnabled = false;
     @Enumerated(STRING)
@@ -38,24 +36,23 @@ public class Profile {
     @Embedded
     private CoachInformation coachInformation;
 
-    public Profile(long id, String firstName, String lastName, String email, String password, String classYear, String photoUrl) {
+    public Profile(long id, String firstName, String lastName, String email, String password, String classYear) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
         this.classYear = classYear;
-        this.photoUrl = photoUrl;
         this.role = Role.COACHEE;
         this.coachInformation = new CoachInformation();
     }
 
     public Profile(String firstName, String lastName, String classYear, String email, String password) {
-        this(0, firstName, lastName, email, password, classYear, "");
+        this(0, firstName, lastName, email, password, classYear);
     }
 
     public Profile(long id, String firstName, String lastName, String email, String password) {
-        this(id, firstName, lastName, email, password, "", "");
+        this(id, firstName, lastName, email, password, "");
     }
 
     public Profile() {
@@ -97,10 +94,6 @@ public class Profile {
         return classYear;
     }
 
-    public String getPhotoUrl() {
-        return photoUrl;
-    }
-
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
@@ -111,10 +104,6 @@ public class Profile {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public void setPhotoUrl(String photoUrl) {
-        this.photoUrl = photoUrl;
     }
 
     public boolean isAccountEnabled() {
