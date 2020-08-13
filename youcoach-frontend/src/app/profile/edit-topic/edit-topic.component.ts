@@ -63,6 +63,7 @@ export class EditTopicComponent implements OnInit, AfterViewInit {
   addRow() {
     this.topics.push({name: this.newTopicForm.get('name').value, grades: []});
     this.newTopicForm.reset();
+    this.newTopicForm.setValue( {'name':null});
   }
 
   removeRow(index: number) {
