@@ -10,7 +10,6 @@ public class ProfileDto {
     private String firstName;
     private String lastName;
     private String email;
-    private String photoUrl;
     private RoleDto youcoachRole;
 
     public ProfileDto withClassYear(String classYear) {
@@ -35,11 +34,6 @@ public class ProfileDto {
 
     public ProfileDto withEmail(String email) {
         this.email = email;
-        return this;
-    }
-
-    public ProfileDto withPhotoUrl(String photoUrl) {
-        this.photoUrl = photoUrl;
         return this;
     }
 
@@ -76,10 +70,6 @@ public class ProfileDto {
         this.email = email;
     }
 
-    public String getPhotoUrl() {
-        return photoUrl;
-    }
-
 
     @Override
     public boolean equals(Object o) {
@@ -90,12 +80,11 @@ public class ProfileDto {
                 Objects.equals(classYear, that.classYear) &&
                 Objects.equals(firstName, that.firstName) &&
                 Objects.equals(lastName, that.lastName) &&
-                Objects.equals(photoUrl, that.photoUrl) &&
                 Objects.equals(email, that.email);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(classYear, id, firstName, lastName, email, photoUrl);
+        return Objects.hash(classYear, id, firstName, lastName, email);
     }
 }

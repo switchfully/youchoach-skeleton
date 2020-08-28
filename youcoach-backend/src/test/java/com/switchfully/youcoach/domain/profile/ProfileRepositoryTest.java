@@ -8,7 +8,6 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.jdbc.Sql;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -24,7 +23,7 @@ class ProfileRepositoryTest {
 
     private Profile getDefaultProfile() {
         return new Profile(1,"First", "Last","example@example.com","1lpassword",
-                "1 - latin","/my/photo.png");
+                "1 - latin");
     }
 
     @Test
@@ -39,7 +38,7 @@ class ProfileRepositoryTest {
     @Sql("classpath:oneDefaultUser.sql")
     void retrieveProfile(){
         Profile expected = new Profile(20L, "First", "Last","example@example.com",
-                "1Lpassword","1 - Latin","/my/photo.png");
+                "1Lpassword","1 - Latin");
         Profile actual = profileRepository.findById(20L).get();
         Assertions.assertThat(actual).isEqualTo(expected);
     }
@@ -58,7 +57,7 @@ class ProfileRepositoryTest {
     @Sql("classpath:oneDefaultUser.sql")
     void emailDuplication() {
         Profile duplicateEmail = new Profile(2,"DuplicateFirst","DuplicateLast","example@example.com",
-                "1Lpassword","1 - latin","/my/photo.png");
+                "1Lpassword","1 - latin");
         profileRepository.save(duplicateEmail);
 
         assertThatExceptionOfType(DataIntegrityViolationException.class).isThrownBy(() -> profileRepository.flush() );

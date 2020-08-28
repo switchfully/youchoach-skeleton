@@ -80,7 +80,6 @@ public class ProfileService {
         profile.setFirstName(updateProfileDto.getFirstName());
         profile.setLastName(updateProfileDto.getLastName());
         profile.setClassYear(updateProfileDto.getClassYear());
-        profile.setPhotoUrl(updateProfileDto.getPhotoUrl());
         if (updateProfileDto.getYoucoachRole() != null) {
             profile.setRole(Role.valueOf(updateProfileDto.getYoucoachRole().getName()));
         }
@@ -89,7 +88,6 @@ public class ProfileService {
                 .withEmail(updateProfileDto.getEmail())
                 .withFirstName(updateProfileDto.getFirstName())
                 .withLastName(updateProfileDto.getLastName())
-                .withPhotoUrl(updateProfileDto.getPhotoUrl())
                 .withClassYear(updateProfileDto.getClassYear())
                 .withYoucoachRole(new RoleDto(profile.getRole().name(), profile.getRole().getLabel()));
 
@@ -98,7 +96,6 @@ public class ProfileService {
         }
         return cpu;
     }
-
 
     public SecuredUserDto getUserById(long id) {
         return profileMapper.toUserDto(profileRepository.findById(id).get());

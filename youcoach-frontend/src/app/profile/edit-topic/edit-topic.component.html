@@ -26,11 +26,11 @@
               <td>
                 <div class="input-field">
                   <label for="name" translate>edit-topic.label.new-topic</label>
-                  <input id="name" type="text" formControlName="name" class="autocomplete" (keyup.enter)="addRow()" (change)="updateValue(inputRef.value)" #inputRef/>
+                  <input id="name" type="text" formControlName="name" class="autocomplete" (change)="updateValue(inputRef.value)" #inputRef/>
                 </div>
               </td>
               <td>
-                <button type="submit" class="waves-effect btn-floating"><i class="material-icons">add_circle</i>
+                <button type="submit" [disabled]="!newTopicForm.get('name').value" (click)="addRow()" class="waves-effect btn-floating"><i class="material-icons">add_circle</i>
                 </button>
               </td>
             </tr>

@@ -100,7 +100,7 @@ class ProfileControllerTest {
                 .andReturn()
                 .getResponse()
                 .getContentAsString();
-        String expected = "{\"id\":20,\"firstName\":\"First\",\"lastName\":\"Last\",\"email\":\"example@example.com\",\"classYear\":\"1 - latin\",\"photoUrl\":\"/my/photo.png\",\"youcoachRole\":{\"name\":\"COACHEE\",\"label\":\"enum.role.coachee\"}}";
+        String expected = "{\"id\":20,\"firstName\":\"First\",\"lastName\":\"Last\",\"email\":\"example@example.com\",\"classYear\":\"1 - latin\",\"youcoachRole\":{\"name\":\"COACHEE\",\"label\":\"enum.role.coachee\"}}";
         JSONAssert.assertEquals(expected, actualResult, true);
     }
 
@@ -119,7 +119,7 @@ class ProfileControllerTest {
                 .andReturn()
                 .getResponse()
                 .getContentAsString();
-        String expected = "{\"id\":20,\"firstName\":\"First\",\"lastName\":\"Last\",\"email\":\"example@example.com\",\"classYear\":\"1 - latin\",\"photoUrl\":\"/my/photo.png\", \"youcoachRole\":{\"name\":\"COACHEE\",\"label\":\"enum.role.coachee\"}}";
+        String expected = "{\"id\":20,\"firstName\":\"First\",\"lastName\":\"Last\",\"email\":\"example@example.com\",\"classYear\":\"1 - latin\", \"youcoachRole\":{\"name\":\"COACHEE\",\"label\":\"enum.role.coachee\"}}";
         JSONAssert.assertEquals(expected, actualResult, true);
     }
 
@@ -154,7 +154,7 @@ class ProfileControllerTest {
                 .andReturn()
                 .getResponse()
                 .getContentAsString();
-        String expected = "{\"id\":20,\"firstName\":\"First\",\"lastName\":\"Last\",\"email\":\"example@example.com\",\"classYear\":\"1 - latin\",\"photoUrl\":\"/my/photo.png\",\"youcoachRole\":{\"name\":\"COACHEE\",\"label\":\"enum.role.coachee\"}}";
+        String expected = "{\"id\":20,\"firstName\":\"First\",\"lastName\":\"Last\",\"email\":\"example@example.com\",\"classYear\":\"1 - latin\",\"youcoachRole\":{\"name\":\"COACHEE\",\"label\":\"enum.role.coachee\"}}";
         JSONAssert.assertEquals(expected, actualResult, true);
     }
 
@@ -181,7 +181,6 @@ class ProfileControllerTest {
                 .withAvailability("Whenever you want.")
                 .withCoachingTopics(List.of(new Topic("Algebra", List.of(Grade.THREE, Grade.FOUR))))
                 .withEmail("example@example.com")
-                .withPhotoUrl("/my/photo.png")
                 .withFirstName("First")
                 .withLastName("Last")
                 .withId(20L)

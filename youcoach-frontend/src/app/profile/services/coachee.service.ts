@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Observable, of} from 'rxjs';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {ICoachee} from '../../security/register/icoachee';
+import {ICoachee} from '../../security/interfaces/ICoachee';
 import {IMember} from '../interfaces/IMember';
 import {catchError} from 'rxjs/operators';
 import {ICoacheeRegisterResult} from '../../security/interfaces/ICoacheeRegisterResult';
@@ -10,7 +10,6 @@ import {IPasswordChange} from '../../security/interfaces/IPasswordChange';
 import {IPasswordChangeResult} from '../../security/interfaces/IPasswordChangeResult';
 import {environment} from '../../../environments/environment';
 import {IMemberProfileUpdated} from '../interfaces/IMemberProfileUpdated';
-import {AuthenticationService} from "../../security/services/authentication/authentication.service";
 
 @Injectable({
   providedIn: 'root'
@@ -50,10 +49,17 @@ export class CoacheeService {
     return this.http.put<IMemberProfileUpdated>(this.url + '/profile/' + member.id, member, this.httpOptions);
   }
 
+  uploadImage(profileId: number, file: File) {
+    const formData = new FormData();
+    formData.append('profilePicture', file, file.name);
+    return this.http.post(this.url + '/profile/' + profileId + '/image', formData);
+  }
+
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
       console.error(error); // log to console instead
       return of(result as T);
     };
   }
+
 }
