@@ -5,10 +5,13 @@ import com.switchfully.youcoach.domain.session.api.CreateSessionDto;
 import com.switchfully.youcoach.domain.session.api.CoachFeedbackDto;
 import com.switchfully.youcoach.domain.session.api.SessionDto;
 import com.switchfully.youcoach.domain.session.exception.SessionNotFoundException;
+import com.switchfully.youcoach.security.authorization.AuthorizationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.InsufficientAuthenticationException;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
@@ -21,11 +24,13 @@ import java.util.List;
 @CrossOrigin
 public class SessionController {
     private final SessionService sessionService;
+    private final AuthorizationService authorizationService;
     private final static Logger LOGGER = LoggerFactory.getLogger(SessionController.class);
 
     @Autowired
-    public SessionController(SessionService sessionService) {
+    public SessionController(SessionService sessionService, AuthorizationService authorizationService) {
         this.sessionService = sessionService;
+        this.authorizationService = authorizationService;
     }
 
     @PostMapping(produces = "application/json", consumes = "application/json")
@@ -37,8 +42,11 @@ public class SessionController {
 
     @GetMapping(produces = "application/json")
     @ResponseStatus(HttpStatus.OK)
-    public List<SessionDto> getCoachingSession(Principal principal) {
-        return sessionService.getCoachingSessionsForUser(principal.getName());
+    public List<SessionDto> getCoachingSession(@RequestParam long profileIdentifier, Authentication principal) {
+        if(!authorizationService.canAccessSession(principal, profileIdentifier)){
+            throw new InsufficientAuthenticationException("You don't have access to this users sessions");
+        }
+        return sessionService.getCoachingSessionsForUser(profileIdentifier);
     }
 
     @GetMapping(produces = "application/json" , path = "/coach")

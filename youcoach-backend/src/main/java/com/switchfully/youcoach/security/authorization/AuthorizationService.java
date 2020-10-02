@@ -23,4 +23,8 @@ public class AuthorizationService {
     public boolean canChangeRole(Authentication authentication) {
         return authentication.getAuthorities().contains(ROLE_ADMIN);
     }
+
+    public boolean canAccessSession(Authentication authentication, long profileIdentifier) {
+        return canAccessProfile(authentication, profileIdentifier);
+    }
 }

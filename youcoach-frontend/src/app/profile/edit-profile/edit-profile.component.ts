@@ -36,17 +36,18 @@ export class EditProfileComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const url: string = this.route.snapshot['_routerState'].url;
-    this.getCoacheeByID(this.profileId);
-  }
-
-  getCoacheeByID(id: number): void {
-    this.coacheeService.getCoacheeById(id).subscribe(
-      member => {
-        this.editForm.patchValue(member);
-        M.AutoInit();
-      }
-    );
+    this.route.parent.params
+      .pipe(
+        map(routeParams => routeParams.id),
+        tap(profileId => this.profileId = profileId),
+        flatMap(coacheeId => this.coacheeService.getCoacheeById(coacheeId))
+      )
+      .subscribe(
+        member => {
+          this.editForm.patchValue(member);
+          M.AutoInit();
+        }
+      );
   }
 
   updateProfile(member): void {

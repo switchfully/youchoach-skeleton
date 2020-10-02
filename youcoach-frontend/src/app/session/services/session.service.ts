@@ -26,8 +26,8 @@ export class SessionService {
     return this.http.post<ISession>(this.url, session, this.httpOptions);
   }
 
-  getSessions(): Observable<ISessionComplete[]> {
-    return this.http.get<ISessionComplete[]>(this.url, this.httpOptions).pipe(
+  getSessions(id: number): Observable<ISessionComplete[]> {
+    return this.http.get<ISessionComplete[]>(`${this.url}?profileIdentifier=${id}`, this.httpOptions).pipe(
       map(response => response.map(session => Object.assign(new ISessionComplete(), session)))
     );
   }

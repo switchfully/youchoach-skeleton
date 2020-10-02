@@ -3,6 +3,7 @@ import {SessionService} from "../services/session.service";
 import {ISessionComplete, Status} from "../interfaces/ISessionComplete";
 import {ActivatedRoute} from "@angular/router";
 import {FormBuilder, FormGroup} from "@angular/forms";
+import {flatMap, map, tap} from "rxjs/operators";
 
 @Component({
   selector: 'app-session-detail',
@@ -21,7 +22,6 @@ export class SessionDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.coach = this.route.snapshot['_routerState'].url.indexOf('/coach/') !== -1;
-    let sessionId = +this.route.snapshot.paramMap.get('id');
     this.coachFeedbackForm = this.formBuilder.group({
       whatDidYouLike: "",
       onTime: "",
@@ -37,15 +37,19 @@ export class SessionDetailComponent implements OnInit {
       clearExplanation: ""
     });
 
-    this.sessionService.getSession(sessionId).subscribe(session => {
-      this.session = session;
-      if(session.coachFeedback) {
-        this.coachFeedbackForm.patchValue(session.coachFeedback);
-      }
-      if(session.coacheeFeedback) {
-        this.coacheeFeedbackForm.patchValue(session.coacheeFeedback);
-      }
-    });
+    this.route.params
+      .pipe(
+        flatMap(routParams => this.sessionService.getSession(routParams.sessionId))
+      )
+      .subscribe(session => {
+        this.session = session;
+        if (session.coachFeedback) {
+          this.coachFeedbackForm.patchValue(session.coachFeedback);
+        }
+        if (session.coacheeFeedback) {
+          this.coacheeFeedbackForm.patchValue(session.coacheeFeedback);
+        }
+      });
   }
 
   cancelSession(session: ISessionComplete): void {

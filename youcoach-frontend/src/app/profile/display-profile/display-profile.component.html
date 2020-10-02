@@ -8,13 +8,13 @@
         <section class="card-panel grey lighten-5" *ngIf="member">
           <div class="right">
             <a class="waves-effect waves-light btn-large btn-floating yellow darken-2"><i
-              class="material-icons left" [routerLink]="'/coachee/edit-profile/' + member.id">edit</i>Edit</a>
+              class="material-icons left" [routerLink]="'/coachee/' + member.id + '/edit-profile'">edit</i>Edit</a>
           </div>
           <h5 translate>profile-information.title</h5>
           <div class="divider"></div>
           <div class="row">
             <div class="col l2 m2 s12">
-              <img [src]="member.id.toString() | authImage | async" class="responsive-img circle"
+              <img [src]=" ''+ member.id | authImage | async" class="responsive-img circle"
                    alt="Profile Picture">
             </div>
             <div class="col l10 m10 s12">

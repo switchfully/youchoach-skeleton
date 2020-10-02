@@ -4,7 +4,7 @@
     <section class="card-panel grey lighten-5" *ngIf="coach">
       <div class="right">
         <button class="waves-effect waves-light yellow darken-2 btn-large black-text"
-                routerLink="/coachee/coach-profile/{{coach.id}}/request-a-session" translate>
+                routerLink="request-a-session" translate>
           request-session.button.request-session<i
           class="material-icons right">event</i></button>
         <a *ngIf="authenticationService.isAdmin()" class="waves-effect waves-light btn-large btn-floating yellow darken-2"><i
@@ -15,7 +15,7 @@
       <div class="divider"></div>
       <div class="row">
         <div class="col l2 m2 s12">
-          <img [src]="coach.id.toString() | authImage | async" class="responsive-img circle"
+          <img [src]="'' + coach.id | authImage | async" class="responsive-img circle"
                alt="Profile Picture">
         </div>
         <div class="col l10 m10 s12">

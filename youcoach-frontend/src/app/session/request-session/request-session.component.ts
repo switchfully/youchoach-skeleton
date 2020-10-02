@@ -8,6 +8,7 @@ import {InitMaterializeComponent} from '../../init-materialize.component';
 import * as M from 'materialize-css';
 import {DatepickerOptions} from 'materialize-css';
 import {TimeComparatorService} from '../services/time-comparator.service';
+import {AuthenticationService} from "../../security/services/authentication/authentication.service";
 
 @Component({
   selector: 'app-request-session',
@@ -16,8 +17,14 @@ import {TimeComparatorService} from '../services/time-comparator.service';
 })
 export class RequestSessionComponent extends InitMaterializeComponent implements OnInit {
 
-  constructor(private coachService: CoachService, private route: ActivatedRoute,
-              private fb: FormBuilder, private sessionService: SessionService, private router: Router, private timeComparator: TimeComparatorService) {
+  constructor(private coachService: CoachService,
+              private route: ActivatedRoute,
+              private fb: FormBuilder,
+              private sessionService: SessionService,
+              private router: Router,
+              private timeComparator: TimeComparatorService,
+              private authenticationService: AuthenticationService
+  ) {
     super();
   }
 
@@ -102,7 +109,7 @@ export class RequestSessionComponent extends InitMaterializeComponent implements
         this.initializeTimePicker();
       }
       , 1000);
-    this.idToGet = +this.route.snapshot.paramMap.get('id');
+    this.idToGet = +this.route.snapshot.paramMap.get('coachId');
   }
 
   onSubmit() {
@@ -124,7 +131,7 @@ export class RequestSessionComponent extends InitMaterializeComponent implements
   }
 
   goSessions(): void {
-    this.router.navigateByUrl('/coachee/my-sessions');
+    this.router.navigateByUrl(`/coachee/${this.authenticationService.getUserId()}/sessions`);
   }
 
 }

@@ -28,7 +28,7 @@ export class OverviewComponent implements OnInit {
     if (profile.youcoachRole.name === 'COACH' || profile.youcoachRole.name === 'ADMIN') {
       return `/coach/coach-profile/${profile.id}`
     }
-    return `/coachee/profile/${profile.id}`;
+    return `/coachee/${profile.id}/profile`;
   }
 
   performFiltering() {

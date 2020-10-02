@@ -29,7 +29,9 @@ export class CoachProfileComponent implements OnInit {
   coachView = false;
 
   constructor(private coachService: CoachService, private route: ActivatedRoute, public authenticationService: AuthenticationService) {
-    this.idToGet = +this.route.snapshot.paramMap.get('id');
+    this.route.params.subscribe(routeParams => {
+      this.idToGet = routeParams.id == null ? routeParams.coachId : routeParams.id
+    });
   }
 
   ngOnInit(): void {

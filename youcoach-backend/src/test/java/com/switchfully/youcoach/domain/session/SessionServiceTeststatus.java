@@ -31,7 +31,7 @@ class SessionServiceTeststatus {
         session1.accept();
         when(sessionRepository.findAllByCoachee(Mockito.any())).thenReturn(List.of(session1));
 
-        List<SessionDto> actual = sessionService.getCoachingSessionsForUser("example@example.com");
+        List<SessionDto> actual = sessionService.getCoachingSessionsForUser(1);
 
         assertThat(actual.get(0).getStatus()).isEqualTo(Status.WAITING_FOR_FEEDBACK);
     }

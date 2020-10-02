@@ -49,7 +49,7 @@ export class LoginComponent implements OnInit {
     if (this.authenticationService.isCoach()) {
       return `/coach/coach-profile/${this.authenticationService.getUserId()}`;
     }
-    return `/coachee/profile/${this.authenticationService.getUserId()}`;
+    return `/coachee/${this.authenticationService.getUserId()}/profile`;
   }
 
   resetPassword() {

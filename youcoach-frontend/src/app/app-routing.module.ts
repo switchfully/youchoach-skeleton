@@ -31,19 +31,17 @@ import {EditTopicComponent} from "./profile/edit-topic/edit-topic.component";
 
 const routes: Routes = [
   {
-    path: 'coachee',
+    path: 'coachee/:id',
     component: CoacheeComponent,
     children: [
-      {path: 'becomecoach', component: BecomeCoachComponent},
       {path: 'profile', component: DisplayProfileComponent},
-      {path: 'profile/:id', component: DisplayProfileComponent},
       {path: 'edit-profile', component: EditProfileComponent},
-      {path: 'edit-profile/:id', component: EditProfileComponent},
-      {path: 'my-sessions', component: CoacheeMySessionsComponent},
-      {path: 'session/:id', component: SessionDetailComponent},
       {path: 'find-coach', component: FindACoachComponent},
-      {path: 'coach-profile/:id', component: CoachProfileComponent},
-      {path: 'coach-profile/:id/request-a-session', component: RequestSessionComponent}
+      {path: 'coach-profile/:coachId', component: CoachProfileComponent},
+      {path: 'coach-profile/:coachId/request-a-session', component: RequestSessionComponent},
+      {path: 'sessions', component: CoacheeMySessionsComponent},
+      {path: 'sessions/:sessionId', component: SessionDetailComponent},
+      {path: 'becomecoach', component: BecomeCoachComponent},
     ]
   },
   {

@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {SessionService} from '../services/session.service';
 import {ISessionComplete, Status} from '../interfaces/ISessionComplete';
-import {TimeComparatorService} from '../services/time-comparator.service';
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-coachee-my-sessions',
@@ -11,15 +11,15 @@ import {TimeComparatorService} from '../services/time-comparator.service';
 export class CoacheeMySessionsComponent implements OnInit {
   sessions: ISessionComplete[] = null;
 
-  constructor(private sessionService: SessionService) {
+  constructor(private sessionService: SessionService, private route: ActivatedRoute) {
   }
 
   ngOnInit(): void {
-    this.getSessions();
+    this.getSessions(+this.route.parent.snapshot.paramMap.get('id'));
   }
 
-  getSessions(): void {
-    this.sessionService.getSessions().subscribe(sessions => this.sessions = sessions);
+  getSessions(id: number): void {
+    this.sessionService.getSessions(id).subscribe(sessions => this.sessions = sessions);
   }
 
   cancelSession(session: ISessionComplete): void {

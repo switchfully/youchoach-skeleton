@@ -53,11 +53,11 @@ class SessionServiceTest {
         when(sessionMapper.toModel(any(CreateSessionDto.class), any(Profile.class), any(Profile.class))).thenReturn(session);
         when(sessionMapper.toDto(any(Session.class))).thenReturn(sessionDto);
         when(sessionRepository.save(any(Session.class))).thenReturn(session);
-        when(profileRepository.findByEmail("example@example.com")).thenReturn(optionalUser);
+        when(profileRepository.findById(2L)).thenReturn(optionalUser);
         when(sessionRepository.findAllByCoachee(optionalUser)).thenReturn(List.of(session));
 
 
-        List<SessionDto> coachingSessionsForUser = sessionService.getCoachingSessionsForUser("example@example.com");
+        List<SessionDto> coachingSessionsForUser = sessionService.getCoachingSessionsForUser(2L);
 
         assertThat(coachingSessionsForUser).contains(sessionDto);
     }
