@@ -39,7 +39,8 @@ export class RequestSessionComponent extends InitMaterializeComponent implements
     return this.sessionForm !== null &&
       this.validateDate() === null &&
       this.sessionForm.get('subject').value.length > 0 &&
-      this.sessionForm.get('location').value.length > 0;
+      this.sessionForm.get('location').value.length > 0 &&
+      this.sessionForm.get('remarks').value.length > 0;
   }
 
   private validateDate(): ValidationErrors | null {
@@ -58,7 +59,6 @@ export class RequestSessionComponent extends InitMaterializeComponent implements
     }
 
     const dateTopass = this.timeComparator.constructSessionDate(date, time);
-    // return dateTopass === null || new Date() > dateTopass ? {mustBeFuture: true} : null;
     return null;
   }
 
