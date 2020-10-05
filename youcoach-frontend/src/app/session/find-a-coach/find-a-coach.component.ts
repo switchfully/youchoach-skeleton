@@ -10,13 +10,13 @@ import {ICoach} from '../../profile/interfaces/ICoach';
   styleUrls: ['./find-a-coach.component.css']
 })
 export class FindACoachComponent implements OnInit {
-  searchText: string;
-  coachList: ICoachList = {coaches: null};
+  private coachList: ICoachList = {coaches: null};
   topicList = [];
   // tslint:disable-next-line:variable-name
   private _filteredCoaches: ICoach [];
-  selectedTopics: string[];
-  grades: number[];
+  selectedTopics: string[] = [];
+  selectedGrades: number[] = [];
+  selectedText: string = '';
 
 
   constructor(private coachService: CoachService) {
@@ -60,29 +60,44 @@ export class FindACoachComponent implements OnInit {
   }
 
   performFilter() {
-    this.filteredCoaches = this.coachList.coaches;
-    if (this.selectedTopics && this.selectedTopics.length > 0) {
-      this.filteredCoaches = this._filteredCoaches
-        .filter(coach => {
-          return coach.topics.some(topic => this.selectedTopics.some(sTopic => {
-              return sTopic === topic.name;
-            }
-          ));
-        });
+    const filters = [];
+    if(this.selectedTopics.length > 0 && this.selectedGrades.length > 0) {
+      filters.push(coach => this.hasTopicThatIsInSelectedTopicsAndSelectedGrade(coach, this.selectedTopics, this.selectedGrades));
     }
-    if (this.grades && this.grades.length > 0) {
-      this.filteredCoaches = this._filteredCoaches
-        .filter(coach => {
-          return coach.topics.some(topic => topic.grades.some(grade => this.grades.some(grd => {
-            return (grd.toString() === grade.toString());
-          })));
-        });
+    if (this.selectedTopics.length > 0) {
+       filters.push(coach => this.hasOneOfSelectedTopics(coach, this.selectedTopics));
     }
-    if (this.searchText !== undefined && this.searchText.length > 2) {
-      this.filteredCoaches = this._filteredCoaches
-        .filter(coach => coach.firstName.toLowerCase().startsWith(this.searchText.toLowerCase()) ||
-          coach.lastName.toLowerCase().startsWith(this.searchText.toLowerCase())
-        );
+    if (this.selectedGrades.length > 0) {
+      filters.push(coach => this.hasOneOfSelectedGrades(coach, this.selectedGrades));
     }
+    if (this.selectedText.length > 2) {
+      filters.push(coach => this.hasFirstOrLastNameStartingWith(coach, this.selectedText));
+    }
+
+    this.filteredCoaches = this.coachList.coaches.filter(coach => filters.every(filter => filter(coach)))
+  }
+
+  private hasFirstOrLastNameStartingWith(coach, searchText) {
+    return coach.firstName.toLowerCase().startsWith(searchText.toLowerCase()) || coach.lastName.toLowerCase().startsWith(searchText.toLowerCase());
+  }
+
+  private hasOneOfSelectedGrades(coach, selectedGrades) {
+    return coach.topics.some(topic => this.isInSelectedGrades(topic, selectedGrades));
+  }
+
+  private hasOneOfSelectedTopics(coach, selectedTopics) {
+    return coach.topics.some(topic => this.isASelectedTopic(topic, selectedTopics));
+  }
+
+  private hasTopicThatIsInSelectedTopicsAndSelectedGrade(coach: any, selectedTopics: string[], selectedGrades: number[]) {
+    return coach.topics.some(topic => this.isASelectedTopic(topic, selectedTopics) && this.isInSelectedGrades(topic, selectedGrades));
+  }
+
+  private isASelectedTopic(topic, selectedTopics) {
+    return selectedTopics.some(sTopic => sTopic === topic.name);
+  }
+
+  private isInSelectedGrades(topic, selectedGrades) {
+    return topic.grades.some(grade => selectedGrades.some(sGrade => sGrade.toString() === grade.toString()));
   }
 }

@@ -13,7 +13,7 @@
             <label translate>coach-overview.label.filter-topic</label>
           </div>
           <div class="input-field col l3 m6 s12">
-            <select [(ngModel)]="grades" multiple>
+            <select [(ngModel)]="selectedGrades" multiple>
               <option value="none" selected disabled translate>coach-overview.label.filter-year-dropdown</option>
               <option value="1">year 1</option>
               <option value="2">year 2</option>
@@ -27,7 +27,7 @@
           </div>
           <div class="input-field col l6 m12 s12">
             <i class="material-icons prefix">search</i>
-            <input id="icon_prefix" type="text" class="validate" [(ngModel)]="searchText" autocomplete="off"
+            <input id="icon_prefix" type="text" class="validate" [(ngModel)]="selectedText" autocomplete="off"
                    (change)="performFilter()">
             <label for="icon_prefix" translate>coach-overview.label.search-placeholder</label>
           </div>
