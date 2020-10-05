@@ -11,7 +11,7 @@ import {flatMap, map, tap} from "rxjs/operators";
 })
 export class CoacheeComponent implements OnInit {
   coacheeId: number;
-  private coacheeName: string;
+  coacheeName: string;
 
   constructor(private route: ActivatedRoute,
               public authenticationService: AuthenticationService,
