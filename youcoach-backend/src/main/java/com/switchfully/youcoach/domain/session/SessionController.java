@@ -35,7 +35,7 @@ public class SessionController {
 
     @PostMapping(produces = "application/json", consumes = "application/json")
     @ResponseStatus(HttpStatus.CREATED)
-    public SessionDto saveCoachingSession(@RequestBody CreateSessionDto createSessionDto, Principal principal){
+    public SessionDto saveCoachingSession(@RequestBody CreateSessionDto createSessionDto, Principal principal) {
         LOGGER.info("attempting to create a coaching session");
         return sessionService.save(createSessionDto, principal.getName());
     }
@@ -43,28 +43,31 @@ public class SessionController {
     @GetMapping(produces = "application/json")
     @ResponseStatus(HttpStatus.OK)
     public List<SessionDto> getCoachingSession(@RequestParam long profileIdentifier, Authentication principal) {
-        if(!authorizationService.canAccessSession(principal, profileIdentifier)){
+        if (!authorizationService.canAccessSession(principal, profileIdentifier)) {
             throw new InsufficientAuthenticationException("You don't have access to this users sessions");
         }
         return sessionService.getCoachingSessionsForUser(profileIdentifier);
     }
 
-    @GetMapping(produces = "application/json" , path = "/coach")
+    @GetMapping(produces = "application/json", path = "/coach")
     @ResponseStatus(HttpStatus.OK)
-    public List<SessionDto> getCoachingSessionforCoach(Principal principal) {
-        return sessionService.getCoachingSessionsForCoach(principal.getName());
+    public List<SessionDto> getCoachingSessionforCoach(@RequestParam long profileIdentifier, Authentication principal) {
+        if (!authorizationService.canAccessSession(principal, profileIdentifier)) {
+            throw new InsufficientAuthenticationException("You don't have access to this users sessions");
+        }
+        return sessionService.getCoachingSessionsForCoach(profileIdentifier);
     }
 
     @PostMapping(path = "/{id}/cancel", produces = "application/json", consumes = "application/json")
     @ResponseStatus(HttpStatus.CREATED)
-    public SessionDto cancelSession(@PathVariable ("id") Long sessionId) {
+    public SessionDto cancelSession(@PathVariable("id") Long sessionId) {
         LOGGER.info("updating session status");
         return sessionService.cancel(sessionId);
     }
 
     @PostMapping(path = "/{id}/accept", produces = "application/json", consumes = "application/json")
     @ResponseStatus(HttpStatus.CREATED)
-    public SessionDto acceptSession(@PathVariable ("id") Long sessionId) {
+    public SessionDto acceptSession(@PathVariable("id") Long sessionId) {
         LOGGER.info("updating session status");
         return sessionService.accept(sessionId);
     }

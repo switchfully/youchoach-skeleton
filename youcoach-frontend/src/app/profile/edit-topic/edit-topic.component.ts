@@ -5,6 +5,7 @@ import {CoachService} from "../services/coach.service";
 import {ITopic} from "../interfaces/ICoach";
 import {Location} from "@angular/common";
 import {ProfileService} from "../../admin/services/profile.service";
+import {flatMap, map, tap} from "rxjs/operators";
 
 @Component({
   selector: 'app-edit-topic',
@@ -25,8 +26,13 @@ export class EditTopicComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.idToGet = +this.activatedRoute.snapshot.paramMap.get('id');
-    this.coachService.getSpecificCoach(this.idToGet).subscribe(coach => this.topics = coach.topics);
+    this.activatedRoute.parent.params
+      .pipe(
+        map(params => params.coachId),
+        tap(coachId => this.idToGet=coachId),
+        flatMap(coachId => this.coachService.getSpecificCoach(coachId)),
+      )
+      .subscribe(coach => this.topics = coach.topics);
   }
 
   ngAfterViewInit(): void {

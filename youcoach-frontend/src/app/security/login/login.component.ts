@@ -47,7 +47,7 @@ export class LoginComponent implements OnInit {
       return `/admin/overview`;
     }
     if (this.authenticationService.isCoach()) {
-      return `/coach/coach-profile/${this.authenticationService.getUserId()}`;
+      return `/coach/${this.authenticationService.getUserId()}/coach-profile`;
     }
     return `/coachee/${this.authenticationService.getUserId()}/profile`;
   }

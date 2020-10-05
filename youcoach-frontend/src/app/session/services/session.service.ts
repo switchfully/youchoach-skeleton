@@ -32,8 +32,8 @@ export class SessionService {
     );
   }
 
-  getSessionsforCoach(): Observable<ISessionComplete[]> {
-    return this.http.get<ISessionComplete[]>(this.url + '/coach', this.httpOptions).pipe(
+  getSessionsforCoach(id: number): Observable<ISessionComplete[]> {
+    return this.http.get<ISessionComplete[]>(`${this.url}/coach?profileIdentifier=${id}`, this.httpOptions).pipe(
       map(response => response.map(session => Object.assign(new ISessionComplete(), session)))
     );
   }

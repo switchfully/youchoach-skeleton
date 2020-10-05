@@ -63,7 +63,7 @@
         <ul class="tabs tabs-transparent">
           <li class="tab"><a class="grey-text text-darken-2" [routerLink]="'/coachee/' + authenticationService.getUserId() + '/profile'" translate>menu.link.my-profile</a></li>
           <li class="tab"><a class="grey-text text-darken-2" [routerLink]="'/coachee/' + authenticationService.getUserId() + '/find-coach'" translate>menu.link.find-a-coach</a></li>
-          <li class="tab" *ngIf="authenticationService.isCoach()"><a class="grey-text text-darken-2" [routerLink]="'/coach/coach-profile/' + authenticationService.getUserId()" translate>menu.link.my-coach-profile</a></li>
+          <li class="tab" *ngIf="authenticationService.isCoach()"><a class="grey-text text-darken-2" [routerLink]="'/coach/' + authenticationService.getUserId() + '/coach-profile/'" translate>menu.link.my-coach-profile</a></li>
           <li class="tab" *ngIf="authenticationService.isAdmin()"><a class="grey-text text-darken-2" [routerLink]="'/admin/overview'" translate>menu.link.admin-overview</a></li>
         </ul>
       </div>

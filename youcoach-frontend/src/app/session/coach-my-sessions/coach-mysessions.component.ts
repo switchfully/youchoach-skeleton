@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {SessionService} from '../services/session.service';
 import {TimeComparatorService} from '../services/time-comparator.service';
 import {ISessionComplete, Status} from '../interfaces/ISessionComplete';
+import {flatMap} from "rxjs/operators";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-coach-mysessions',
@@ -11,15 +13,15 @@ import {ISessionComplete, Status} from '../interfaces/ISessionComplete';
 export class CoachMysessionsComponent implements OnInit {
   sessions: ISessionComplete[];
 
-  constructor(private sessionService: SessionService) {
+  constructor(private sessionService: SessionService, private route: ActivatedRoute) {
   }
 
   ngOnInit(): void {
-    this.getSessions();
-  }
-
-  getSessions(): void {
-    this.sessionService.getSessionsforCoach().subscribe(sessions => this.sessions = sessions);
+    this.route.parent.params
+      .pipe(
+        flatMap(params => this.sessionService.getSessionsforCoach(params.coachId))
+      )
+      .subscribe(sessions => this.sessions = sessions);
   }
 
   acceptSession(session: ISessionComplete): void {

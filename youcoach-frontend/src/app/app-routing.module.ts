@@ -45,17 +45,15 @@ const routes: Routes = [
     ]
   },
   {
-    path: 'coach',
+    path: 'coach/:coachId',
     component: CoachComponent,
     children: [
       {path: 'change-topics', component: ChangeTopicsComponent},
-      {path: 'coach-profile/:id', component: CoachProfileComponent},
       {path: 'coach-profile', component: CoachProfileComponent},
-      {path: 'coach-profile/:id/edit-topic', component: EditTopicComponent},
+      {path: 'edit-topic', component: EditTopicComponent},
       {path: 'edit-coach-information', component: EditCoachInformationComponent},
-      {path: 'edit-coach-information/:id', component: EditCoachInformationComponent},
       {path: 'coach-my-sessions', component: CoachMysessionsComponent},
-      {path: 'session/:id', component: SessionDetailComponent},
+      {path: 'sessions/:sessionId', component: SessionDetailComponent},
     ]
   },
   {

@@ -43,8 +43,8 @@ public class SessionService {
         return sessionMapper.toDto(sessionList);
     }
 
-    public List<SessionDto> getCoachingSessionsForCoach(String email) {
-        Optional<Profile> user = profileRepository.findByEmail(email);
+    public List<SessionDto> getCoachingSessionsForCoach(long profileIdentifier) {
+        Optional<Profile> user = profileRepository.findById(profileIdentifier);
         List<Session> sessionList = sessionRepository.findAllByCoach(user);
         setStatusToAutomaticallyClosedWhenTimeIsPast(sessionList);
         return sessionMapper.toDto(sessionList);

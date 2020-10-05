@@ -8,7 +8,7 @@
           request-session.button.request-session<i
           class="material-icons right">event</i></button>
         <a *ngIf="authenticationService.isAdmin()" class="waves-effect waves-light btn-large btn-floating yellow darken-2"><i
-          class="material-icons left" [routerLink]="'/coachee/edit-profile/' + coach.id">edit</i>Edit</a>
+          class="material-icons left" [routerLink]="'/coachee/' + coach.id + '/edit-profile'">edit</i>Edit</a>
       </div>
       <h5 translate>my-profile-menu.link.profile-information</h5>
 
@@ -47,7 +47,7 @@
       <section class="card-panel grey lighten-5 ">
         <div class="right" *ngIf="coach.email !== null">
           <a class="waves-effect waves-light btn-large btn-floating teal lighten-3"
-             [routerLink]="'/coach/edit-coach-information/' + idToGet"><i
+             [routerLink]="'/coach/' + idToGet + '/edit-coach-information'"><i
             class="material-icons left">edit</i>Edit</a>
         </div>
         <h5 translate>coach-information.title</h5>
@@ -73,7 +73,7 @@
       <div class="divider"></div>
       <section class="card-panel grey lighten-5">
         <div class="right" *ngIf="authenticationService.isAdmin()">
-          <a class="waves-effect waves-light btn-large btn-floating teal lighten-3" [routerLink]="'/coach/coach-profile/' + idToGet + '/edit-topic'"><i class="material-icons left">edit</i>Edit</a>
+          <a class="waves-effect waves-light btn-large btn-floating teal lighten-3" [routerLink]="'/coach/' + idToGet + '/edit-topic'"><i class="material-icons left">edit</i>Edit</a>
         </div>
         <h5 translate>coaching-topics.title</h5>
         <div class="divider"></div>

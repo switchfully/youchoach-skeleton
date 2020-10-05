@@ -4,6 +4,7 @@ import {CoachService} from '../services/coach.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Location} from '@angular/common';
 import {ICoach} from '../interfaces/ICoach';
+import {flatMap} from "rxjs/operators";
 
 @Component({
   selector: 'app-edit-coach-information',
@@ -25,13 +26,16 @@ export class EditCoachInformationComponent implements OnInit {
   }
 
   getCoach(): void {
-    const id = +this.route.snapshot.paramMap.get('id');
-    this.coachService.getSpecificCoach(id).subscribe(
-      coach => {
-        this.coach = coach;
-        this.editForm.patchValue(coach);
-      }
-    );
+    this.route.parent.params
+      .pipe(
+        flatMap(params => this.coachService.getSpecificCoach(params.coachId))
+      )
+      .subscribe(
+        coach => {
+          this.coach = coach;
+          this.editForm.patchValue(coach);
+        }
+      );
   }
 
   onSubmit() {

@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {SessionService} from '../services/session.service';
 import {ISessionComplete, Status} from '../interfaces/ISessionComplete';
 import {ActivatedRoute} from "@angular/router";
+import {flatMap} from "rxjs/operators";
 
 @Component({
   selector: 'app-coachee-my-sessions',
@@ -15,11 +16,11 @@ export class CoacheeMySessionsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getSessions(+this.route.parent.snapshot.paramMap.get('id'));
-  }
-
-  getSessions(id: number): void {
-    this.sessionService.getSessions(id).subscribe(sessions => this.sessions = sessions);
+    this.route.parent.params
+      .pipe(
+        flatMap(params => this.sessionService.getSessions(params.id))
+      )
+      .subscribe(sessions => this.sessions = sessions);
   }
 
   cancelSession(session: ISessionComplete): void {

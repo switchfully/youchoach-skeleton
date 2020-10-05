@@ -29,8 +29,15 @@ export class CoachProfileComponent implements OnInit {
   coachView = false;
 
   constructor(private coachService: CoachService, private route: ActivatedRoute, public authenticationService: AuthenticationService) {
+    this.route.parent.params.subscribe(routeParams => {
+      if (routeParams.coachId) {
+        this.idToGet = routeParams.coachId
+      }
+    });
     this.route.params.subscribe(routeParams => {
-      this.idToGet = routeParams.id == null ? routeParams.coachId : routeParams.id
+      if (routeParams.coachId) {
+        this.idToGet = routeParams.coachId
+      }
     });
   }
 
