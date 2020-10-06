@@ -4,6 +4,9 @@ import {TranslateService} from '@ngx-translate/core';
 import {ActivatedRoute} from '@angular/router';
 import * as M from 'materialize-css';
 import {ThemeService} from "../theme.service";
+import {ProfileService} from "../../admin/services/profile.service";
+import {CoacheeService} from "../../profile/services/coachee.service";
+import {flatMap} from "rxjs/operators";
 
 @Component({
   selector: 'app-header',
@@ -14,7 +17,11 @@ export class HeaderComponent implements OnInit {
   username;
   language = 'en';
 
-  constructor(public authenticationService: AuthenticationService, private translate: TranslateService, public themeService: ThemeService) {
+  constructor(public authenticationService: AuthenticationService,
+              private translate: TranslateService,
+              public themeService: ThemeService,
+              private coacheeService: CoacheeService
+  ) {
   }
 
   ngOnInit(): void {
@@ -23,6 +30,12 @@ export class HeaderComponent implements OnInit {
     this.authenticationService.userLoggedIn$.subscribe(_ => {
       this.username = this.authenticationService.getUsername();
     });
+
+    this.authenticationService.mimicUser$
+      .pipe(
+        flatMap(mimicUserId => this.coacheeService.getCoacheeById(mimicUserId))
+      )
+      .subscribe(member => this.username = member.firstName + ' ' +member.lastName);
   }
 
   switchLanguage(language: string) {

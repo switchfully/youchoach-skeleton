@@ -22,7 +22,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let profile of filteredProfiles" [routerLink]="getProfileUrl(profile)" class="clickable-row">
+            <tr *ngFor="let profile of filteredProfiles" (click)="navigateToProfileUrl(profile)" class="clickable-row">
               <td>{{profile.firstName}}</td>
               <td>{{profile.lastName}}</td>
               <td>{{profile.classYear}}</td>

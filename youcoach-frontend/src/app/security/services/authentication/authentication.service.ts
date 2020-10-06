@@ -12,17 +12,18 @@ export class AuthenticationService {
   private tokenKey = 'jwt_token';
   private usernameKey = 'username';
   private userIdKey = 'user_id';
+  private mimicUserId = 'mimic_user_id';
   private userLoggedInSource = new Subject<boolean>();
+  private mimicUserSource = new Subject<number>();
   private tokenValue = null;
   private usernameValue = null;
   private userId = null;
 
   userLoggedIn$ = this.userLoggedInSource.asObservable();
-
+  mimicUser$ = this.mimicUserSource.asObservable();
 
   constructor(private loginService: AuthenticationHttpService) {
   }
-
 
   public setJwtToken(token: string, username: string): void {
     this.tokenValue = token;
@@ -59,7 +60,19 @@ export class AuthenticationService {
     if (this.userId === null) {
       this.userId = sessionStorage.getItem(this.userIdKey);
     }
+    if (this.getMimicUserId() !== null) {
+      return this.getMimicUserId();
+    }
     return this.userId;
+  }
+
+  getMimicUserId() {
+    return sessionStorage.getItem(this.mimicUserId);
+  }
+
+  setMimicUserId(mimicUserId: string) {
+    sessionStorage.setItem(this.mimicUserId, mimicUserId);
+    this.mimicUserSource.next(parseInt(mimicUserId));
   }
 
   isLoggedIn() {
@@ -78,10 +91,11 @@ export class AuthenticationService {
 
   isCoach(): boolean {
     const tokenDecoded: any = JWT(this.getToken());
-    return  tokenDecoded.rol.includes('ROLE_COACH');
+    return tokenDecoded.rol.includes('ROLE_COACH');
   }
+
   isAdmin(): boolean {
     const tokenDecoded: any = JWT(this.getToken());
-    return  tokenDecoded.rol.includes('ROLE_ADMIN');
+    return tokenDecoded.rol.includes('ROLE_ADMIN');
   }
 }

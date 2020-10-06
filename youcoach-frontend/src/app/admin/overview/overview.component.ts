@@ -3,6 +3,8 @@ import {IMember} from "../../profile/interfaces/IMember";
 import {ProfileService} from "../services/profile.service";
 import {ThemeService} from "../../template/theme.service";
 import {ICoach} from "../../profile/interfaces/ICoach";
+import {AuthenticationService} from "../../security/services/authentication/authentication.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-overview',
@@ -14,7 +16,9 @@ export class OverviewComponent implements OnInit {
   _filteredProfiles: IMember[];
   searchText: string;
 
-  constructor(private profileService: ProfileService, public themeService: ThemeService) {
+  constructor(private profileService: ProfileService,
+              private authenticationService: AuthenticationService,
+              private router: Router) {
   }
 
   ngOnInit(): void {
@@ -50,5 +54,10 @@ export class OverviewComponent implements OnInit {
 
   set filteredProfiles(profiles: IMember[]) {
     this._filteredProfiles = profiles;
+  }
+
+  navigateToProfileUrl(profile: IMember) {
+    this.authenticationService.setMimicUserId('' + profile.id);
+    this.router.navigateByUrl(this.getProfileUrl(profile));
   }
 }
