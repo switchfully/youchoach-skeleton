@@ -36,34 +36,37 @@
 
       <div class="row">
 
-        <div *ngFor="let coach of filteredCoaches">
-          <div class="col l3 m4 s12">
-            <h6 class="card-title">{{coach.firstName}}&nbsp;{{coach.lastName}}</h6>
-            <div class="card small">
-              <div class="card-image">
-                <img class="responsive-img" [src]="'' + coach.id | authImage | async">
-              </div>
-              <div class="card-stacked">
-                <div class="card-content">
-
-                  <table class="highlight responsive-table">
-                    <tbody>
-                    <div class="row" *ngFor="let topic of coach.topics">
-                      <td class='col'><strong>{{topic.name}}</strong>: {{topic.grades.sort()}}</td>
-
-                    </div>
-                    </tbody>
-                  </table>
-                </div>
-
-                <a title="See details of {{coach.firstName + ' ' + coach.lastName}} "
-                   class="btn-floating halfway-fab waves-effect waves-light yellow darken-2 btn-large"
-                   [routerLink]="['../coach-profile/', coach.id]"><i
-                  class="material-icons">send</i></a>
-              </div>
-
+        <div class="col l3 m4 s12" *ngFor="let coach of filteredCoaches">
+          <h6 class="card-title">{{coach.firstName}}&nbsp;{{coach.lastName}}</h6>
+          <div class="card small">
+            <div class="card-image">
+              <img class="responsive-img" [src]="'' + coach.id | authImage | async">
             </div>
+            <div class="card-stacked">
+              <div class="card-content">
+
+                <table class="highlight responsive-table">
+                  <tbody>
+                  <div class="row" *ngFor="let topic of coach.topics">
+                    <td class='col'><strong>{{topic.name}}</strong>: {{topic.grades.sort()}}</td>
+
+                  </div>
+                  </tbody>
+                </table>
+              </div>
+
+              <a title="See details of {{coach.firstName + ' ' + coach.lastName}} "
+                 class="btn-floating halfway-fab waves-effect waves-light yellow darken-2 btn-large"
+                 [routerLink]="['../coach-profile/', coach.id]"><i
+                class="material-icons">send</i></a>
+            </div>
+
+
           </div>
+        </div>
+
+        <div *ngIf="filteredCoaches.length === 0" class="col l3 m4 s12">
+          <div class="yellow-text text-darken-2" translate>coach-overview.message.no-coaches-found<i class="material-icons left">warning</i></div>
         </div>
 
       </div>
