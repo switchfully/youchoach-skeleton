@@ -2,11 +2,19 @@
   <div class="content-container">
 
     <section class="card-panel grey lighten-5" *ngIf="coach">
-      <div class="right">
-        <button class="waves-effect waves-light yellow darken-2 btn-large black-text" routerLink="request-a-session" translate>request-session.button.request-session<i class="material-icons right">event</i></button>
-        <a *ngIf="authenticationService.isAdmin()" class="waves-effect waves-light btn-large btn-floating yellow darken-2"><i class="material-icons left" [routerLink]="'/coachee/' + coach.id + '/edit-profile'">edit</i>Edit</a>
+      <div class="row">
+
+        <div class="col s4">
+          <h5 translate>my-profile-menu.link.profile-information</h5>
+        </div>
+        <div class="col offset-s0 offset-m1 offset-l5">
+          <button class="waves-effect waves-light yellow darken-2 btn-large black-text" routerLink="request-a-session" translate>request-session.button.request-session<i class="material-icons right">event</i></button>
+        </div>
+
+        <div *ngIf="authenticationService.isAdmin()"  class="col">
+          <a class="waves-effect waves-light btn-large btn-floating yellow darken-2"><i class="material-icons left" [routerLink]="'/coachee/' + coach.id + '/edit-profile'">edit</i>Edit</a>
+        </div>
       </div>
-      <h5 translate>my-profile-menu.link.profile-information</h5>
 
       <div class="divider"></div>
       <div class="row">
