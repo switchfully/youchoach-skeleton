@@ -98,3 +98,8 @@ ul.dropdown-content {
   width: auto !important;
 }
 
+@media only screen and (min-width: 700px) {
+  .margin-button {
+    margin-right: 12px;
+  }
+}
