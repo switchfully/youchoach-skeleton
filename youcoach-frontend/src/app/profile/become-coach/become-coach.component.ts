@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import {InitMaterializeComponent} from '../../init-materialize.component';
+import {Component, OnInit} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {environment} from "../../../environments/environment";
 
@@ -8,11 +7,10 @@ import {environment} from "../../../environments/environment";
   templateUrl: './become-coach.component.html',
   styleUrls: ['./become-coach.component.css']
 })
-export class BecomeCoachComponent extends InitMaterializeComponent implements OnInit {
+export class BecomeCoachComponent implements OnInit {
   private mailto: string;
 
   constructor(public translateService: TranslateService) {
-    super();
   }
 
   mail() {

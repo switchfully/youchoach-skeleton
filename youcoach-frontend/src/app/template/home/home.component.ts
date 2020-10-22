@@ -1,6 +1,4 @@
-
-import { Component, OnInit } from '@angular/core';
-import {InitMaterializeComponent} from '../../init-materialize.component';
+import {Component, OnInit} from '@angular/core';
 import {TranslateService} from "@ngx-translate/core";
 
 
@@ -10,12 +8,12 @@ import {TranslateService} from "@ngx-translate/core";
   styleUrls: ['./home.component.css']
 })
 
-export class HomeComponent extends InitMaterializeComponent implements OnInit {
+export class HomeComponent implements OnInit {
   title = 'You-Coach | Intra-School Coaching';
 
 
   constructor(public translateService: TranslateService) {
-    super();
+
   }
 
   ngOnInit(): void {

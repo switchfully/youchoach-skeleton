@@ -4,7 +4,6 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {ISession} from '../interfaces/ISession';
 import {FormBuilder, ValidationErrors, Validators} from '@angular/forms';
 import {SessionService} from '../services/session.service';
-import {InitMaterializeComponent} from '../../init-materialize.component';
 import * as M from 'materialize-css';
 import {DatepickerOptions} from 'materialize-css';
 import {TimeComparatorService} from '../services/time-comparator.service';
@@ -15,7 +14,7 @@ import {AuthenticationService} from "../../security/services/authentication/auth
   templateUrl: './request-session.component.html',
   styleUrls: ['./request-session.component.css']
 })
-export class RequestSessionComponent extends InitMaterializeComponent implements OnInit {
+export class RequestSessionComponent implements OnInit {
   private profileId: number;
   session: ISession;
   sessionForm;
@@ -31,7 +30,6 @@ export class RequestSessionComponent extends InitMaterializeComponent implements
               private timeComparator: TimeComparatorService,
               private authenticationService: AuthenticationService
   ) {
-    super();
   }
 
   ngOnInit(): void {

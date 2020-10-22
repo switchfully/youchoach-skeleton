@@ -1,22 +1,24 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {AuthenticationService} from '../../security/services/authentication/authentication.service';
 import {TranslateService} from '@ngx-translate/core';
 import * as M from 'materialize-css';
 import {CoacheeService} from "../../profile/services/coachee.service";
 import {flatMap} from "rxjs/operators";
+import {InitService} from "../materialize/init.service";
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: []
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, AfterViewInit {
   username;
   language = 'en';
 
   constructor(public authenticationService: AuthenticationService,
               private translate: TranslateService,
-              private coacheeService: CoacheeService
+              private coacheeService: CoacheeService,
+              private initService: InitService
   ) {
   }
 
@@ -31,15 +33,17 @@ export class HeaderComponent implements OnInit {
       .pipe(
         flatMap(mimicUserId => this.coacheeService.getCoacheeById(mimicUserId))
       )
-      .subscribe(member => this.username = member.firstName + ' ' + member.lastName
-      );
-    setTimeout(() => M.AutoInit(), 1);
+      .subscribe(member => this.username = member.firstName + ' ' + member.lastName);
+  }
+
+  ngAfterViewInit(): void {
+    this.initService.initDropdowns();
+    this.initService.initSidenav();
   }
 
   switchLanguage(language: string) {
     this.translate.use(language);
     this.language = language;
-    setTimeout(() => M.AutoInit(), 1);
   }
 
   currentLanguage() {

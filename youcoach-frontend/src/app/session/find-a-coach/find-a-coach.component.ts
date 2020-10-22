@@ -1,8 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {ICoachList} from '../../profile/interfaces/ICoachList';
 import {CoachService} from '../../profile/services/coach.service';
 import * as M from 'materialize-css';
 import {ICoach} from '../../profile/interfaces/ICoach';
+import {InitService} from "../../template/materialize/init.service";
 
 @Component({
   selector: 'app-find-a-coach',
@@ -19,7 +20,7 @@ export class FindACoachComponent implements OnInit {
   selectedText: string = '';
 
 
-  constructor(private coachService: CoachService) {
+  constructor(private coachService: CoachService, private initService: InitService) {
   }
 
   ngOnInit(): void {
@@ -38,7 +39,7 @@ export class FindACoachComponent implements OnInit {
         }
       }
       this.topicList.sort();
-      setTimeout(() => this.enableSelect(), 50);
+      this.initService.initFormSelect();
     });
   }
 
@@ -52,20 +53,17 @@ export class FindACoachComponent implements OnInit {
     this._filteredCoaches = value;
   }
 
-  private enableSelect() {
-    const elem: any = document.getElementsByTagName('select');
-    for (const el of elem) {
-      const instance = M.FormSelect.init(el, {});
-    }
-  }
-
   performFilter() {
+    if (!this.coachList.coaches) {
+      this.filteredCoaches = [];
+      return;
+    }
     const filters = [];
-    if(this.selectedTopics.length > 0 && this.selectedGrades.length > 0) {
+    if (this.selectedTopics.length > 0 && this.selectedGrades.length > 0) {
       filters.push(coach => this.hasTopicThatIsInSelectedTopicsAndSelectedGrade(coach, this.selectedTopics, this.selectedGrades));
     }
     if (this.selectedTopics.length > 0) {
-       filters.push(coach => this.hasOneOfSelectedTopics(coach, this.selectedTopics));
+      filters.push(coach => this.hasOneOfSelectedTopics(coach, this.selectedTopics));
     }
     if (this.selectedGrades.length > 0) {
       filters.push(coach => this.hasOneOfSelectedGrades(coach, this.selectedGrades));

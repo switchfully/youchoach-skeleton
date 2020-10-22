@@ -4,7 +4,6 @@ import {CoacheeService} from '../services/coachee.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AuthenticationService} from '../../security/services/authentication/authentication.service';
 import {Location} from "@angular/common";
-import * as M from 'materialize-css';
 import {flatMap, map, tap} from "rxjs/operators";
 
 @Component({
@@ -40,14 +39,10 @@ export class EditProfileComponent implements OnInit {
       .pipe(
         map(routeParams => routeParams.id),
         tap(profileId => this.profileId = profileId),
-        flatMap(coacheeId => this.coacheeService.getCoacheeById(coacheeId))
+        flatMap(coacheeId => this.coacheeService.getCoacheeById(coacheeId)),
+        map(member => this.editForm.patchValue(member))
       )
-      .subscribe(
-        member => {
-          this.editForm.patchValue(member);
-          M.AutoInit();
-        }
-      );
+      .subscribe(_ => setTimeout(() => M.Dropdown.init(document.querySelectorAll('.dropdown-trigger'), {coverTrigger: false}), 1));
   }
 
   updateProfile(member): void {
