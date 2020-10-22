@@ -43,4 +43,11 @@ export class InitService {
       M.Sidenav.init(document.querySelectorAll('.sidenav'));
     }, 1);
   }
+
+  initModal() {
+    setTimeout(() => {
+      console.log('init modal');
+      M.Modal.init(document.querySelectorAll('.modal'));
+    }, 1);
+  }
 }

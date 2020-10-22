@@ -211,4 +211,10 @@ public class ProfileService {
     public List<String> getAllTopics() {
         return topicRepository.getAllTopics();
     }
+
+    public void deleteProfile(long id) {
+        profileRepository.findById(id).ifPresentOrElse(profileRepository::delete, () -> {
+            throw new ProfileIdNotFoundException();
+        });
+    }
 }

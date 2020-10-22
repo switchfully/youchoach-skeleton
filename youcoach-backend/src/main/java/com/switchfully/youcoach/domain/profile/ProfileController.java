@@ -133,12 +133,18 @@ public class ProfileController {
 
     @GetMapping(path = "/profile/{id}/image")
     public ResponseEntity<Resource> downloadImage(@PathVariable("id") long id) {
-            DBFile profileImage = imageService.getProfileImage(id).orElseThrow(() -> new ResponseStatusException(NOT_FOUND));
+        DBFile profileImage = imageService.getProfileImage(id).orElseThrow(() -> new ResponseStatusException(NOT_FOUND));
 
-            return ResponseEntity.ok()
-                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + profileImage.getOriginalFileName() + "\"")
-                    .header(HttpHeaders.CONTENT_TYPE, "image/jpg")
-                    .body(profileImage.getResource());
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + profileImage.getOriginalFileName() + "\"")
+                .header(HttpHeaders.CONTENT_TYPE, "image/jpg")
+                .body(profileImage.getResource());
+    }
+
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @DeleteMapping(path = "/profile/{id}")
+    public void deleteProfile(@PathVariable("id") long id) {
+        profileService.deleteProfile(id);
     }
 
     @PreAuthorize("isAnonymous()")

@@ -28,4 +28,8 @@ export class ProfileService {
   getAllTopics(): Observable<String[]> {
     return this.http.get<String[]>(this.url + '/topics', this.httpOptions);
   }
+
+  deleteProfile(id: number): Observable<Object> {
+    return this.http.delete(this.url + '/profile/' + id, this.httpOptions);
+  }
 }

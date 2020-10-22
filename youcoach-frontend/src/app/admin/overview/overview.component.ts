@@ -5,6 +5,7 @@ import {ThemeService} from "../../template/theme.service";
 import {ICoach} from "../../profile/interfaces/ICoach";
 import {AuthenticationService} from "../../security/services/authentication/authentication.service";
 import {Router} from "@angular/router";
+import {InitService} from "../../template/materialize/init.service";
 
 @Component({
   selector: 'app-overview',
@@ -18,12 +19,16 @@ export class OverviewComponent implements OnInit {
 
   constructor(private profileService: ProfileService,
               private authenticationService: AuthenticationService,
-              private router: Router) {
+              private router: Router,
+              private initService: InitService
+  ) {
   }
+
 
   ngOnInit(): void {
     this.profileService.getAllProfiles().subscribe(profiles => {
       this.profiles = profiles;
+      this.initService.initModal();
       this.performFiltering();
     });
   }
@@ -59,5 +64,11 @@ export class OverviewComponent implements OnInit {
   navigateToProfileUrl(profile: IMember) {
     this.authenticationService.setMimicUserId('' + profile.id);
     this.router.navigateByUrl(this.getProfileUrl(profile));
+  }
+
+  deleteProfile(profile: IMember) {
+    this.profileService.deleteProfile(profile.id).subscribe(_ => {
+      this.profiles = this.profiles.filter(p => profile.id !== p.id);
+    });
   }
 }
