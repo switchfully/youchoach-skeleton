@@ -83,18 +83,26 @@ export class AuthenticationService {
     sessionStorage.removeItem(this.tokenKey);
     sessionStorage.removeItem(this.usernameKey);
     sessionStorage.removeItem(this.userIdKey);
+    sessionStorage.removeItem(this.mimicUserId);
     this.tokenValue = null;
     this.usernameValue = null;
     this.userId = null;
+    this.mimicUserId = null;
     this.userLoggedInSource.next(false);
   }
 
   isCoach(): boolean {
+    if(this.getToken() == null) {
+      return false;
+    }
     const tokenDecoded: any = JWT(this.getToken());
     return tokenDecoded.rol.includes('ROLE_COACH');
   }
 
   isAdmin(): boolean {
+    if(this.getToken() == null) {
+      return false;
+    }
     const tokenDecoded: any = JWT(this.getToken());
     return tokenDecoded.rol.includes('ROLE_ADMIN');
   }

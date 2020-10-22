@@ -1,16 +1,5 @@
 <main>
   <div class="row">
-    <div class="col s12 m2">
-      <div class="content-container">
-        <h6 translate>my-profile-menu.title</h6>
-        <div class="collection">
-          <a class="collection-item black-text" [ngClass]="{'active yellow darken-2': isActive('profile'), 'grey-text text-darken-2': !isActive('profile')}" routerLink="profile" translate>my-profile-menu.link.profile-information</a>
-          <a class="collection-item black-text" [ngClass]="{'active yellow darken-2': isActive('sessions'), 'grey-text text-darken-2': !isActive('sessions')}" routerLink="sessions" translate>my-profile-menu.link.coaching-sessions</a>
-          <a class="collection-item black-text" [ngClass]="{'active yellow darken-2': isActive('becomecoach'), 'grey-text text-darken-2': !isActive('becomecoach')}" routerLink="becomecoach" translate>my-profile-menu.link.apply-to-become-a-coach</a>
-        </div>
-      </div>
-    </div>
-
     <router-outlet></router-outlet>
   </div>
 </main>

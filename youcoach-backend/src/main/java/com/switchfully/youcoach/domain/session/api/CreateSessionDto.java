@@ -9,19 +9,21 @@ public class CreateSessionDto {
     private String location;
     private String remarks;
     private Long coachId;
+    private Long profileId;
     private String coacheeFeedback;
     private String coachFeedback;
 
     public CreateSessionDto() {
     }
 
-    public CreateSessionDto(String subject, String date, String time, String location, String remarks, Long coachId) {
+    public CreateSessionDto(String subject, String date, String time, String location, String remarks, Long coachId, Long profileId) {
         this.subject = subject;
         this.date = date;
         this.time = time;
         this.location = location;
         this.remarks = remarks;
         this.coachId = coachId;
+        this.profileId = profileId;
     }
 
     public String getSubject() {
@@ -46,6 +48,10 @@ public class CreateSessionDto {
 
     public Long getCoachId() {
         return coachId;
+    }
+
+    public Long getProfileId() {
+        return profileId;
     }
 
     public String getCoacheeFeedback() {

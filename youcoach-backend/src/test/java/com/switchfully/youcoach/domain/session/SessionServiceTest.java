@@ -22,7 +22,7 @@ import static org.mockito.Mockito.when;
 class SessionServiceTest {
 
     private Session session = new Session("Mathematics", LocalDateTime.now(), "school", "no remarks", new Profile(1L, null, null, null, null), null);
-    private CreateSessionDto createSessionDto = new CreateSessionDto("Mathematics", "30/05/2020", "11:50", "school", "no remarks", 1L);
+    private CreateSessionDto createSessionDto = new CreateSessionDto("Mathematics", "30/05/2020", "11:50", "school", "no remarks", 1L, 1L);
     private SessionDto sessionDto = new SessionDto(1L, "Mathematics", "30/05/2020", "11:50", "school", "no remarks", new SessionDto.Person(1L, "Name"), new SessionDto.Person(2L, "Name"), Status.REQUESTED, null, null);
     private SessionRepository sessionRepository = mock(SessionRepository.class);
     private SessionMapper sessionMapper = mock(SessionMapper.class);
@@ -39,7 +39,7 @@ class SessionServiceTest {
         when(profileRepository.findByEmail("example@example.com")).thenReturn(Optional.of(new Profile(2L, null, null, null, null)));
         when(profileRepository.findById(1L)).thenReturn(Optional.of(new Profile(1L, null, null, null, null)));
 
-        SessionDto actual = sessionService.save(createSessionDto, "example@example.com");
+        SessionDto actual = sessionService.save(createSessionDto);
 
         assertThat(actual).isEqualToIgnoringGivenFields(createSessionDto, "id", "coach", "coachee", "status");
     }

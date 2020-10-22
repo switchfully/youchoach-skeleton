@@ -30,9 +30,9 @@ public class SessionService {
     }
 
 
-    public SessionDto save(CreateSessionDto createSessionDto, String username) {
+    public SessionDto save(CreateSessionDto createSessionDto) {
         Profile coach = profileRepository.findById(createSessionDto.getCoachId()).orElseThrow(CoachNotFoundException::new);
-        Profile coachee = profileRepository.findByEmail(username).orElseThrow(() -> new ProfileNotFoundException("Username: " + username));
+        Profile coachee = profileRepository.findById(createSessionDto.getProfileId()).orElseThrow(() -> new ProfileNotFoundException(""));
         return sessionMapper.toDto(sessionRepository.save(sessionMapper.toModel(createSessionDto, coach, coachee)));
     }
 

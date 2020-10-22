@@ -67,7 +67,7 @@ class SessionControllerTest {
 
     @Test
     void jacksonConverter() throws JsonProcessingException {
-        CreateSessionDto createSessionDto = new CreateSessionDto("Mathematics", "30/05/2020", "11:50", "school", "no remarks", 1L);
+        CreateSessionDto createSessionDto = new CreateSessionDto("Mathematics", "30/05/2020", "11:50", "school", "no remarks", 1L, 1L);
         String value = new ObjectMapper().writeValueAsString(createSessionDto);
         CreateSessionDto actualCoachingSessionDto = new ObjectMapper().readerFor(CreateSessionDto.class).readValue(value);
         assertThat(actualCoachingSessionDto).isEqualTo(createSessionDto);        // Given
@@ -84,7 +84,7 @@ class SessionControllerTest {
     void createCoachingSession() throws Exception {
         Principal mockPrincipal = mock(Principal.class);
         when(mockPrincipal.getName()).thenReturn("example2@example.com");
-        CreateSessionDto createSessionDto = new CreateSessionDto("Mathematics", "30/05/2020", "11:50", "school", "no remarks", 20L);
+        CreateSessionDto createSessionDto = new CreateSessionDto("Mathematics", "30/05/2020", "11:50", "school", "no remarks", 20L, 21L);
         String actualResult =
                 mockMvc.perform(post("/coaching-sessions")
                         .principal(mockPrincipal)

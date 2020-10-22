@@ -94,3 +94,7 @@ p {
   font-size: inherit;
 }
 
+ul.dropdown-content {
+  width: auto !important;
+}
+

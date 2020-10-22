@@ -16,6 +16,12 @@ import {AuthenticationService} from "../../security/services/authentication/auth
   styleUrls: ['./request-session.component.css']
 })
 export class RequestSessionComponent extends InitMaterializeComponent implements OnInit {
+  private profileId: number;
+  session: ISession;
+  sessionForm;
+  datePickerElem;
+  timePickerElem;
+  idToGet: number;
 
   constructor(private coachService: CoachService,
               private route: ActivatedRoute,
@@ -28,12 +34,24 @@ export class RequestSessionComponent extends InitMaterializeComponent implements
     super();
   }
 
-  session: ISession;
-  sessionForm;
-  datePickerElem;
-  timePickerElem;
+  ngOnInit(): void {
+    this.sessionForm = this.fb.group({
+      coachId: [''],
+      subject: ['', [Validators.required]],
+      date: ['', [Validators.required]],
+      time: ['', [Validators.required]],
+      location: ['', [Validators.required]],
+      remarks: ['', [Validators.required]]
+    }, {validators: [_ => this.validateDate()]});
+    setTimeout(() => {
+        this.initializeDatePicker();
+        this.initializeTimePicker();
+      }
+      , 1000);
+    this.idToGet = +this.route.snapshot.paramMap.get('coachId');
+    this.profileId = +this.route.parent.snapshot.paramMap.get('id');
+  }
 
-  idToGet: number;
 
   enableSend(): boolean {
     return this.sessionForm !== null &&
@@ -95,25 +113,9 @@ export class RequestSessionComponent extends InitMaterializeComponent implements
     }
   }
 
-  ngOnInit(): void {
-    this.sessionForm = this.fb.group({
-      idCoach: [''],
-      subject: ['', [Validators.required]],
-      date: ['', [Validators.required]],
-      time: ['', [Validators.required]],
-      location: ['', [Validators.required]],
-      remarks: ['', [Validators.required]]
-    }, {validators: [_ => this.validateDate()]});
-    setTimeout(() => {
-        this.initializeDatePicker();
-        this.initializeTimePicker();
-      }
-      , 1000);
-    this.idToGet = +this.route.snapshot.paramMap.get('coachId');
-  }
-
   onSubmit() {
     this.session = {
+      profileId: this.profileId,
       coachId: this.idToGet,
       subject: this.sessionForm.get('subject').value,
       date: this.sessionForm.get('date').value,

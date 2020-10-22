@@ -19,11 +19,7 @@ export class ImageService {
   downloadImageAsUrl(profileId: string): Observable<any> {
     return this.http.get(`${this.url}/users/profile/${profileId}/image`, {responseType: 'blob'}).pipe(
       map(image => this.domSanitizer.bypassSecurityTrustUrl(URL.createObjectURL(image))),
-      catchError(error => {
-          console.log(error);
-          return of('/assets/img/placeholder.png')
-        }
-      )
+      catchError(_ => of('/assets/img/placeholder.png'))
     );
   }
 }

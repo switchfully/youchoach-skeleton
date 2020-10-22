@@ -20,7 +20,7 @@ public class SessionMapperTest {
 
     @Test
     void toCoachingSessionModel(){
-        CreateSessionDto ccsd = new CreateSessionDto("subject","01/05/2020","13:01","Cafeteria","Bring food", 1L);
+        CreateSessionDto ccsd = new CreateSessionDto("subject","01/05/2020","13:01","Cafeteria","Bring food", 1L, 1L);
         Profile coach = getDefaultUser();
         Profile coachee = getDefaultUser();
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy H:mm");
@@ -34,7 +34,7 @@ public class SessionMapperTest {
 
     @Test
     void toCoachingSessionDto(){
-        CreateSessionDto ccsd = new CreateSessionDto("subject","01/05/2020","13:01","Cafeteria","Bring food", 1L);
+        CreateSessionDto ccsd = new CreateSessionDto("subject","01/05/2020","13:01","Cafeteria","Bring food", 1L, 1L);
         Profile coach = getDefaultUser();
         Profile coachee = getDefaultUser();
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy H:mm");
@@ -51,7 +51,7 @@ public class SessionMapperTest {
     }
     @Test
     void toListCoachingSessionDto(){
-        CreateSessionDto ccsd = new CreateSessionDto("subject","01/05/2020","13:01","Cafeteria","Bring food", 1L);
+        CreateSessionDto ccsd = new CreateSessionDto("subject","01/05/2020","13:01","Cafeteria","Bring food", 1L, 1L);
         Profile coach = getDefaultUser();
         Profile coachee = getDefaultUser();
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy H:mm");

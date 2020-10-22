@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -35,9 +34,9 @@ public class SessionController {
 
     @PostMapping(produces = "application/json", consumes = "application/json")
     @ResponseStatus(HttpStatus.CREATED)
-    public SessionDto saveCoachingSession(@RequestBody CreateSessionDto createSessionDto, Principal principal) {
+    public SessionDto saveCoachingSession(@RequestBody CreateSessionDto createSessionDto) {
         LOGGER.info("attempting to create a coaching session");
-        return sessionService.save(createSessionDto, principal.getName());
+        return sessionService.save(createSessionDto);
     }
 
     @GetMapping(produces = "application/json")

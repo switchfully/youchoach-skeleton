@@ -1,10 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthenticationService} from '../../security/services/authentication/authentication.service';
 import {TranslateService} from '@ngx-translate/core';
-import {ActivatedRoute} from '@angular/router';
 import * as M from 'materialize-css';
-import {ThemeService} from "../theme.service";
-import {ProfileService} from "../../admin/services/profile.service";
 import {CoacheeService} from "../../profile/services/coachee.service";
 import {flatMap} from "rxjs/operators";
 
@@ -19,7 +16,6 @@ export class HeaderComponent implements OnInit {
 
   constructor(public authenticationService: AuthenticationService,
               private translate: TranslateService,
-              public themeService: ThemeService,
               private coacheeService: CoacheeService
   ) {
   }
@@ -35,7 +31,9 @@ export class HeaderComponent implements OnInit {
       .pipe(
         flatMap(mimicUserId => this.coacheeService.getCoacheeById(mimicUserId))
       )
-      .subscribe(member => this.username = member.firstName + ' ' +member.lastName);
+      .subscribe(member => this.username = member.firstName + ' ' + member.lastName
+      );
+    setTimeout(() => M.AutoInit(), 1);
   }
 
   switchLanguage(language: string) {
