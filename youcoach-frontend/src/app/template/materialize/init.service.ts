@@ -26,7 +26,7 @@ export class InitService {
   initFormSelect() {
     setTimeout(() => {
       console.log('init form select');
-      M.FormSelect.init(document.querySelectorAll('select'));
+      M.FormSelect.init(document.querySelectorAll('select'), {classes: '', dropdownOptions: {coverTrigger: false}});
     }, 1);
   }
 

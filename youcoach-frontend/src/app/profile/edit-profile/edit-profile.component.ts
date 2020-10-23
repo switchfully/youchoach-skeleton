@@ -5,6 +5,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {AuthenticationService} from '../../security/services/authentication/authentication.service';
 import {Location} from "@angular/common";
 import {flatMap, map, tap} from "rxjs/operators";
+import {InitService} from "../../template/materialize/init.service";
 
 @Component({
   selector: 'app-edit-profile',
@@ -30,8 +31,14 @@ export class EditProfileComponent implements OnInit {
   emailExistsError = false;
   profileId = +this.route.snapshot.paramMap.get('id');
 
-  constructor(private fb: FormBuilder, private coacheeService: CoacheeService, private router: Router,
-              public authenticationService: AuthenticationService, private route: ActivatedRoute, private location: Location) {
+  constructor(private fb: FormBuilder,
+              private coacheeService: CoacheeService,
+              private router: Router,
+              public authenticationService: AuthenticationService,
+              private route: ActivatedRoute,
+              private location: Location,
+              private initService: InitService
+  ) {
   }
 
   ngOnInit(): void {
@@ -40,9 +47,10 @@ export class EditProfileComponent implements OnInit {
         map(routeParams => routeParams.id),
         tap(profileId => this.profileId = profileId),
         flatMap(coacheeId => this.coacheeService.getCoacheeById(coacheeId)),
-        map(member => this.editForm.patchValue(member))
       )
-      .subscribe(_ => setTimeout(() => M.Dropdown.init(document.querySelectorAll('.dropdown-trigger'), {coverTrigger: false}), 1));
+      .subscribe(member => this.editForm.patchValue(member));
+
+    this.initService.initFormSelect();
   }
 
   updateProfile(member): void {
