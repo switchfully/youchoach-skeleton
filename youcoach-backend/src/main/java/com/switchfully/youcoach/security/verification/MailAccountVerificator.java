@@ -2,6 +2,8 @@ package com.switchfully.youcoach.security.verification;
 
 import com.switchfully.youcoach.domain.profile.Profile;
 import com.switchfully.youcoach.domain.profile.ProfileRepository;
+import com.switchfully.youcoach.email.EmailExecutor;
+import com.switchfully.youcoach.email.command.accountverification.AccountVerificationEmailCommand;
 import com.switchfully.youcoach.security.verification.exception.AccountVerificationFailedException;
 import com.switchfully.youcoach.email.EmailSenderService;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -24,17 +26,17 @@ public class MailAccountVerificator implements AccountVerificator {
     private final AccountVerificationRepository accountVerificationRepository;
     private final ProfileRepository profileRepository;
     private final Environment environment;
-    private final EmailSenderService emailSenderService;
-    private final TemplateEngine templateEngine;
+    private final EmailExecutor emailExecutor;
 
     @Autowired
-    public MailAccountVerificator(AccountVerificationRepository accountVerificationRepository, ProfileRepository profileRepository, Environment environment,
-                                  EmailSenderService emailSenderService, TemplateEngine templateEngine){
+    public MailAccountVerificator(AccountVerificationRepository accountVerificationRepository,
+                                  ProfileRepository profileRepository,
+                                  Environment environment,
+                                  EmailExecutor emailExecutor){
         this.accountVerificationRepository = accountVerificationRepository;
         this.profileRepository = profileRepository;
         this.environment = environment;
-        this.emailSenderService = emailSenderService;
-        this.templateEngine = templateEngine;
+        this.emailExecutor = emailExecutor;
     }
 
     @Override
@@ -60,21 +62,9 @@ public class MailAccountVerificator implements AccountVerificator {
 
     @Override
     public void sendVerificationEmail(Profile profile) throws MessagingException {
-        AccountVerification accountVerification = generateAccountVerification(profile);
-        String subject = environment.getProperty("app.emailverification.subject");
-        String from = environment.getProperty("app.emailverification.sender");
-
-        final Context ctx = new Context();
-        ctx.setVariable("fullName", profile.getFirstName() + " " + profile.getLastName());
-        ctx.setVariable("firmName", environment.getProperty("app.emailverification.firmName"));
-        ctx.setVariable("hostName", environment.getProperty("app.emailverification.hostName"));
-        ctx.setVariable("url", environment.getProperty("app.emailverification.hostName") + "/validate-account");
-        ctx.setVariable("token", accountVerification.getVerificationCode());
-        final String body = this.templateEngine.process("EmailVerificationTemplate.html", ctx);
-
-        emailSenderService.sendMail(from, profile.getEmail(), subject, body, true);
-
+        emailExecutor.execute(new AccountVerificationEmailCommand(profile, generateAccountVerification(profile)));
     }
+
     @Override
     public boolean resendVerificationEmailFor(String email){
         Optional<Profile> userOpt = profileRepository.findByEmail(email);

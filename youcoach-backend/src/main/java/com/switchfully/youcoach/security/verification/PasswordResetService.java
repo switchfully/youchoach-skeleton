@@ -15,6 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 
+import javax.mail.MessagingException;
 import javax.transaction.Transactional;
 import java.util.Optional;
 
@@ -43,7 +44,11 @@ public class PasswordResetService {
     public void requestPasswordReset(PasswordResetRequestDto request) {
         if(!verificationService.isSigningAndVerifyingAvailable() || activeProfiles.contains("development")) return;
 
-        emailExecutor.execute(new ResetPasswordEmailCommand(request.getEmail()));
+        try {
+            emailExecutor.execute(new ResetPasswordEmailCommand(request.getEmail()));
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
     }
 
     public PasswordChangeResultDto performPasswordChange(PasswordChangeRequestDto request){

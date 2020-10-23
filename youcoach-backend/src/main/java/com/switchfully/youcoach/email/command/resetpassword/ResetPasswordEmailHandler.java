@@ -36,11 +36,11 @@ public class ResetPasswordEmailHandler implements EmailHandler<ResetPasswordEmai
     }
 
     @Override
-    public void handle(ResetPasswordEmailCommand command) {
+    public void handle(ResetPasswordEmailCommand command) throws MessagingException {
         Optional<Profile> userOpt = profileRepository.findByEmail(command.getEmail());
-        userOpt.ifPresent(user -> {
-            try { sendResetEmail(user); } catch(MessagingException ignore){}
-        });
+        if(userOpt.isPresent()) {
+            sendResetEmail(userOpt.get());
+        }
     }
 
     private void sendResetEmail(Profile profile) throws MessagingException {

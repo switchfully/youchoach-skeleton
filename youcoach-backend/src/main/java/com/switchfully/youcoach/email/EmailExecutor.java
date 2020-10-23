@@ -4,6 +4,7 @@ import com.switchfully.youcoach.email.command.EmailCommand;
 import com.switchfully.youcoach.email.command.EmailHandler;
 import org.springframework.stereotype.Component;
 
+import javax.mail.MessagingException;
 import java.util.List;
 import java.util.Map;
 
@@ -21,7 +22,7 @@ public class EmailExecutor {
                 .collect(toMap(EmailHandler::getCommandType, identity()));
     }
 
-    public void execute(EmailCommand command) {
+    public void execute(EmailCommand command) throws MessagingException {
         EmailHandler<? super EmailCommand> handler = handlerMap.get(command.getClass());
 
         if (handler == null) {
