@@ -48,11 +48,9 @@ public class VerificationService {
             sig.update(toVerifyAgainst);
 
             return sig.verify(decoded) && (Arrays.equals(decoded, digitallySign(value)));
-
         } catch (SignatureException | InvalidKeyException | NoSuchAlgorithmException e) {
-            SigningFailedException sfe = new SigningFailedException(e.getMessage());
-            sfe.addSuppressed(e);
-            throw sfe;
+            e.printStackTrace();
+            return false;
         }
     }
 
