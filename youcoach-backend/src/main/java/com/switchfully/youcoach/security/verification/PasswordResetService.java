@@ -2,6 +2,8 @@ package com.switchfully.youcoach.security.verification;
 
 import com.switchfully.youcoach.domain.profile.Profile;
 import com.switchfully.youcoach.domain.profile.ProfileRepository;
+import com.switchfully.youcoach.email.EmailExecutor;
+import com.switchfully.youcoach.email.command.resetpassword.ResetPasswordEmailCommand;
 import com.switchfully.youcoach.security.verification.api.PasswordChangeRequestDto;
 import com.switchfully.youcoach.security.verification.api.PasswordChangeResultDto;
 import com.switchfully.youcoach.security.verification.api.PasswordResetRequestDto;
@@ -12,9 +14,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
-import org.thymeleaf.context.Context;
 
-import javax.mail.MessagingException;
 import javax.transaction.Transactional;
 import java.util.Optional;
 
@@ -23,34 +23,27 @@ import java.util.Optional;
 public class PasswordResetService {
     private final PasswordEncoder passwordEncoder;
     private final ProfileRepository profileRepository;
-    private final EmailSenderService emailSenderService;
-    private final Environment environment;
     private final VerificationService verificationService;
-    private final TemplateEngine templateEngine;
-    private String activeProfiles;
+    private final String activeProfiles;
+    private final EmailExecutor emailExecutor;
 
     @Autowired
     public PasswordResetService(PasswordEncoder passwordEncoder, ProfileRepository profileRepository,
                                 EmailSenderService emailSenderService, Environment environment,
                                 VerificationService verificationService, TemplateEngine templateEngine,
-                                @Value("${spring.profiles.active}") String activeProfiles){
+                                @Value("${spring.profiles.active}") String activeProfiles, EmailExecutor emailExecutor){
 
         this.passwordEncoder = passwordEncoder;
         this.profileRepository = profileRepository;
-        this.emailSenderService = emailSenderService;
-        this.environment = environment;
+        this.emailExecutor = emailExecutor;
         this.verificationService = verificationService;
-        this.templateEngine = templateEngine;
         this.activeProfiles = activeProfiles;
     }
 
     public void requestPasswordReset(PasswordResetRequestDto request) {
         if(!verificationService.isSigningAndVerifyingAvailable() || activeProfiles.contains("development")) return;
 
-        Optional<Profile> userOpt = profileRepository.findByEmail(request.getEmail());
-        userOpt.ifPresent(user -> {
-            try { sendResetEmail(user); } catch(MessagingException ignore){}
-        });
+        emailExecutor.execute(new ResetPasswordEmailCommand(request.getEmail()));
     }
 
     public PasswordChangeResultDto performPasswordChange(PasswordChangeRequestDto request){
@@ -71,22 +64,5 @@ public class PasswordResetService {
         return verificationService.isSigningAndVerifyingAvailable() &&
                 verificationService.verifyBased64SignaturePasses(request.getToken(),request.getEmail()) &&
                 verificationService.isPasswordValid(request.getPassword());
-    }
-
-
-    private void sendResetEmail(Profile profile) throws MessagingException {
-        String subject = environment.getProperty("app.passwordreset.subject");
-        String from = environment.getProperty("app.passwordreset.sender");
-
-        final Context ctx = new Context();
-        ctx.setVariable("fullName", profile.getFirstName() + " " + profile.getLastName());
-        ctx.setVariable("firmName", environment.getProperty("app.passwordreset.firmName"));
-        ctx.setVariable("hostName", environment.getProperty("app.passwordreset.hostName"));
-        ctx.setVariable("url", environment.getProperty("app.passwordreset.hostName") + "/password-reset");
-        ctx.setVariable("token", verificationService.digitallySignAndEncodeBase64(profile.getEmail()));
-        final String body = this.templateEngine.process("PasswordResetTemplate.html", ctx);
-
-        emailSenderService.sendMail(from, profile.getEmail(), subject, body, true);
-
     }
 }

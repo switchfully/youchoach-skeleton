@@ -19,7 +19,7 @@ public class VerificationService {
         return signingAndVerifyingAvailable;
     }
 
-    public VerificationService(){
+    public VerificationService() {
         KeyPairGenerator kpg;
         KeyPair kp = null;
         boolean available = true;
@@ -27,7 +27,7 @@ public class VerificationService {
             kpg = KeyPairGenerator.getInstance("RSA");
             kpg.initialize(1024);
             kp = kpg.genKeyPair();
-        } catch(NoSuchAlgorithmException ignore){
+        } catch (NoSuchAlgorithmException ignore) {
             available = false;
         } finally {
             this.keyPair = kp;
@@ -49,13 +49,12 @@ public class VerificationService {
 
             return sig.verify(decoded) && (Arrays.equals(decoded, digitallySign(value)));
 
-        } catch(SignatureException|InvalidKeyException|NoSuchAlgorithmException e){
+        } catch (SignatureException | InvalidKeyException | NoSuchAlgorithmException e) {
             SigningFailedException sfe = new SigningFailedException(e.getMessage());
             sfe.addSuppressed(e);
             throw sfe;
         }
     }
-
 
 
     public Signature generateSignature(String value) throws NoSuchAlgorithmException, InvalidKeyException, SignatureException {
@@ -63,27 +62,28 @@ public class VerificationService {
         byte[] data = value.getBytes(StandardCharsets.UTF_8);
 
 
-            Signature sig = Signature.getInstance("SHA1WithRSA");
-            sig.initSign(this.keyPair.getPrivate());
-            sig.update(data);
-            return sig;
+        Signature sig = Signature.getInstance("SHA1WithRSA");
+        sig.initSign(this.keyPair.getPrivate());
+        sig.update(data);
+        return sig;
     }
-    public byte[] digitallySign(String value){
-        try{
+
+    public byte[] digitallySign(String value) {
+        try {
             return generateSignature(value).sign();
-        } catch(NoSuchAlgorithmException|InvalidKeyException|SignatureException e){
+        } catch (NoSuchAlgorithmException | InvalidKeyException | SignatureException e) {
             SigningFailedException sfe = new SigningFailedException(e.getMessage());
             sfe.addSuppressed(e);
             throw sfe;
         }
-}
+    }
 
-    public String digitallySignAndEncodeBase64(String value){
+    public String digitallySignAndEncodeBase64(String value) {
         return Base64.getEncoder().encodeToString(digitallySign(value));
     }
 
     public boolean isEmailValid(String email) {
-        if(email == null) return false;
+        if (email == null) return false;
 
         String ePattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$";
         java.util.regex.Pattern p = java.util.regex.Pattern.compile(ePattern);
@@ -92,7 +92,7 @@ public class VerificationService {
     }
 
     public boolean isPasswordValid(String password) {
-        if(password == null) return false;
+        if (password == null) return false;
 
         String pattern = "(?=.*[0-9])(?=.*[A-Z])(?=\\S+$).{8,}";
         return password.matches(pattern);
