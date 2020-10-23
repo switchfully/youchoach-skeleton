@@ -1,20 +1,21 @@
 package com.switchfully.youcoach.domain.request;
 
 import com.switchfully.youcoach.domain.request.api.ProfileChangeRequest;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(path = "/requests")
 @CrossOrigin
 public class RequestController {
 
-    private RequestService requestService;
+    private final RequestService requestService;
 
-    @PostMapping(path = "/profile-change")
-    public void requestProfileChange(ProfileChangeRequest profileChangeRequest) {
+    public RequestController(RequestService requestService) {
+        this.requestService = requestService;
+    }
+
+    @PostMapping(consumes = "application/json;charset=UTF-8", produces = "application/json;charset=UTF-8", path = "/profile-change")
+    public void requestProfileChange(@RequestBody ProfileChangeRequest profileChangeRequest) {
         requestService.profileChange(profileChangeRequest);
     }
 }

@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import {TranslateService} from '@ngx-translate/core';
-import {environment} from "../../../environments/environment";
+import {Component, OnInit} from '@angular/core';
+import {RequestService} from "../services/request.service";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-change-topics',
@@ -8,24 +8,16 @@ import {environment} from "../../../environments/environment";
   styleUrls: ['./change-topics.component.css']
 })
 export class ChangeTopicsComponent implements OnInit {
-  private mailto: string;
+  private profileId: number;
 
-  constructor(public translateService: TranslateService) { }
+  constructor(private requestService: RequestService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.route.parent.params.subscribe(routeParams => this.profileId = routeParams.coachId);
   }
 
   mail() {
-    this.mailto = 'mailto:' + environment.adminEmail;
-
-    this.translateService.get('request-profile-change.email-subject').subscribe((subject: string) => {
-      this.mailto += '?subject=' + subject;
-    });
-
-    this.translateService.get('request-profile-change.email-body').subscribe((body: string) => {
-      this.mailto += '&body=' + body;
-    });
-    location.href = this.mailto;
+    this.requestService.requestProfileChange(this.profileId).subscribe(() => {});
   }
 
 }
