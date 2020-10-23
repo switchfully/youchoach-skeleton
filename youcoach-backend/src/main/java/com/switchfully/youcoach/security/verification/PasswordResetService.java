@@ -29,10 +29,11 @@ public class PasswordResetService {
     private final EmailExecutor emailExecutor;
 
     @Autowired
-    public PasswordResetService(PasswordEncoder passwordEncoder, ProfileRepository profileRepository,
-                                EmailSenderService emailSenderService, Environment environment,
-                                VerificationService verificationService, TemplateEngine templateEngine,
-                                @Value("${spring.profiles.active}") String activeProfiles, EmailExecutor emailExecutor){
+    public PasswordResetService(PasswordEncoder passwordEncoder,
+                                ProfileRepository profileRepository,
+                                VerificationService verificationService,
+                                @Value("${spring.profiles.active}") String activeProfiles,
+                                EmailExecutor emailExecutor) {
 
         this.passwordEncoder = passwordEncoder;
         this.profileRepository = profileRepository;
@@ -42,32 +43,34 @@ public class PasswordResetService {
     }
 
     public void requestPasswordReset(PasswordResetRequestDto request) {
-        if(!verificationService.isSigningAndVerifyingAvailable() || activeProfiles.contains("development")) return;
+        if (!verificationService.isSigningAndVerifyingAvailable() || activeProfiles.contains("development")) return;
 
         try {
             emailExecutor.execute(new ResetPasswordEmailCommand(request.getEmail()));
         } catch (MessagingException e) {
             e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 
-    public PasswordChangeResultDto performPasswordChange(PasswordChangeRequestDto request){
-        if(digitalSigningAvailableAndSignatureMatchesAndPasswordFollowsValidFormat(request)){
-            Optional<Profile> userOpt = profileRepository.findByEmail(request.getEmail());
-            if(userOpt.isPresent()){
-                Profile profile = userOpt.get();
-                profile.setPassword(passwordEncoder.encode(request.getPassword()));
-                return new PasswordChangeResultDto(true);
-            }
+    public PasswordChangeResultDto performPasswordChange(PasswordChangeRequestDto request) {
+        if (!digitalSigningAvailableAndSignatureMatchesAndPasswordFollowsValidFormat(request)) {
+            return new PasswordChangeResultDto(false);
+        }
+        Optional<Profile> userOpt = profileRepository.findByEmail(request.getEmail());
+        if (userOpt.isEmpty()) {
+            return new PasswordChangeResultDto(false);
         }
 
-        return new PasswordChangeResultDto(false);
+        Profile profile = userOpt.get();
+        profile.setPassword(passwordEncoder.encode(request.getPassword()));
+        return new PasswordChangeResultDto(true);
 
     }
 
     private boolean digitalSigningAvailableAndSignatureMatchesAndPasswordFollowsValidFormat(PasswordChangeRequestDto request) {
         return verificationService.isSigningAndVerifyingAvailable() &&
-                verificationService.verifyBased64SignaturePasses(request.getToken(),request.getEmail()) &&
+                verificationService.verifyBased64SignaturePasses(request.getToken(), request.getEmail()) &&
                 verificationService.isPasswordValid(request.getPassword());
     }
 }

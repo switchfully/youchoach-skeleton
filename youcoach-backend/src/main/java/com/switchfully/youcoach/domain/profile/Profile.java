@@ -110,8 +110,8 @@ public class Profile {
         return accountEnabled;
     }
 
-    public void setAccountEnabled(boolean isEnabled) {
-        accountEnabled = isEnabled;
+    public void enableAccount() {
+        accountEnabled = true;
     }
 
     public void setClassYear(String classYear) {

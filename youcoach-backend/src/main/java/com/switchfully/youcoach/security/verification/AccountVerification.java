@@ -22,17 +22,15 @@ public class AccountVerification {
     private LocalDateTime createdOn = LocalDateTime.now();
 
     public AccountVerification(){}
-    public AccountVerification(Profile profile){
+
+    public AccountVerification(Profile profile, String verificationCode){
         this.id = profile == null ? null : profile.getId();
         this.profile = profile;
+        this.verificationCode = verificationCode;
     }
 
     public String getVerificationCode() {
         return verificationCode;
-    }
-
-    public void setVerificationCode(String verificationCode){
-        this.verificationCode = verificationCode;
     }
 
     public Profile getProfile() {

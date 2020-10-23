@@ -7,5 +7,6 @@ import java.util.Optional;
 
 public interface AccountVerificationRepository extends CrudRepository<AccountVerification, Long> {
     void deleteAccountVerificationByProfile(Profile profile);
-    Optional<AccountVerification> findAccountVerificationByProfile_EmailAndVerificationCode(String email, String verificationCode);
+
+    Optional<AccountVerification> findAccountVerificationByProfile(Profile profile);
 }

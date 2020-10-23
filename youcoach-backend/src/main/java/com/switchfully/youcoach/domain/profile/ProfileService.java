@@ -3,6 +3,7 @@ package com.switchfully.youcoach.domain.profile;
 
 import com.switchfully.youcoach.domain.profile.api.*;
 import com.switchfully.youcoach.domain.profile.exception.ProfileIdNotFoundException;
+import com.switchfully.youcoach.domain.profile.exception.ProfileNotFoundException;
 import com.switchfully.youcoach.domain.profile.role.Role;
 import com.switchfully.youcoach.domain.profile.role.coach.TopicRepository;
 import com.switchfully.youcoach.domain.profile.role.coach.api.CoachListingDto;
@@ -26,6 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.mail.MessagingException;
 import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
@@ -62,14 +64,10 @@ public class ProfileService {
         performValidation(createSecuredUserDto);
         Profile newProfile = profileMapper.toUser(createSecuredUserDto);
         newProfile.setPassword(passwordEncoder.encode(newProfile.getPassword()));
-        newProfile = profileRepository.save(newProfile);
-        accountVerificator.createAccountVerification(newProfile);
-        try {
-            accountVerificator.sendVerificationEmail(newProfile);
-        } catch (MessagingException ex) {
-            newProfile.setAccountEnabled(true);
-            accountVerificator.removeAccountVerification(newProfile);
-        }
+        profileRepository.save(newProfile);
+
+        accountVerificator.sendVerificationEmail(newProfile);
+
         return profileMapper.toUserDto(newProfile);
     }
 
@@ -173,19 +171,18 @@ public class ProfileService {
     }
 
     public VerificationResultDto validateAccount(ValidateAccountDto validationData) {
-        if (validationDataDoesNotMatch(validationData)) return new VerificationResultDto(false);
-
-        accountVerificator.enableAccount(validationData.getEmail());
-        return new VerificationResultDto(true);
-    }
-
-    private boolean validationDataDoesNotMatch(ValidateAccountDto validationData) {
-        return !accountVerificator.doesVerificationCodeMatch(validationData.getVerificationCode(), validationData.getEmail());
+        Profile profile = profileRepository.findByEmail(validationData.getEmail()).orElseThrow(() -> new ProfileNotFoundException(""));
+        return new VerificationResultDto(accountVerificator.enableAccount(validationData.getVerificationCode(), profile));
     }
 
     public ResendVerificationDto resendValidation(ResendVerificationDto validationData) {
-        boolean result = accountVerificator.resendVerificationEmailFor(validationData.getEmail());
-        validationData.setValidationBeenResend(result);
+        Optional<Profile> profile = profileRepository.findByEmail(validationData.getEmail());
+        if(profile.isPresent()) {
+            boolean result = accountVerificator.resendVerificationEmailFor(profile.get());
+            validationData.setValidationBeenResend(result);
+        } else {
+            validationData.setValidationBeenResend(true);
+        }
         return validationData;
     }
 
