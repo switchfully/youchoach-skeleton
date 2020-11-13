@@ -3,80 +3,76 @@
     <div class="nav-wrapper">
       <div class="row">
         <div class="col s1 m0 l1">
-          <a href="#" data-target="nav-mobile" class="sidenav-trigger green-text"><i class="material-icons">menu</i></a>
+          <a href="#" data-target="nav-mobile" class="sidenav-trigger teal-text"><i class="material-icons">menu</i></a>
         </div>
         <div class="col s11 m3 l2">
-          <a id="logo-container" routerLink="/home" class="brand-logo">You-Coach <span class="grey-text quote">NDC</span></a>
+          <a id="logo-container" routerLink="/home" class="brand-logo">You-Coach</a>
         </div>
 
         <div class="col s0 m9 l9">
           <ul class="right hide-on-med-and-down valign-wrapper">
+            <li *ngIf="authenticationService.isLoggedIn()"><a class='red-text' [routerLink]="'/coachee/' + authenticationService.getUserId() + '/find-coach'" translate>menu.link.find-a-coach<i class="material-icons left">search</i></a></li>
             <li *ngIf="authenticationService.isLoggedIn()">
-              <a class='dropdown-trigger' data-target='dropdown-profile-1' href="#" translate>menu.link.profile</a>
-              <ul id="dropdown-profile-1" class='dropdown-content'>
-                <li><a [routerLink]="'/coachee/' + authenticationService.getUserId() + '/profile'" translate>menu.link.coachee-profile-information</a></li>
-                <li><a [routerLink]="'/coachee/' + authenticationService.getUserId() + '/becomecoach'" translate>menu.link.apply-to-become-a-coach</a></li>
-                <li *ngIf="authenticationService.isCoach()"><a [routerLink]="'/coach/' + authenticationService.getUserId() + '/coach-profile/'" translate>menu.link.coach-profile-information</a></li>
-                <li *ngIf="authenticationService.isCoach()"><a [routerLink]="'/coach/' + authenticationService.getUserId() + '/change-topics'" translate>menu.link.request-profile-change</a></li>
-              </ul>
-            </li>
-            <li *ngIf="authenticationService.isLoggedIn()"><a [routerLink]="'/coachee/' + authenticationService.getUserId() + '/find-coach'" translate>menu.link.find-a-coach</a></li>
-            <li *ngIf="authenticationService.isLoggedIn()">
-              <a class='dropdown-trigger' data-target='dropdown-sessions-1' href="#" translate>menu.link.coaching-sessions</a>
+              <a class='dropdown-trigger btn' data-target='dropdown-sessions-1' href="#" translate>menu.link.coaching-sessions<i class="material-icons left">date_range</i></a>
               <ul id="dropdown-sessions-1" class='dropdown-content'>
-                <li><a [routerLink]="'/coachee/' + authenticationService.getUserId() + '/sessions'" translate>menu.link.coachee-sessions</a></li>
-                <li *ngIf="authenticationService.isCoach()"><a [routerLink]="'/coach/' + authenticationService.getUserId() + '/coach-my-sessions'" translate>menu.link.coach-sessions</a></li>
+                <li><a class='orange-text' [routerLink]="'/coachee/' + authenticationService.getUserId() + '/sessions'" translate>menu.link.coachee-sessions<i class="material-icons left">today</i></a></li>
+                <li *ngIf="authenticationService.isCoach()"><a [routerLink]="'/coach/' + authenticationService.getUserId() + '/coach-my-sessions'" translate>menu.link.coach-sessions<i class="material-icons left">perm_contact_calendar</i></a></li>
               </ul>
             </li>
-
-            <li *ngIf="authenticationService.isAdmin()"><a [routerLink]="'/admin/overview'" translate>admin-menu.link.overview</a></li>
-            <li><a routerLink="/home" translate>FAQ</a></li>
-            <li class="header-hidden"><p class="grey-text" *ngIf="authenticationService.isLoggedIn()" translate [translateParams]="{username: username}">menu.label.logged-in</p></li>
-            <li><a class="waves-effect waves-light yellow darken-2 btn black-text" routerLink="/login" *ngIf="!authenticationService.isLoggedIn()" translate>menu.button.sign-in<i class="material-icons right">person</i></a></li>
-            <li><a class="waves-effect waves-light grey lighten-2 btn black-text" routerLink="/home" *ngIf="authenticationService.isLoggedIn()" (click)="logout()" translate>menu.button.log-out<i class="material-icons right">person</i></a></li>
-            <li><a class="waves-effect waves-light teal lighten-3 btn black-text" routerLink="/register" *ngIf="!authenticationService.isLoggedIn()" translate>menu.button.register<i class="material-icons right">person_add</i></a></li>
+            <li *ngIf="authenticationService.isLoggedIn()">
+              <a class='dropdown-trigger btn yellow darken-2 black-text' data-target='dropdown-profile-1' href="#" translate [translateParams]="{username: username}">menu.label.logged-in<i class="material-icons left">face</i></a>
+              <ul id="dropdown-profile-1" class='dropdown-content'>
+                <li *ngIf="authenticationService.isAdmin()"><a class='red-text' [routerLink]="'/admin/overview'" translate>admin-menu.link.overview<i class="material-icons left">settings</i></a></li>
+                <li><a [routerLink]="'/coachee/' + authenticationService.getUserId() + '/profile'" translate>menu.link.coachee-profile-information<i class="material-icons left">account_circle</i></a></li>
+                <li *ngIf="authenticationService.isCoach()"><a [routerLink]="'/coach/' + authenticationService.getUserId() + '/coach-profile/'" translate>menu.link.coach-profile-information<i class="material-icons left">assignment_ind</i></a></li>
+                <li *ngIf="authenticationService.isCoach(); else elseBlock"><a [routerLink]="'/coach/' + authenticationService.getUserId() + '/change-topics'" translate>menu.link.request-profile-change<i class="material-icons left">send</i></a></li>
+                <ng-template #elseBlock><li><a [routerLink]="'/coachee/' + authenticationService.getUserId() + '/becomecoach'" translate>menu.link.apply-to-become-a-coach<i class="material-icons left">send</i></a></li></ng-template>
+                <li *ngIf="authenticationService.isLoggedIn()"><a routerLink="/home" translate>menu.button.FAQ<i class="material-icons">help_outline</i></a></li>
+                <li><a class="waves-light red lighten-2 white-text" routerLink="/home" *ngIf="authenticationService.isLoggedIn()" (click)="logout()" translate>menu.button.log-out<i class="material-icons">power_settings_new</i></a></li>
+              </ul>
+            </li>
+            <li><a class="waves-light yellow darken-2 btn black-text" href="/login" *ngIf="!authenticationService.isLoggedIn()" translate>menu.button.sign-in<i class="material-icons right">person</i></a></li>
+            <li><a class="waves-light teal lighten-3 btn black-text" routerLink="/register" *ngIf="!authenticationService.isLoggedIn()" translate>menu.button.register<i class="material-icons right">person_add</i></a></li>
             <li class="center-align">
-              <a class='dropdown-trigger btn' data-target='dropdown1'><i class="material-icons">language</i></a>
+              <a class='dropdown-trigger' data-target='dropdown1'><i class="material-icons">language</i></a>
 
               <ul id='dropdown1' class='dropdown-content'>
-                <li><a [class.active]="currentLanguage() === 'en'" (click)="switchLanguage('en')">en</a></li>
-                <li><a [class.active]="currentLanguage() === 'fr '" (click)="switchLanguage('fr')">fr</a></li>
-                <li><a [class.active]="currentLanguage() === 'nl '" (click)="switchLanguage('nl')">nl</a></li>
+                <li><a [class.active]="currentLanguage() === 'en'" (click)="switchLanguage('en')">English</a></li>
+                <li><a [class.active]="currentLanguage() === 'fr '" (click)="switchLanguage('fr')">Français</a></li>
+                <li><a [class.active]="currentLanguage() === 'nl '" (click)="switchLanguage('nl')">Nederlands</a></li>
               </ul>
             </li>
           </ul>
         </div>
 
       <ul id="nav-mobile" class="left sidenav">
-        <li *ngIf="authenticationService.isLoggedIn()"><a class='dropdown-trigger btn yellow darken-2' data-target='dropdown-profile' href="#" translate>menu.link.profile</a>
-          <ul id="dropdown-profile" class='dropdown-content'>
-            <li><a [routerLink]="'/coachee/' + authenticationService.getUserId() + '/profile'" translate>menu.link.coachee-profile-information</a></li>
-            <li><a [routerLink]="'/coachee/' + authenticationService.getUserId() + '/becomecoach'" translate>menu.link.apply-to-become-a-coach</a></li>
-            <li *ngIf="authenticationService.isCoach()"><a [routerLink]="'/coach/' + authenticationService.getUserId() + '/coach-profile/'" translate>menu.link.coach-profile-information</a></li>
-            <li *ngIf="authenticationService.isCoach()"><a [routerLink]="'/coach/' + authenticationService.getUserId() + '/change-topics'" translate>menu.link.request-profile-change</a></li>
-          </ul>
-        </li>
-        <li *ngIf="authenticationService.isLoggedIn()"><a class='btn yellow darken-2' [routerLink]="'/coachee/' + authenticationService.getUserId() + '/find-coach'" translate>menu.link.find-a-coach</a></li>
-        <li *ngIf="authenticationService.isLoggedIn()"><a class='dropdown-trigger btn teal lighten-3' data-target='dropdown-sessions' href="#" translate>menu.link.coaching-sessions</a>
+        <li *ngIf="authenticationService.isLoggedIn()"><a class='btn red white-text' [routerLink]="'/coachee/' + authenticationService.getUserId() + '/find-coach'" translate>menu.link.find-a-coach</a></li>
+        <li *ngIf="authenticationService.isLoggedIn()"><a class='dropdown-trigger btn teal white-text' data-target='dropdown-sessions' href="#" translate>menu.link.coaching-sessions</a>
           <ul id="dropdown-sessions" class='dropdown-content'>
-            <li><a [routerLink]="'/coachee/' + authenticationService.getUserId() + '/sessions'" translate>menu.link.coachee-sessions</a></li>
-            <li *ngIf="authenticationService.isCoach()"><a [routerLink]="'/coach/' + authenticationService.getUserId() + '/coach-my-sessions'" translate>menu.link.coach-sessions</a></li>
+            <li><a class='orange-text' [routerLink]="'/coachee/' + authenticationService.getUserId() + '/sessions'" translate>menu.link.coachee-sessions<i class="material-icons left orange-text">today</i></a></li>
+            <li *ngIf="authenticationService.isCoach()"><a class='teal-text' [routerLink]="'/coach/' + authenticationService.getUserId() + '/coach-my-sessions'" translate>menu.link.coach-sessions<i class="material-icons left teal-text">perm_contact_calendar</i></a></li>
           </ul>
         </li>
-        <li *ngIf="authenticationService.isAdmin()"><a class='btn brown lighten-2' [routerLink]="'/admin/overview'" translate>admin-menu.link.overview</a></li>
-        <li><a routerLink="/home" translate>FAQ</a></li>
-        <li><a class="grey-text" *ngIf="authenticationService.isLoggedIn()" translate [translateParams]="{username: username}">menu.label.logged-in</a></li>
-        <li><a class="waves-effect waves-light yellow darken-2 btn black-text" routerLink="/login" *ngIf="!authenticationService.isLoggedIn()" translate>menu.button.sign-in<i class="material-icons right">person</i></a></li>
-        <li><a class="waves-effect waves-light grey lighten-2 btn black-text" routerLink="/home" *ngIf="authenticationService.isLoggedIn()" (click)="logout()" translate>menu.button.log-out<i class="material-icons right">person</i></a></li>
-        <li><a class="waves-effect waves-light teal lighten-3 btn black-text" routerLink="/register" *ngIf="!authenticationService.isLoggedIn()" translate>menu.button.register<i class="material-icons right">person_add</i></a></li>
+        <li *ngIf="authenticationService.isLoggedIn()"><a class='dropdown-trigger waves-light yellow darken-2 btn black-text' data-target='dropdown-profile' href="#" translate [translateParams]="{username: username}">menu.label.logged-in</a>
+          <ul id="dropdown-profile" class='dropdown-content'>
+            <li *ngIf="authenticationService.isAdmin()"><a class='red-text' [routerLink]="'/admin/overview'" translate>admin-menu.link.overview<i class="material-icons left red-text">settings</i></a></li>
+            <li><a class='waves-light teal-text' [routerLink]="'/coachee/' + authenticationService.getUserId() + '/profile'" translate>menu.link.coachee-profile-information<i class="material-icons left teal-text">account_circle</i></a></li>
+            <li class='waves-light' *ngIf="authenticationService.isCoach()"><a class='teal-text' [routerLink]="'/coach/' + authenticationService.getUserId() + '/coach-profile/'" translate>menu.link.coach-profile-information<i class="material-icons left teal-text">assignment_ind</i></a></li>
+            <li class='waves-light' *ngIf="authenticationService.isCoach(); else elseBlock"><a class='teal-text' [routerLink]="'/coach/' + authenticationService.getUserId() + '/change-topics'" translate>menu.link.request-profile-change<i class="material-icons left teal-text">send</i></a></li>
+            <ng-template #elseBlock><li class='waves-light'><a class='teal-text' [routerLink]="'/coachee/' + authenticationService.getUserId() + '/becomecoach'" translate>menu.link.apply-to-become-a-coach<i class="material-icons left teal-text">send</i></a></li></ng-template>
+            <li class='waves-light' *ngIf="authenticationService.isLoggedIn()"><a class='teal-text' routerLink="/home" translate>menu.button.FAQ<i class="material-icons left teal-text">help_outline</i></a></li>
+            <li><a class="waves-light red lighten-2 white-text" routerLink="/home" *ngIf="authenticationService.isLoggedIn()" (click)="logout()" translate>menu.button.log-out<i class="material-icons white-text left">power_settings_new</i></a></li>
+          </ul>
+        </li>
+        <li><a class="waves-light yellow darken-2 btn black-text" routerLink="/login" *ngIf="!authenticationService.isLoggedIn()" translate>menu.button.sign-in<i class="material-icons right">person</i></a></li>
+        <li><a class="waves-light teal lighten-3 btn black-text" routerLink="/register" *ngIf="!authenticationService.isLoggedIn()" translate>menu.button.register<i class="material-icons right">person_add</i></a></li>
 
         <li class="center-align">
-
-          <a class='waves-effect waves-light btn dropdown-trigger btn black-text' data-target='dropdown2' translate>menu.link.switch-language<i class="material-icons right">language</i></a>
+          <a class='waves-light btn dropdown-trigger btn white-text' data-target='dropdown2' translate>menu.link.switch-language</a>
           <ul id='dropdown2' class='dropdown-content'>
-            <li><a [class.active]="currentLanguage() === 'en'" (click)="switchLanguage('en')">en</a></li>
-            <li><a [class.active]="currentLanguage() === 'fr '" (click)="switchLanguage('fr')">fr</a></li>
-            <li><a [class.active]="currentLanguage() === 'nl '" (click)="switchLanguage('nl')">nl</a></li>
+            <li><a [class.active]="currentLanguage() === 'en'" (click)="switchLanguage('en')">English</a></li>
+            <li><a [class.active]="currentLanguage() === 'fr '" (click)="switchLanguage('fr')">Français</a></li>
+            <li><a [class.active]="currentLanguage() === 'nl '" (click)="switchLanguage('nl')">Nederlands</a></li>
           </ul>
         </li>
       </ul>
