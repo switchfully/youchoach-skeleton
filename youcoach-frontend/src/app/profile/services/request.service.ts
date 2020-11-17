@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {environment} from "../../../environments/environment";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {ICoach} from "../interfaces/ICoach";
+import {ICoach, ITopic} from "../interfaces/ICoach";
 
 @Injectable({
   providedIn: 'root'
@@ -18,8 +18,7 @@ export class RequestService {
   constructor(private http: HttpClient) {
   }
 
-  requestProfileChange(profileId: number): Observable<Object>{
-    console.log(profileId);
-    return this.http.post<Object>(this.url + `/profile-change`, {profileId}, this.httpOptions);
+  changeTopics(profileId: number, changeTopics: ITopic[]): Observable<Object>{
+    return this.http.post<Object>(this.url + `/change-topics`, {profileId, changeTopics}, this.httpOptions);
   }
 }

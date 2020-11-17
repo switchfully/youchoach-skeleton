@@ -2,9 +2,9 @@ package com.switchfully.youcoach.domain.request;
 
 import com.switchfully.youcoach.domain.profile.Profile;
 import com.switchfully.youcoach.domain.profile.ProfileRepository;
-import com.switchfully.youcoach.domain.request.api.ProfileChangeRequest;
+import com.switchfully.youcoach.domain.request.api.ChangeTopicsRequest;
 import com.switchfully.youcoach.email.EmailExecutor;
-import com.switchfully.youcoach.email.command.profilechange.ProfileChangeEmailCommand;
+import com.switchfully.youcoach.email.command.changetopics.ChangeTopicsEmailCommand;
 import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
@@ -20,10 +20,10 @@ public class RequestService {
         this.emailExecutor = emailExecutor;
     }
 
-    public void profileChange(ProfileChangeRequest profileChangeRequest) {
-        Profile profile = profileRepository.getOne(profileChangeRequest.getProfileId());
+    public void changeTopics(ChangeTopicsRequest changeTopicsRequest) {
+        Profile profile = profileRepository.getOne(changeTopicsRequest.getProfileId());
         try {
-            this.emailExecutor.execute(new ProfileChangeEmailCommand(profile));
+            this.emailExecutor.execute(new ChangeTopicsEmailCommand(profile, changeTopicsRequest.getChangeTopics()));
         } catch (MessagingException e) {
             throw new RuntimeException(e);
         }

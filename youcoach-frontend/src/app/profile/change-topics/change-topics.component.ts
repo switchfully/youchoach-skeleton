@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {RequestService} from "../services/request.service";
 import {Location} from "@angular/common";
 import {ActivatedRoute} from "@angular/router";
+import {ITopic} from "../interfaces/ICoach";
 
 @Component({
   selector: 'app-change-topics',
@@ -21,7 +22,9 @@ export class ChangeTopicsComponent implements OnInit {
   }
 
   mail() {
-    this.requestService.requestProfileChange(this.profileId).subscribe(() => this.location.back());
+    // const changeTopics: ITopic[] = [{name: 'french', grades:[1,2,3]}, {name: 'dutch', grades:[2,3]}]
+    const changeTopics: ITopic[] = [];
+    this.requestService.changeTopics(this.profileId, changeTopics).subscribe(() => this.location.back());
   }
 
 }

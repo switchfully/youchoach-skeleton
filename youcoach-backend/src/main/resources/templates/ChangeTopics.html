@@ -2,14 +2,17 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title th:remove="all">Template for HTML email</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 </head>
 <body>
 <p>
     Hello, Admin!
 </p>
 <p>
-    <span th:text="${userName}">Unknown user</span> would like to become a coach.
+    <span th:text="${userName}">Unknown user</span> would like to change his topics to:
+    <tr th:each="topic : ${topics}">
+        <td><span th:text="${topic}"></span></td>
+    </tr>
     You can edit his profile with the following <a th:href="${url}">here</a>.
 </p>
 <p>
