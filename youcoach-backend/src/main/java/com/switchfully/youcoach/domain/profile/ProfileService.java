@@ -24,7 +24,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.mail.MessagingException;
 import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
@@ -90,7 +89,7 @@ public class ProfileService {
                 .withYoucoachRole(new RoleDto(profile.getRole().name(), profile.getRole().getLabel()));
 
         if (!email.equals(updateProfileDto.getEmail())) {
-            cpu.setToken(securedUserService.generateAuthorizationBearerTokenForUser(updateProfileDto.getEmail()));
+            cpu.setToken(securedUserService.generateToken(updateProfileDto.getEmail()));
         }
         return cpu;
     }

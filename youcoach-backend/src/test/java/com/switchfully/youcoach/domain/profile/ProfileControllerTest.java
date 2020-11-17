@@ -91,7 +91,7 @@ class ProfileControllerTest {
     @Sql("classpath:oneDefaultUser.sql")
     void getCoacheeProfile() throws Exception {
         UsernamePasswordAuthenticationToken user = new UsernamePasswordAuthenticationToken("example@example.com", null, List.of(UserRole.ROLE_COACHEE));
-        String token = securedUserService.generateJwtToken(user);
+        String token = securedUserService.generateToken(user);
 
         String actualResult = mockMvc.perform(get("/users/profile/20").header("Authorization", "Bearer " + token)
                 //.with(csrf())
@@ -108,7 +108,7 @@ class ProfileControllerTest {
     @Sql("classpath:oneDefaultUser.sql")
     void getSpecificCoacheeProfile() throws Exception {
         UsernamePasswordAuthenticationToken user = new UsernamePasswordAuthenticationToken("example@example.com", null, List.of(UserRole.ROLE_COACHEE));
-        String token = securedUserService.generateJwtToken(user);
+        String token = securedUserService.generateToken(user);
 
         String actualResult = mockMvc.perform(get("/users/profile/20")
                 .header("Authorization", "Bearer " + token)
@@ -128,7 +128,7 @@ class ProfileControllerTest {
     @Sql("classpath:anotherDefaultUser.sql")
     void getCoacheeWithOtherUser_forbidden_if_not_own_profile() throws Exception {
         UsernamePasswordAuthenticationToken user = new UsernamePasswordAuthenticationToken("example2@example.com", null, List.of(UserRole.ROLE_COACHEE));
-        String token = securedUserService.generateJwtToken(user);
+        String token = securedUserService.generateToken(user);
 
         mockMvc.perform(get("/users/profile/20")
                 .header("Authorization", "Bearer " + token)
@@ -141,9 +141,20 @@ class ProfileControllerTest {
     @Test
     @Sql("classpath:oneDefaultUser.sql")
     @Sql("classpath:anotherDefaultUser.sql")
+    void editCoacheeWithNoAuthorization() throws Exception {
+        mockMvc.perform(get("/users/profile/20/edit")
+                .with(csrf())
+                .accept("application/json;charset=UTF-8")
+        )
+                .andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    @Sql("classpath:oneDefaultUser.sql")
+    @Sql("classpath:anotherDefaultUser.sql")
     void getCoacheeWithAdmin() throws Exception {
         UsernamePasswordAuthenticationToken user = new UsernamePasswordAuthenticationToken("example2@example.com", null, List.of(UserRole.ROLE_ADMIN));
-        String token = securedUserService.generateJwtToken(user);
+        String token = securedUserService.generateToken(user);
 
         String actualResult = mockMvc.perform(get("/users/profile/20")
                 .header("Authorization", "Bearer " + token)
@@ -163,7 +174,7 @@ class ProfileControllerTest {
     @Sql("classpath:makeUsersCoach.sql")
     void getCoachProfile() throws Exception {
         UsernamePasswordAuthenticationToken user = new UsernamePasswordAuthenticationToken("example@example.com", null, List.of(UserRole.ROLE_COACH));
-        String token = securedUserService.generateJwtToken(user);
+        String token = securedUserService.generateToken(user);
 
 
         String actualResult = mockMvc.perform(get("/users/coach/profile/20")

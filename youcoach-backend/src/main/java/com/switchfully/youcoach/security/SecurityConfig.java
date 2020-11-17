@@ -15,6 +15,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
@@ -34,7 +35,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         this.securedUserService = securedUserService;
         this.passwordEncoder = passwordEncoder;
         this.jwtSecret = jwtSecret;
-//        this.roleToFeatureMapper = roleToFeatureMapper;
     }
 
     @Override
@@ -47,11 +47,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/users/password/reset").permitAll()
                 .anyRequest().authenticated()
                 .and()
+                .addFilter(new JwtAuthenticationFilter(authenticationManager(), securedUserService, authenticationFailureHandler()))
+                .addFilter(new JwtAuthorizationFilter(authenticationManager(), authenticationFailureHandler(), jwtSecret))
+                .sessionManagement()
+                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+    }
 
-                .addFilter(new JwtAuthenticationFilter(authenticationManager(), securedUserService, new OnAuthenticationFailureHandler()))
-                .addFilter(new JwtAuthorizationFilter(authenticationManager(), jwtSecret))
-
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+    @Bean
+    public AuthenticationFailureHandler authenticationFailureHandler(){
+        return new OnAuthenticationFailureHandler();
     }
 
     @Bean
@@ -61,7 +65,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         corsConfig.setMaxAge(8000L);
         corsConfig.setAllowCredentials(true);
         corsConfig.addAllowedOrigin(origins);
-//        corsConfig.addAllowedOrigin("https://you-coach-south.herokuapp.com");
         corsConfig.addAllowedHeader("*");
         corsConfig.addAllowedMethod("GET");
         corsConfig.addAllowedMethod("POST");

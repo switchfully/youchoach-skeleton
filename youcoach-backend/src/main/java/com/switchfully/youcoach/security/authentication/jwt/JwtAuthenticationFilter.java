@@ -1,13 +1,13 @@
 package com.switchfully.youcoach.security.authentication.jwt;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.switchfully.youcoach.security.authentication.OnAuthenticationFailureHandler;
 import com.switchfully.youcoach.security.authentication.user.SecuredUserService;
 import com.switchfully.youcoach.security.authentication.user.SecuredUser;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import javax.servlet.FilterChain;
@@ -24,7 +24,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     private final SecuredUserService securedUserService;
 
     public JwtAuthenticationFilter(AuthenticationManager authenticationManager,
-                                   SecuredUserService securedUserService, OnAuthenticationFailureHandler failureHandler) {
+                                   SecuredUserService securedUserService, AuthenticationFailureHandler failureHandler) {
         this.authenticationManager = authenticationManager;
         this.securedUserService = securedUserService;
 
@@ -62,9 +62,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response,
                                             FilterChain filterChain, Authentication authentication) {
 
-        String token = securedUserService.generateJwtToken(authentication);
-
-
+        String token = securedUserService.generateToken(authentication);
 
         response.addHeader("Authorization", "Bearer " + token);
         response.addHeader("Access-Control-Expose-Headers", "Authorization");

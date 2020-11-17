@@ -87,6 +87,7 @@ class SessionControllerTest {
         CreateSessionDto createSessionDto = new CreateSessionDto("Mathematics", "30/05/2020", "11:50", "school", "no remarks", 20L, 21L);
         String actualResult =
                 mockMvc.perform(post("/coaching-sessions")
+                        .header("Authorization", "Bearer " + securedUserService.generateToken(mockPrincipal.getName()))
                         .principal(mockPrincipal)
                         .with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)

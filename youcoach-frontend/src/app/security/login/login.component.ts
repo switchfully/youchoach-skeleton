@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder} from '@angular/forms';
 import {AuthenticationService} from '../services/authentication/authentication.service';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {CoacheeService} from '../../profile/services/coachee.service';
 import {InitService} from "../../template/materialize/init.service";
 
@@ -16,10 +16,12 @@ export class LoginComponent implements OnInit {
   loginForm;
   title = 'You-Coach | Sign in';
   jwt;
+  private redirectUrl: any;
 
   constructor(private formBuilder: FormBuilder,
               private authenticationService: AuthenticationService,
               private router: Router,
+              private route: ActivatedRoute,
               private coacheeService: CoacheeService,
               private initService: InitService
   ) {
@@ -31,6 +33,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     document.title = this.title;
+    this.route.queryParams.subscribe(queryParams => this.redirectUrl = queryParams.redirectUrl)
   }
 
   onSubmit(loginData) {
@@ -41,7 +44,7 @@ export class LoginComponent implements OnInit {
         (_ => {
           this.success = true;
           this.initService.initDropdowns();
-          this.router.navigateByUrl(this.getHomeUrl());
+          this.router.navigateByUrl(this.redirectUrl ? this.redirectUrl : this.getHomeUrl());
         }),
         (_ => this.error = true)
       );
@@ -49,7 +52,7 @@ export class LoginComponent implements OnInit {
   }
 
   private getHomeUrl() {
-    if(this.authenticationService.isAdmin()) {
+    if (this.authenticationService.isAdmin()) {
       return `/admin/overview`;
     }
     if (this.authenticationService.isCoach()) {
@@ -59,7 +62,7 @@ export class LoginComponent implements OnInit {
   }
 
   resetPassword() {
-    this.coacheeService.requestPasswordResetToken({ email: this.loginForm.get('username').value })
+    this.coacheeService.requestPasswordResetToken({email: this.loginForm.get('username').value})
       .subscribe(_ => this.router.navigateByUrl('/password-reset-requested'));
   }
 

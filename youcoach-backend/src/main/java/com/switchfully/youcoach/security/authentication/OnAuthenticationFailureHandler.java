@@ -15,17 +15,18 @@ public class OnAuthenticationFailureHandler implements AuthenticationFailureHand
 
     @Override
     public void onAuthenticationFailure(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException, ServletException {
-       switch(e.getClass().getSimpleName()){
-           case "DisabledException":
-               sendErrorResponse(httpServletResponse, HttpStatus.UNAUTHORIZED, "USER_DISABLED");
-               break;
-           case "BadCredentialsException":
-               sendErrorResponse(httpServletResponse, HttpStatus.UNAUTHORIZED, "USER_UNKNOWN");
-               break;
-           default:
-               System.out.println("ERROR: " + e.getClass().getSimpleName());
-               sendErrorResponse(httpServletResponse,HttpStatus.FORBIDDEN, e.getClass().getSimpleName());
-       }
+        switch (e.getClass().getSimpleName()) {
+            case "DisabledException":
+                sendErrorResponse(httpServletResponse, HttpStatus.UNAUTHORIZED, "USER_DISABLED");
+                break;
+            case "BadCredentialsException":
+            case "AuthenticationCredentialsNotFoundException":
+                sendErrorResponse(httpServletResponse, HttpStatus.UNAUTHORIZED, "USER_UNKNOWN");
+                break;
+            default:
+                System.out.println("ERROR: " + e.getClass().getSimpleName());
+                sendErrorResponse(httpServletResponse, HttpStatus.FORBIDDEN, e.getClass().getSimpleName());
+        }
 
     }
 
@@ -38,7 +39,7 @@ public class OnAuthenticationFailureHandler implements AuthenticationFailureHand
     public static class OnAuthenticationFailureActionResponse {
         private String name;
 
-        public OnAuthenticationFailureActionResponse(String name){
+        public OnAuthenticationFailureActionResponse(String name) {
             this.name = name;
         }
 

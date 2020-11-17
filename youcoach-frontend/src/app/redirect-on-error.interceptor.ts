@@ -50,6 +50,7 @@ export class RedirectOnErrorInterceptor implements HttpInterceptor {
             } else if (isAuthorisationError()) {
               this.handleErrorResponse('/forbidden');
             }
+            return;
           }
         }
         return throwError(err);
@@ -63,7 +64,8 @@ export class RedirectOnErrorInterceptor implements HttpInterceptor {
     switch (err.error.name) {
       case 'USER_UNKNOWN':
         if (this.router !== undefined && this.router !== null && this.router.url !== '/login') {
-          this.handleErrorResponseAndLogUserOut('/login');
+          console.log('original url' + this.router.url);
+          this.handleErrorResponseAndLogUserOut('/login?redirectUrl=' + this.router.url);
         }
         break;
       case 'USER_DISABLED':
@@ -79,9 +81,7 @@ export class RedirectOnErrorInterceptor implements HttpInterceptor {
     if (this.authenticationService.isLoggedIn() && forceLogOut !== undefined && forceLogOut === true) {
       this.authenticationService.logout();
     }
-    this.router.navigateByUrl(url).then(_ => {
-    });
-    this.forbiddenService.url = this.router.url;
+    this.router.navigateByUrl(url).then(_ => {console.log('navigated!')});
   }
 
   private handleErrorResponseAndLogUserOut(url: string) {

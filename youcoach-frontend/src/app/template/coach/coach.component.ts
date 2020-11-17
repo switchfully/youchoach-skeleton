@@ -9,13 +9,9 @@ import {AuthenticationService} from "../../security/services/authentication/auth
 })
 export class CoachComponent implements OnInit {
 
-  constructor(private route: ActivatedRoute, public authenticationService: AuthenticationService) { }
+  constructor() { }
 
   ngOnInit(): void {
   }
 
-  isActive(link: string) {
-    const url: string = this.route.snapshot['_routerState'].url;
-    return url.indexOf(link) !== -1;
-  }
 }

@@ -1,5 +1,6 @@
 package com.switchfully.youcoach.security.authentication.jwt;
 
+import com.google.common.collect.Lists;
 import com.switchfully.youcoach.security.authentication.user.UserRole;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
@@ -8,11 +9,15 @@ import io.jsonwebtoken.UnsupportedJwtException;
 import io.jsonwebtoken.security.SignatureException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import org.springframework.web.client.HttpClientErrorException;
 
+import javax.security.sasl.AuthenticationException;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -27,21 +32,30 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
     private static final Logger log = LoggerFactory.getLogger(JwtAuthorizationFilter.class);
 
+    private final AuthenticationFailureHandler authenticationFailureHandler;
     private final String jwtSecret;
 
 
-    public JwtAuthorizationFilter(AuthenticationManager authenticationManager, String jwtSecret) {
+    public JwtAuthorizationFilter(AuthenticationManager authenticationManager, AuthenticationFailureHandler authenticationFailureHandler, String jwtSecret) {
         super(authenticationManager);
+        this.authenticationFailureHandler = authenticationFailureHandler;
         this.jwtSecret = jwtSecret;
-
     }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
                                     FilterChain filterChain) throws IOException, ServletException {
+        //ugly code and duplication from SecurityConfig.
+        //I got no idea to do this better.
+        //This basically means do not test security in these cases, something the SecurityConfig does also
+        if(request.getRequestURI().contains("/users") && Lists.newArrayList("POST", "PATCH").contains(request.getMethod())) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
         var authentication = getAuthentication(request);
         if (authentication == null) {
-            filterChain.doFilter(request, response);
+            authenticationFailureHandler.onAuthenticationFailure(request, response, new AuthenticationCredentialsNotFoundException(""));
             return;
         }
 
