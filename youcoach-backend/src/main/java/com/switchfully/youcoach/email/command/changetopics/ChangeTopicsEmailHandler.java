@@ -35,8 +35,8 @@ public class ChangeTopicsEmailHandler implements EmailHandler<ChangeTopicsEmailC
         final Context ctx = new Context();
         ctx.setVariable("userName", command.getProfile().getFirstName() + " " + command.getProfile().getLastName());
         ctx.setVariable("firmName", environment.getProperty("app.profilechange.firmName"));
-        ctx.setVariable("url", environment.getProperty("app.profilechange.hostName") + "/coachee/" + command.getProfile().getId() + "/edit-profile");
-        ctx.setVariable("topics", command.printTopics());
+        ctx.setVariable("url", environment.getProperty("app.profilechange.hostName") + "/coach/" + command.getProfile().getId() + "/edit-topic");
+        ctx.setVariable("text", command.getText().replace("\n", System.lineSeparator()));
 
         final String body = this.templateEngine.process("ChangeTopics.html", ctx);
 

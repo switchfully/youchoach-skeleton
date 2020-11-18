@@ -1,10 +1,8 @@
 package com.switchfully.youcoach.domain.request.api;
 
-import java.util.List;
-
 public class ChangeTopicsRequest {
     private long profileId;
-    private List<ChangeTopic> changeTopics;
+    private String text;
 
     public ChangeTopicsRequest() {
     }
@@ -13,7 +11,7 @@ public class ChangeTopicsRequest {
         return profileId;
     }
 
-    public List<ChangeTopic> getChangeTopics() {
-        return changeTopics;
+    public String getText() {
+        return text;
     }
 }

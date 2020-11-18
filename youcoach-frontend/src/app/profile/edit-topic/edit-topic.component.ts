@@ -12,7 +12,7 @@ import {flatMap, map, tap} from "rxjs/operators";
   templateUrl: './edit-topic.component.html',
   styleUrls: ['./edit-topic.component.css']
 })
-export class EditTopicComponent implements OnInit, AfterViewInit {
+export class EditTopicComponent implements OnInit {
   private idToGet: number;
   topics: ITopic[];
   newTopicForm = this.formBuilder.group({name: ['']});
@@ -31,11 +31,12 @@ export class EditTopicComponent implements OnInit, AfterViewInit {
         map(params => params.coachId),
         tap(coachId => this.idToGet=coachId),
         flatMap(coachId => this.coachService.getSpecificCoach(coachId)),
+        tap(_ => this.getAllTopics()),
       )
       .subscribe(coach => this.topics = coach.topics);
   }
 
-  ngAfterViewInit(): void {
+  private getAllTopics() {
     this.profileService.getAllTopics().subscribe(
       topics => {
         const data = {};

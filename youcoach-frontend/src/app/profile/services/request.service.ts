@@ -18,7 +18,7 @@ export class RequestService {
   constructor(private http: HttpClient) {
   }
 
-  changeTopics(profileId: number, changeTopics: ITopic[]): Observable<Object>{
-    return this.http.post<Object>(this.url + `/change-topics`, {profileId, changeTopics}, this.httpOptions);
+  changeTopics(profileId: number, text: string): Observable<Object>{
+    return this.http.post<Object>(this.url + `/change-topics`, {profileId, text}, this.httpOptions);
   }
 }

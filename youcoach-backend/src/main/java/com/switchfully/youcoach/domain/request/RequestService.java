@@ -23,7 +23,7 @@ public class RequestService {
     public void changeTopics(ChangeTopicsRequest changeTopicsRequest) {
         Profile profile = profileRepository.getOne(changeTopicsRequest.getProfileId());
         try {
-            this.emailExecutor.execute(new ChangeTopicsEmailCommand(profile, changeTopicsRequest.getChangeTopics()));
+            this.emailExecutor.execute(new ChangeTopicsEmailCommand(profile, changeTopicsRequest.getText()));
         } catch (MessagingException e) {
             throw new RuntimeException(e);
         }
