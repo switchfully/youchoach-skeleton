@@ -10,7 +10,7 @@
             <span translate>request-profile-change.text.change-topics</span>
           </div>
           <div class="row">
-            <a href="/faq">Need more help?</a>
+            <a href="/faq" translate>request-profile-change.link.faq</a>
           </div>
           <div class="row">
             <div class="input-field">
@@ -19,6 +19,7 @@
               <label for="topics" translate>request-profile-change.label.mail-content</label>
             </div>
           </div>
+
           <div *ngIf="error">
             <span class="red-text">Something went wrong. Please try another time, while we try to fix the problem.</span>
           </div>
@@ -27,8 +28,8 @@
             </button>
             <div *ngIf="sending" class="btn-large waves-effect waves-light teal lighten-3 disabled">
               <div class="row">
-                <div class="col">
-                  Sending mail
+                <div class="col" translate>
+                  request-profile-change.button.sending-email
                 </div>
                 <div class="col" style="padding-top: 10px;">
                   <div class="preloader-wrapper small active right-align">

@@ -13,6 +13,8 @@ import {InitService} from "../../template/materialize/init.service";
 export class LoginComponent implements OnInit {
   error;
   success;
+  sending: boolean;
+  wrongUsernameOrPassword: boolean;
   loginForm;
   title = 'You-Coach | Sign in';
   jwt;
@@ -37,6 +39,7 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit(loginData) {
+    this.sending = true;
     this.error = false;
     this.success = false;
     this.authenticationService.login(loginData)
@@ -47,8 +50,12 @@ export class LoginComponent implements OnInit {
           this.router.navigateByUrl(this.redirectUrl ? this.redirectUrl : this.getHomeUrl());
         }),
         (fault => {
-          console.log(fault);
-          this.error = true;
+          this.sending = false;
+          if (fault.status === 401) {
+            this.wrongUsernameOrPassword = true;
+          } else {
+            this.error = true;
+          }
         })
       );
     this.loginForm.reset();
