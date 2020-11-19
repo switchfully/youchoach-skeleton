@@ -1,20 +1,15 @@
-package com.switchfully.youcoach.email.command.changetopics;
+package com.switchfully.youcoach.email.command.becomecoach;
 
 import com.switchfully.youcoach.domain.profile.Profile;
 import com.switchfully.youcoach.email.command.EmailCommand;
 
-public class ChangeTopicsEmailCommand implements EmailCommand {
-
+public class BecomeACoachCommand implements EmailCommand {
     private final Profile profile;
     private final String request;
 
-    public ChangeTopicsEmailCommand(Profile profile, String request) {
+    public BecomeACoachCommand(Profile profile, String request) {
         this.profile = profile;
         this.request = request;
-    }
-
-    public long getProfileId() {
-        return profile.getId();
     }
 
     public String getRequest() {
@@ -22,6 +17,10 @@ public class ChangeTopicsEmailCommand implements EmailCommand {
     }
 
     public String getFullName() {
-        return profile.getFullName();
+        return profile.getFirstName() + " " + profile.getLastName();
+    }
+
+    public long getId() {
+        return profile.getId();
     }
 }

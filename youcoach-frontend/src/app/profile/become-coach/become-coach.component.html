@@ -5,19 +5,50 @@
       <h5 translate>my-coach-profile-menu.link.request-profile-change</h5>
       <div class="divider"></div>
       <div class="row">
-        <div class="col l2 m2 s12">
-          <img src="/assets/img/image_preview.png" class="responsive-img"
-               alt="Under Construction">
-        </div>
-        <div class="col l10 m10 s12">
-          <span class="black-text" translate>request-profile-change.text.under-construction</span>
+        <form class="col l12 m12 s12" [formGroup]="becomeACoachForm" (ngSubmit)="mail(becomeACoachForm.value)">
+          <div class="row">
+            <span translate>request-profile-change.text.become-a-coach</span>
+          </div>
+          <div class="row">
+            <div class="input-field">
+              <i class="material-icons prefix">mode_edit</i>
+              <textarea id="topics" class="materialize-textarea validate" formControlName="request"></textarea>
+              <label for="topics" translate>request-profile-change.label.mail-content</label>
+            </div>
+          </div>
+          <div *ngIf="error">
+            <span class="red-text">Something went wrong. Please try another time, while we try to fix the problem.</span>
+          </div>
 
           <div class="row right-align">
-            <a (click)="mail()"
-               class="btn-large waves-effect waves-light yellow darken-2" translate>request-profile-change.button.send-email<i
-              class="material-icons right">send</i></a>
+            <button *ngIf="!sending" (click)="mail(becomeACoachForm.value)" class="btn-large waves-effect waves-light teal lighten-3" translate>request-profile-change.button.send-email<i class="material-icons right">send</i>
+            </button>
+
+
+            <div *ngIf="sending" class="btn-large waves-effect waves-light teal lighten-3 disabled">
+              <div class="row">
+                <div class="col">
+                  Sending mail
+                </div>
+                <div class="col" style="padding-top: 10px;">
+                  <div class="preloader-wrapper small active right-align">
+                    <div class="spinner-layer spinner-green-only">
+                      <div class="circle-clipper left">
+                        <div class="circle"></div>
+                      </div>
+                      <div class="gap-patch">
+                        <div class="circle"></div>
+                      </div>
+                      <div class="circle-clipper right">
+                        <div class="circle"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
+        </form>
       </div>
     </section>
   </div>

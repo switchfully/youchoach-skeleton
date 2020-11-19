@@ -18,7 +18,11 @@ export class RequestService {
   constructor(private http: HttpClient) {
   }
 
-  changeTopics(profileId: number, text: string): Observable<Object>{
-    return this.http.post<Object>(this.url + `/change-topics`, {profileId, text}, this.httpOptions);
+  changeTopics(profileId: number, request: string): Observable<Object>{
+    return this.http.post<Object>(this.url + `/change-topics`, {profileId, request}, this.httpOptions);
+  }
+
+  becomeACoach(profileId: number, request: string): Observable<Object> {
+    return this.http.post<Object>(this.url + `/become-a-coach`, {profileId, request}, this.httpOptions);
   }
 }

@@ -12,7 +12,7 @@
     <p><span th:text="${userName}">Unknown user</span> wants to change his topics</p>
     <p><b>His/Her message:</b></p>
     <p style="background: #f2f3f5; border: 2px solid #f65b5f; padding: 0.625rem; width: 50%">
-        <span th:utext="${#strings.replace(#strings.escapeXml(text), T(java.lang.System).getProperty('line.separator'),'&lt;br /&gt;')}"></span>
+        <span th:utext="${#strings.replace(#strings.escapeXml(request), T(java.lang.System).getProperty('line.separator'),'&lt;br /&gt;')}"></span>
     </p>
     <p>
         You can edit his/her topics with this <a th:href="${url}">url</a>.

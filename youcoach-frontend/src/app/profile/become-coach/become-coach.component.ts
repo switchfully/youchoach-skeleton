@@ -1,6 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
-import {environment} from "../../../environments/environment";
+import {RequestService} from "../services/request.service";
+import {Location} from "@angular/common";
+import {ActivatedRoute} from "@angular/router";
+import {FormBuilder, FormGroup} from "@angular/forms";
 
 @Component({
   selector: 'app-become-coach',
@@ -8,24 +11,36 @@ import {environment} from "../../../environments/environment";
   styleUrls: ['./become-coach.component.css']
 })
 export class BecomeCoachComponent implements OnInit {
-  private mailto: string;
+  private profileId: number;
+  sending: boolean;
+  becomeACoachForm: FormGroup;
+  error: boolean;
 
-  constructor(public translateService: TranslateService) {
-  }
-
-  mail() {
-    this.mailto = 'mailto:' + environment.adminEmail;
-
-    this.translateService.get('become-a-coach.email-subject').subscribe((subject: string) => {
-      this.mailto += '?subject=' + subject;
-    });
-
-    this.translateService.get('become-a-coach.email-body').subscribe((body: string) => {
-      this.mailto += '&body=' + body;
-    });
-    location.href = this.mailto;
+  constructor(
+    private requestService: RequestService,
+    public translateService: TranslateService,
+    private route: ActivatedRoute,
+    private location: Location,
+    private formBuilder: FormBuilder
+  ) {
   }
 
   ngOnInit() {
+    this.route.parent.params.subscribe(routeParams => this.profileId = routeParams.id);
+    this.becomeACoachForm = this.formBuilder.group({
+      request: ['']
+    });
   }
+
+  mail(form: any) {
+    this.sending = true;
+    this.requestService.becomeACoach(this.profileId, form.request).subscribe(
+      () => this.location.back(),
+      ()=> {
+        this.sending = false;
+        this.error = true;
+      }
+    );
+  }
+
 }

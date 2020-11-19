@@ -2,7 +2,7 @@ package com.switchfully.youcoach.domain.request.api;
 
 public class ChangeTopicsRequest {
     private long profileId;
-    private String text;
+    private String request;
 
     public ChangeTopicsRequest() {
     }
@@ -11,7 +11,7 @@ public class ChangeTopicsRequest {
         return profileId;
     }
 
-    public String getText() {
-        return text;
+    public String getRequest() {
+        return request;
     }
 }

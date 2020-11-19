@@ -28,15 +28,15 @@ public class ChangeTopicsEmailHandler implements EmailHandler<ChangeTopicsEmailC
 
     @Override
     public void handle(ChangeTopicsEmailCommand command) throws MessagingException {
-        String subject = environment.getProperty("app.profilechange.subject");
-        String from = environment.getProperty("app.profilechange.sender");
-        String to = environment.getProperty("app.profilechange.receiver");
+        String subject = environment.getProperty("app.changetopics.subject");
+        String from = environment.getProperty("app.changetopics.sender");
+        String to = environment.getProperty("app.changetopics.receiver");
 
         final Context ctx = new Context();
-        ctx.setVariable("userName", command.getProfile().getFirstName() + " " + command.getProfile().getLastName());
-        ctx.setVariable("firmName", environment.getProperty("app.profilechange.firmName"));
-        ctx.setVariable("url", environment.getProperty("app.profilechange.hostName") + "/coach/" + command.getProfile().getId() + "/edit-topic");
-        ctx.setVariable("text", command.getText().replace("\n", System.lineSeparator()));
+        ctx.setVariable("userName", command.getFullName());
+        ctx.setVariable("firmName", environment.getProperty("app.changetopics.firmName"));
+        ctx.setVariable("url", environment.getProperty("app.changetopics.hostName") + "/coach/" + command.getProfileId() + "/edit-topic");
+        ctx.setVariable("request", command.getRequest().replace("\n", System.lineSeparator()));
 
         final String body = this.templateEngine.process("ChangeTopics.html", ctx);
 

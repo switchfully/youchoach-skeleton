@@ -5,25 +5,24 @@
       <h5 translate>request-profile-change.title</h5>
       <div class="divider"></div>
       <div class="row">
-        <form class="col l10 m12 s12" [formGroup]="topicsForm" (ngSubmit)="mail(topicsForm.value)">
+        <form class="col l12 m12 s12" [formGroup]="topicsForm" (ngSubmit)="mail(topicsForm.value)">
           <div class="row">
             <span translate>request-profile-change.text.change-topics</span>
           </div>
           <div class="row">
             <div class="input-field">
               <i class="material-icons prefix">mode_edit</i>
-              <textarea id="topics" class="materialize-textarea validate" formControlName="topics"></textarea>
+              <textarea id="topics" class="materialize-textarea validate" formControlName="request"></textarea>
               <label for="topics" translate>request-profile-change.label.mail-content</label>
             </div>
           </div>
-          <div *ngIf="!sending" class="row right-align">
-            <button type="submit" class="btn-large waves-effect waves-light teal lighten-3" translate>request-profile-change.button.send-email<i class="material-icons right">send</i>
-            </button>
+          <div *ngIf="error">
+            <span class="red-text">Something went wrong. Please try another time, while we try to fix the problem.</span>
           </div>
-
-
-          <div *ngIf="sending" class="row right-align">
-            <div class="btn-large waves-effect waves-light teal lighten-3 disabled">
+          <div class="row right-align">
+            <button *ngIf="!sending" type="submit" class="btn-large waves-effect waves-light teal lighten-3" translate>request-profile-change.button.send-email<i class="material-icons right">send</i>
+            </button>
+            <div *ngIf="sending" class="btn-large waves-effect waves-light teal lighten-3 disabled">
               <div class="row">
                 <div class="col">
                   Sending mail
@@ -45,8 +44,10 @@
                 </div>
               </div>
             </div>
-
           </div>
+
+
+
         </form>
       </div>
     </section>

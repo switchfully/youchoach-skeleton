@@ -2,19 +2,28 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title th:remove="all">Template for HTML email</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 </head>
 <body>
-<p>
-    Hello, Admin!
-</p>
-<p>
-    <span th:text="${userName}">Unknown user</span> would like to become a coach.
-    You can edit his profile with the following <a th:href="${url}">here</a>.
-</p>
-<p>
-    The <span th:text="${firmName}">youcoach</span> team.
-</p>
+<main>
+    <p>
+        Hello, Admin!
+    </p>
+    <p>
+        <span th:text="${userName}">Unknown user</span> would like to become a coach.
+    <p>
+        <b>His/Her message:</b>
+    </p>
+    <p style="background: #f2f3f5; border: 2px solid #f65b5f; padding: 0.625rem; width: 50%">
+        <span th:utext="${#strings.replace(#strings.escapeXml(request), T(java.lang.System).getProperty('line.separator'),'&lt;br /&gt;')}"></span>
+    </p>
+    <p>
+        You can edit his profile with the following <a th:href="${url}">here</a>.
+    </p>
+    <p>
+        The <span th:text="${firmName}">youcoach</span> team.
+    </p>
+</main>
 </body>
 </html>
 
