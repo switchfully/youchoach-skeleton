@@ -25,6 +25,9 @@ import {EnHomeComponent} from './template/home/en-home/en-home.component';
 import {FrHomeComponent} from './template/home/fr-home/fr-home.component';
 import {AdminModule} from "./admin/admin.module";
 import {AdminComponent} from './template/admin/admin.component';
+import { FaqComponent } from './template/faq/faq.component';
+import { EnFaqComponent } from './template/faq/en-faq/en-faq.component';
+import { FrFaqComponent } from './template/faq/fr-faq/fr-faq.component';
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -42,7 +45,10 @@ export function HttpLoaderFactory(http: HttpClient) {
     CoachComponent,
     EnHomeComponent,
     FrHomeComponent,
-    AdminComponent
+    AdminComponent,
+    FaqComponent,
+    EnFaqComponent,
+    FrFaqComponent
   ],
 
   imports: [

@@ -28,6 +28,7 @@ import {CoachComponent} from "./template/coach/coach.component";
 import {OverviewComponent} from "./admin/overview/overview.component";
 import {AdminComponent} from "./template/admin/admin.component";
 import {EditTopicComponent} from "./profile/edit-topic/edit-topic.component";
+import {FaqComponent} from "./template/faq/faq.component";
 
 const routes: Routes = [
   {
@@ -64,6 +65,7 @@ const routes: Routes = [
     ]
   },
   {path: 'home', component: HomeComponent},
+  {path: 'faq', component: FaqComponent},
   {path: 'login', component: LoginComponent},
   {path: 'not-found', component: NotFoundComponent},
   {path: 'password-reset-requested', component: PasswordResetRequestedComponent},

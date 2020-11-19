@@ -46,7 +46,10 @@ export class LoginComponent implements OnInit {
           this.initService.initDropdowns();
           this.router.navigateByUrl(this.redirectUrl ? this.redirectUrl : this.getHomeUrl());
         }),
-        (_ => this.error = true)
+        (fault => {
+          console.log(fault);
+          this.error = true;
+        })
       );
     this.loginForm.reset();
   }

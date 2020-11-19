@@ -27,7 +27,7 @@
                 <li *ngIf="authenticationService.isCoach()"><a [routerLink]="'/coach/' + authenticationService.getUserId() + '/coach-profile/'" translate>menu.link.coach-profile-information<i class="material-icons left">assignment_ind</i></a></li>
                 <li *ngIf="authenticationService.isCoach(); else elseBlock"><a [routerLink]="'/coach/' + authenticationService.getUserId() + '/change-topics'" translate>menu.link.request-profile-change<i class="material-icons left">send</i></a></li>
                 <ng-template #elseBlock><li><a [routerLink]="'/coachee/' + authenticationService.getUserId() + '/becomecoach'" translate>menu.link.apply-to-become-a-coach<i class="material-icons left">send</i></a></li></ng-template>
-                <li *ngIf="authenticationService.isLoggedIn()"><a routerLink="/home" translate>menu.button.FAQ<i class="material-icons">help_outline</i></a></li>
+                <li *ngIf="authenticationService.isLoggedIn()"><a routerLink="/faq" translate>menu.button.FAQ<i class="material-icons">help_outline</i></a></li>
                 <li><a class="waves-light red lighten-2 white-text" routerLink="/home" *ngIf="authenticationService.isLoggedIn()" (click)="logout()" translate>menu.button.log-out<i class="material-icons">power_settings_new</i></a></li>
               </ul>
             </li>
@@ -60,7 +60,7 @@
             <li class='waves-light' *ngIf="authenticationService.isCoach()"><a class='teal-text' [routerLink]="'/coach/' + authenticationService.getUserId() + '/coach-profile/'" translate>menu.link.coach-profile-information<i class="material-icons left teal-text">assignment_ind</i></a></li>
             <li class='waves-light' *ngIf="authenticationService.isCoach(); else elseBlock"><a class='teal-text' [routerLink]="'/coach/' + authenticationService.getUserId() + '/change-topics'" translate>menu.link.request-profile-change<i class="material-icons left teal-text">send</i></a></li>
             <ng-template #elseBlock><li class='waves-light'><a class='teal-text' [routerLink]="'/coachee/' + authenticationService.getUserId() + '/becomecoach'" translate>menu.link.apply-to-become-a-coach<i class="material-icons left teal-text">send</i></a></li></ng-template>
-            <li class='waves-light' *ngIf="authenticationService.isLoggedIn()"><a class='teal-text' routerLink="/home" translate>menu.button.FAQ<i class="material-icons left teal-text">help_outline</i></a></li>
+            <li class='waves-light' *ngIf="authenticationService.isLoggedIn()"><a class='teal-text' routerLink="/faq" translate>menu.button.FAQ<i class="material-icons left teal-text">help_outline</i></a></li>
             <li><a class="waves-light red lighten-2 white-text" routerLink="/home" *ngIf="authenticationService.isLoggedIn()" (click)="logout()" translate>menu.button.log-out<i class="material-icons white-text left">power_settings_new</i></a></li>
           </ul>
         </li>
