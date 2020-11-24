@@ -1,3 +1,9 @@
 .td {
   margin: 2px;
 }
+.card{
+	cursor: pointer;
+}
+.card-title{
+	cursor: pointer;
+}

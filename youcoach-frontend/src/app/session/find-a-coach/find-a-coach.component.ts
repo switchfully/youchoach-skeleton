@@ -99,3 +99,6 @@ export class FindACoachComponent implements OnInit {
     return topic.grades.some(grade => selectedGrades.some(sGrade => sGrade.toString() === grade.toString()));
   }
 }
+$(document).ready(function(){
+    $('.collapsible').collapsible();
+});

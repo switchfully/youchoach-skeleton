@@ -9,8 +9,8 @@
           <div class="row">
             <span translate>request-profile-change.text.change-topics</span>
           </div>
-          <div class="row">
-            <a href="/faq" translate>request-profile-change.link.faq</a>
+          <div class="row btn white">
+            <a href="/faq" translate>request-profile-change.link.faq <i class="material-icons left">help_outline</i></a>
           </div>
           <div class="row">
             <div class="input-field">
@@ -23,7 +23,7 @@
           <div *ngIf="error">
             <span class="red-text">Something went wrong. Please try another time, while we try to fix the problem.</span>
           </div>
-          <div class="row right-align">
+          <div class="row center">
             <button *ngIf="!sending" type="submit" class="btn-large waves-effect waves-light teal lighten-3" translate>request-profile-change.button.send-email<i class="material-icons right">send</i>
             </button>
             <div *ngIf="sending" class="btn-large waves-effect waves-light teal lighten-3 disabled">

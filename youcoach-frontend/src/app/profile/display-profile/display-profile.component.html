@@ -6,10 +6,6 @@
       <div class="content-container">
 
         <section class="card-panel grey lighten-5" *ngIf="member">
-          <div class="right">
-            <a class="waves-effect waves-light btn-large btn-floating yellow darken-2"><i
-              class="material-icons left" [routerLink]="'/coachee/' + member.id + '/edit-profile'">edit</i>Edit</a>
-          </div>
           <h5 translate>profile-information.title</h5>
           <div class="divider"></div>
           <div class="row">
@@ -41,6 +37,10 @@
                 </tbody>
               </table>
             </div>
+          </div>
+          <div class="left">
+            <a class="waves-effect waves-light btn yellow darken-2 black-text" [routerLink]="'/coachee/' + member.id + '/edit-profile'" translate>coach-profile-information.button<i
+              class="material-icons left">edit</i></a>
           </div>
         </section>
 

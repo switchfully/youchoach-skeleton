@@ -5,14 +5,7 @@
       <div class="row">
 
         <div class="col s4">
-          <h5 translate>my-profile-menu.link.profile-information</h5>
-        </div>
-        <div class="col offset-s0 offset-m1 offset-l5">
-          <button class="waves-effect waves-light yellow darken-2 btn-large black-text" routerLink="request-a-session" translate>request-session.button.request-session<i class="material-icons right">event</i></button>
-        </div>
-
-        <div *ngIf="authenticationService.isAdmin()"  class="col">
-          <a class="waves-effect waves-light btn-large btn-floating yellow darken-2"><i class="material-icons left" [routerLink]="'/coachee/' + coach.id + '/edit-profile'">edit</i>Edit</a>
+          <h5 translate>my-profile-menu.link.profile-information</h5>      
         </div>
       </div>
 
@@ -45,15 +38,13 @@
           </table>
         </div>
       </div>
+      <div *ngIf="authenticationService.isAdmin()" class="col">
+          <a class="waves-effect waves-light btn yellow darken-2 black-text" [routerLink]="'/coachee/' + coach.id + '/edit-profile'" translate>coach-profile-information.button<i class="material-icons left">edit</i></a>
+        </div>
     </section>
     <div>
       <div class="divider"></div>
       <section class="card-panel grey lighten-5 ">
-        <div class="right" *ngIf="coach.email !== null">
-          <a class="waves-effect waves-light btn-large btn-floating teal lighten-3"
-             [routerLink]="'/coach/' + idToGet + '/edit-coach-information'"><i
-            class="material-icons left">edit</i>Edit</a>
-        </div>
         <h5 translate>coach-information.title</h5>
         <div class="divider"></div>
         <div class="row">
@@ -72,13 +63,13 @@
             </table>
           </div>
         </div>
+        <div *ngIf="coach.email !== null"  class="col">
+          <a class="waves-effect waves-light btn teal lighten-3 black-text " [routerLink]="'/coach/' + idToGet + '/edit-coach-information'" translate>coach-information.button<i class="material-icons left">edit</i></a>
+        </div>
       </section>
 
       <div class="divider"></div>
       <section class="card-panel grey lighten-5">
-        <div class="right" *ngIf="authenticationService.isAdmin()">
-          <a class="waves-effect waves-light btn-large btn-floating teal lighten-3" [routerLink]="'/coach/' + idToGet + '/edit-topic'"><i class="material-icons left">edit</i>Edit</a>
-        </div>
         <h5 translate>coaching-topics.title</h5>
         <div class="divider"></div>
         <div class="row">
@@ -87,9 +78,9 @@
               <tbody>
               <tr *ngFor="let topic of coach.topics">
                 <td><strong>{{topic.name}}</strong></td>
-                <td>
+                <td> 
                   <div class="center">
-                    <a class="btn-floating " [class.disabled]="!topic.grades.includes(1)"><i class="material-icons">filter_1</i></a>
+                    <span translate>coaching-topics.label.year</span> : <a class="btn-floating " [class.disabled]="!topic.grades.includes(1)"><i class="material-icons">filter_1</i></a>
                     <a class="btn-floating " [class.disabled]="!topic.grades.includes(2)"><i class="material-icons">filter_2</i></a>
                     <a class="btn-floating " [class.disabled]="!topic.grades.includes(3)"><i class="material-icons">filter_3</i></a>
                     <a class="btn-floating " [class.disabled]="!topic.grades.includes(4)"><i class="material-icons">filter_4</i></a>
@@ -103,7 +94,16 @@
             </table>
           </div>
         </div>
+        <div class="col" *ngIf="authenticationService.isAdmin()">
+          <a class="waves-effect waves-light btn teal lighten-3 black-text " [routerLink]="'/coach/' + idToGet + '/edit-topic'" translate>coaching-topics.button<i class="material-icons left">edit</i></a>
+        </div>
       </section>
+          <div>
+            <br>
+          </div>
+          <div class="center">
+          <button class="waves-effect waves-light yellow darken-2 btn-large black-text" routerLink="request-a-session" translate>request-session.button.request-session<i class="material-icons left">event</i></button>
+        </div>
     </div>
   </div>
 </div>

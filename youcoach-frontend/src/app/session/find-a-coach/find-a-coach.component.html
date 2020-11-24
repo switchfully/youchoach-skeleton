@@ -1,8 +1,14 @@
 <div class="col s12 m12">
   <div class="content-container">
-
+    <section>
+      <ul class="collapsible grey lighten-5">
+        <li>
+          <div class="collapsible-header red-text">Small descriptive text (click here for more details) <i class="material-icons">help_outline</i></div>
+          <div class="collapsible-body"><span>Help text or embed video </span></div>
+        </li>
+      </ul>
+    </section>
     <section class="card-panel grey lighten-5">
-
       <header>
         <div class="row">
           <div class="input-field col l3 m6 s12">
@@ -15,13 +21,13 @@
           <div class="input-field col l3 m6 s12">
             <select [(ngModel)]="selectedGrades" multiple>
               <option value="none" selected disabled translate>coach-overview.label.filter-year-dropdown</option>
-              <option value="1">year 1</option>
-              <option value="2">year 2</option>
-              <option value="3">year 3</option>
-              <option value="4">year 4</option>
-              <option value="5">year 5</option>
-              <option value="6">year 6</option>
-              <option value="7">year 7</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
             </select>
             <label translate>coach-overview.label.filter-year</label>
           </div>
@@ -37,28 +43,21 @@
       <div class="row">
 
         <div class="col l3 m4 s12" *ngFor="let coach of filteredCoaches">
-          <h6 class="card-title">{{coach.firstName}}&nbsp;{{coach.lastName}}</h6>
-          <div class="card small">
+          <h6 class="card-title teal-text" [routerLink]="['../coach-profile/', coach.id]">{{coach.firstName}}&nbsp;{{coach.lastName}}</h6>
+          <div class="card small" [routerLink]="['../coach-profile/', coach.id]">
             <div class="card-image">
               <img class="responsive-img" [src]="'' + coach.id | authImage | async">
             </div>
             <div class="card-stacked">
               <div class="card-content">
-
                 <table class="highlight responsive-table">
                   <tbody>
                   <div class="row" *ngFor="let topic of coach.topics">
-                    <td class='col'><strong>{{topic.name}}</strong>: {{topic.grades.sort()}}</td>
-
+                    <td class='col teal-text'><strong>{{topic.name}}</strong> : <span translate>coaching-topics.label.year</span> {{topic.grades.sort()}}</td>
                   </div>
                   </tbody>
                 </table>
               </div>
-
-              <a title="See details of {{coach.firstName + ' ' + coach.lastName}} "
-                 class="btn-floating halfway-fab waves-effect waves-light yellow darken-2 btn-large"
-                 [routerLink]="['../coach-profile/', coach.id]"><i
-                class="material-icons">send</i></a>
             </div>
 
 
