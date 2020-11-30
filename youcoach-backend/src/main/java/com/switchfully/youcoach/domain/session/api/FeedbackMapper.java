@@ -1,7 +1,7 @@
 package com.switchfully.youcoach.domain.session.api;
 
-import com.switchfully.youcoach.domain.session.CoachFeedback;
-import com.switchfully.youcoach.domain.session.CoacheeFeedback;
+import com.switchfully.youcoach.domain.session.feedback.CoachFeedback;
+import com.switchfully.youcoach.domain.session.feedback.CoacheeFeedback;
 import org.springframework.stereotype.Component;
 
 @Component

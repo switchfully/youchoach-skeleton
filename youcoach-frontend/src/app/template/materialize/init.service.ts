@@ -15,6 +15,13 @@ export class InitService {
     }, 1);
   }
 
+  initCollapsible() {
+    setTimeout(() => {
+      console.log('init dropdowns');
+      M.Collapsible.init(document.querySelectorAll('.collapsible'), {})
+    }, 1);
+  }
+
   autoInit() {
     //try to avoid using this function. Since it might break the others
     setTimeout(() => {

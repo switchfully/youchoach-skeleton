@@ -24,19 +24,11 @@ public class RequestService {
 
     public void changeTopics(ChangeTopicsRequest changeTopicsRequest) {
         Profile profile = profileRepository.getOne(changeTopicsRequest.getProfileId());
-        try {
-            this.emailExecutor.execute(new ChangeTopicsEmailCommand(profile, changeTopicsRequest.getRequest()));
-        } catch (MessagingException e) {
-            throw new RuntimeException(e);
-        }
+        this.emailExecutor.execute(new ChangeTopicsEmailCommand(profile, changeTopicsRequest.getRequest()));
     }
 
     public void becomeACoach(BecomeACoachRequest becomeACoachRequest) {
         Profile profile = profileRepository.getOne(becomeACoachRequest.getProfileId());
-        try {
-            this.emailExecutor.execute(new BecomeACoachCommand(profile, becomeACoachRequest.getRequest()));
-        } catch (MessagingException e) {
-            throw new RuntimeException(e);
-        }
+        this.emailExecutor.execute(new BecomeACoachCommand(profile, becomeACoachRequest.getRequest()));
     }
 }

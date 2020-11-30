@@ -1,4 +1,4 @@
-package com.switchfully.youcoach.domain.session;
+package com.switchfully.youcoach.domain.session.feedback;
 
 import javax.persistence.Embeddable;
 import javax.persistence.EnumType;

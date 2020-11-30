@@ -40,6 +40,7 @@ export class FindACoachComponent implements OnInit {
       }
       this.topicList.sort();
       this.initService.initFormSelect();
+      this.initService.initCollapsible();
     });
   }
 

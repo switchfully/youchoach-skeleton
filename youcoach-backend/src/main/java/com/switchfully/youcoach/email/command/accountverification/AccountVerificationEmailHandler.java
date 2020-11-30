@@ -1,9 +1,8 @@
 package com.switchfully.youcoach.email.command.accountverification;
 
-import com.switchfully.youcoach.domain.profile.Profile;
 import com.switchfully.youcoach.email.EmailSenderService;
 import com.switchfully.youcoach.email.command.EmailHandler;
-import com.switchfully.youcoach.security.verification.AccountVerification;
+import com.switchfully.youcoach.email.exception.SendingMailError;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 import org.thymeleaf.TemplateEngine;

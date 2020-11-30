@@ -2,6 +2,7 @@ package com.switchfully.youcoach.email;
 
 import com.switchfully.youcoach.email.command.EmailCommand;
 import com.switchfully.youcoach.email.command.EmailHandler;
+import com.switchfully.youcoach.email.exception.SendingMailError;
 import org.springframework.stereotype.Component;
 
 import javax.mail.MessagingException;
@@ -22,13 +23,17 @@ public class EmailExecutor {
                 .collect(toMap(EmailHandler::getCommandType, identity()));
     }
 
-    public void execute(EmailCommand command) throws MessagingException {
+    public void execute(EmailCommand command) {
         EmailHandler<? super EmailCommand> handler = handlerMap.get(command.getClass());
 
         if (handler == null) {
             throw new RuntimeException(format("No commandhandler found for command type %s", command.getClass().getSimpleName()));
         }
 
-        handler.handle(command);
+        try {
+            handler.handle(command);
+        } catch (MessagingException exception) {
+            throw new SendingMailError(exception);
+        }
     }
 }

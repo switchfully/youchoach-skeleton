@@ -1,6 +1,6 @@
 package com.switchfully.youcoach.domain.session.api;
 
-import com.switchfully.youcoach.domain.session.Score;
+import com.switchfully.youcoach.domain.session.feedback.Score;
 
 public class CoacheeFeedbackDto {
     private Score onTime;

@@ -36,7 +36,7 @@ public class SessionController {
     @ResponseStatus(HttpStatus.CREATED)
     public SessionDto saveCoachingSession(@RequestBody CreateSessionDto createSessionDto) {
         LOGGER.info("attempting to create a coaching session");
-        return sessionService.save(createSessionDto);
+        return sessionService.create(createSessionDto);
     }
 
     @GetMapping(produces = "application/json")

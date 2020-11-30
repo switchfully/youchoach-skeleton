@@ -1,6 +1,8 @@
 package com.switchfully.youcoach.domain.session;
 
 import com.switchfully.youcoach.domain.profile.Profile;
+import com.switchfully.youcoach.domain.session.feedback.CoachFeedback;
+import com.switchfully.youcoach.domain.session.feedback.CoacheeFeedback;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;

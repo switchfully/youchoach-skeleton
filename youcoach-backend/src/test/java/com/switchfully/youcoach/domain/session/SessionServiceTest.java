@@ -6,6 +6,7 @@ import com.switchfully.youcoach.domain.session.api.CreateSessionDto;
 import com.switchfully.youcoach.domain.session.api.FeedbackMapper;
 import com.switchfully.youcoach.domain.session.api.SessionDto;
 import com.switchfully.youcoach.domain.session.api.SessionMapper;
+import com.switchfully.youcoach.email.EmailExecutor;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.context.jdbc.Sql;
@@ -28,7 +29,8 @@ class SessionServiceTest {
     private SessionMapper sessionMapper = mock(SessionMapper.class);
     private ProfileRepository profileRepository = mock(ProfileRepository.class);
     private FeedbackMapper feedbackMapper = mock(FeedbackMapper.class);
-    private SessionService sessionService = new SessionService(sessionRepository, sessionMapper, profileRepository, feedbackMapper);
+    private EmailExecutor emailExecutor = mock(EmailExecutor.class);
+    private SessionService sessionService = new SessionService(sessionRepository, sessionMapper, profileRepository, feedbackMapper, emailExecutor);
 
     @Test
     @Sql({"classpath:/oneDefaultUser.sql", "classpath:/makeUsersCoach.sql"})
@@ -39,7 +41,7 @@ class SessionServiceTest {
         when(profileRepository.findByEmail("example@example.com")).thenReturn(Optional.of(new Profile(2L, null, null, null, null)));
         when(profileRepository.findById(1L)).thenReturn(Optional.of(new Profile(1L, null, null, null, null)));
 
-        SessionDto actual = sessionService.save(createSessionDto);
+        SessionDto actual = sessionService.create(createSessionDto);
 
         assertThat(actual).isEqualToIgnoringGivenFields(createSessionDto, "id", "coach", "coachee", "status");
     }

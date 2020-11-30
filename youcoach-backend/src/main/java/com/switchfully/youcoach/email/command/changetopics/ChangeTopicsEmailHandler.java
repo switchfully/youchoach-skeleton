@@ -2,6 +2,7 @@ package com.switchfully.youcoach.email.command.changetopics;
 
 import com.switchfully.youcoach.email.EmailSenderService;
 import com.switchfully.youcoach.email.command.EmailHandler;
+import com.switchfully.youcoach.email.exception.SendingMailError;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 import org.thymeleaf.TemplateEngine;
@@ -10,7 +11,7 @@ import org.thymeleaf.context.Context;
 import javax.mail.MessagingException;
 
 @Component
-public class ChangeTopicsEmailHandler implements EmailHandler<ChangeTopicsEmailCommand>{
+public class ChangeTopicsEmailHandler implements EmailHandler<ChangeTopicsEmailCommand> {
     private final EmailSenderService emailSenderService;
     private final TemplateEngine templateEngine;
     private final Environment environment;

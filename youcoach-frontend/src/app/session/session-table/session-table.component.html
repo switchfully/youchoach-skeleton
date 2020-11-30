@@ -1,4 +1,4 @@
-<section class="card-panel grey lighten-5">
+<section *ngIf="sessions.length !== 0" class="card-panel grey lighten-5">
   <h5 translate>{{title}}</h5>
   <div class="divider"></div>
   <div class="row">
@@ -39,3 +39,7 @@
     </div>
   </div>
 </section>
+<section *ngIf="sessions.length === 0" class="card-panel grey lighten-5">
+  <h5>No <span translate>{{title}}</span> available</h5>
+</section>
+

@@ -2,6 +2,7 @@ package com.switchfully.youcoach.email.command.becomecoach;
 
 import com.switchfully.youcoach.email.EmailSenderService;
 import com.switchfully.youcoach.email.command.EmailHandler;
+import com.switchfully.youcoach.email.exception.SendingMailError;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 import org.thymeleaf.TemplateEngine;

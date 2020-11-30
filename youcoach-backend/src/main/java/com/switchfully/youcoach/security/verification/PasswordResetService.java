@@ -45,12 +45,7 @@ public class PasswordResetService {
     public void requestPasswordReset(PasswordResetRequestDto request) {
         if (!verificationService.isSigningAndVerifyingAvailable() || activeProfiles.contains("development")) return;
 
-        try {
-            emailExecutor.execute(new ResetPasswordEmailCommand(request.getEmail()));
-        } catch (MessagingException e) {
-            e.printStackTrace();
-            throw new RuntimeException(e);
-        }
+        emailExecutor.execute(new ResetPasswordEmailCommand(request.getEmail()));
     }
 
     public PasswordChangeResultDto performPasswordChange(PasswordChangeRequestDto request) {

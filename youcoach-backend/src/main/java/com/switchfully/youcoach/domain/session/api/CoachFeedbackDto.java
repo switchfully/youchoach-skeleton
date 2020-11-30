@@ -1,9 +1,6 @@
 package com.switchfully.youcoach.domain.session.api;
 
-import com.switchfully.youcoach.domain.session.Score;
-
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+import com.switchfully.youcoach.domain.session.feedback.Score;
 
 public class CoachFeedbackDto {
     private Score onTime;
