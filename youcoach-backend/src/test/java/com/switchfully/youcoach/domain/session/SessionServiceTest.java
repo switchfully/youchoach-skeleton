@@ -6,7 +6,7 @@ import com.switchfully.youcoach.domain.session.api.CreateSessionDto;
 import com.switchfully.youcoach.domain.session.api.FeedbackMapper;
 import com.switchfully.youcoach.domain.session.api.SessionDto;
 import com.switchfully.youcoach.domain.session.api.SessionMapper;
-import com.switchfully.youcoach.email.EmailExecutor;
+import com.switchfully.youcoach.email.EmailSender;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.context.jdbc.Sql;
@@ -29,7 +29,7 @@ class SessionServiceTest {
     private SessionMapper sessionMapper = mock(SessionMapper.class);
     private ProfileRepository profileRepository = mock(ProfileRepository.class);
     private FeedbackMapper feedbackMapper = mock(FeedbackMapper.class);
-    private EmailExecutor emailExecutor = mock(EmailExecutor.class);
+    private EmailSender emailExecutor = mock(EmailSender.class);
     private SessionService sessionService = new SessionService(sessionRepository, sessionMapper, profileRepository, feedbackMapper, emailExecutor);
 
     @Test

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title th:remove="all">Session Created</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<p>
+    Hi <span th:text="${coachName}"></span>,
+</p>
+<p>
+    <span th:text="${coacheeName}"></span> would like to have a session with you on <span th:text="${sessionDate}"></span> at <span th:text="${sessionLocation}"></span>.
+    He/She wants to have a session about: <span th:text="${sessionSubject}"></span>.
+</p>
+<p>
+    <b>His/Her remarks:</b>
+</p>
+<p style="background: #f2f3f5; border: 2px solid #f65b5f; padding: 0.625rem; width: 50%">
+    <span th:text="${sessionRemarks}"></span>
+</p>
+</body>
+</html>

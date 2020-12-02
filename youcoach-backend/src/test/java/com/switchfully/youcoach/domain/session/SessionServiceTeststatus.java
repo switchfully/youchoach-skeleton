@@ -5,7 +5,7 @@ import com.switchfully.youcoach.domain.profile.ProfileRepository;
 import com.switchfully.youcoach.domain.session.api.FeedbackMapper;
 import com.switchfully.youcoach.domain.session.api.SessionDto;
 import com.switchfully.youcoach.domain.session.api.SessionMapper;
-import com.switchfully.youcoach.email.EmailExecutor;
+import com.switchfully.youcoach.email.EmailSender;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
@@ -20,7 +20,7 @@ class SessionServiceTeststatus {
     private SessionRepository sessionRepository = mock(SessionRepository.class);
     private ProfileRepository profileRepository = mock(ProfileRepository.class);
     private FeedbackMapper feedbackMapper = mock(FeedbackMapper .class);
-    private EmailExecutor emailExecutor = mock(EmailExecutor .class);
+    private EmailSender emailExecutor = mock(EmailSender.class);
 
 
     @Test

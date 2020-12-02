@@ -1,23 +1,20 @@
 package com.switchfully.youcoach.email.command.changetopics;
 
-import com.switchfully.youcoach.email.EmailSenderService;
+import com.switchfully.youcoach.email.Email;
 import com.switchfully.youcoach.email.command.EmailHandler;
-import com.switchfully.youcoach.email.exception.SendingMailError;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
-import javax.mail.MessagingException;
+import static com.switchfully.youcoach.email.Email.email;
 
 @Component
 public class ChangeTopicsEmailHandler implements EmailHandler<ChangeTopicsEmailCommand> {
-    private final EmailSenderService emailSenderService;
     private final TemplateEngine templateEngine;
     private final Environment environment;
 
-    public ChangeTopicsEmailHandler(EmailSenderService emailSenderService, TemplateEngine templateEngine, Environment environment) {
-        this.emailSenderService = emailSenderService;
+    public ChangeTopicsEmailHandler(TemplateEngine templateEngine, Environment environment) {
         this.templateEngine = templateEngine;
         this.environment = environment;
     }
@@ -28,19 +25,15 @@ public class ChangeTopicsEmailHandler implements EmailHandler<ChangeTopicsEmailC
     }
 
     @Override
-    public void handle(ChangeTopicsEmailCommand command) throws MessagingException {
-        String subject = environment.getProperty("app.changetopics.subject");
-        String from = environment.getProperty("app.changetopics.sender");
-        String to = environment.getProperty("app.changetopics.receiver");
-
+    public Email createEmail(ChangeTopicsEmailCommand command) {
         final Context ctx = new Context();
         ctx.setVariable("userName", command.getFullName());
-        ctx.setVariable("firmName", environment.getProperty("app.changetopics.firmName"));
-        ctx.setVariable("url", environment.getProperty("app.changetopics.hostName") + "/coach/" + command.getProfileId() + "/edit-topic");
+        ctx.setVariable("url", environment.getProperty("app.email.hostName") + "/coach/" + command.getProfileId() + "/edit-topic");
         ctx.setVariable("request", command.getRequest().replace("\n", System.lineSeparator()));
 
-        final String body = this.templateEngine.process("ChangeTopics.html", ctx);
-
-        emailSenderService.sendMail(from, to, subject, body, true);
+        return email()
+                .to(environment.getProperty("app.changetopics.receiver"))
+                .subject("Topic Change Requested")
+                .body(this.templateEngine.process("ChangeTopics.html", ctx));
     }
 }

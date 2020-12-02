@@ -15,6 +15,7 @@ export class LoginComponent implements OnInit {
   success;
   sending: boolean;
   wrongUsernameOrPassword: boolean;
+  userUnknown: boolean;
   loginForm;
   title = 'You-Coach | Sign in';
   jwt;
@@ -50,6 +51,7 @@ export class LoginComponent implements OnInit {
           this.router.navigateByUrl(this.redirectUrl ? this.redirectUrl : this.getHomeUrl());
         }),
         (fault => {
+          console.log('test');
           this.sending = false;
           if (fault.status === 401) {
             this.wrongUsernameOrPassword = true;
@@ -73,7 +75,10 @@ export class LoginComponent implements OnInit {
 
   resetPassword() {
     this.coacheeService.requestPasswordResetToken({email: this.loginForm.get('username').value})
-      .subscribe(_ => this.router.navigateByUrl('/password-reset-requested'));
+      .subscribe(
+        _ => this.router.navigateByUrl('/password-reset-requested'),
+        _ => this.userUnknown = true
+      );
   }
 
   logout() {

@@ -23,10 +23,11 @@
               </div>
               <p class="red-text" *ngIf="error" translate>sign-in.message.something-went-wrong</p>
               <p class="red-text" *ngIf="wrongUsernameOrPassword" translate>sign-in.message.login-failed</p>
+              <p class="red-text" *ngIf="userUnknown" translate>sign-in.message.email-unknown</p>
               <div class="row right-align">
                   <div *ngIf="sending" class="waves-effect waves-light teal lighten-3 btn-large black-text margin-button disabled"><div class="row"><div class="col" translate>sign-in.button.sign-in</div><div class="col" style="padding-top: 10px;"><div class="preloader-wrapper small active right-align"><div class="spinner-layer spinner-green-only"><div class="circle-clipper left"><div class="circle"></div></div><div class="gap-patch"><div class="circle"></div></div><div class="circle-clipper right"><div class="circle"></div></div></div></div></div></div></div>
-                  <button *ngIf="!sending" class="waves-effect waves-light teal lighten-3 btn-large black-text margin-button" translate>sign-in.button.sign-in<i class="material-icons right">send</i></button>
-                  <button class="waves-effect waves-light yellow darken-2 btn-large black-text"  (click)="resetPassword()" translate>sign-in.button.reset-password<i class="material-icons right">autorenew</i></button>
+                  <button type=submit *ngIf="!sending" class="waves-effect waves-light teal lighten-3 btn-large black-text margin-button" translate>sign-in.button.sign-in<i class="material-icons right">send</i></button>
+                  <button type=button class="waves-effect waves-light yellow darken-2 btn-large black-text"  (click)="resetPassword()" translate>sign-in.button.reset-password<i class="material-icons right">autorenew</i></button>
               </div>
             </form>
           </div>

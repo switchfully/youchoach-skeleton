@@ -6,7 +6,8 @@ import com.switchfully.youcoach.domain.profile.exception.ProfileNotFoundExceptio
 import com.switchfully.youcoach.domain.profile.role.coach.exception.CoachNotFoundException;
 import com.switchfully.youcoach.domain.session.api.*;
 import com.switchfully.youcoach.domain.session.exception.SessionNotFoundException;
-import com.switchfully.youcoach.email.EmailExecutor;
+import com.switchfully.youcoach.email.EmailSender;
+import com.switchfully.youcoach.email.MessageSender;
 import com.switchfully.youcoach.email.command.sessioncreated.SessionCreatedEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,15 +23,15 @@ public class SessionService {
     private final SessionMapper sessionMapper;
     private final ProfileRepository profileRepository;
     private final FeedbackMapper feedbackMapper;
-    private final EmailExecutor emailExecutor;
+    private final MessageSender messageSender;
 
     @Autowired
-    public SessionService(SessionRepository sessionRepository, SessionMapper sessionMapper, ProfileRepository profileRepository, FeedbackMapper feedbackMapper, EmailExecutor emailExecutor) {
+    public SessionService(SessionRepository sessionRepository, SessionMapper sessionMapper, ProfileRepository profileRepository, FeedbackMapper feedbackMapper, MessageSender messageSender) {
         this.sessionRepository = sessionRepository;
         this.sessionMapper = sessionMapper;
         this.profileRepository = profileRepository;
         this.feedbackMapper = feedbackMapper;
-        this.emailExecutor = emailExecutor;
+        this.messageSender = messageSender;
     }
 
 
@@ -38,7 +39,7 @@ public class SessionService {
         Profile coach = profileRepository.findById(createSessionDto.getCoachId()).orElseThrow(CoachNotFoundException::new);
         Profile coachee = profileRepository.findById(createSessionDto.getProfileId()).orElseThrow(() -> new ProfileNotFoundException(""));
         Session session = sessionMapper.toModel(createSessionDto, coach, coachee);
-        emailExecutor.execute(new SessionCreatedEvent());
+        messageSender.execute(new SessionCreatedEvent(session));
         return sessionMapper.toDto(sessionRepository.save(session));
     }
 

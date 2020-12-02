@@ -9,19 +9,19 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin
 public class RequestController {
 
-    private final RequestService requestService;
+    private final ProfileRequestService profileRequestService;
 
-    public RequestController(RequestService requestService) {
-        this.requestService = requestService;
+    public RequestController(ProfileRequestService profileRequestService) {
+        this.profileRequestService = profileRequestService;
     }
 
     @PostMapping(consumes = "application/json;charset=UTF-8", produces = "application/json;charset=UTF-8", path = "/change-topics")
     public void requestChangeTopics(@RequestBody ChangeTopicsRequest changeTopicsRequest) {
-        requestService.changeTopics(changeTopicsRequest);
+        profileRequestService.changeTopics(changeTopicsRequest);
     }
 
     @PostMapping(consumes = "application/json;charset=UTF-8", produces = "application/json;charset=UTF-8", path = "/become-a-coach")
     public void requestBecomeACoach(@RequestBody BecomeACoachRequest becomeACoachRequest) {
-        requestService.becomeACoach(becomeACoachRequest);
+        profileRequestService.becomeACoach(becomeACoachRequest);
     }
 }
