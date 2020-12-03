@@ -2,7 +2,7 @@ package com.switchfully.youcoach.security.verification;
 
 import com.switchfully.youcoach.domain.profile.Profile;
 import com.switchfully.youcoach.email.EmailSender;
-import com.switchfully.youcoach.email.command.accountverification.AccountVerificationEmailCommand;
+import com.switchfully.youcoach.security.verification.event.AccountCreated;
 import com.switchfully.youcoach.email.exception.SendingMailError;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +32,7 @@ public class MailAccountVerificator implements AccountVerificator {
     public boolean sendVerificationEmail(Profile profile) {
         AccountVerification accountVerification = accountVerificationRepository.save(generateAccountVerification(profile));
         try {
-            emailExecutor.execute(new AccountVerificationEmailCommand(profile, accountVerification));
+            emailExecutor.handle(new AccountCreated(profile, accountVerification));
         } catch (SendingMailError e) {
             e.printStackTrace();
             removeAccountVerification(profile);

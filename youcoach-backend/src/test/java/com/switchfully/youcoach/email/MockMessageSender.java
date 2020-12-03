@@ -1,6 +1,6 @@
 package com.switchfully.youcoach.email;
 
-import com.switchfully.youcoach.email.command.EmailCommand;
+import com.switchfully.youcoach.domain.Event;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 public class MockMessageSender implements MessageSender {
 
     @Override
-    public void execute(EmailCommand command) {
+    public void handle(Event event) {
 
     }
 }

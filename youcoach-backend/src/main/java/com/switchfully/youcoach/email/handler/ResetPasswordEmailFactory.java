@@ -1,9 +1,9 @@
-package com.switchfully.youcoach.email.command.resetpassword;
+package com.switchfully.youcoach.email.handler;
 
 import com.switchfully.youcoach.domain.profile.Profile;
 import com.switchfully.youcoach.domain.profile.ProfileRepository;
 import com.switchfully.youcoach.email.Email;
-import com.switchfully.youcoach.email.command.EmailHandler;
+import com.switchfully.youcoach.security.verification.event.ResetPasswordRequestReceived;
 import com.switchfully.youcoach.email.exception.SendingMailError;
 import com.switchfully.youcoach.security.verification.VerificationService;
 import org.springframework.core.env.Environment;
@@ -12,14 +12,14 @@ import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
 @Component
-public class ResetPasswordEmailHandler implements EmailHandler<ResetPasswordEmailCommand> {
+public class ResetPasswordEmailFactory implements EmailFactory<ResetPasswordRequestReceived> {
 
     private final VerificationService verificationService;
     private final ProfileRepository profileRepository;
     private final Environment environment;
     private final TemplateEngine templateEngine;
 
-    public ResetPasswordEmailHandler(VerificationService verificationService, ProfileRepository profileRepository, Environment environment, TemplateEngine templateEngine) {
+    public ResetPasswordEmailFactory(VerificationService verificationService, ProfileRepository profileRepository, Environment environment, TemplateEngine templateEngine) {
         this.verificationService = verificationService;
         this.profileRepository = profileRepository;
         this.environment = environment;
@@ -27,12 +27,12 @@ public class ResetPasswordEmailHandler implements EmailHandler<ResetPasswordEmai
     }
 
     @Override
-    public Class<ResetPasswordEmailCommand> getCommandType() {
-        return ResetPasswordEmailCommand.class;
+    public Class<ResetPasswordRequestReceived> getCommandType() {
+        return ResetPasswordRequestReceived.class;
     }
 
     @Override
-    public Email createEmail(ResetPasswordEmailCommand command) {
+    public Email create(ResetPasswordRequestReceived command) {
         Profile profile = profileRepository.findByEmail(command.getEmail()).orElseThrow(() -> new SendingMailError("Could not find profile"));
 
         final Context ctx = new Context();

@@ -2,9 +2,8 @@ package com.switchfully.youcoach.security.verification;
 
 import com.switchfully.youcoach.domain.profile.Profile;
 import com.switchfully.youcoach.domain.profile.ProfileRepository;
-import com.switchfully.youcoach.email.EmailSender;
 import com.switchfully.youcoach.email.MessageSender;
-import com.switchfully.youcoach.email.command.resetpassword.ResetPasswordEmailCommand;
+import com.switchfully.youcoach.security.verification.event.ResetPasswordRequestReceived;
 import com.switchfully.youcoach.security.verification.api.PasswordChangeRequestDto;
 import com.switchfully.youcoach.security.verification.api.PasswordChangeResultDto;
 import com.switchfully.youcoach.security.verification.api.PasswordResetRequestDto;
@@ -42,7 +41,7 @@ public class PasswordResetService {
     public void requestPasswordReset(PasswordResetRequestDto request) {
         if (!verificationService.isSigningAndVerifyingAvailable() || activeProfiles.contains("development")) return;
 
-        messageSender.execute(new ResetPasswordEmailCommand(request.getEmail()));
+        messageSender.handle(new ResetPasswordRequestReceived(request.getEmail()));
     }
 
     public PasswordChangeResultDto performPasswordChange(PasswordChangeRequestDto request) {

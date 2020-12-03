@@ -1,7 +1,7 @@
 package com.switchfully.youcoach.email;
 
-import com.switchfully.youcoach.email.command.EmailCommand;
+import com.switchfully.youcoach.domain.Event;
 
 public interface MessageSender {
-    void execute(EmailCommand command);
+    void handle(Event event);
 }

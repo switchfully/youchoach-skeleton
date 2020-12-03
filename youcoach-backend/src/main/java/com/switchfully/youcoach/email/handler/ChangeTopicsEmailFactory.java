@@ -1,7 +1,7 @@
-package com.switchfully.youcoach.email.command.changetopics;
+package com.switchfully.youcoach.email.handler;
 
 import com.switchfully.youcoach.email.Email;
-import com.switchfully.youcoach.email.command.EmailHandler;
+import com.switchfully.youcoach.domain.request.event.ChangeTopicsRequestReceived;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 import org.thymeleaf.TemplateEngine;
@@ -10,22 +10,22 @@ import org.thymeleaf.context.Context;
 import static com.switchfully.youcoach.email.Email.email;
 
 @Component
-public class ChangeTopicsEmailHandler implements EmailHandler<ChangeTopicsEmailCommand> {
+public class ChangeTopicsEmailFactory implements EmailFactory<ChangeTopicsRequestReceived> {
     private final TemplateEngine templateEngine;
     private final Environment environment;
 
-    public ChangeTopicsEmailHandler(TemplateEngine templateEngine, Environment environment) {
+    public ChangeTopicsEmailFactory(TemplateEngine templateEngine, Environment environment) {
         this.templateEngine = templateEngine;
         this.environment = environment;
     }
 
     @Override
-    public Class<ChangeTopicsEmailCommand> getCommandType() {
-        return ChangeTopicsEmailCommand.class;
+    public Class<ChangeTopicsRequestReceived> getCommandType() {
+        return ChangeTopicsRequestReceived.class;
     }
 
     @Override
-    public Email createEmail(ChangeTopicsEmailCommand command) {
+    public Email create(ChangeTopicsRequestReceived command) {
         final Context ctx = new Context();
         ctx.setVariable("userName", command.getFullName());
         ctx.setVariable("url", environment.getProperty("app.email.hostName") + "/coach/" + command.getProfileId() + "/edit-topic");

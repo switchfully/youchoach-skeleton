@@ -5,10 +5,10 @@ import com.switchfully.youcoach.domain.profile.ProfileRepository;
 import com.switchfully.youcoach.domain.profile.exception.ProfileNotFoundException;
 import com.switchfully.youcoach.domain.profile.role.coach.exception.CoachNotFoundException;
 import com.switchfully.youcoach.domain.session.api.*;
+import com.switchfully.youcoach.domain.session.event.SessionCancelledEvent;
 import com.switchfully.youcoach.domain.session.exception.SessionNotFoundException;
-import com.switchfully.youcoach.email.EmailSender;
 import com.switchfully.youcoach.email.MessageSender;
-import com.switchfully.youcoach.email.command.sessioncreated.SessionCreatedEvent;
+import com.switchfully.youcoach.domain.session.event.SessionCreated;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,7 +39,7 @@ public class SessionService {
         Profile coach = profileRepository.findById(createSessionDto.getCoachId()).orElseThrow(CoachNotFoundException::new);
         Profile coachee = profileRepository.findById(createSessionDto.getProfileId()).orElseThrow(() -> new ProfileNotFoundException(""));
         Session session = sessionMapper.toModel(createSessionDto, coach, coachee);
-        messageSender.execute(new SessionCreatedEvent(session));
+        messageSender.handle(new SessionCreated(session));
         return sessionMapper.toDto(sessionRepository.save(session));
     }
 

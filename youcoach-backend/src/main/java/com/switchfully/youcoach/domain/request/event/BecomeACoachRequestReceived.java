@@ -1,13 +1,13 @@
-package com.switchfully.youcoach.email.command.becomecoach;
+package com.switchfully.youcoach.domain.request.event;
 
 import com.switchfully.youcoach.domain.profile.Profile;
-import com.switchfully.youcoach.email.command.EmailCommand;
+import com.switchfully.youcoach.domain.Event;
 
-public class BecomeACoachCommand implements EmailCommand {
+public class BecomeACoachRequestReceived implements Event {
     private final Profile profile;
     private final String request;
 
-    public BecomeACoachCommand(Profile profile, String request) {
+    public BecomeACoachRequestReceived(Profile profile, String request) {
         this.profile = profile;
         this.request = request;
     }

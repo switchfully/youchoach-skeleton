@@ -1,15 +1,15 @@
-package com.switchfully.youcoach.email.command.sessioncreated;
+package com.switchfully.youcoach.domain.session.event;
 
 import com.switchfully.youcoach.domain.session.Session;
-import com.switchfully.youcoach.email.command.EmailCommand;
+import com.switchfully.youcoach.domain.Event;
 
 import java.time.LocalDateTime;
 
-public class SessionCreatedEvent implements EmailCommand {
+public class SessionCreated implements Event {
 
     private final Session session;
 
-    public SessionCreatedEvent(Session session) {
+    public SessionCreated(Session session) {
         this.session = session;
     }
 

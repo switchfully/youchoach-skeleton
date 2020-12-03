@@ -1,29 +1,27 @@
-package com.switchfully.youcoach.email.command.sessioncreated;
+package com.switchfully.youcoach.email.handler;
 
+import com.switchfully.youcoach.domain.session.event.SessionCreated;
 import com.switchfully.youcoach.email.Email;
-import com.switchfully.youcoach.email.command.EmailHandler;
 import org.springframework.stereotype.Component;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
-import javax.mail.MessagingException;
-
 @Component
-public class SessionCreatedEmailHandler implements EmailHandler<SessionCreatedEvent> {
+public class SessionCreatedEmailFactory implements EmailFactory<SessionCreated> {
 
     private final TemplateEngine templateEngine;
 
-    public SessionCreatedEmailHandler(TemplateEngine templateEngine) {
+    public SessionCreatedEmailFactory(TemplateEngine templateEngine) {
         this.templateEngine = templateEngine;
     }
 
     @Override
-    public Class<SessionCreatedEvent> getCommandType() {
-        return SessionCreatedEvent.class;
+    public Class<SessionCreated> getCommandType() {
+        return SessionCreated.class;
     }
 
     @Override
-    public Email createEmail(SessionCreatedEvent command) {
+    public Email create(SessionCreated command) {
         final Context ctx = new Context();
         ctx.setVariable("coachName", command.getCoachName());
         ctx.setVariable("coacheeName", command.getCoacheeName());

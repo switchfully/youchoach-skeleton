@@ -1,7 +1,7 @@
 package com.switchfully.youcoach.email;
 
-import com.switchfully.youcoach.email.command.EmailCommand;
-import com.switchfully.youcoach.email.command.EmailHandler;
+import com.switchfully.youcoach.domain.Event;
+import com.switchfully.youcoach.email.handler.EmailFactory;
 import com.switchfully.youcoach.email.exception.SendingMailError;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,44 +27,46 @@ public class EmailSender implements MessageSender {
 
     private final JavaMailSender javaMailSender;
     private final Environment environment;
-    private final Map<Class<?>, EmailHandler> handlerMap;
+    private final Map<Class<?>, EmailFactory> factoryMap;
 
-    public EmailSender(Environment environment, JavaMailSender javaMailSender, List<EmailHandler<? extends EmailCommand>> emailHandlerList) {
+    public EmailSender(Environment environment, JavaMailSender javaMailSender, List<EmailFactory<? extends Event>> emailFactoryList) {
         this.javaMailSender = javaMailSender;
         this.environment = environment;
-        this.handlerMap = emailHandlerList.stream()
-                .collect(toMap(EmailHandler::getCommandType, identity()));
+        this.factoryMap = emailFactoryList.stream()
+                .collect(toMap(EmailFactory::getCommandType, identity()));
         System.setProperty("mail.mime.charset", "utf8");
     }
 
     @Override
-    public void execute(EmailCommand command) {
-        EmailHandler<? super EmailCommand> handler = handlerMap.get(command.getClass());
+    public void handle(Event event) {
+        EmailFactory<? super Event> factory = factoryMap.get(event.getClass());
 
-        if (handler == null) {
-            throw new RuntimeException(format("No commandhandler found for command type %s", command.getClass().getSimpleName()));
+        if (factory == null) {
+            throw new RuntimeException(format("No commandhandler found for command type %s", event.getClass().getSimpleName()));
         }
 
         try {
-            Email email = handler.createEmail(command);
+            Email email = factory.create(event)
+                    .from(environment.getProperty("app.email.sender"));
 
-            sendMail(environment.getProperty("app.email.sender"), email.getTo(), email.getSubject(), email.getBody());
+            sendMail(email);
         } catch (MessagingException exception) {
             throw new SendingMailError(exception);
         }
     }
 
-    public void sendMail(String from, String to, String subject, String body) throws MessagingException {
+    public void sendMail(Email email) throws MessagingException {
         MimeMessage message = javaMailSender.createMimeMessage();
-        MimeMessageHelper helper = new MimeMessageHelper(message, true,"UTF-8");
+        MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
 
-        helper.setTo(to);
-        helper.setSubject(subject);
-        helper.setText(body, true);
-        helper.setFrom(from);
+        helper.setTo(email.getTo());
+        helper.setSubject(email.getSubject());
+        helper.setText(email.getBody(), true);
+        helper.setFrom(email.getFrom());
 
-        logger.info("Sending email with subject " + subject + " to " + to);
+        logger.info("Sending email " + email);
         javaMailSender.send(message);
 
     }
+
 }

@@ -1,30 +1,30 @@
-package com.switchfully.youcoach.email.command.accountverification;
+package com.switchfully.youcoach.email.handler;
 
 import com.switchfully.youcoach.email.Email;
-import com.switchfully.youcoach.email.command.EmailHandler;
+import com.switchfully.youcoach.security.verification.event.AccountCreated;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
 @Component
-public class AccountVerificationEmailHandler implements EmailHandler<AccountVerificationEmailCommand> {
+public class AccountVerificationEmailFactory implements EmailFactory<AccountCreated> {
 
     private final TemplateEngine templateEngine;
     private final Environment environment;
 
-    public AccountVerificationEmailHandler(TemplateEngine templateEngine, Environment environment) {
+    public AccountVerificationEmailFactory(TemplateEngine templateEngine, Environment environment) {
         this.templateEngine = templateEngine;
         this.environment = environment;
     }
 
     @Override
-    public Class<AccountVerificationEmailCommand> getCommandType() {
-        return AccountVerificationEmailCommand.class;
+    public Class<AccountCreated> getCommandType() {
+        return AccountCreated.class;
     }
 
     @Override
-    public Email createEmail(AccountVerificationEmailCommand command) {
+    public Email create(AccountCreated command) {
         final Context ctx = new Context();
         ctx.setVariable("fullName", command.getProfile().getFirstName() + " " + command.getProfile().getLastName());
         ctx.setVariable("hostName", environment.getProperty("app.email.hostName"));
