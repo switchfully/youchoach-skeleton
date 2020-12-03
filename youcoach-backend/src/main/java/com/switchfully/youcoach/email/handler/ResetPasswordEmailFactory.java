@@ -27,13 +27,13 @@ public class ResetPasswordEmailFactory implements EmailFactory<ResetPasswordRequ
     }
 
     @Override
-    public Class<ResetPasswordRequestReceived> getCommandType() {
+    public Class<ResetPasswordRequestReceived> getEventType() {
         return ResetPasswordRequestReceived.class;
     }
 
     @Override
-    public Email create(ResetPasswordRequestReceived command) {
-        Profile profile = profileRepository.findByEmail(command.getEmail()).orElseThrow(() -> new SendingMailError("Could not find profile"));
+    public Email create(ResetPasswordRequestReceived event) {
+        Profile profile = profileRepository.findByEmail(event.getEmail()).orElseThrow(() -> new SendingMailError("Could not find profile"));
 
         final Context ctx = new Context();
         ctx.setVariable("fullName", profile.getFirstName() + " " + profile.getLastName());

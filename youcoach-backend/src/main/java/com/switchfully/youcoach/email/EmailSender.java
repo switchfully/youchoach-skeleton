@@ -33,7 +33,7 @@ public class EmailSender implements MessageSender {
         this.javaMailSender = javaMailSender;
         this.environment = environment;
         this.factoryMap = emailFactoryList.stream()
-                .collect(toMap(EmailFactory::getCommandType, identity()));
+                .collect(toMap(EmailFactory::getEventType, identity()));
         System.setProperty("mail.mime.charset", "utf8");
     }
 

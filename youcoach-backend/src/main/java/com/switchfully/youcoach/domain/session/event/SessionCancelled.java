@@ -1,15 +1,14 @@
 package com.switchfully.youcoach.domain.session.event;
 
-import com.switchfully.youcoach.domain.session.Session;
 import com.switchfully.youcoach.domain.Event;
+import com.switchfully.youcoach.domain.session.Session;
 
 import java.time.LocalDateTime;
 
-public class SessionCreated implements Event {
-
+public class SessionCancelled implements Event {
     private final Session session;
 
-    public SessionCreated(Session session) {
+    public SessionCancelled(Session session) {
         this.session = session;
     }
 
@@ -27,14 +26,6 @@ public class SessionCreated implements Event {
 
     public String getSessionLocation() {
         return session.getLocation();
-    }
-
-    public String getSessionSubject() {
-        return session.getSubject();
-    }
-
-    public String getSessionRemarks() {
-        return session.getRemarks();
     }
 
     public String getCoachName() {

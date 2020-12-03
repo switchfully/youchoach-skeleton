@@ -1,6 +1,6 @@
 package com.switchfully.youcoach.email.handler;
 
-import com.switchfully.youcoach.domain.session.event.SessionCreated;
+import com.switchfully.youcoach.domain.session.event.SessionCancelled;
 import com.switchfully.youcoach.email.Email;
 import org.springframework.stereotype.Component;
 import org.thymeleaf.TemplateEngine;
@@ -9,33 +9,31 @@ import org.thymeleaf.context.Context;
 import java.time.format.DateTimeFormatter;
 
 @Component
-public class SessionCreatedEmailFactory implements EmailFactory<SessionCreated> {
+public class SessionCancelledEmailFactory implements EmailFactory<SessionCancelled> {
 
     private final TemplateEngine templateEngine;
 
-    public SessionCreatedEmailFactory(TemplateEngine templateEngine) {
+    public SessionCancelledEmailFactory(TemplateEngine templateEngine) {
         this.templateEngine = templateEngine;
     }
 
     @Override
-    public Class<SessionCreated> getEventType() {
-        return SessionCreated.class;
+    public Class<SessionCancelled> getEventType() {
+        return SessionCancelled.class;
     }
 
     @Override
-    public Email create(SessionCreated event) {
+    public Email create(SessionCancelled event) {
         final Context ctx = new Context();
         ctx.setVariable("coachName", event.getCoachName());
         ctx.setVariable("coacheeName", event.getCoacheeName());
         ctx.setVariable("sessionDate", event.getSessionDateAndTime().format(DateTimeFormatter.ofPattern("dd-MM-yyyy mm:hh")));
         ctx.setVariable("sessionLocation", event.getSessionLocation());
-        ctx.setVariable("sessionSubject", event.getSessionSubject());
-        ctx.setVariable("sessionRemarks", event.getSessionRemarks());
-        String body = this.templateEngine.process("SessionCreated.html", ctx);
+        String body = this.templateEngine.process("SessionCancelled.html", ctx);
 
         return Email.email()
                 .to(event.getCoachEmail())
-                .subject("Session Created - Sessie aangemaakt - Session Créé")
-                .body(body);
+                .body(body)
+                .subject("Session Cancelled - Sessie Geannuleerd - Session Annulée");
     }
 }

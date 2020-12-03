@@ -20,16 +20,16 @@ public class ChangeTopicsEmailFactory implements EmailFactory<ChangeTopicsReques
     }
 
     @Override
-    public Class<ChangeTopicsRequestReceived> getCommandType() {
+    public Class<ChangeTopicsRequestReceived> getEventType() {
         return ChangeTopicsRequestReceived.class;
     }
 
     @Override
-    public Email create(ChangeTopicsRequestReceived command) {
+    public Email create(ChangeTopicsRequestReceived event) {
         final Context ctx = new Context();
-        ctx.setVariable("userName", command.getFullName());
-        ctx.setVariable("url", environment.getProperty("app.email.hostName") + "/coach/" + command.getProfileId() + "/edit-topic");
-        ctx.setVariable("request", command.getRequest().replace("\n", System.lineSeparator()));
+        ctx.setVariable("userName", event.getFullName());
+        ctx.setVariable("url", environment.getProperty("app.email.hostName") + "/coach/" + event.getProfileId() + "/edit-topic");
+        ctx.setVariable("request", event.getRequest().replace("\n", System.lineSeparator()));
 
         return email()
                 .to(environment.getProperty("app.changetopics.receiver"))

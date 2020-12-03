@@ -10,31 +10,31 @@ import org.thymeleaf.context.Context;
 import static com.switchfully.youcoach.email.Email.email;
 
 @Component
-public class BecomeACoachFactory implements EmailFactory<BecomeACoachRequestReceived> {
+public class BecomeACoachEmailFactory implements EmailFactory<BecomeACoachRequestReceived> {
 
     private final TemplateEngine templateEngine;
     private final Environment environment;
 
-    public BecomeACoachFactory(TemplateEngine templateEngine, Environment environment) {
+    public BecomeACoachEmailFactory(TemplateEngine templateEngine, Environment environment) {
         this.templateEngine = templateEngine;
         this.environment = environment;
     }
 
     @Override
-    public Class<BecomeACoachRequestReceived> getCommandType() {
+    public Class<BecomeACoachRequestReceived> getEventType() {
         return BecomeACoachRequestReceived.class;
     }
 
     @Override
-    public Email create(BecomeACoachRequestReceived command) {
+    public Email create(BecomeACoachRequestReceived event) {
         final Context ctx = new Context();
-        ctx.setVariable("userName", command.getFullName());
-        ctx.setVariable("url", environment.getProperty("app.email.hostName") + "/coachee/" + command.getId() + "/edit-profile");
-        ctx.setVariable("request", command.getRequest().replace("\n", System.lineSeparator()));
+        ctx.setVariable("userName", event.getFullName());
+        ctx.setVariable("url", environment.getProperty("app.email.hostName") + "/coachee/" + event.getId() + "/edit-profile");
+        ctx.setVariable("request", event.getRequest().replace("\n", System.lineSeparator()));
 
         return email()
                 .to(environment.getProperty("app.becomeacoach.receiver"))
-                .subject(command.getFullName() + " wants to become a Coach")
+                .subject(event.getFullName() + " wants to become a Coach")
                 .body(this.templateEngine.process("BecomeACoach.html", ctx));
     }
 

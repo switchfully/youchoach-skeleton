@@ -5,7 +5,7 @@ import com.switchfully.youcoach.domain.profile.ProfileRepository;
 import com.switchfully.youcoach.domain.profile.exception.ProfileNotFoundException;
 import com.switchfully.youcoach.domain.profile.role.coach.exception.CoachNotFoundException;
 import com.switchfully.youcoach.domain.session.api.*;
-import com.switchfully.youcoach.domain.session.event.SessionCancelledEvent;
+import com.switchfully.youcoach.domain.session.event.SessionCancelled;
 import com.switchfully.youcoach.domain.session.exception.SessionNotFoundException;
 import com.switchfully.youcoach.email.MessageSender;
 import com.switchfully.youcoach.domain.session.event.SessionCreated;
@@ -64,6 +64,7 @@ public class SessionService {
     public SessionDto cancel(Long sessionId) {
         Session session = getSessionFromDatabase(sessionId);
         session.cancel();
+        messageSender.handle(new SessionCancelled(session));
         return sessionMapper.toDto(session);
     }
 

@@ -19,20 +19,20 @@ public class AccountVerificationEmailFactory implements EmailFactory<AccountCrea
     }
 
     @Override
-    public Class<AccountCreated> getCommandType() {
+    public Class<AccountCreated> getEventType() {
         return AccountCreated.class;
     }
 
     @Override
-    public Email create(AccountCreated command) {
+    public Email create(AccountCreated event) {
         final Context ctx = new Context();
-        ctx.setVariable("fullName", command.getProfile().getFirstName() + " " + command.getProfile().getLastName());
+        ctx.setVariable("fullName", event.getProfile().getFirstName() + " " + event.getProfile().getLastName());
         ctx.setVariable("hostName", environment.getProperty("app.email.hostName"));
         ctx.setVariable("url", environment.getProperty("app.email.hostName") + "/validate-account");
-        ctx.setVariable("token", command.getAccountVerification().getVerificationCode());
+        ctx.setVariable("token", event.getAccountVerification().getVerificationCode());
 
         return Email.email()
-                .to(command.getProfile().getEmail())
+                .to(event.getProfile().getEmail())
                 .subject("Lidmaatschapsverificatie - Verification de compte - Account verification")
                 .body(this.templateEngine.process("EmailVerificationTemplate.html", ctx));
     }
