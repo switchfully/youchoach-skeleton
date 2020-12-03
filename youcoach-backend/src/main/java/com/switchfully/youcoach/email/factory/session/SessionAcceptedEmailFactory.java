@@ -1,8 +1,8 @@
-package com.switchfully.youcoach.email.handler;
+package com.switchfully.youcoach.email.factory.session;
 
 import com.switchfully.youcoach.domain.session.event.SessionAccepted;
-import com.switchfully.youcoach.domain.session.event.SessionCreated;
 import com.switchfully.youcoach.email.Email;
+import com.switchfully.youcoach.email.factory.EmailFactory;
 import org.springframework.stereotype.Component;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
@@ -30,7 +30,7 @@ public class SessionAcceptedEmailFactory implements EmailFactory<SessionAccepted
         ctx.setVariable("coacheeName", event.getCoacheeName());
         ctx.setVariable("sessionDate", event.getSessionDateAndTime().format(DateTimeFormatter.ofPattern("dd-MM-yyyy hh:mm")));
         ctx.setVariable("sessionLocation", event.getSessionLocation());
-        String body = this.templateEngine.process("SessionAccepted.html", ctx);
+        String body = this.templateEngine.process("session/SessionAccepted.html", ctx);
 
         return Email.email()
                 .to(event.getCoacheeEmail())

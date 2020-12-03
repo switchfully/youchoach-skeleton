@@ -1,7 +1,8 @@
-package com.switchfully.youcoach.email.handler;
+package com.switchfully.youcoach.email.factory.request;
 
 import com.switchfully.youcoach.email.Email;
 import com.switchfully.youcoach.domain.request.event.ChangeTopicsRequestReceived;
+import com.switchfully.youcoach.email.factory.EmailFactory;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 import org.thymeleaf.TemplateEngine;
@@ -34,6 +35,6 @@ public class ChangeTopicsEmailFactory implements EmailFactory<ChangeTopicsReques
         return email()
                 .to(environment.getProperty("app.changetopics.receiver"))
                 .subject("Topic Change Requested")
-                .body(this.templateEngine.process("ChangeTopics.html", ctx));
+                .body(this.templateEngine.process("request/ChangeTopics.html", ctx));
     }
 }

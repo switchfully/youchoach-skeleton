@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-    <title th:remove="all">Session Created</title>
+    <title th:remove="all">Session Declined</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
@@ -9,7 +9,7 @@
     Hi <span th:text="${coacheeName}"></span>,
 </p>
 <p>
-    <span th:text="${coachName}"></span> has accepted your session on <span th:text="${sessionDate}"></span> at <span th:text="${sessionLocation}"></span>.
+    <span th:text="${coachName}"></span> has declined your session on <span th:text="${sessionDate}"></span> at <span th:text="${sessionLocation}"></span>.
 </p>
 </body>
 </html>

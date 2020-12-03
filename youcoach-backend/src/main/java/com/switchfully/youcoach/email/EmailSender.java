@@ -1,7 +1,7 @@
 package com.switchfully.youcoach.email;
 
 import com.switchfully.youcoach.domain.Event;
-import com.switchfully.youcoach.email.handler.EmailFactory;
+import com.switchfully.youcoach.email.factory.EmailFactory;
 import com.switchfully.youcoach.email.exception.SendingMailError;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

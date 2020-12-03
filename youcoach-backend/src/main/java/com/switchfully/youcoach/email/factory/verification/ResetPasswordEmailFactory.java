@@ -1,8 +1,9 @@
-package com.switchfully.youcoach.email.handler;
+package com.switchfully.youcoach.email.factory.verification;
 
 import com.switchfully.youcoach.domain.profile.Profile;
 import com.switchfully.youcoach.domain.profile.ProfileRepository;
 import com.switchfully.youcoach.email.Email;
+import com.switchfully.youcoach.email.factory.EmailFactory;
 import com.switchfully.youcoach.security.verification.event.ResetPasswordRequestReceived;
 import com.switchfully.youcoach.email.exception.SendingMailError;
 import com.switchfully.youcoach.security.verification.VerificationService;
@@ -39,7 +40,7 @@ public class ResetPasswordEmailFactory implements EmailFactory<ResetPasswordRequ
         ctx.setVariable("fullName", profile.getFirstName() + " " + profile.getLastName());
         ctx.setVariable("url", environment.getProperty("app.email.hostName") + "/password-reset");
         ctx.setVariable("token", verificationService.digitallySignAndEncodeBase64(profile.getEmail()));
-        String body = this.templateEngine.process("PasswordResetTemplate.html", ctx);
+        String body = this.templateEngine.process("verification/PasswordResetTemplate.html", ctx);
 
         return Email.email()
                 .to(profile.getEmail())

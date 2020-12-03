@@ -1,4 +1,4 @@
-package com.switchfully.youcoach.email.handler;
+package com.switchfully.youcoach.email.factory;
 
 import com.switchfully.youcoach.domain.Event;
 import com.switchfully.youcoach.email.Email;

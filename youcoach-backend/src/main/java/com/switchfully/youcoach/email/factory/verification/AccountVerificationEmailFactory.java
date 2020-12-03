@@ -1,6 +1,7 @@
-package com.switchfully.youcoach.email.handler;
+package com.switchfully.youcoach.email.factory.verification;
 
 import com.switchfully.youcoach.email.Email;
+import com.switchfully.youcoach.email.factory.EmailFactory;
 import com.switchfully.youcoach.security.verification.event.AccountCreated;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
@@ -34,6 +35,6 @@ public class AccountVerificationEmailFactory implements EmailFactory<AccountCrea
         return Email.email()
                 .to(event.getProfile().getEmail())
                 .subject("Lidmaatschapsverificatie - Verification de compte - Account verification")
-                .body(this.templateEngine.process("EmailVerificationTemplate.html", ctx));
+                .body(this.templateEngine.process("verification/EmailVerificationTemplate.html", ctx));
     }
 }

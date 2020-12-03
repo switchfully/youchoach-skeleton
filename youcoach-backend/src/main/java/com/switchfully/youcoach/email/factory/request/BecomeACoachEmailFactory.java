@@ -1,7 +1,8 @@
-package com.switchfully.youcoach.email.handler;
+package com.switchfully.youcoach.email.factory.request;
 
 import com.switchfully.youcoach.email.Email;
 import com.switchfully.youcoach.domain.request.event.BecomeACoachRequestReceived;
+import com.switchfully.youcoach.email.factory.EmailFactory;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 import org.thymeleaf.TemplateEngine;
@@ -35,7 +36,7 @@ public class BecomeACoachEmailFactory implements EmailFactory<BecomeACoachReques
         return email()
                 .to(environment.getProperty("app.becomeacoach.receiver"))
                 .subject(event.getFullName() + " wants to become a Coach")
-                .body(this.templateEngine.process("BecomeACoach.html", ctx));
+                .body(this.templateEngine.process("request/BecomeACoach.html", ctx));
     }
 
 }
