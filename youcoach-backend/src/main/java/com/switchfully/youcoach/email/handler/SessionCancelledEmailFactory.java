@@ -27,7 +27,7 @@ public class SessionCancelledEmailFactory implements EmailFactory<SessionCancell
         final Context ctx = new Context();
         ctx.setVariable("coachName", event.getCoachName());
         ctx.setVariable("coacheeName", event.getCoacheeName());
-        ctx.setVariable("sessionDate", event.getSessionDateAndTime().format(DateTimeFormatter.ofPattern("dd-MM-yyyy mm:hh")));
+        ctx.setVariable("sessionDate", event.getSessionDateAndTime().format(DateTimeFormatter.ofPattern("dd-MM-yyyy hh:mm")));
         ctx.setVariable("sessionLocation", event.getSessionLocation());
         String body = this.templateEngine.process("SessionCancelled.html", ctx);
 

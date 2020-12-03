@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title th:remove="all">Session Created</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<p>
+    Hi <span th:text="${coacheeName}"></span>,
+</p>
+<p>
+    <span th:text="${coachName}"></span> has accepted your session on <span th:text="${sessionDate}"></span> at <span th:text="${sessionLocation}"></span>.
+</p>
+</body>
+</html>
