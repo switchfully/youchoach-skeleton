@@ -5,12 +5,9 @@ import com.switchfully.youcoach.domain.profile.ProfileRepository;
 import com.switchfully.youcoach.domain.profile.exception.ProfileNotFoundException;
 import com.switchfully.youcoach.domain.profile.role.coach.exception.CoachNotFoundException;
 import com.switchfully.youcoach.domain.session.api.*;
-import com.switchfully.youcoach.domain.session.event.SessionAccepted;
-import com.switchfully.youcoach.domain.session.event.SessionCancelled;
-import com.switchfully.youcoach.domain.session.event.SessionDeclined;
+import com.switchfully.youcoach.domain.session.event.*;
 import com.switchfully.youcoach.domain.session.exception.SessionNotFoundException;
 import com.switchfully.youcoach.email.MessageSender;
-import com.switchfully.youcoach.domain.session.event.SessionCreated;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -98,6 +95,7 @@ public class SessionService {
     public SessionDto provideSessionFeedback(Long sessionId, CoacheeFeedbackDto coacheeFeedback) {
         Session session = getSessionFromDatabase(sessionId);
         session.provideCoacheeFeedback(feedbackMapper.toModel(coacheeFeedback));
+        messageSender.handle(new CoacheeProvidedFeedback(session));
         return sessionMapper.toDto(session);
     }
 

@@ -36,7 +36,7 @@ public class SessionCreatedEmailFactory implements EmailFactory<SessionCreated> 
 
         return Email.email()
                 .to(event.getCoachEmail())
-                .subject("Session Created - Sessie aangemaakt - Session Créé")
+                .subject("Session Requested - Sessie aangevraagd - Session Démandée")
                 .body(body);
     }
 }
