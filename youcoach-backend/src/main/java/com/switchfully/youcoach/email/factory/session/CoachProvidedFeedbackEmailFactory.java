@@ -1,5 +1,6 @@
 package com.switchfully.youcoach.email.factory.session;
 
+import com.switchfully.youcoach.domain.session.event.CoachProvidedFeedback;
 import com.switchfully.youcoach.domain.session.event.CoacheeProvidedFeedback;
 import com.switchfully.youcoach.email.Email;
 import com.switchfully.youcoach.email.factory.EmailFactory;
@@ -9,28 +10,28 @@ import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
 @Component
-public class CoacheeProvidedFeedbackEmailFactory implements EmailFactory<CoacheeProvidedFeedback> {
+public class CoachProvidedFeedbackEmailFactory implements EmailFactory<CoachProvidedFeedback> {
 
     private final TemplateEngine templateEngine;
     private final Environment environment;
 
-    public CoacheeProvidedFeedbackEmailFactory(TemplateEngine templateEngine, Environment environment) {
+    public CoachProvidedFeedbackEmailFactory(TemplateEngine templateEngine, Environment environment) {
         this.templateEngine = templateEngine;
         this.environment = environment;
     }
 
     @Override
-    public Class<CoacheeProvidedFeedback> getEventType() {
-        return CoacheeProvidedFeedback.class;
+    public Class<CoachProvidedFeedback> getEventType() {
+        return CoachProvidedFeedback.class;
     }
 
     @Override
-    public Email create(CoacheeProvidedFeedback event) {
+    public Email create(CoachProvidedFeedback event) {
         final Context ctx = new Context();
         ctx.setVariable("coachName", event.getCoachName());
         ctx.setVariable("coacheeName", event.getCoacheeName());
-        ctx.setVariable("url", environment.getProperty("app.email.hostName") + "/coach/" + event.getProfileId() + "/sessions/" + event.getSessionId() + "#feedback");
-        String body = this.templateEngine.process("session/CoacheeProvidedFeedback.html", ctx);
+        ctx.setVariable("url", environment.getProperty("app.email.hostName") + "/coachee/" + event.getProfileId() + "/sessions/" + event.getSessionId() + "#feedback");
+        String body = this.templateEngine.process("session/CoachProvidedFeedback.html", ctx);
 
         return Email.email()
                 .to(event.getCoachEmail())

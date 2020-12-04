@@ -19,7 +19,8 @@ export class LoginComponent implements OnInit {
   loginForm;
   title = 'You-Coach | Sign in';
   jwt;
-  private redirectUrl: any;
+  private redirectUrl: string;
+  private fragment: string;
 
   constructor(private formBuilder: FormBuilder,
               private authenticationService: AuthenticationService,
@@ -36,7 +37,8 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     document.title = this.title;
-    this.route.queryParams.subscribe(queryParams => this.redirectUrl = queryParams.redirectUrl)
+    this.route.queryParams.subscribe(queryParams => this.redirectUrl = queryParams.redirectUrl);
+    this.route.fragment.subscribe(fragment => this.fragment = fragment);
   }
 
   onSubmit(loginData) {
@@ -48,7 +50,7 @@ export class LoginComponent implements OnInit {
         (_ => {
           this.success = true;
           this.initService.initDropdowns();
-          this.router.navigateByUrl(this.redirectUrl ? this.redirectUrl : this.getHomeUrl());
+          this.router.navigateByUrl(this.redirectUrl ? `${this.redirectUrl}#${this.fragment}` : this.getHomeUrl());
         }),
         (fault => {
           console.log('test');

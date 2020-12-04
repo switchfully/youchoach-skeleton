@@ -107,6 +107,7 @@ public class SessionService {
     public SessionDto provideSessionFeedbackAsCoach(Long sessionId, CoachFeedbackDto coachFeedbackDto) {
         Session session = getSessionFromDatabase(sessionId);
         session.provideFeedbackAsCoach(feedbackMapper.toModel(coachFeedbackDto));
+        messageSender.handle(new CoachProvidedFeedback(session));
         return sessionMapper.toDto(session);
     }
 }

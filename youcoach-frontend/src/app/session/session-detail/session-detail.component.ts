@@ -1,23 +1,25 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {SessionService} from "../services/session.service";
 import {ISessionComplete, Status} from "../interfaces/ISessionComplete";
 import {ActivatedRoute} from "@angular/router";
 import {FormBuilder, FormGroup} from "@angular/forms";
-import {flatMap, map, tap} from "rxjs/operators";
+import {flatMap, map, tap, timeout} from "rxjs/operators";
+import {ViewportScroller} from "@angular/common";
 
 @Component({
   selector: 'app-session-detail',
   templateUrl: './session-detail.component.html',
   styleUrls: ['./session-detail.component.css']
 })
-export class SessionDetailComponent implements OnInit {
+export class SessionDetailComponent implements OnInit, AfterViewInit {
 
   session: ISessionComplete;
   coachFeedbackForm: FormGroup;
   coacheeFeedbackForm: FormGroup;
   coach: boolean;
+  private fragment: string;
 
-  constructor(private formBuilder: FormBuilder, private sessionService: SessionService, private route: ActivatedRoute) {
+  constructor(private formBuilder: FormBuilder, private sessionService: SessionService, private route: ActivatedRoute, private viewportScroller: ViewportScroller) {
   }
 
   ngOnInit(): void {
@@ -50,6 +52,8 @@ export class SessionDetailComponent implements OnInit {
           this.coacheeFeedbackForm.patchValue(session.coacheeFeedback);
         }
       });
+
+    this.route.fragment.subscribe(fragment => this.fragment = fragment);
   }
 
   cancelSession(session: ISessionComplete): void {
@@ -92,5 +96,13 @@ export class SessionDetailComponent implements OnInit {
         this.coachFeedbackForm.patchValue(session.coachFeedback);
       },
       _ => alert('Updating status failed!'));
+  }
+
+  ngAfterViewInit(): void {
+    setTimeout(() => {
+      if (this.fragment) {
+        this.viewportScroller.scrollToAnchor(this.fragment);
+      }
+    }, 75);
   }
 }

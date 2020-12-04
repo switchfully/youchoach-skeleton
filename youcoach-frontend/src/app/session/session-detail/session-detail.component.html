@@ -225,7 +225,7 @@
       </div>
     </section>
 
-    <section *ngIf="session && (session.coacheeFeedback || session.coachFeedback)" class="card-panel grey lighten-5">
+    <section id="feedback" *ngIf="session && (session.coacheeFeedback || session.coachFeedback)" class="card-panel grey lighten-5">
       <h5 translate>session-detail.title.feedback-overview</h5>
       <div class="divider"></div>
       <div class="row">
