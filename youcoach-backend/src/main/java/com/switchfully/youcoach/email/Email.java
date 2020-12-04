@@ -1,8 +1,13 @@
 package com.switchfully.youcoach.email;
 
+import org.assertj.core.util.Lists;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class Email {
     private String from;
-    private String to;
+    private List<String> to = new ArrayList<>();
     private String subject;
     private String body;
 
@@ -10,8 +15,8 @@ public class Email {
         return new Email();
     }
 
-    public String getTo() {
-        return to;
+    public String[] getTo() {
+        return to.toArray(new String[0]);
     }
 
     public String getSubject() {
@@ -27,7 +32,7 @@ public class Email {
     }
 
     public Email to(String to) {
-        this.to = to;
+        this.to.add(to);
         return this;
     }
 

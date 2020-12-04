@@ -55,7 +55,7 @@
           class="material-icons right">cancel</i></a>
       </div>
     </section>
-    <section *ngIf="session && session.isWaitingForFeedback()" class="card-panel grey lighten-5">
+    <section id="provide-feedback" *ngIf="session && session.isWaitingForFeedback()" class="card-panel grey lighten-5">
       <h5 translate>session-detail.title.feedback</h5>
       <div class="divider"></div>
       <div class="row">

@@ -108,12 +108,20 @@ public class Session {
         return coachFeedback;
     }
 
-    void updateIfExpired() {
-        if (this.status == ACCEPTED && hasExpired(dateAndTime)) {
+    void stopSession() {
+        if (this.status == ACCEPTED) {
             status = WAITING_FOR_FEEDBACK;
-        } else if (this.status == REQUESTED && hasExpired(dateAndTime)) {
+        } else if (this.status == REQUESTED) {
             status = DECLINED;
         }
+    }
+
+    boolean isActive(){
+        return status == ACCEPTED || status == REQUESTED;
+    }
+
+    public boolean isFinished() {
+        return status == WAITING_FOR_FEEDBACK;
     }
 
     void cancel() {
@@ -132,8 +140,8 @@ public class Session {
         this.status = WAITING_FOR_FEEDBACK;
     }
 
-    private boolean hasExpired(LocalDateTime dateAndTime) {
-        return ZonedDateTime.of(dateAndTime, ZoneId.of("Europe/Brussels")).isBefore(ZonedDateTime.now(ZoneId.of("Europe/Brussels")));
+    public boolean hasExpired() {
+        return ZonedDateTime.of(dateAndTime, ZoneId.of("Europe/Brussels")).plusHours(1).isBefore(ZonedDateTime.now(ZoneId.of("Europe/Brussels")));
     }
 
     public void provideCoacheeFeedback(CoacheeFeedback coacheeFeedback) {
@@ -163,5 +171,4 @@ public class Session {
     public int hashCode() {
         return Objects.hash(id);
     }
-
 }

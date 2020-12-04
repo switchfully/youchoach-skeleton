@@ -57,7 +57,13 @@ public class SessionService {
     }
 
     private void setStatusToAutomaticallyClosedWhenTimeIsPast(List<Session> sessionList) {
-        sessionList.forEach(Session::updateIfExpired);
+        sessionList.stream()
+                .filter(Session::isActive)
+                .filter(Session::hasExpired)
+                .peek(Session::stopSession)
+                .filter(Session::isFinished)
+                .map(SessionFinished::new)
+                .forEach(messageSender::handle);
     }
 
     public SessionDto cancel(Long sessionId) {
@@ -84,6 +90,7 @@ public class SessionService {
     public SessionDto finish(Long sessionId) {
         Session session = getSessionFromDatabase(sessionId);
         session.finish();
+        messageSender.handle(new SessionFinished(session));
         return sessionMapper.toDto(session);
     }
 
