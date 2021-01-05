@@ -10,14 +10,9 @@ import * as JWT from 'jwt-decode';
 export class AuthenticationService {
 
   private tokenKey = 'jwt_token';
-  private usernameKey = 'username';
-  private userIdKey = 'user_id';
-  private mimicUserId = 'mimic_user_id';
+  private mimicUserIdKey = 'mimic_user_id';
   private userLoggedInSource = new Subject<boolean>();
   private mimicUserSource = new Subject<number>();
-  private tokenValue = null;
-  private usernameValue = null;
-  private userId = null;
 
   userLoggedIn$ = this.userLoggedInSource.asObservable();
   mimicUser$ = this.mimicUserSource.asObservable();
@@ -25,53 +20,42 @@ export class AuthenticationService {
   constructor(private loginService: AuthenticationHttpService) {
   }
 
-  public setJwtToken(token: string, username: string): void {
-    this.tokenValue = token;
-    this.usernameValue = username;
-    this.userId = JWT(this.getToken()).id;
-    sessionStorage.setItem(this.tokenKey, this.tokenValue);
-    sessionStorage.setItem(this.usernameKey, this.usernameValue);
-    sessionStorage.setItem(this.userIdKey, this.userId);
+  public setJwtToken(token: string): void {
+    sessionStorage.setItem(this.tokenKey, token);
   }
 
   login(loginData: any) {
     return this.loginService.login(loginData)
       .pipe(tap(response => {
-        this.setJwtToken(response.headers.get('Authorization').replace('Bearer', '').trim(), loginData.username);
+        this.setJwtToken(response.headers.get('Authorization').replace('Bearer', '').trim());
         this.userLoggedInSource.next(true);
       }));
   }
 
   getToken() {
-    if (this.tokenValue === null) {
-      this.tokenValue = sessionStorage.getItem(this.tokenKey);
-    }
-    return this.tokenValue;
-  }
-
-  getUsername() {
-    if (this.usernameValue === null) {
-      this.usernameValue = sessionStorage.getItem(this.usernameKey);
-    }
-    return this.usernameValue;
+    return sessionStorage.getItem(this.tokenKey);
   }
 
   getUserId() {
-    if (this.userId === null) {
-      this.userId = sessionStorage.getItem(this.userIdKey);
+    if (!this.isLoggedIn()) {
+      return null;
     }
-    if (this.getMimicUserId() !== null) {
+    if (this.isMimicing()) {
       return this.getMimicUserId();
     }
-    return this.userId;
+    return JWT(this.getToken()).id;
   }
 
   getMimicUserId() {
-    return sessionStorage.getItem(this.mimicUserId);
+    return sessionStorage.getItem(this.mimicUserIdKey);
   }
 
-  setMimicUserId(mimicUserId: string) {
-    sessionStorage.setItem(this.mimicUserId, mimicUserId);
+  private isMimicing() {
+    return this.getMimicUserId() !== null;
+  }
+
+  mimicUser(mimicUserId: string) {
+    sessionStorage.setItem(this.mimicUserIdKey, mimicUserId);
     this.mimicUserSource.next(parseInt(mimicUserId));
   }
 
@@ -81,18 +65,12 @@ export class AuthenticationService {
 
   logout() {
     sessionStorage.removeItem(this.tokenKey);
-    sessionStorage.removeItem(this.usernameKey);
-    sessionStorage.removeItem(this.userIdKey);
-    sessionStorage.removeItem(this.mimicUserId);
-    this.tokenValue = null;
-    this.usernameValue = null;
-    this.userId = null;
-    this.mimicUserId = null;
+    sessionStorage.removeItem(this.mimicUserIdKey);
     this.userLoggedInSource.next(false);
   }
 
   isCoach(): boolean {
-    if(this.getToken() == null) {
+    if (!this.isLoggedIn()) {
       return false;
     }
     const tokenDecoded: any = JWT(this.getToken());
@@ -100,7 +78,7 @@ export class AuthenticationService {
   }
 
   isAdmin(): boolean {
-    if(this.getToken() == null) {
+    if (!this.isLoggedIn()) {
       return false;
     }
     const tokenDecoded: any = JWT(this.getToken());

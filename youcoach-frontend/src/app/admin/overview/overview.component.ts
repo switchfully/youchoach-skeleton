@@ -62,7 +62,7 @@ export class OverviewComponent implements OnInit {
   }
 
   navigateToProfileUrl(profile: IMember) {
-    this.authenticationService.setMimicUserId('' + profile.id);
+    this.authenticationService.mimicUser('' + profile.id);
     this.router.navigateByUrl(this.getProfileUrl(profile));
   }
 

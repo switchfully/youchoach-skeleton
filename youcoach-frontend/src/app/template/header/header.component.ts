@@ -1,7 +1,6 @@
 import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {AuthenticationService} from '../../security/services/authentication/authentication.service';
 import {TranslateService} from '@ngx-translate/core';
-import * as M from 'materialize-css';
 import {CoacheeService} from "../../profile/services/coachee.service";
 import {flatMap} from "rxjs/operators";
 import {InitService} from "../materialize/init.service";
@@ -24,10 +23,16 @@ export class HeaderComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.translate.use(this.translate.getBrowserLang());
-    this.username = this.authenticationService.getUsername();
-    this.authenticationService.userLoggedIn$.subscribe(_ => {
-      this.username = this.authenticationService.getUsername();
-    });
+
+    if (this.authenticationService.getUserId()) {
+      this.coacheeService.getCoacheeById(this.authenticationService.getUserId()).subscribe(profile => this.username = profile.firstName)
+    }
+
+    this.authenticationService.userLoggedIn$
+      .pipe(
+        flatMap(_ => this.coacheeService.getCoacheeById(this.authenticationService.getUserId()))
+      )
+      .subscribe(profile => this.username = profile.firstName);
 
     this.authenticationService.mimicUser$
       .pipe(

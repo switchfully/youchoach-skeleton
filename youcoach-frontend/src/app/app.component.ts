@@ -8,17 +8,12 @@ import {TranslateService} from '@ngx-translate/core';
   styleUrls: []
 })
 export class AppComponent {
-  username;
 
-  constructor(private authenticationService: AuthenticationService, private translate: TranslateService) {
-    translate.setDefaultLang('en');
+  constructor() {
   }
 
   ngOnInit(): void {
-    this.username = this.authenticationService.getUsername();
-    this.authenticationService.userLoggedIn$.subscribe(_ => {
-      this.username = this.authenticationService.getUsername();
-    });
+
   }
 
 }
