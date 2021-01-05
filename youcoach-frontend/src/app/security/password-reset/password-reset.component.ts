@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {CoacheeService} from '../../profile/services/coachee.service';
+import {AccountService} from "../services/account.service";
 
 @Component({
   selector: 'app-password-reset',
@@ -14,7 +15,7 @@ export class PasswordResetComponent implements OnInit {
   password: string;
   repeatPassword: string;
 
-  constructor(private route: ActivatedRoute, private router: Router, private coacheeService: CoacheeService) {
+  constructor(private route: ActivatedRoute, private router: Router, private accountService: AccountService) {
     // tslint:disable-next-line:max-line-length
     this.emailMatch = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
   }
@@ -37,7 +38,7 @@ export class PasswordResetComponent implements OnInit {
   }
 
   resetPassword(): void {
-    this.coacheeService.performPasswordReset({email: this.email, token: this.token, password: this.password})
+    this.accountService.performPasswordReset({email: this.email, token: this.token, password: this.password})
       .subscribe(result => {
                              if (result.passwordChanged) {
                                this.router.navigateByUrl('/password-change-success');

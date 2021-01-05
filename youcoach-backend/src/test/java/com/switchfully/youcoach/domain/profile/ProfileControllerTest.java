@@ -70,23 +70,6 @@ class ProfileControllerTest {
                 .build();
     }
 
-    @WithMockUser
-    @Test
-    void createUser() throws Exception {
-        CreateSecuredUserDto createSecuredUserDto = new CreateSecuredUserDto("Integration", "Test", "classYear", "test@integraition.be", "test123TT");
-        String actualResult =
-                mockMvc.perform(post("/users")
-                        .with(csrf())
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(new ObjectMapper().writeValueAsString(createSecuredUserDto))
-                ).andExpect(status().isCreated())
-                        .andReturn()
-                        .getResponse()
-                        .getContentAsString();
-        String expected = "{\"id\":20,\"firstName\":\"Integration\",\"lastName\":\"Test\",\"email\":\"test@integraition.be\"}";
-        JSONAssert.assertEquals(expected, actualResult, false);
-    }
-
     @Test
     @Sql("classpath:oneDefaultUser.sql")
     void getCoacheeProfile() throws Exception {

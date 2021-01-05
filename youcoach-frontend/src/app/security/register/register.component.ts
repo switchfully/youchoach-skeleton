@@ -4,6 +4,7 @@ import {Router} from '@angular/router';
 import {CoacheeService} from '../../profile/services/coachee.service';
 import {ICoachee} from '../interfaces/ICoachee';
 import {ICoacheeRegisterResult} from '../interfaces/ICoacheeRegisterResult';
+import {AccountService} from "../services/account.service";
 
 @Component({
   selector: 'app-register',
@@ -29,8 +30,10 @@ export class RegisterComponent implements OnInit {
     return pass === confirmPass ? null : {notSame: true};
   }
 
-  constructor(private fb: FormBuilder, private router: Router,
-              private coacheeService: CoacheeService) {
+  constructor(private fb: FormBuilder,
+              private router: Router,
+              private accountService: AccountService
+  ) {
   }
 
   ngOnInit(): void {
@@ -53,7 +56,7 @@ export class RegisterComponent implements OnInit {
   }
 
   private register(coachee: ICoachee) {
-    this.coacheeService.register(coachee).subscribe(
+    this.accountService.register(coachee).subscribe(
       addedCoachee => {
         this.coachee = this.transformResult(addedCoachee);
         if (addedCoachee.accountEnabled) { this.router.navigateByUrl('/registration-success');

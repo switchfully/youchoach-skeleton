@@ -41,23 +41,14 @@ public class ProfileController {
     private final static Logger LOGGER = LoggerFactory.getLogger(ProfileController.class);
 
     private final ProfileService profileService;
-    private final PasswordResetService passwordResetService;
     private final AuthorizationService authorizationService;
     private final ImageService imageService;
 
     @Autowired
-    public ProfileController(ProfileService profileService, PasswordResetService passwordResetService, AuthorizationService authorizationService, ImageService imageService) {
+    public ProfileController(ProfileService profileService, AuthorizationService authorizationService, ImageService imageService) {
         this.profileService = profileService;
-        this.passwordResetService = passwordResetService;
         this.authorizationService = authorizationService;
         this.imageService = imageService;
-    }
-
-    @PostMapping(produces = "application/json", consumes = "application/json")
-    @ResponseStatus(HttpStatus.CREATED)
-    public SecuredUserDto createUser(@RequestBody CreateSecuredUserDto createValidatedUserDto) {
-        LOGGER.info("user was added");
-        return profileService.createUser(createValidatedUserDto);
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
@@ -145,30 +136,6 @@ public class ProfileController {
     @DeleteMapping(path = "/profile/{id}")
     public void deleteProfile(@PathVariable("id") long id) {
         profileService.deleteProfile(id);
-    }
-
-    @PreAuthorize("isAnonymous()")
-    @PostMapping(consumes = "application/json;charset=UTF-8", produces = "application/json;charset=UTF-8", path = "/validate")
-    public VerificationResultDto validateAccount(@RequestBody ValidateAccountDto validationData) {
-        return profileService.validateAccount(validationData);
-    }
-
-    @PreAuthorize("isAnonymous()")
-    @PatchMapping(consumes = "application/json;charset=UTF-8", produces = "application/json;charset=UTF-8", path = "/validate")
-    public ResendVerificationDto resendValidation(@RequestBody ResendVerificationDto validationData) {
-        return profileService.resendValidation(validationData);
-    }
-
-    @PreAuthorize("isAnonymous()")
-    @PostMapping(consumes = "application/json;charset=UTF-8", path = "/password/reset")
-    public void requestPasswordResetToken(@RequestBody PasswordResetRequestDto resetRequest) {
-        passwordResetService.requestPasswordReset(resetRequest);
-    }
-
-    @PreAuthorize("isAnonymous()")
-    @PatchMapping(consumes = "application/json;charset=UTF-8", path = "/password/reset", produces = "application/json;charset=UTF-8")
-    public PasswordChangeResultDto performPasswordChange(@RequestBody PasswordChangeRequestDto changeRequest) {
-        return passwordResetService.performPasswordChange(changeRequest);
     }
 
     @ExceptionHandler(IllegalStateException.class)

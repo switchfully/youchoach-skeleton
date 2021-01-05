@@ -40,11 +40,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable().authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/users").permitAll()
-                .antMatchers(HttpMethod.PATCH, "/users/validate").permitAll()
-                .antMatchers(HttpMethod.POST, "/users/validate").permitAll()
-                .antMatchers(HttpMethod.PATCH, "/users/password/reset").permitAll()
-                .antMatchers(HttpMethod.POST, "/users/password/reset").permitAll()
+                .antMatchers(HttpMethod.POST, "/security/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .addFilter(new JwtAuthenticationFilter(authenticationManager(), securedUserService, authenticationFailureHandler()))

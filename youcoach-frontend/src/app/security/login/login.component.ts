@@ -4,6 +4,7 @@ import {AuthenticationService} from '../services/authentication/authentication.s
 import {ActivatedRoute, Router} from '@angular/router';
 import {CoacheeService} from '../../profile/services/coachee.service';
 import {InitService} from "../../template/materialize/init.service";
+import {AccountService} from "../services/account.service";
 
 @Component({
   selector: 'app-login',
@@ -26,7 +27,7 @@ export class LoginComponent implements OnInit {
               private authenticationService: AuthenticationService,
               private router: Router,
               private route: ActivatedRoute,
-              private coacheeService: CoacheeService,
+              private accountService: AccountService,
               private initService: InitService
   ) {
     this.loginForm = this.formBuilder.group({
@@ -76,7 +77,7 @@ export class LoginComponent implements OnInit {
   }
 
   resetPassword() {
-    this.coacheeService.requestPasswordResetToken({email: this.loginForm.get('username').value})
+    this.accountService.requestPasswordResetToken({email: this.loginForm.get('username').value})
       .subscribe(
         _ => this.router.navigateByUrl('/password-reset-requested'),
         _ => this.userUnknown = true

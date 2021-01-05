@@ -21,22 +21,9 @@ export class CoacheeService {
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': 'https://youcoach-test.herokuapp.com/'
     }),
-
   };
 
   constructor(private http: HttpClient) {
-  }
-
-  register(coachee: ICoachee): Observable<ICoacheeRegisterResult> {
-    return this.http.post<ICoacheeRegisterResult>(this.url, coachee, this.httpOptions);
-  }
-
-  requestPasswordResetToken(tokenRequest: IRequestPasswordResetToken): Observable<any> {
-    return this.http.post<any>(this.url + '/password/reset', tokenRequest, this.httpOptions);
-  }
-
-  performPasswordReset(passwordChange: IPasswordChange): Observable<IPasswordChangeResult> {
-    return this.http.patch<any>(this.url + '/password/reset', passwordChange, this.httpOptions);
   }
 
   getCoacheeById(id: number): Observable<IMember> {

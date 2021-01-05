@@ -11,7 +11,7 @@ import {environment} from '../../../environments/environment';
 })
 export class EmailValidationService {
 
-  readonly url = `${environment.backendUrl}/users`;
+  readonly url = `${environment.backendUrl}/security/account`;
   httpOptions = {
     headers: new HttpHeaders({'Content-Type': 'application/json'})
   };
@@ -24,6 +24,6 @@ export class EmailValidationService {
   }
 
   resend(data: IResendValidation): Observable<IResendValidation> {
-    return this.http.patch<IResendValidation>(this.url + '/validate', data, this.httpOptions);
+    return this.http.post<IResendValidation>(this.url + '/resend-validation', data, this.httpOptions);
   }
 }
