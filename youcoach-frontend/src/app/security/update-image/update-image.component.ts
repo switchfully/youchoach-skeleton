@@ -14,7 +14,7 @@ export class UpdateImageComponent implements OnInit {
     profilePicture: ['']
   });
   tempProfilePicture: File;
-  profileId = +this.route.snapshot.paramMap.get('id');
+  profileId;
 
   constructor(private coacheeService: CoacheeService,
               private route: ActivatedRoute,
@@ -23,6 +23,7 @@ export class UpdateImageComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.route.parent.params.subscribe(routeParams => this.profileId = routeParams.id);
   }
 
   onFileChanged(file: File, profilePicture: HTMLImageElement) {

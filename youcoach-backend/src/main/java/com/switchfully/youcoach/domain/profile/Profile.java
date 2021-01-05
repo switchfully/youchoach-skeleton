@@ -3,7 +3,7 @@ package com.switchfully.youcoach.domain.profile;
 import com.switchfully.youcoach.domain.profile.role.Role;
 import com.switchfully.youcoach.domain.profile.role.coach.CoachInformation;
 import com.switchfully.youcoach.domain.profile.role.coach.Topic;
-import com.switchfully.youcoach.security.authentication.user.UserRole;
+import com.switchfully.youcoach.security.authentication.user.Authority;
 
 import javax.persistence.*;
 import java.util.List;
@@ -58,8 +58,8 @@ public class Profile {
     public Profile() {
     }
 
-    public List<UserRole> getRoles() {
-        return role.getUserRoles();
+    public List<Authority> getAuthorities() {
+        return role.getAuthorities();
     }
 
     public Role getRole() {

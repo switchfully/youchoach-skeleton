@@ -8,7 +8,7 @@ import com.switchfully.youcoach.domain.profile.role.coach.Grade;
 import com.switchfully.youcoach.domain.profile.role.coach.api.CoachProfileDto;
 import com.switchfully.youcoach.security.authentication.user.api.CreateSecuredUserDto;
 import com.switchfully.youcoach.security.authentication.user.SecuredUserService;
-import com.switchfully.youcoach.security.authentication.user.UserRole;
+import com.switchfully.youcoach.security.authentication.user.Authority;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
@@ -90,7 +90,7 @@ class ProfileControllerTest {
     @Test
     @Sql("classpath:oneDefaultUser.sql")
     void getCoacheeProfile() throws Exception {
-        UsernamePasswordAuthenticationToken user = new UsernamePasswordAuthenticationToken("example@example.com", null, List.of(UserRole.ROLE_COACHEE));
+        UsernamePasswordAuthenticationToken user = new UsernamePasswordAuthenticationToken("example@example.com", null, List.of(Authority.COACHEE));
         String token = securedUserService.generateToken(user);
 
         String actualResult = mockMvc.perform(get("/users/profile/20").header("Authorization", "Bearer " + token)
@@ -107,7 +107,7 @@ class ProfileControllerTest {
     @Test
     @Sql("classpath:oneDefaultUser.sql")
     void getSpecificCoacheeProfile() throws Exception {
-        UsernamePasswordAuthenticationToken user = new UsernamePasswordAuthenticationToken("example@example.com", null, List.of(UserRole.ROLE_COACHEE));
+        UsernamePasswordAuthenticationToken user = new UsernamePasswordAuthenticationToken("example@example.com", null, List.of(Authority.COACHEE));
         String token = securedUserService.generateToken(user);
 
         String actualResult = mockMvc.perform(get("/users/profile/20")
@@ -127,7 +127,7 @@ class ProfileControllerTest {
     @Sql("classpath:oneDefaultUser.sql")
     @Sql("classpath:anotherDefaultUser.sql")
     void getCoacheeWithOtherUser_forbidden_if_not_own_profile() throws Exception {
-        UsernamePasswordAuthenticationToken user = new UsernamePasswordAuthenticationToken("example2@example.com", null, List.of(UserRole.ROLE_COACHEE));
+        UsernamePasswordAuthenticationToken user = new UsernamePasswordAuthenticationToken("example2@example.com", null, List.of(Authority.COACHEE));
         String token = securedUserService.generateToken(user);
 
         mockMvc.perform(get("/users/profile/20")
@@ -153,7 +153,7 @@ class ProfileControllerTest {
     @Sql("classpath:oneDefaultUser.sql")
     @Sql("classpath:anotherDefaultUser.sql")
     void getCoacheeWithAdmin() throws Exception {
-        UsernamePasswordAuthenticationToken user = new UsernamePasswordAuthenticationToken("example2@example.com", null, List.of(UserRole.ROLE_ADMIN));
+        UsernamePasswordAuthenticationToken user = new UsernamePasswordAuthenticationToken("example2@example.com", null, List.of(Authority.ADMIN));
         String token = securedUserService.generateToken(user);
 
         String actualResult = mockMvc.perform(get("/users/profile/20")
@@ -173,7 +173,7 @@ class ProfileControllerTest {
     @Sql("classpath:oneDefaultUser.sql")
     @Sql("classpath:makeUsersCoach.sql")
     void getCoachProfile() throws Exception {
-        UsernamePasswordAuthenticationToken user = new UsernamePasswordAuthenticationToken("example@example.com", null, List.of(UserRole.ROLE_COACH));
+        UsernamePasswordAuthenticationToken user = new UsernamePasswordAuthenticationToken("example@example.com", null, List.of(Authority.COACH));
         String token = securedUserService.generateToken(user);
 
 

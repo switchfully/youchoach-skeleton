@@ -2,6 +2,7 @@ package com.switchfully.youcoach.security.verification;
 
 import com.switchfully.youcoach.domain.profile.Profile;
 import com.switchfully.youcoach.email.EmailSender;
+import com.switchfully.youcoach.email.MessageSender;
 import com.switchfully.youcoach.security.verification.event.AccountCreated;
 import com.switchfully.youcoach.email.exception.SendingMailError;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -17,22 +18,22 @@ import org.springframework.transaction.annotation.Transactional;
 public class MailAccountVerificator implements AccountVerificator {
     private final AccountVerificationRepository accountVerificationRepository;
     private final Environment environment;
-    private final EmailSender emailExecutor;
+    private final MessageSender messageSender;
 
     @Autowired
     public MailAccountVerificator(AccountVerificationRepository accountVerificationRepository,
                                   Environment environment,
-                                  EmailSender emailExecutor) {
+                                  MessageSender messageSender) {
         this.accountVerificationRepository = accountVerificationRepository;
         this.environment = environment;
-        this.emailExecutor = emailExecutor;
+        this.messageSender = messageSender;
     }
 
     @Override
     public boolean sendVerificationEmail(Profile profile) {
         AccountVerification accountVerification = accountVerificationRepository.save(generateAccountVerification(profile));
         try {
-            emailExecutor.handle(new AccountCreated(profile, accountVerification));
+            messageSender.handle(new AccountCreated(profile, accountVerification));
         } catch (SendingMailError e) {
             e.printStackTrace();
             removeAccountVerification(profile);

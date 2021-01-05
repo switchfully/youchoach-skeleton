@@ -1,7 +1,7 @@
 package com.switchfully.youcoach.security.authentication.jwt;
 
 import com.google.common.collect.Lists;
-import com.switchfully.youcoach.security.authentication.user.UserRole;
+import com.switchfully.youcoach.security.authentication.user.Authority;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.MalformedJwtException;
@@ -15,9 +15,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
-import org.springframework.web.client.HttpClientErrorException;
 
-import javax.security.sasl.AuthenticationException;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -48,7 +46,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
         //ugly code and duplication from SecurityConfig.
         //I got no idea to do this better.
         //This basically means do not test security in these cases, something the SecurityConfig does also
-        if(request.getRequestURI().contains("/users") && Lists.newArrayList("POST", "PATCH").contains(request.getMethod())) {
+        if ((request.getRequestURI().equals("/users/validate") || request.getRequestURI().equals("/users/password/reset") || request.getRequestURI().equals("/users")) && Lists.newArrayList("POST", "PATCH").contains(request.getMethod())) {
             filterChain.doFilter(request, response);
             return;
         }
@@ -79,7 +77,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
                 ArrayList<String> authoritiesInToken
                         = parsedToken.getBody().get("rol", ArrayList.class);
                 var authorities = authoritiesInToken.stream()
-                        .map(UserRole::valueOf)
+                        .map(Authority::valueOf)
                         .collect(Collectors.toList());
 
                 if (!isEmpty(username)) {

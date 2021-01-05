@@ -1,7 +1,5 @@
 package com.switchfully.youcoach.domain.profile.api;
 
-import com.switchfully.youcoach.security.authentication.user.UserRole;
-
 import java.util.Objects;
 
 public class ProfileDto {

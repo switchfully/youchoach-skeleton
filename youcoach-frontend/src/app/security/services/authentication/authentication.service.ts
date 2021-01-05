@@ -96,7 +96,7 @@ export class AuthenticationService {
       return false;
     }
     const tokenDecoded: any = JWT(this.getToken());
-    return tokenDecoded.rol.includes('ROLE_COACH');
+    return tokenDecoded.rol.includes('COACH');
   }
 
   isAdmin(): boolean {
@@ -104,6 +104,6 @@ export class AuthenticationService {
       return false;
     }
     const tokenDecoded: any = JWT(this.getToken());
-    return tokenDecoded.rol.includes('ROLE_ADMIN');
+    return tokenDecoded.rol.includes('ADMIN');
   }
 }

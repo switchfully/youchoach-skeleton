@@ -105,9 +105,11 @@ public class ProfileService {
     private void performValidation(CreateSecuredUserDto createSecuredUserDto) {
         if (!verificationService.isEmailValid(createSecuredUserDto.getEmail())) {
             throw new IllegalStateException("Email is not valid !");
-        } else if (emailExists(createSecuredUserDto.getEmail())) {
+        }
+        if (emailExists(createSecuredUserDto.getEmail())) {
             throw new IllegalStateException("Email already exists!");
-        } else if (!verificationService.isPasswordValid(createSecuredUserDto.getPassword())) {
+        }
+        if (!verificationService.isPasswordValid(createSecuredUserDto.getPassword())) {
             throw new IllegalStateException("Password needs te be 8 characters : --> 1 capital, 1 lowercase and 1 one number ");
         }
     }

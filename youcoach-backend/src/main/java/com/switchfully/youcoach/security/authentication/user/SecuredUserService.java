@@ -21,7 +21,6 @@ public class SecuredUserService implements UserDetailsService {
 
     private final ProfileRepository profileRepository;
     private final JwtGenerator jwtGenerator;
-    private String jwtSecret;
 
     public SecuredUserService(ProfileRepository profileRepository, JwtGenerator jwtGenerator) {
         this.profileRepository = profileRepository;
@@ -38,13 +37,13 @@ public class SecuredUserService implements UserDetailsService {
         return new SecuredUser(profile.getEmail(), profile.getPassword(), authorities, profile.isAccountEnabled());
     }
 
-    public Collection<GrantedAuthority> determineGrantedAuthorities(Profile profile) {
-        return new ArrayList<>(profile.getRoles());
+    private Collection<GrantedAuthority> determineGrantedAuthorities(Profile profile) {
+        return new ArrayList<>(profile.getAuthorities());
     }
 
     public boolean isAdmin(String email){
         UserDetails ud = loadUserByUsername(email);
-        return ud.getAuthorities().contains(UserRole.ROLE_ADMIN);
+        return ud.getAuthorities().contains(Authority.ADMIN);
     }
 
     public String generateToken(String email) {

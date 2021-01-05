@@ -60,20 +60,20 @@ public class ProfileController {
         return profileService.createUser(createValidatedUserDto);
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping(produces = "application/json;charset=UTF-8")
-    public List<ProfileDto> geProfiles() {
+    public List<ProfileDto> getProfiles() {
         return profileService.getProfiles();
     }
 
-    @PreAuthorize("hasRole('ROLE_COACHEE')")
+    @PreAuthorize("hasAuthority('COACHEE')")
     @GetMapping(produces = "application/json;charset=UTF-8", path = "/find-coach")
     public CoachListingDto getCoachProfiles() {
         return profileService.getCoachProfiles();
     }
 
 
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_COACHEE')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'COACHEE')")
     @GetMapping(produces = "application/json;charset=UTF-8", path = "/profile/{id}")
     public ProfileDto getSpecificCoacheeProfile(@PathVariable("id") long id, Authentication principal) {
         if (!authorizationService.canAccessProfile(principal, id)) {
@@ -82,13 +82,13 @@ public class ProfileController {
         return profileService.getCoacheeProfile(id);
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_COACHEE', 'ROLE_COACH', 'ROLE_ADMIN')")
+    @PreAuthorize("hasAnyAuthority('COACHEE', 'COACH', 'ADMIN')")
     @GetMapping(produces = "application/json;charset=UTF-8", path = "/coach/profile/{id}")
     public CoachProfileDto getSpecificCoachProfile(Principal principal, @PathVariable("id") long id) {
         return profileService.getCoachProfile(principal, id);
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_COACHEE', 'ROLE_ADMIN')")
+    @PreAuthorize("hasAnyAuthority('COACHEE', 'ADMIN')")
     @PutMapping(produces = "application/json;charset=UTF-8", consumes = "application/json", path = "/profile/{id}")
     public ProfileUpdatedDto updateCoacheeProfile(@RequestBody UpdateProfileDto updateProfileDto, @PathVariable("id") long id, Authentication principal) {
         if (!authorizationService.canAccessProfile(principal, id)) {
@@ -101,7 +101,7 @@ public class ProfileController {
         return profileService.updateProfile(email, updateProfileDto);
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_COACH','ROLE_ADMIN')")
+    @PreAuthorize("hasAnyAuthority('COACH','ADMIN')")
     @PutMapping(produces = "application/json;charset=UTF-8", path = "/coach/profile/{id}")
     public CoachProfileDto updateCoachInformation(@RequestBody CoachProfileDto coachProfileDto, @PathVariable("id") long id, Authentication principal) {
         if (!authorizationService.canAccessProfile(principal, id)) {
@@ -111,7 +111,7 @@ public class ProfileController {
         return profileService.updateCoachInformation(email, coachProfileDto);
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PutMapping(path = "/coach/profile/{id}/topics")
     public void updateTopics(@RequestBody List<CoachingTopicDto> topicDtos, @PathVariable("id") long id) {
         profileService.updateTopics(id, topicDtos);
@@ -122,7 +122,7 @@ public class ProfileController {
         return profileService.getAllTopics();
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_COACHEE','ROLE_ADMIN')")
+    @PreAuthorize("hasAnyAuthority('COACHEE','ADMIN')")
     @PostMapping(path = "/profile/{id}/image")
     public void uploadImage(@RequestParam("profilePicture") MultipartFile file, @PathVariable("id") long id, Authentication principal) {
         if (!authorizationService.canAccessProfile(principal, id)) {
@@ -141,7 +141,7 @@ public class ProfileController {
                 .body(profileImage.getResource());
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     @DeleteMapping(path = "/profile/{id}")
     public void deleteProfile(@PathVariable("id") long id) {
         profileService.deleteProfile(id);

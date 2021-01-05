@@ -4,6 +4,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.Objects;
 
 public class SecuredUser implements UserDetails {
     private String username;
@@ -57,7 +58,29 @@ public class SecuredUser implements UserDetails {
         return enabled;
     }
 
-    public void setEnabled(boolean enabled){
-        this.enabled = enabled;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        SecuredUser that = (SecuredUser) o;
+        return enabled == that.enabled &&
+                Objects.equals(username, that.username) &&
+                Objects.equals(password, that.password) &&
+                Objects.equals(authorities, that.authorities);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(username, password, authorities, enabled);
+    }
+
+    @Override
+    public String toString() {
+        return "SecuredUser{" +
+                "username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", authorities=" + authorities +
+                ", enabled=" + enabled +
+                '}';
     }
 }
