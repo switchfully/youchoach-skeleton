@@ -1,4 +1,4 @@
-package com.switchfully.youcoach.security.verification.exception;
+package com.switchfully.youcoach.security.authentication.user.exception;
 
 public class AccountVerificationFailedException extends RuntimeException{
 }

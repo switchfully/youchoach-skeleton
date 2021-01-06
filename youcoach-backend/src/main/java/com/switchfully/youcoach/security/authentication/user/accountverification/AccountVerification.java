@@ -1,19 +1,17 @@
-package com.switchfully.youcoach.security.verification;
+package com.switchfully.youcoach.security.authentication.user.accountverification;
 
-import com.switchfully.youcoach.domain.profile.Profile;
+import com.switchfully.youcoach.security.authentication.user.api.Account;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
+@Table(name = "account_verification")
 public class AccountVerification {
     @Id
-    private Long id;
-
-    @OneToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name="id")
-    private Profile profile;
+    @Column(name = "id")
+    private Long profileId;
 
     @Column(name = "verification_code", nullable = false)
     private String verificationCode;
@@ -21,11 +19,10 @@ public class AccountVerification {
     @Column(name = "created_on", nullable = false)
     private LocalDateTime createdOn = LocalDateTime.now();
 
-    public AccountVerification(){}
+    public AccountVerification(Account profile, String code){}
 
-    public AccountVerification(Profile profile, String verificationCode){
-        this.id = profile == null ? null : profile.getId();
-        this.profile = profile;
+    public AccountVerification(Long profileId, String verificationCode){
+        this.profileId = profileId;
         this.verificationCode = verificationCode;
     }
 
@@ -33,20 +30,16 @@ public class AccountVerification {
         return verificationCode;
     }
 
-    public Profile getProfile() {
-        return profile;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AccountVerification that = (AccountVerification) o;
-        return Objects.equals(id, that.id);
+        return Objects.equals(profileId, that.profileId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(profileId);
     }
 }

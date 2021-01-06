@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.switchfully.youcoach.domain.session.api.CreateSessionDto;
 import com.switchfully.youcoach.domain.session.api.SessionDto;
 import com.switchfully.youcoach.domain.profile.ProfileService;
+import com.switchfully.youcoach.security.authentication.user.Authority;
 import com.switchfully.youcoach.security.authentication.user.SecuredUserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,6 +17,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.core.env.Environment;
 import org.springframework.http.MediaType;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers;
@@ -27,6 +29,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.security.Principal;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
@@ -40,7 +43,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @ComponentScan(basePackages = "com.switchfully.youcoach")
-class SessionControllerTest {
+class SessionControllerIntegrationTest {
     @Autowired
     MockMvc mockMvc;
     @Autowired
@@ -72,12 +75,7 @@ class SessionControllerTest {
         CreateSessionDto createSessionDto = new CreateSessionDto("Mathematics", "30/05/2020", "11:50", "school", "no remarks", 1L, 1L);
         String value = new ObjectMapper().writeValueAsString(createSessionDto);
         CreateSessionDto actualCoachingSessionDto = new ObjectMapper().readerFor(CreateSessionDto.class).readValue(value);
-        assertThat(actualCoachingSessionDto).isEqualTo(createSessionDto);        // Given
-
-        // When
-
-        // Then
-
+        assertThat(actualCoachingSessionDto).isEqualTo(createSessionDto);
     }
 
     @WithMockUser(username = "example2@example.com")
@@ -89,7 +87,7 @@ class SessionControllerTest {
         CreateSessionDto createSessionDto = new CreateSessionDto("Mathematics", "30/05/2020", "11:50", "school", "no remarks", 20L, 21L);
         String actualResult =
                 mockMvc.perform(post("/coaching-sessions")
-                        .header("Authorization", "Bearer " + securedUserService.generateToken(mockPrincipal.getName()))
+                        .header("Authorization", "Bearer " + securedUserService.generateToken(new UsernamePasswordAuthenticationToken("example2@example.com", null, List.of(Authority.COACHEE))))
                         .principal(mockPrincipal)
                         .with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)

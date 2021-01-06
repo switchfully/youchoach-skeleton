@@ -3,6 +3,7 @@ package com.switchfully.youcoach.domain.profile;
 import com.switchfully.youcoach.domain.profile.role.Role;
 import com.switchfully.youcoach.domain.profile.role.coach.CoachInformation;
 import com.switchfully.youcoach.domain.profile.role.coach.Topic;
+import com.switchfully.youcoach.security.authentication.user.api.Account;
 import com.switchfully.youcoach.security.authentication.user.Authority;
 
 import javax.persistence.*;
@@ -14,7 +15,7 @@ import static javax.persistence.EnumType.STRING;
 @Entity
 @Table(name = "profile")
 @Inheritance(strategy = InheritanceType.JOINED)
-public class Profile {
+public class Profile implements Account {
     @Id
     @SequenceGenerator(name = "profile_seq", sequenceName = "profile_seq", initialValue = 1, allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "profile_seq")
@@ -66,7 +67,7 @@ public class Profile {
         return role;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 

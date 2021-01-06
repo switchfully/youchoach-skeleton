@@ -8,11 +8,7 @@ import com.switchfully.youcoach.domain.profile.role.coach.api.CoachListingDto;
 import com.switchfully.youcoach.domain.profile.role.coach.api.CoachProfileDto;
 import com.switchfully.youcoach.domain.profile.role.coach.api.CoachingTopicDto;
 import com.switchfully.youcoach.file.DBFile;
-import com.switchfully.youcoach.security.authentication.user.api.CreateSecuredUserDto;
-import com.switchfully.youcoach.security.authentication.user.api.SecuredUserDto;
 import com.switchfully.youcoach.security.authorization.AuthorizationService;
-import com.switchfully.youcoach.security.verification.PasswordResetService;
-import com.switchfully.youcoach.security.verification.api.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,7 +71,7 @@ public class ProfileController {
 
     @PreAuthorize("hasAnyAuthority('COACHEE', 'COACH', 'ADMIN')")
     @GetMapping(produces = "application/json;charset=UTF-8", path = "/coach/profile/{id}")
-    public CoachProfileDto getSpecificCoachProfile(Principal principal, @PathVariable("id") long id) {
+    public CoachProfileDto getSpecificCoachProfile(Authentication principal, @PathVariable("id") long id) {
         return profileService.getCoachProfile(principal, id);
     }
 

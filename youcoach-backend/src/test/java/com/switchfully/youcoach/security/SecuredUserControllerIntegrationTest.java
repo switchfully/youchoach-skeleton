@@ -34,7 +34,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @ComponentScan(basePackages = "com.switchfully.youcoach")
 @Transactional
-class SecurityAccountControllerTest {
+class SecuredUserControllerIntegrationTest {
 
     @Autowired
     MockMvc mockMvc;
@@ -63,7 +63,7 @@ class SecurityAccountControllerTest {
                         .andReturn()
                         .getResponse()
                         .getContentAsString();
-        String expected = "{\"id\":20,\"firstName\":\"Integration\",\"lastName\":\"Test\",\"email\":\"test@integraition.be\"}";
+        String expected = "{\"id\":20,\"email\":\"test@integraition.be\"}";
         JSONAssert.assertEquals(expected, actualResult, false);
     }
 

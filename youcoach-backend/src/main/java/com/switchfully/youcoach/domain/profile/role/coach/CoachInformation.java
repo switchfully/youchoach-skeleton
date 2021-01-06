@@ -3,6 +3,7 @@ package com.switchfully.youcoach.domain.profile.role.coach;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Embeddable
@@ -68,5 +69,21 @@ public class CoachInformation {
 
     private boolean listContainsTopic(Topic newTopic, List<Topic> list) {
         return list.stream().anyMatch(topic -> topic.getName().equals(newTopic.getName()));
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CoachInformation that = (CoachInformation) o;
+        return Objects.equals(introduction, that.introduction) &&
+                Objects.equals(availability, that.availability) &&
+                Objects.equals(xp, that.xp) &&
+                Objects.equals(topics, that.topics);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(introduction, availability, xp, topics);
     }
 }

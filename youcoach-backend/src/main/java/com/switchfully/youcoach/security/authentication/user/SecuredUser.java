@@ -9,10 +9,10 @@ import java.util.Objects;
 public class SecuredUser implements UserDetails {
     private String username;
     private String password;
-    private Collection<? extends GrantedAuthority> authorities;
+    private Collection<Authority> authorities;
     private boolean enabled;
 
-    public SecuredUser(String username, String password, Collection<? extends GrantedAuthority> authorities, boolean enabled){
+    public SecuredUser(String username, String password, Collection<Authority> authorities, boolean enabled){
         this.username = username;
         this.password = password;
         this.authorities = authorities;
@@ -24,7 +24,7 @@ public class SecuredUser implements UserDetails {
     }
 
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
+    public Collection<Authority> getAuthorities() {
         return authorities;
     }
 

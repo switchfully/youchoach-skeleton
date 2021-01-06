@@ -1,12 +1,12 @@
-package com.switchfully.youcoach.security.verification;
+package com.switchfully.youcoach.security.authentication.user;
 
 import com.switchfully.youcoach.domain.profile.Profile;
 import com.switchfully.youcoach.domain.profile.ProfileRepository;
 import com.switchfully.youcoach.email.MessageSender;
-import com.switchfully.youcoach.security.verification.event.ResetPasswordRequestReceived;
-import com.switchfully.youcoach.security.verification.api.PasswordChangeRequestDto;
-import com.switchfully.youcoach.security.verification.api.PasswordChangeResultDto;
-import com.switchfully.youcoach.security.verification.api.PasswordResetRequestDto;
+import com.switchfully.youcoach.security.authentication.user.api.PasswordChangeRequestDto;
+import com.switchfully.youcoach.security.authentication.user.api.PasswordChangeResultDto;
+import com.switchfully.youcoach.security.authentication.user.api.PasswordResetRequestDto;
+import com.switchfully.youcoach.security.authentication.user.event.ResetPasswordRequestReceived;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,32 +20,32 @@ import java.util.Optional;
 public class PasswordResetService {
     private final PasswordEncoder passwordEncoder;
     private final ProfileRepository profileRepository;
-    private final VerificationService verificationService;
+    private final SignatureService signatureService;
     private final String activeProfiles;
     private final MessageSender messageSender;
 
     @Autowired
     public PasswordResetService(PasswordEncoder passwordEncoder,
                                 ProfileRepository profileRepository,
-                                VerificationService verificationService,
+                                SignatureService signatureService,
                                 @Value("${spring.profiles.active}") String activeProfiles,
                                 MessageSender messageSender) {
 
         this.passwordEncoder = passwordEncoder;
         this.profileRepository = profileRepository;
         this.messageSender = messageSender;
-        this.verificationService = verificationService;
+        this.signatureService = signatureService;
         this.activeProfiles = activeProfiles;
     }
 
     public void requestPasswordReset(PasswordResetRequestDto request) {
-        if (!verificationService.isSigningAndVerifyingAvailable() || activeProfiles.contains("development")) return;
+        if (!activeProfiles.contains("development")) return;
 
         messageSender.handle(new ResetPasswordRequestReceived(request.getEmail()));
     }
 
     public PasswordChangeResultDto performPasswordChange(PasswordChangeRequestDto request) {
-        if (!digitalSigningAvailableAndSignatureMatchesAndPasswordFollowsValidFormat(request)) {
+        if (!signatureService.verifyBased64SignaturePasses(request.getToken(), request.getEmail())) {
             return new PasswordChangeResultDto(false);
         }
         Optional<Profile> userOpt = profileRepository.findByEmail(request.getEmail());
@@ -56,12 +56,5 @@ public class PasswordResetService {
         Profile profile = userOpt.get();
         profile.setPassword(passwordEncoder.encode(request.getPassword()));
         return new PasswordChangeResultDto(true);
-
-    }
-
-    private boolean digitalSigningAvailableAndSignatureMatchesAndPasswordFollowsValidFormat(PasswordChangeRequestDto request) {
-        return verificationService.isSigningAndVerifyingAvailable() &&
-                verificationService.verifyBased64SignaturePasses(request.getToken(), request.getEmail()) &&
-                verificationService.isPasswordValid(request.getPassword());
     }
 }

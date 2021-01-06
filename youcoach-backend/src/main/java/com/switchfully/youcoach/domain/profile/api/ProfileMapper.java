@@ -21,16 +21,8 @@ import java.util.stream.Collectors;
 @Component
 public class ProfileMapper {
 
-    public SecuredUserDto toUserDto(Profile profile) {
-        return new SecuredUserDto(profile.getId(), profile.getFirstName(), profile.getLastName(), profile.getEmail(), profile.isAccountEnabled());
-    }
-
     public Profile toUser(CreateSecuredUserDto createSecuredUserDto) {
         return new Profile(createSecuredUserDto.getFirstName(), createSecuredUserDto.getLastName(), createSecuredUserDto.getClassYear(), createSecuredUserDto.getEmail(), createSecuredUserDto.getPassword());
-    }
-
-    public List<SecuredUserDto> toUserDto(List<Profile> profiles) {
-        return profiles.stream().map(this::toUserDto).collect(Collectors.toList());
     }
 
     public ProfileDto toCoacheeProfileDto(Profile model) {

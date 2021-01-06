@@ -66,7 +66,6 @@ public class CoachProfileDto extends ProfileDto {
         return this;
     }
 
-
     @Override
     public String toString() {
         return "CoachProfileDto{" +
@@ -83,8 +82,8 @@ public class CoachProfileDto extends ProfileDto {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         CoachProfileDto that = (CoachProfileDto) o;
-        return Objects.equals(xp, that.xp) &&
-                Objects.equals(availability, that.availability) &&
+        return Objects.equals(availability, that.availability) &&
+                Objects.equals(xp, that.xp) &&
                 Objects.equals(introduction, that.introduction) &&
                 Objects.equals(topics, that.topics);
     }

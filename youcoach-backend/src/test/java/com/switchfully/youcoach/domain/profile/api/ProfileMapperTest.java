@@ -90,16 +90,6 @@ public class ProfileMapperTest {
 
 
     }
-    @Test
-    void userToUserDto(){
-        Profile profile = getDefaultUser();
-
-        SecuredUserDto expected = new SecuredUserDto(profile.getId(), profile.getFirstName(), profile.getLastName(), profile.getEmail(), profile.isAccountEnabled());
-
-        SecuredUserDto actual = profileMapper.toUserDto(profile);
-
-        Assertions.assertThat(actual).isEqualTo(expected);
-    }
 
     @Test
     void createUserDtoToUser(){
@@ -114,20 +104,5 @@ public class ProfileMapperTest {
         Assertions.assertThat(actual.getEmail()).isEqualTo(expected.getEmail());
         Assertions.assertThat(actual.getPassword()).isEqualTo(expected.getPassword());
     }
-
-    @Test
-    void listUserToListUserDto(){
-        Profile profile = getDefaultUser();
-        Profile profile2 = new Profile(2,"First","Last",
-                "example2@example.com","1Lpassword","1 - latin");
-        List<Profile> profiles = List.of(profile, profile2);
-        List<SecuredUserDto> expected = List.of(new SecuredUserDto(profile.getId(), profile.getFirstName(), profile.getLastName(), profile.getEmail(), profile.isAccountEnabled()),
-                new SecuredUserDto(profile2.getId(), profile2.getFirstName(), profile2.getLastName(), profile2.getEmail(), profile2.isAccountEnabled()));
-
-        List<SecuredUserDto> actual = profileMapper.toUserDto(profiles);
-
-        Assertions.assertThat(actual).hasSameElementsAs(expected);
-    }
-
 
 }

@@ -1,9 +1,8 @@
-package com.switchfully.youcoach.security.verification;
+package com.switchfully.youcoach.security.authentication.user.accountverification;
 
-import com.switchfully.youcoach.domain.profile.Profile;
-import com.switchfully.youcoach.email.EmailSender;
 import com.switchfully.youcoach.email.MessageSender;
-import com.switchfully.youcoach.security.verification.event.AccountCreated;
+import com.switchfully.youcoach.security.authentication.user.api.Account;
+import com.switchfully.youcoach.security.authentication.user.event.AccountCreated;
 import com.switchfully.youcoach.email.exception.SendingMailError;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +29,7 @@ public class MailAccountVerificator implements AccountVerificator {
     }
 
     @Override
-    public boolean sendVerificationEmail(Profile profile) {
+    public boolean sendVerificationEmail(Account profile) {
         AccountVerification accountVerification = accountVerificationRepository.save(generateAccountVerification(profile));
         try {
             messageSender.handle(new AccountCreated(profile, accountVerification));
@@ -43,7 +42,7 @@ public class MailAccountVerificator implements AccountVerificator {
     }
 
     @Override
-    public boolean resendVerificationEmailFor(Profile profile) {
+    public boolean resendVerificationEmailFor(Account profile) {
         if (profile.isAccountEnabled()) {
             return false;
         }
@@ -52,7 +51,7 @@ public class MailAccountVerificator implements AccountVerificator {
     }
 
     @Override
-    public boolean enableAccount(String verificationCode, Profile profile) {
+    public boolean enableAccount(String verificationCode, Account profile) {
         if (!doesVerificationCodeMatch(verificationCode, profile)) {
             return false;
         }
@@ -61,17 +60,17 @@ public class MailAccountVerificator implements AccountVerificator {
         return true;
     }
 
-    private AccountVerification generateAccountVerification(Profile profile) {
+    private AccountVerification generateAccountVerification(Account profile) {
         String code = DigestUtils.md5Hex(environment.getProperty("app.emailverification.salt") + profile.getEmail()).toUpperCase();
         return new AccountVerification(profile, code);
     }
 
-    private void removeAccountVerification(Profile profile) {
-        accountVerificationRepository.deleteAccountVerificationByProfile(profile);
+    private void removeAccountVerification(Account profile) {
+        accountVerificationRepository.deleteAccountVerificationByProfileId(profile.getId());
     }
 
-    private boolean doesVerificationCodeMatch(String verificationCode, Profile profile) {
-        return accountVerificationRepository.findAccountVerificationByProfile(profile)
+    private boolean doesVerificationCodeMatch(String verificationCode, Account profile) {
+        return accountVerificationRepository.findAccountVerificationByProfileId(profile.getId())
                 .map(account -> account.getVerificationCode().equals(verificationCode))
                 .orElse(false);
     }

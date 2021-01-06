@@ -1,4 +1,4 @@
-package com.switchfully.youcoach.security.verification.event;
+package com.switchfully.youcoach.security.authentication.user.event;
 
 import com.switchfully.youcoach.domain.Event;
 

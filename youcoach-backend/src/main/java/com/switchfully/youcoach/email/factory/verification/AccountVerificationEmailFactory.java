@@ -2,7 +2,7 @@ package com.switchfully.youcoach.email.factory.verification;
 
 import com.switchfully.youcoach.email.Email;
 import com.switchfully.youcoach.email.factory.EmailFactory;
-import com.switchfully.youcoach.security.verification.event.AccountCreated;
+import com.switchfully.youcoach.security.authentication.user.event.AccountCreated;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 import org.thymeleaf.TemplateEngine;
@@ -27,13 +27,13 @@ public class AccountVerificationEmailFactory implements EmailFactory<AccountCrea
     @Override
     public Email create(AccountCreated event) {
         final Context ctx = new Context();
-        ctx.setVariable("fullName", event.getProfile().getFirstName() + " " + event.getProfile().getLastName());
+        ctx.setVariable("fullName", event.getAccount().getFullName());
         ctx.setVariable("hostName", environment.getProperty("app.email.hostName"));
         ctx.setVariable("url", environment.getProperty("app.email.hostName") + "/validate-account");
         ctx.setVariable("token", event.getAccountVerification().getVerificationCode());
 
         return Email.email()
-                .to(event.getProfile().getEmail())
+                .to(event.getAccount().getEmail())
                 .subject("Lidmaatschapsverificatie - Verification de compte - Account verification")
                 .body(this.templateEngine.process("verification/EmailVerificationTemplate.html", ctx));
     }
