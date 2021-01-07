@@ -20,7 +20,7 @@ import static org.springframework.util.StringUtils.isEmpty;
 
 @Service
 public class JwtGenerator {
-    private static final int TOKEN_TIME_TO_LIVE  = 3600000;
+    private static final int TOKEN_TIME_TO_LIVE = 3600000;
     private static final Logger LOGGER = LoggerFactory.getLogger(JwtGenerator.class);
 
     private final String jwtSecret;
@@ -30,40 +30,37 @@ public class JwtGenerator {
     }
 
     public UsernamePasswordAuthenticationToken convertToken(String token) {
-        if (!isEmpty(token) && token.startsWith("Bearer")) {
-                try {
-                    var parsedToken = Jwts.parser()
-                            .setSigningKey(jwtSecret.getBytes())
-                            .parseClaimsJws(token);
-
-                    var username = parsedToken
-                            .getBody()
-                            .getSubject();
-
-
-                    List<String> authoritiesInToken
-                            = parsedToken.getBody().get("rol", ArrayList.class);
-                    var authorities = authoritiesInToken.stream()
-                            .map(Authority::valueOf)
-                            .collect(Collectors.toList());
-
-                    if (!isEmpty(username)) {
-                        return new UsernamePasswordAuthenticationToken(username, null, authorities);
-                    }
-                } catch (ExpiredJwtException exception) {
-                    LOGGER.warn("Request to parse expired JWT : {} failed : {}", token, exception.getMessage());
-                } catch (UnsupportedJwtException exception) {
-                    LOGGER.warn("Request to parse unsupported JWT : {} failed : {}", token, exception.getMessage());
-                } catch (MalformedJwtException exception) {
-                    LOGGER.warn("Request to parse invalid JWT : {} failed : {}", token, exception.getMessage());
-                } catch (SignatureException exception) {
-                    LOGGER.warn("Request to parse JWT with invalid signature : {} failed : {}", token, exception.getMessage());
-                } catch (IllegalArgumentException exception) {
-                    LOGGER.warn("Request to parse empty or null JWT : {} failed : {}", token, exception.getMessage());
-                }
-            }
-
+        if (isEmpty(token)) {
             return null;
+        }
+
+        Jws<Claims> parsedToken = null;
+        try {
+            parsedToken = Jwts.parser().setSigningKey(jwtSecret.getBytes()).parseClaimsJws(token);
+        } catch (ExpiredJwtException exception) {
+            LOGGER.warn("Request to parse expired JWT : {} failed : {}", token, exception.getMessage());
+        } catch (UnsupportedJwtException exception) {
+            LOGGER.warn("Request to parse unsupported JWT : {} failed : {}", token, exception.getMessage());
+        } catch (MalformedJwtException exception) {
+            LOGGER.warn("Request to parse invalid JWT : {} failed : {}", token, exception.getMessage());
+        } catch (SignatureException exception) {
+            LOGGER.warn("Request to parse JWT with invalid signature : {} failed : {}", token, exception.getMessage());
+        } catch (IllegalArgumentException exception) {
+            LOGGER.warn("Request to parse empty or null JWT : {} failed : {}", token, exception.getMessage());
+        }
+
+        if(parsedToken == null){
+            return null;
+        }
+
+        var username = parsedToken.getBody().getSubject();
+
+        List<String> authoritiesInToken = parsedToken.getBody().get("rol", ArrayList.class);
+        var authorities = authoritiesInToken.stream()
+                .map(Authority::valueOf)
+                .collect(Collectors.toList());
+
+        return new UsernamePasswordAuthenticationToken(username, null, authorities);
     }
 
     public String generateToken(Account account) {

@@ -13,6 +13,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Optional;
 
 public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
     private static final Logger LOGGER = LoggerFactory.getLogger(JwtAuthorizationFilter.class);
@@ -38,7 +39,8 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
             return;
         }
 
-        var authentication = jwtGenerator.convertToken(request.getHeader("Authorization").replace("Bearer ", ""));
+        String token = Optional.ofNullable(request.getHeader("Authorization")).map(header -> header.replace("Bearer ", "")).orElse("");
+        var authentication = jwtGenerator.convertToken(token);
         LOGGER.info("Authentication successful! " + authentication);
         if (authentication == null) {
             authenticationFailureHandler.onAuthenticationFailure(request, response, new AuthenticationCredentialsNotFoundException(""));
