@@ -26,10 +26,7 @@ export class AuthenticationService {
 
   login(loginData: any) {
     return this.loginService.login(loginData)
-      .pipe(tap(response => {
-        this.setJwtToken(response.headers.get('Authorization').replace('Bearer', '').trim());
-        this.userLoggedInSource.next(true);
-      }));
+      .pipe(tap(_ => this.userLoggedInSource.next(true)));
   }
 
   getToken() {

@@ -1,7 +1,8 @@
-import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
+import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Injectable} from '@angular/core';
 import {AuthenticationService} from './authentication.service';
+import {tap} from "rxjs/operators";
 
 
 @Injectable({
@@ -19,6 +20,10 @@ export class AuthenticationInterceptor implements HttpInterceptor {
         }
       });
     }
-    return next.handle(req);
+    return next.handle(req).pipe(tap((response: HttpResponse<any>) => {
+        if (response.headers && response.headers.get('Authorization')) {
+          this.authenticationService.setJwtToken(response.headers.get('Authorization').replace('Bearer', '').trim());
+        }
+    }));
   }
 }

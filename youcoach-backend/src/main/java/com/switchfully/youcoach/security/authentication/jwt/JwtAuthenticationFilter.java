@@ -65,7 +65,9 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response,
                                             FilterChain filterChain, Authentication authentication) {
 
-        String token = jwtGenerator.generateJwtToken(accountService.findByEmail(authentication.getName()).map(Account::getId).map(Object::toString).orElse(null), authentication.getName(), authentication.getAuthorities());
+        Account account = accountService.findByEmail(authentication.getName()).orElseThrow(() -> new RuntimeException("Could not find account"));
+
+        String token = jwtGenerator.generateToken(account);
 
         response.addHeader("Authorization", "Bearer " + token);
         response.addHeader("Access-Control-Expose-Headers", "Authorization");

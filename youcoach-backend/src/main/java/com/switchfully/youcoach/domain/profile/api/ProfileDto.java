@@ -9,6 +9,7 @@ public class ProfileDto {
     private String lastName;
     private String email;
     private RoleDto youcoachRole;
+    private String token;
 
     public ProfileDto withClassYear(String classYear) {
         this.classYear = classYear;
@@ -40,6 +41,11 @@ public class ProfileDto {
         return this;
     }
 
+    public ProfileDto withToken(String token) {
+        this.token = token;
+        return this;
+    }
+
     public RoleDto getYoucoachRole() {
         return youcoachRole;
     }
@@ -62,6 +68,10 @@ public class ProfileDto {
 
     public String getEmail() {
         return email;
+    }
+
+    public String getToken() {
+        return token;
     }
 
     public void setEmail(String email) {

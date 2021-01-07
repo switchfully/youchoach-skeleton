@@ -2,12 +2,11 @@ package com.switchfully.youcoach.domain.session;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.switchfully.youcoach.domain.profile.ProfileService;
+import com.switchfully.youcoach.domain.profile.role.Role;
 import com.switchfully.youcoach.domain.session.api.CreateSessionDto;
 import com.switchfully.youcoach.domain.session.api.SessionDto;
-import com.switchfully.youcoach.domain.profile.ProfileService;
 import com.switchfully.youcoach.security.authentication.jwt.JwtGenerator;
-import com.switchfully.youcoach.security.authentication.user.Authority;
-import com.switchfully.youcoach.security.authentication.user.SecuredUserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
@@ -18,7 +17,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.core.env.Environment;
 import org.springframework.http.MediaType;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers;
@@ -30,8 +28,8 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.security.Principal;
-import java.util.List;
 
+import static com.switchfully.youcoach.domain.profile.ProfileTestBuilder.profile;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -88,7 +86,7 @@ class SessionControllerIntegrationTest {
         CreateSessionDto createSessionDto = new CreateSessionDto("Mathematics", "30/05/2020", "11:50", "school", "no remarks", 20L, 21L);
         String actualResult =
                 mockMvc.perform(post("/coaching-sessions")
-                        .header("Authorization", "Bearer " + jwtGenerator.generateJwtToken("21", "example2@example.com", List.of(Authority.COACHEE)))
+                        .header("Authorization", "Bearer " + jwtGenerator.generateToken(profile().id(21L).email("example2@example.com").role(Role.COACHEE).build()))
                         .principal(mockPrincipal)
                         .with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)

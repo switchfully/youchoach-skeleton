@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Observable, of} from 'rxjs';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
 import {ICoachee} from '../../security/interfaces/ICoachee';
 import {IMember} from '../interfaces/IMember';
 import {catchError} from 'rxjs/operators';
@@ -32,8 +32,8 @@ export class CoacheeService {
     );
   }
 
-  updateProfile(member: IMember): Observable<IMemberProfileUpdated> {
-    return this.http.put<IMemberProfileUpdated>(this.url + '/profile/' + member.id, member, this.httpOptions);
+  updateProfile(member: IMember): Observable<any> {
+    return this.http.put<any>(this.url + '/profile/' + member.id, member);
   }
 
   uploadImage(profileId: number, file: File) {

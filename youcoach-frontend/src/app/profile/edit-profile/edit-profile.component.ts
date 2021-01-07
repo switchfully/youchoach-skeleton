@@ -55,10 +55,7 @@ export class EditProfileComponent implements OnInit {
 
   updateProfile(member): void {
     this.coacheeService.updateProfile(member)
-      .subscribe(memberUpdated => {
-          if (memberUpdated.token !== null) {
-            this.authenticationService.setJwtToken(memberUpdated.token);
-          }
+      .subscribe(_ => {
           this.onBack();
         },
         err => {

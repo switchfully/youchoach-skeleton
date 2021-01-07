@@ -1,13 +1,14 @@
 package com.switchfully.youcoach.domain.profile;
 
+import com.google.common.collect.ImmutableMap;
 import com.switchfully.youcoach.domain.profile.api.ProfileDto;
-import com.switchfully.youcoach.domain.profile.api.ProfileUpdatedDto;
 import com.switchfully.youcoach.domain.profile.api.UpdateProfileDto;
 import com.switchfully.youcoach.domain.profile.image.ImageService;
 import com.switchfully.youcoach.domain.profile.role.coach.api.CoachListingDto;
 import com.switchfully.youcoach.domain.profile.role.coach.api.CoachProfileDto;
 import com.switchfully.youcoach.domain.profile.role.coach.api.CoachingTopicDto;
 import com.switchfully.youcoach.file.DBFile;
+import com.switchfully.youcoach.security.authentication.jwt.JwtGenerator;
 import com.switchfully.youcoach.security.authorization.AuthorizationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,16 +20,18 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.security.core.Authentication;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.security.Principal;
 import java.util.List;
 
+import static com.google.common.collect.ImmutableMap.builder;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
+import static org.springframework.http.ResponseEntity.ok;
 
 @RestController
 @RequestMapping(path = "/users")
@@ -39,12 +42,18 @@ public class ProfileController {
     private final ProfileService profileService;
     private final AuthorizationService authorizationService;
     private final ImageService imageService;
+    private JwtGenerator jwtGenerator;
 
     @Autowired
-    public ProfileController(ProfileService profileService, AuthorizationService authorizationService, ImageService imageService) {
+    public ProfileController(ProfileService profileService,
+                             AuthorizationService authorizationService,
+                             ImageService imageService,
+                             JwtGenerator jwtGenerator
+    ) {
         this.profileService = profileService;
         this.authorizationService = authorizationService;
         this.imageService = imageService;
+        this.jwtGenerator = jwtGenerator;
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
@@ -77,15 +86,20 @@ public class ProfileController {
 
     @PreAuthorize("hasAnyAuthority('COACHEE', 'ADMIN')")
     @PutMapping(produces = "application/json;charset=UTF-8", consumes = "application/json", path = "/profile/{id}")
-    public ProfileUpdatedDto updateCoacheeProfile(@RequestBody UpdateProfileDto updateProfileDto, @PathVariable("id") long id, Authentication principal) {
+    public ResponseEntity<ProfileDto> updateCoacheeProfile(@RequestBody UpdateProfileDto updateProfileDto, @PathVariable("id") long id, Authentication principal) {
         if (!authorizationService.canAccessProfile(principal, id)) {
             throw new InsufficientAuthenticationException("You don't have access to this profile");
         }
         if (!authorizationService.canChangeRole(principal)) {
             updateProfileDto.clearRole();
         }
-        String email = profileService.getUserById(id).getEmail();
-        return profileService.updateProfile(email, updateProfileDto);
+
+        ProfileDto profileDto = profileService.updateProfile(id, updateProfileDto);
+
+        return ok()
+                .header("Authorization", "Bearer " + profileDto.getToken())
+                .header("Access-Control-Expose-Headers", "Authorization")
+                .body(profileDto);
     }
 
     @PreAuthorize("hasAnyAuthority('COACH','ADMIN')")
@@ -122,7 +136,7 @@ public class ProfileController {
     public ResponseEntity<Resource> downloadImage(@PathVariable("id") long id) {
         DBFile profileImage = imageService.getProfileImage(id).orElseThrow(() -> new ResponseStatusException(NOT_FOUND));
 
-        return ResponseEntity.ok()
+        return ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + profileImage.getOriginalFileName() + "\"")
                 .header(HttpHeaders.CONTENT_TYPE, "image/jpg")
                 .body(profileImage.getResource());

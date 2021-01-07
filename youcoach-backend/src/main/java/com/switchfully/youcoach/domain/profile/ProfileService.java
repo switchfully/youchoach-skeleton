@@ -3,12 +3,14 @@ package com.switchfully.youcoach.domain.profile;
 
 import com.switchfully.youcoach.domain.profile.api.*;
 import com.switchfully.youcoach.domain.profile.exception.ProfileIdNotFoundException;
+import com.switchfully.youcoach.domain.profile.exception.ProfileNotFoundException;
 import com.switchfully.youcoach.domain.profile.role.Role;
 import com.switchfully.youcoach.domain.profile.role.coach.TopicRepository;
 import com.switchfully.youcoach.domain.profile.role.coach.api.CoachListingDto;
 import com.switchfully.youcoach.domain.profile.role.coach.api.CoachProfileDto;
 import com.switchfully.youcoach.domain.profile.role.coach.api.CoachingTopicDto;
 import com.switchfully.youcoach.domain.profile.role.coach.exception.CoachNotFoundException;
+import com.switchfully.youcoach.security.authentication.jwt.JwtGenerator;
 import com.switchfully.youcoach.security.authentication.user.api.Account;
 import com.switchfully.youcoach.security.authentication.user.api.AccountService;
 import com.switchfully.youcoach.security.authentication.user.api.CreateSecuredUserDto;
@@ -32,19 +34,27 @@ public class ProfileService implements AccountService {
     private final ProfileMapper profileMapper;
 
     private final TopicRepository topicRepository;
+    private JwtGenerator jwtGenerator;
 
     @Autowired
     public ProfileService(ProfileRepository profileRepository,
                           ProfileMapper profileMapper,
-                          TopicRepository topicRepository) {
+                          TopicRepository topicRepository,
+                          JwtGenerator jwtGenerator
+    ) {
         this.profileRepository = profileRepository;
         this.profileMapper = profileMapper;
         this.topicRepository = topicRepository;
+        this.jwtGenerator = jwtGenerator;
     }
 
-    public ProfileUpdatedDto updateProfile(String email, UpdateProfileDto updateProfileDto) {
-        performUpdateValidation(email, updateProfileDto);
-        Profile profile = assertUserExistsAndRetrieve(email);
+    public ProfileDto updateProfile(long id, UpdateProfileDto updateProfileDto) {
+        String oldEmail = getUserById(id).getEmail();
+        if (!oldEmail.equalsIgnoreCase(updateProfileDto.getEmail()) && emailExists(updateProfileDto.getEmail())) {
+            throw new IllegalStateException("Email already exists!");
+        }
+
+        Profile profile = assertUserExistsAndRetrieve(oldEmail);
         profile.setEmail(updateProfileDto.getEmail());
         profile.setFirstName(updateProfileDto.getFirstName());
         profile.setLastName(updateProfileDto.getLastName());
@@ -53,28 +63,22 @@ public class ProfileService implements AccountService {
             profile.setRole(Role.valueOf(updateProfileDto.getYoucoachRole().getName()));
         }
 
-        ProfileUpdatedDto cpu = (ProfileUpdatedDto) new ProfileUpdatedDto()
+
+        return new ProfileDto()
                 .withEmail(updateProfileDto.getEmail())
                 .withFirstName(updateProfileDto.getFirstName())
                 .withLastName(updateProfileDto.getLastName())
                 .withClassYear(updateProfileDto.getClassYear())
-                .withYoucoachRole(new RoleDto(profile.getRole().name(), profile.getRole().getLabel()));
-
-        return cpu;
+                .withYoucoachRole(new RoleDto(profile.getRole().name(), profile.getRole().getLabel()))
+                .withToken(jwtGenerator.generateToken(profile));
     }
 
     public ProfileDto getUserById(long id) {
-        return profileMapper.toCoacheeProfileDto(profileRepository.findById(id).get());
+        return profileMapper.toCoacheeProfileDto(profileRepository.findById(id).orElseThrow(() -> new ProfileNotFoundException("Profile with id " + id + " not found.")));
     }
 
     public boolean emailExists(String email) {
         return profileRepository.existsByEmail(email);
-    }
-
-    public void performUpdateValidation(String email, UpdateProfileDto updateProfileDto) {
-        if (!email.equalsIgnoreCase(updateProfileDto.getEmail()) && emailExists(updateProfileDto.getEmail())) {
-            throw new IllegalStateException("Email already exists!");
-        }
     }
 
     public ProfileDto getCoacheeProfile(long id) {

@@ -3,6 +3,7 @@ package com.switchfully.youcoach.domain.profile;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.switchfully.youcoach.ApplicationTest;
 import com.switchfully.youcoach.domain.profile.api.RoleDto;
+import com.switchfully.youcoach.domain.profile.role.Role;
 import com.switchfully.youcoach.domain.profile.role.coach.Topic;
 import com.switchfully.youcoach.domain.profile.role.coach.Grade;
 import com.switchfully.youcoach.domain.profile.role.coach.api.CoachProfileDto;
@@ -35,6 +36,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 import java.util.List;
 
+import static com.switchfully.youcoach.domain.profile.ProfileTestBuilder.profile;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -74,7 +76,7 @@ class ProfileControllerIntegrationTest {
     @Test
     @Sql("classpath:oneDefaultUser.sql")
     void getCoacheeProfile() throws Exception {
-        String token = jwtGenerator.generateJwtToken("20", "example@example.com", List.of(Authority.COACHEE));
+        String token = jwtGenerator.generateToken(profile().id(20L).email("example@example.com").role(Role.COACHEE).build());
 
         String actualResult = mockMvc.perform(get("/users/profile/20").header("Authorization", "Bearer " + token)
                 //.with(csrf())
@@ -83,14 +85,14 @@ class ProfileControllerIntegrationTest {
                 .andReturn()
                 .getResponse()
                 .getContentAsString();
-        String expected = "{\"id\":20,\"firstName\":\"First\",\"lastName\":\"Last\",\"email\":\"example@example.com\",\"classYear\":\"1 - latin\",\"youcoachRole\":{\"name\":\"COACHEE\",\"label\":\"enum.role.coachee\"}}";
+        String expected = "{\"id\":20,\"firstName\":\"First\",\"lastName\":\"Last\",\"email\":\"example@example.com\",\"classYear\":\"1 - latin\",\"youcoachRole\":{\"name\":\"COACHEE\",\"label\":\"enum.role.coachee\"},\"token\":null}";
         JSONAssert.assertEquals(expected, actualResult, true);
     }
 
     @Test
     @Sql("classpath:oneDefaultUser.sql")
     void getSpecificCoacheeProfile() throws Exception {
-        String token = jwtGenerator.generateJwtToken("20", "example@example.com", List.of(Authority.COACHEE));
+        String token = jwtGenerator.generateToken(profile().id(20L).email("example@example.com").role(Role.COACHEE).build());
 
         String actualResult = mockMvc.perform(get("/users/profile/20")
                 .header("Authorization", "Bearer " + token)
@@ -101,7 +103,7 @@ class ProfileControllerIntegrationTest {
                 .andReturn()
                 .getResponse()
                 .getContentAsString();
-        String expected = "{\"id\":20,\"firstName\":\"First\",\"lastName\":\"Last\",\"email\":\"example@example.com\",\"classYear\":\"1 - latin\", \"youcoachRole\":{\"name\":\"COACHEE\",\"label\":\"enum.role.coachee\"}}";
+        String expected = "{\"id\":20,\"firstName\":\"First\",\"lastName\":\"Last\",\"email\":\"example@example.com\",\"classYear\":\"1 - latin\", \"youcoachRole\":{\"name\":\"COACHEE\",\"label\":\"enum.role.coachee\"},\"token\":null}";
         JSONAssert.assertEquals(expected, actualResult, true);
     }
 
@@ -109,7 +111,7 @@ class ProfileControllerIntegrationTest {
     @Sql("classpath:oneDefaultUser.sql")
     @Sql("classpath:anotherDefaultUser.sql")
     void getCoacheeWithOtherUser_forbidden_if_not_own_profile() throws Exception {
-        String token = jwtGenerator.generateJwtToken("21", "example2@example.com", List.of(Authority.COACHEE));
+        String token = jwtGenerator.generateToken(profile().id(21L).email("example2@example.com").role(Role.COACHEE).build());
 
         mockMvc.perform(get("/users/profile/20")
                 .header("Authorization", "Bearer " + token)
@@ -134,7 +136,7 @@ class ProfileControllerIntegrationTest {
     @Sql("classpath:oneDefaultUser.sql")
     @Sql("classpath:anotherDefaultUser.sql")
     void getCoacheeWithAdmin() throws Exception {
-        String token = jwtGenerator.generateJwtToken("21", "example@example.com", List.of(Authority.ADMIN));
+        String token = jwtGenerator.generateToken(profile().id(21L).email("example2@example.com").role(Role.ADMIN).build());
 
         String actualResult = mockMvc.perform(get("/users/profile/20")
                 .header("Authorization", "Bearer " + token)
@@ -145,7 +147,7 @@ class ProfileControllerIntegrationTest {
                 .andReturn()
                 .getResponse()
                 .getContentAsString();
-        String expected = "{\"id\":20,\"firstName\":\"First\",\"lastName\":\"Last\",\"email\":\"example@example.com\",\"classYear\":\"1 - latin\",\"youcoachRole\":{\"name\":\"COACHEE\",\"label\":\"enum.role.coachee\"}}";
+        String expected = "{\"id\":20,\"firstName\":\"First\",\"lastName\":\"Last\",\"email\":\"example@example.com\",\"classYear\":\"1 - latin\",\"youcoachRole\":{\"name\":\"COACHEE\",\"label\":\"enum.role.coachee\"},\"token\":null}";
         JSONAssert.assertEquals(expected, actualResult, true);
     }
 
@@ -153,7 +155,7 @@ class ProfileControllerIntegrationTest {
     @Sql("classpath:oneDefaultUser.sql")
     @Sql("classpath:makeUsersCoach.sql")
     void getCoachProfile() throws Exception {
-        String token = jwtGenerator.generateJwtToken("20", "example@example.com", List.of(Authority.COACH));
+        String token = jwtGenerator.generateToken(profile().id(20L).email("example@example.com").role(Role.COACH).build());
 
 
         String actualResult = mockMvc.perform(get("/users/coach/profile/20")
