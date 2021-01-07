@@ -3,8 +3,9 @@ package com.switchfully.youcoach.security.authentication.user;
 
 import com.switchfully.youcoach.domain.profile.exception.ProfileNotFoundException;
 import com.switchfully.youcoach.security.authentication.jwt.JwtGenerator;
-import com.switchfully.youcoach.security.authentication.user.accountverification.AccountVerificator;
+import com.switchfully.youcoach.security.authentication.user.accountverification.AccountVerificationService;
 import com.switchfully.youcoach.security.authentication.user.api.*;
+import com.switchfully.youcoach.security.authentication.user.password.reset.PasswordResetService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -15,7 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Optional;
 
 
 @Service
@@ -25,16 +25,17 @@ public class SecuredUserService implements UserDetailsService {
     private final AccountService accountService;
     private final AccountMapper accountMapper;
 
-    private final JwtGenerator jwtGenerator;
     private final PasswordEncoder passwordEncoder;
-    private final AccountVerificator accountVerificator;
 
-    public SecuredUserService(AccountService accountService, AccountMapper accountMapper, JwtGenerator jwtGenerator, PasswordEncoder passwordEncoder, AccountVerificator accountVerificator) {
+    private final AccountVerificationService accountVerificationService;
+    private final PasswordResetService passwordResetService;
+
+    public SecuredUserService(AccountService accountService, AccountMapper accountMapper, PasswordEncoder passwordEncoder, AccountVerificationService accountVerificationService, PasswordResetService passwordResetService) {
         this.accountService = accountService;
         this.accountMapper = accountMapper;
-        this.jwtGenerator = jwtGenerator;
         this.passwordEncoder = passwordEncoder;
-        this.accountVerificator = accountVerificator;
+        this.accountVerificationService = accountVerificationService;
+        this.passwordResetService = passwordResetService;
     }
 
     @Override
@@ -51,10 +52,6 @@ public class SecuredUserService implements UserDetailsService {
         return new ArrayList<>(account.getAuthorities());
     }
 
-    public String generateToken(Authentication authentication) {
-        return jwtGenerator.generateJwtToken(accountService.findByEmail(authentication.getName()).map(Account::getId).map(Object::toString).orElse(null), authentication.getName(), authentication.getAuthorities());
-    }
-
     public SecuredUserDto registerAccount(CreateSecuredUserDto createSecuredUserDto) {
         if (emailExists(createSecuredUserDto.getEmail())) {
             throw new IllegalStateException("Email already exists!");
@@ -62,7 +59,7 @@ public class SecuredUserService implements UserDetailsService {
         Account account = accountService.createAccount(createSecuredUserDto);
         account.setPassword(passwordEncoder.encode(createSecuredUserDto.getPassword()));
 
-        accountVerificator.sendVerificationEmail(account);
+        accountVerificationService.sendVerificationEmail(account);
 
         return accountMapper.toUserDto(account);
     }
@@ -73,17 +70,19 @@ public class SecuredUserService implements UserDetailsService {
 
     public VerificationResultDto validateAccount(ValidateAccountDto validationData) {
         Account account = accountService.findByEmail(validationData.getEmail()).orElseThrow(() -> new ProfileNotFoundException(""));
-        return new VerificationResultDto(accountVerificator.enableAccount(validationData.getVerificationCode(), account));
+        return new VerificationResultDto(accountVerificationService.enableAccount(validationData.getVerificationCode(), account));
     }
 
-    public ResendVerificationDto resendValidation(ResendVerificationDto validationData) {
-        Optional<? extends Account> account = accountService.findByEmail(validationData.getEmail());
-        if(account.isPresent()) {
-            boolean result = accountVerificator.resendVerificationEmailFor(account.get());
-            validationData.setValidationBeenResend(result);
-        } else {
-            validationData.setValidationBeenResend(true);
-        }
-        return validationData;
+    public void resendValidation(ResendVerificationDto validationData) {
+        Account account = accountService.findByEmail(validationData.getEmail()).orElseThrow(() -> new RuntimeException("Account not found"));
+        accountVerificationService.resendVerificationEmailFor(account);
+    }
+
+    public void requestPasswordReset(PasswordResetRequestDto resetRequest) {
+        passwordResetService.requestPasswordReset(resetRequest);
+    }
+
+    public PasswordChangeResultDto performPasswordChange(PasswordChangeRequestDto changeRequest) {
+        return passwordResetService.performPasswordChange(changeRequest);
     }
 }

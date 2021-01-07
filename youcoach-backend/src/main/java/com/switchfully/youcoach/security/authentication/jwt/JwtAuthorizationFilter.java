@@ -1,6 +1,5 @@
 package com.switchfully.youcoach.security.authentication.jwt;
 
-import com.google.common.collect.Lists;
 import com.switchfully.youcoach.security.authentication.user.Authority;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
@@ -27,17 +26,14 @@ import java.util.stream.Collectors;
 import static org.springframework.util.StringUtils.isEmpty;
 
 public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
-
-    private static final Logger log = LoggerFactory.getLogger(JwtAuthorizationFilter.class);
-
     private final AuthenticationFailureHandler authenticationFailureHandler;
-    private final String jwtSecret;
+    private final JwtGenerator jwtGenerator;
 
 
-    public JwtAuthorizationFilter(AuthenticationManager authenticationManager, AuthenticationFailureHandler authenticationFailureHandler, String jwtSecret) {
+    public JwtAuthorizationFilter(AuthenticationManager authenticationManager, AuthenticationFailureHandler authenticationFailureHandler, JwtGenerator jwtGenerator) {
         super(authenticationManager);
         this.authenticationFailureHandler = authenticationFailureHandler;
-        this.jwtSecret = jwtSecret;
+        this.jwtGenerator = jwtGenerator;
     }
 
     @Override
@@ -51,7 +47,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
             return;
         }
 
-        var authentication = getAuthentication(request);
+        var authentication = jwtGenerator.getAuthentication(request);
         if (authentication == null) {
             authenticationFailureHandler.onAuthenticationFailure(request, response, new AuthenticationCredentialsNotFoundException(""));
             return;
@@ -59,43 +55,5 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
         filterChain.doFilter(request, response);
-    }
-
-    private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request) {
-        var token = request.getHeader("Authorization");
-        if (!isEmpty(token) && token.startsWith("Bearer")) {
-            try {
-                var parsedToken = Jwts.parser()
-                        .setSigningKey(jwtSecret.getBytes())
-                        .parseClaimsJws(token.replace("Bearer ", ""));
-
-                var username = parsedToken
-                        .getBody()
-                        .getSubject();
-
-
-                ArrayList<String> authoritiesInToken
-                        = parsedToken.getBody().get("rol", ArrayList.class);
-                var authorities = authoritiesInToken.stream()
-                        .map(Authority::valueOf)
-                        .collect(Collectors.toList());
-
-                if (!isEmpty(username)) {
-                    return new UsernamePasswordAuthenticationToken(username, null, authorities);
-                }
-            } catch (ExpiredJwtException exception) {
-                log.warn("Request to parse expired JWT : {} failed : {}", token, exception.getMessage());
-            } catch (UnsupportedJwtException exception) {
-                log.warn("Request to parse unsupported JWT : {} failed : {}", token, exception.getMessage());
-            } catch (MalformedJwtException exception) {
-                log.warn("Request to parse invalid JWT : {} failed : {}", token, exception.getMessage());
-            } catch (SignatureException exception) {
-                log.warn("Request to parse JWT with invalid signature : {} failed : {}", token, exception.getMessage());
-            } catch (IllegalArgumentException exception) {
-                log.warn("Request to parse empty or null JWT : {} failed : {}", token, exception.getMessage());
-            }
-        }
-
-        return null;
     }
 }

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.switchfully.youcoach.domain.session.api.CreateSessionDto;
 import com.switchfully.youcoach.domain.session.api.SessionDto;
 import com.switchfully.youcoach.domain.profile.ProfileService;
+import com.switchfully.youcoach.security.authentication.jwt.JwtGenerator;
 import com.switchfully.youcoach.security.authentication.user.Authority;
 import com.switchfully.youcoach.security.authentication.user.SecuredUserService;
 import org.junit.jupiter.api.BeforeEach;
@@ -51,7 +52,7 @@ class SessionControllerIntegrationTest {
     @Autowired
     WebApplicationContext webApplicationContext;
     @Autowired
-    SecuredUserService securedUserService;
+    JwtGenerator jwtGenerator;
     @Autowired
     Environment environment;
     @Autowired
@@ -87,7 +88,7 @@ class SessionControllerIntegrationTest {
         CreateSessionDto createSessionDto = new CreateSessionDto("Mathematics", "30/05/2020", "11:50", "school", "no remarks", 20L, 21L);
         String actualResult =
                 mockMvc.perform(post("/coaching-sessions")
-                        .header("Authorization", "Bearer " + securedUserService.generateToken(new UsernamePasswordAuthenticationToken("example2@example.com", null, List.of(Authority.COACHEE))))
+                        .header("Authorization", "Bearer " + jwtGenerator.generateJwtToken("21", "example2@example.com", List.of(Authority.COACHEE)))
                         .principal(mockPrincipal)
                         .with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)

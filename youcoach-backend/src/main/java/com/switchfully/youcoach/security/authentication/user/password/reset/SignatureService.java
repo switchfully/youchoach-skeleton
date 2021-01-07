@@ -1,4 +1,4 @@
-package com.switchfully.youcoach.security.authentication.user;
+package com.switchfully.youcoach.security.authentication.user.password.reset;
 
 import com.switchfully.youcoach.security.authentication.user.exception.SigningFailedException;
 import org.springframework.stereotype.Service;

@@ -18,7 +18,11 @@ public class AccountCreated implements Event {
         return account;
     }
 
-    public AccountVerification getAccountVerification() {
-        return accountVerification;
+    public Long getProfileId() {
+        return accountVerification.getId();
+    }
+
+    public String getVerificationCode() {
+        return accountVerification.getVerificationCode();
     }
 }

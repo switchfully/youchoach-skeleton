@@ -19,7 +19,9 @@ public class AccountVerification {
     @Column(name = "created_on", nullable = false)
     private LocalDateTime createdOn = LocalDateTime.now();
 
-    public AccountVerification(Account profile, String code){}
+    private AccountVerification(){
+
+    }
 
     public AccountVerification(Long profileId, String verificationCode){
         this.profileId = profileId;
@@ -28,6 +30,10 @@ public class AccountVerification {
 
     public String getVerificationCode() {
         return verificationCode;
+    }
+
+    public Long getId() {
+        return profileId;
     }
 
     @Override

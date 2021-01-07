@@ -42,7 +42,7 @@ export class ValidateAccountComponent implements OnInit {
 
   resendValidationtoken(): void {
     this.validationService.resend({ email: this.email, validationBeingResend: false } ).subscribe(
-      result => console.log('result', result),
+      _ => console.log('validation has been resend'),
       err => console.log('err', err)
     );
   }

@@ -6,6 +6,7 @@ import com.switchfully.youcoach.domain.profile.api.RoleDto;
 import com.switchfully.youcoach.domain.profile.role.coach.Topic;
 import com.switchfully.youcoach.domain.profile.role.coach.Grade;
 import com.switchfully.youcoach.domain.profile.role.coach.api.CoachProfileDto;
+import com.switchfully.youcoach.security.authentication.jwt.JwtGenerator;
 import com.switchfully.youcoach.security.authentication.user.api.CreateSecuredUserDto;
 import com.switchfully.youcoach.security.authentication.user.SecuredUserService;
 import com.switchfully.youcoach.security.authentication.user.Authority;
@@ -54,7 +55,7 @@ class ProfileControllerIntegrationTest {
     @Autowired
     WebApplicationContext webApplicationContext;
     @Autowired
-    SecuredUserService securedUserService;
+    JwtGenerator jwtGenerator;
     @Autowired
     Environment environment;
     @Autowired
@@ -73,8 +74,7 @@ class ProfileControllerIntegrationTest {
     @Test
     @Sql("classpath:oneDefaultUser.sql")
     void getCoacheeProfile() throws Exception {
-        UsernamePasswordAuthenticationToken user = new UsernamePasswordAuthenticationToken("example@example.com", null, List.of(Authority.COACHEE));
-        String token = securedUserService.generateToken(user);
+        String token = jwtGenerator.generateJwtToken("20", "example@example.com", List.of(Authority.COACHEE));
 
         String actualResult = mockMvc.perform(get("/users/profile/20").header("Authorization", "Bearer " + token)
                 //.with(csrf())
@@ -90,8 +90,7 @@ class ProfileControllerIntegrationTest {
     @Test
     @Sql("classpath:oneDefaultUser.sql")
     void getSpecificCoacheeProfile() throws Exception {
-        UsernamePasswordAuthenticationToken user = new UsernamePasswordAuthenticationToken("example@example.com", null, List.of(Authority.COACHEE));
-        String token = securedUserService.generateToken(user);
+        String token = jwtGenerator.generateJwtToken("20", "example@example.com", List.of(Authority.COACHEE));
 
         String actualResult = mockMvc.perform(get("/users/profile/20")
                 .header("Authorization", "Bearer " + token)
@@ -110,8 +109,7 @@ class ProfileControllerIntegrationTest {
     @Sql("classpath:oneDefaultUser.sql")
     @Sql("classpath:anotherDefaultUser.sql")
     void getCoacheeWithOtherUser_forbidden_if_not_own_profile() throws Exception {
-        UsernamePasswordAuthenticationToken user = new UsernamePasswordAuthenticationToken("example2@example.com", null, List.of(Authority.COACHEE));
-        String token = securedUserService.generateToken(user);
+        String token = jwtGenerator.generateJwtToken("21", "example2@example.com", List.of(Authority.COACHEE));
 
         mockMvc.perform(get("/users/profile/20")
                 .header("Authorization", "Bearer " + token)
@@ -136,8 +134,7 @@ class ProfileControllerIntegrationTest {
     @Sql("classpath:oneDefaultUser.sql")
     @Sql("classpath:anotherDefaultUser.sql")
     void getCoacheeWithAdmin() throws Exception {
-        UsernamePasswordAuthenticationToken user = new UsernamePasswordAuthenticationToken("example2@example.com", null, List.of(Authority.ADMIN));
-        String token = securedUserService.generateToken(user);
+        String token = jwtGenerator.generateJwtToken("21", "example@example.com", List.of(Authority.ADMIN));
 
         String actualResult = mockMvc.perform(get("/users/profile/20")
                 .header("Authorization", "Bearer " + token)
@@ -156,8 +153,7 @@ class ProfileControllerIntegrationTest {
     @Sql("classpath:oneDefaultUser.sql")
     @Sql("classpath:makeUsersCoach.sql")
     void getCoachProfile() throws Exception {
-        UsernamePasswordAuthenticationToken user = new UsernamePasswordAuthenticationToken("example@example.com", null, List.of(Authority.COACH));
-        String token = securedUserService.generateToken(user);
+        String token = jwtGenerator.generateJwtToken("20", "example@example.com", List.of(Authority.COACH));
 
 
         String actualResult = mockMvc.perform(get("/users/coach/profile/20")

@@ -1,6 +1,8 @@
 package com.switchfully.youcoach.security;
 
+import com.switchfully.youcoach.security.authentication.jwt.JwtGenerator;
 import com.switchfully.youcoach.security.authentication.user.SecuredUserService;
+import com.switchfully.youcoach.security.authentication.user.api.AccountService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -16,8 +18,8 @@ public class SecurityConfigJSONSwagger extends SecurityConfig {
     private final PasswordEncoder passwordEncoder;
 
     public SecurityConfigJSONSwagger(SecuredUserService securedUserService,
-                                     PasswordEncoder passwordEncoder, @Value("${jwt.secret}") String jwtSecret) {
-        super(securedUserService, passwordEncoder, jwtSecret);
+                                     PasswordEncoder passwordEncoder, JwtGenerator jwtGenerator, AccountService accountService) {
+        super(securedUserService, passwordEncoder, jwtGenerator, accountService);
 
         this.securedUserService = securedUserService;
         this.passwordEncoder = passwordEncoder;

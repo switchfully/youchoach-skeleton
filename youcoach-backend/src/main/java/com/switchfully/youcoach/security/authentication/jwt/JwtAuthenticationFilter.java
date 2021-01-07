@@ -1,8 +1,9 @@
 package com.switchfully.youcoach.security.authentication.jwt;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.switchfully.youcoach.security.authentication.user.SecuredUserService;
 import com.switchfully.youcoach.security.authentication.user.SecuredUser;
+import com.switchfully.youcoach.security.authentication.user.api.Account;
+import com.switchfully.youcoach.security.authentication.user.api.AccountService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -19,14 +20,16 @@ import java.io.IOException;
 
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
-
     private final AuthenticationManager authenticationManager;
-    private final SecuredUserService securedUserService;
+    private final JwtGenerator jwtGenerator;
+    private final AccountService accountService;
 
     public JwtAuthenticationFilter(AuthenticationManager authenticationManager,
-                                   SecuredUserService securedUserService, AuthenticationFailureHandler failureHandler) {
+                                   AuthenticationFailureHandler failureHandler,
+                                   JwtGenerator jwtGenerator, AccountService accountService) {
         this.authenticationManager = authenticationManager;
-        this.securedUserService = securedUserService;
+        this.jwtGenerator = jwtGenerator;
+        this.accountService = accountService;
 
         setFilterProcessesUrl("/security/login");
         setAuthenticationFailureHandler(failureHandler);
@@ -62,7 +65,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response,
                                             FilterChain filterChain, Authentication authentication) {
 
-        String token = securedUserService.generateToken(authentication);
+        String token = jwtGenerator.generateJwtToken(accountService.findByEmail(authentication.getName()).map(Account::getId).map(Object::toString).orElse(null), authentication.getName(), authentication.getAuthorities());
 
         response.addHeader("Authorization", "Bearer " + token);
         response.addHeader("Access-Control-Expose-Headers", "Authorization");

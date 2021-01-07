@@ -4,7 +4,7 @@ import com.switchfully.youcoach.domain.Event;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
-@Profile(value = "test")
+@Profile({"test", "development"})
 @Component
 public class MockMessageSender implements MessageSender {
 

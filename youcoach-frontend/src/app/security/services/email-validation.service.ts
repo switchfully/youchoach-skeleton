@@ -23,7 +23,7 @@ export class EmailValidationService {
     return this.http.post<IValidationResult>(this.url + '/validate', data, this.httpOptions);
   }
 
-  resend(data: IResendValidation): Observable<IResendValidation> {
-    return this.http.post<IResendValidation>(this.url + '/resend-validation', data, this.httpOptions);
+  resend(data: IResendValidation): Observable<any> {
+    return this.http.post<any>(this.url + '/resend-validation', data, this.httpOptions);
   }
 }

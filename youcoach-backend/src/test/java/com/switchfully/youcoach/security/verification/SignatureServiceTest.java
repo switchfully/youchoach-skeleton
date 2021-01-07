@@ -1,16 +1,9 @@
 package com.switchfully.youcoach.security.verification;
 
 import com.switchfully.youcoach.security.PasswordConfig;
-import com.switchfully.youcoach.security.SecurityConfig;
-import com.switchfully.youcoach.security.authentication.user.SignatureService;
+import com.switchfully.youcoach.security.authentication.user.password.reset.SignatureService;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
-
-import java.security.KeyPair;
 
 public class SignatureServiceTest {
 

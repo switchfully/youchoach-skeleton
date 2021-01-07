@@ -1,8 +1,8 @@
 package com.switchfully.youcoach.email;
 
 import com.switchfully.youcoach.domain.Event;
-import com.switchfully.youcoach.email.factory.EmailFactory;
 import com.switchfully.youcoach.email.exception.SendingMailError;
+import com.switchfully.youcoach.email.factory.EmailFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Profile;
@@ -21,7 +21,7 @@ import static java.util.function.Function.identity;
 import static java.util.stream.Collectors.toMap;
 
 @Component
-@Profile("!test")
+@Profile({"production"})
 public class EmailSender implements MessageSender {
     private static final Logger logger = LoggerFactory.getLogger(EmailSender.class);
 

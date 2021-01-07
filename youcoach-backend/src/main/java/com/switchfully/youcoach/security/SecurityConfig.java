@@ -3,7 +3,9 @@ package com.switchfully.youcoach.security;
 import com.switchfully.youcoach.security.authentication.OnAuthenticationFailureHandler;
 import com.switchfully.youcoach.security.authentication.jwt.JwtAuthenticationFilter;
 import com.switchfully.youcoach.security.authentication.jwt.JwtAuthorizationFilter;
+import com.switchfully.youcoach.security.authentication.jwt.JwtGenerator;
 import com.switchfully.youcoach.security.authentication.user.SecuredUserService;
+import com.switchfully.youcoach.security.authentication.user.api.AccountService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
@@ -24,17 +26,21 @@ import org.springframework.web.filter.CorsFilter;
 @EnableWebSecurity(debug=false)
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
     private final PasswordEncoder passwordEncoder;
-
-    private final String jwtSecret;
+    private final JwtGenerator jwtGenerator;
     private final SecuredUserService securedUserService;
+    private final AccountService accountService;
 
-    public SecurityConfig(SecuredUserService securedUserService, PasswordEncoder passwordEncoder,
-                          @Value("${jwt.secret}") String jwtSecret) {
+    public SecurityConfig(SecuredUserService securedUserService,
+                          PasswordEncoder passwordEncoder,
+                          JwtGenerator jwtGenerator,
+                          AccountService accountService) {
 
         this.securedUserService = securedUserService;
         this.passwordEncoder = passwordEncoder;
-        this.jwtSecret = jwtSecret;
+        this.jwtGenerator = jwtGenerator;
+        this.accountService = accountService;
     }
 
     @Override
@@ -43,8 +49,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/security/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .addFilter(new JwtAuthenticationFilter(authenticationManager(), securedUserService, authenticationFailureHandler()))
-                .addFilter(new JwtAuthorizationFilter(authenticationManager(), authenticationFailureHandler(), jwtSecret))
+                .addFilter(new JwtAuthenticationFilter(authenticationManager(), authenticationFailureHandler(), jwtGenerator, accountService))
+                .addFilter(new JwtAuthorizationFilter(authenticationManager(), authenticationFailureHandler(), jwtGenerator))
                 .sessionManagement()
                     .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }

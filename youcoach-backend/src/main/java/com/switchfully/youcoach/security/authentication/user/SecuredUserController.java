@@ -16,11 +16,9 @@ import java.io.IOException;
 public class SecuredUserController {
     private final static Logger LOGGER = LoggerFactory.getLogger(SecuredUserController.class);
 
-    private final PasswordResetService passwordResetService;
     private final SecuredUserService securedUserService;
 
-    public SecuredUserController(PasswordResetService passwordResetService, SecuredUserService securedUserService) {
-        this.passwordResetService = passwordResetService;
+    public SecuredUserController(SecuredUserService securedUserService) {
         this.securedUserService = securedUserService;
     }
 
@@ -45,14 +43,14 @@ public class SecuredUserController {
 
     @PreAuthorize("isAnonymous()")
     @PostMapping(consumes = "application/json;charset=UTF-8", produces = "application/json;charset=UTF-8", path = "/resend-validation")
-    public ResendVerificationDto resendValidation(@RequestBody ResendVerificationDto validationData) {
-        return securedUserService.resendValidation(validationData);
+    public void resendValidation(@RequestBody ResendVerificationDto validationData) {
+        securedUserService.resendValidation(validationData);
     }
 
     @PreAuthorize("isAnonymous()")
     @PostMapping(consumes = "application/json;charset=UTF-8", path = "/password/request-reset")
     public void requestPasswordResetToken(@RequestBody PasswordResetRequestDto resetRequest) {
-        passwordResetService.requestPasswordReset(resetRequest);
+        securedUserService.requestPasswordReset(resetRequest);
     }
 
     @PreAuthorize("isAnonymous()")
@@ -61,7 +59,7 @@ public class SecuredUserController {
         if(!isPasswordValid(changeRequest.getPassword())){
             return new PasswordChangeResultDto(false);
         }
-        return passwordResetService.performPasswordChange(changeRequest);
+        return securedUserService.performPasswordChange(changeRequest);
     }
 
     @ExceptionHandler(IllegalStateException.class)

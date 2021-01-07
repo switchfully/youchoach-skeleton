@@ -6,7 +6,7 @@ import com.switchfully.youcoach.domain.profile.role.coach.api.CoachProfileDto;
 import com.switchfully.youcoach.security.PasswordConfig;
 import com.switchfully.youcoach.security.authentication.user.Authority;
 import com.switchfully.youcoach.security.authentication.user.SecuredUserService;
-import com.switchfully.youcoach.security.authentication.user.SignatureService;
+import com.switchfully.youcoach.security.authentication.user.password.reset.SignatureService;
 import org.assertj.core.api.Assertions;
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.Test;
@@ -17,9 +17,7 @@ import org.mockito.Mockito;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 

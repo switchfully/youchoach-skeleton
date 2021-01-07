@@ -1,19 +1,20 @@
 package com.switchfully.youcoach.security.authentication.user;
 
 import com.switchfully.youcoach.domain.profile.Profile;
-import com.switchfully.youcoach.domain.profile.ProfileRepository;
-import com.switchfully.youcoach.domain.profile.api.ProfileMapper;
 import com.switchfully.youcoach.domain.profile.role.Role;
 import com.switchfully.youcoach.security.PasswordConfig;
 import com.switchfully.youcoach.security.authentication.jwt.JwtGenerator;
-import com.switchfully.youcoach.security.authentication.user.accountverification.AccountVerificator;
-import com.switchfully.youcoach.security.authentication.user.api.Account;
+import com.switchfully.youcoach.security.authentication.user.accountverification.AccountVerificationService;
 import com.switchfully.youcoach.security.authentication.user.api.AccountMapper;
 import com.switchfully.youcoach.security.authentication.user.api.AccountService;
 import com.switchfully.youcoach.security.authentication.user.api.CreateSecuredUserDto;
+import com.switchfully.youcoach.security.authentication.user.password.reset.SignatureService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.*;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -37,7 +38,7 @@ public class SecuredUserServiceTest {
     @Mock
     private PasswordEncoder passwordEncoder;
     @Mock
-    private AccountVerificator accountVerificator;
+    private AccountVerificationService accountVerificationService;
     @Spy
     private final SignatureService signatureService = new SignatureService(new PasswordConfig().keyPair());
     @Spy
@@ -64,7 +65,7 @@ public class SecuredUserServiceTest {
         securedUserService.registerAccount(createSecuredUserDto);
 
         verify(accountService).existsByEmail(profile.getEmail());
-        verify(accountVerificator).sendVerificationEmail(profile);
+        verify(accountVerificationService).sendVerificationEmail(profile);
     }
 
 
