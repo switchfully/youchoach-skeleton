@@ -2,8 +2,10 @@ import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {AuthenticationService} from '../../security/services/authentication/authentication.service';
 import {TranslateService} from '@ngx-translate/core';
 import {CoacheeService} from "../../profile/services/coachee.service";
-import {flatMap} from "rxjs/operators";
+import {filter, flatMap} from "rxjs/operators";
 import {InitService} from "../materialize/init.service";
+import {Observable} from "rxjs";
+import {IMember} from "../../profile/interfaces/IMember";
 
 @Component({
   selector: 'app-header',
@@ -30,12 +32,14 @@ export class HeaderComponent implements OnInit, AfterViewInit {
 
     this.authenticationService.userLoggedIn$
       .pipe(
+        filter(loggedIn => loggedIn),
         flatMap(_ => this.coacheeService.getCoacheeById(this.authenticationService.getUserId()))
       )
       .subscribe(profile => this.username = profile.firstName);
 
     this.authenticationService.mimicUser$
       .pipe(
+        filter(mimicUserId => mimicUserId != null),
         flatMap(mimicUserId => this.coacheeService.getCoacheeById(mimicUserId))
       )
       .subscribe(member => this.username = member.firstName + ' ' + member.lastName);
