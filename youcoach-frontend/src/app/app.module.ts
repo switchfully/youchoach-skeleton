@@ -29,11 +29,6 @@ import { FaqComponent } from './template/faq/faq.component';
 import { EnFaqComponent } from './template/faq/en-faq/en-faq.component';
 import { FrFaqComponent } from './template/faq/fr-faq/fr-faq.component';
 
-
-export function HttpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http);
-}
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -57,20 +52,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     HttpClientModule,
     ReactiveFormsModule,
     AppRoutingModule,
-    TranslateModule.forRoot({
-      defaultLanguage: 'en',
-      loader: {
-        provide: TranslateLoader,
-        useFactory: HttpLoaderFactory,
-        deps: [HttpClient]
-      }
-    }),
-    BrowserAnimationsModule,
-    MatButtonModule,
-    _MatMenuDirectivesModule,
-    MatMenuModule,
-    MatIconModule,
-    CustomFormsModule,
     SessionModule,
     SecurityModule,
     ProfileModule,

@@ -17,6 +17,7 @@ import {TranslateModule} from "@ngx-translate/core";
 import {RouterModule} from "@angular/router";
 import {AuthImagePipe} from "./pipes/auth-image.pipe";
 import { UpdateImageComponent } from './update-image/update-image.component';
+import {AppModule} from "../app.module";
 
 
 @NgModule({
@@ -39,7 +40,8 @@ import { UpdateImageComponent } from './update-image/update-image.component';
     ReactiveFormsModule,
     TranslateModule,
     CommonModule,
-    FormsModule
+    FormsModule,
+    AppModule
   ],
   exports: [
     AuthImagePipe,
