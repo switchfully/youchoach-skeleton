@@ -2,7 +2,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {AppComponent} from './app.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from '@angular/common/http';
 import {AppRoutingModule} from './app-routing.module';
 import {RedirectOnErrorInterceptor} from './redirect-on-error.interceptor';
 import {SessionModule} from "./session/session.module";
@@ -21,6 +21,12 @@ import {AdminComponent} from './template/admin/admin.component';
 import {FaqComponent} from './template/faq/faq.component';
 import {EnFaqComponent} from './template/faq/en-faq/en-faq.component';
 import {FrFaqComponent} from './template/faq/fr-faq/fr-faq.component';
+import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
+import {TranslateHttpLoader} from "@ngx-translate/http-loader";
+
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http);
+}
 
 @NgModule({
   declarations: [
@@ -45,6 +51,14 @@ import {FrFaqComponent} from './template/faq/fr-faq/fr-faq.component';
     HttpClientModule,
     ReactiveFormsModule,
     AppRoutingModule,
+    TranslateModule.forRoot({
+      defaultLanguage: 'en',
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      }
+    }),
     SessionModule,
     SecurityModule,
     ProfileModule,
